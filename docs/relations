@@ -1,0 +1,32 @@
+Case study 1: loves.
+relation "loves": (x: npc, y: npc, m number) is in loves if x loves y with magnitude m.
+Adam loves Anna with m = 10: (Adam, Anna, 10).
+Anna loves Adam with m = 8: (Anna, Adam, 8).
+
+Case study 2: contains.
+relation "contains": (x: any, t: any) is in contains if x contains t.
+properties:
+anti-symmetric: If (x,t) then !(t,x).
+transitive: (x,t) and (t,y) then (x,y).
+
+Case study 3: owes.
+relation "owes": (x: npc, y: npc, m: number) is in owes if x owes y m money.
+properties:
+[unnamed]: if (x,y,m) then (y,x,-m).
+
+
+APPROACH: STORAGE COMPLETE.
+Assume every data node is contained.
+This forces invocation of triggers upon CRUD operations.
+Every read operation only relies on the concrete data node.
+If it's not in the database, it cannot be deducted (false).
+- problematic:
+example: query not siblings: will have to enter every pair in S except for 1.
+
+APPROACH: DEDUCTIVE.
+Add the minimum tuples to the knowledge base and answer
+queries based on deduction. Also: define relations based
+on: collection of data + properties (function defs).
+Tuples + rules.
+-feasible. Prolog like.
+

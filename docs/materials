@@ -1,0 +1,9 @@
+prefix glossary: the prefix matches the shading method for the read material.
+*ALWAYS* use only 2 characters as prefix.
+
+PB_ = "[quasi] physically [based] rendering" material. (diffuse and normal map).
+SD_ = "static diffuse" material. (diffuse map only).
+EC_ = "emissive [plain] color [material]".
+AG_ = "animated glow" material. The diffuse map is also the emissive map.
+SG_ = "static glow" material.
+

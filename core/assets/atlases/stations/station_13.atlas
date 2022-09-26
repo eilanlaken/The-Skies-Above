@@ -1,0 +1,96 @@
+station_13.png
+size: 4096, 4096
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+lightBlue
+  rotate: false
+  xy: 4061, 1
+  size: 31, 31
+  orig: 82, 82
+  offset: 25, 26
+  index: 1
+lightBlue
+  rotate: false
+  xy: 3961, 367
+  size: 82, 82
+  orig: 82, 82
+  offset: 0, 0
+  index: 2
+lightGreen
+  rotate: false
+  xy: 4061, 34
+  size: 31, 31
+  orig: 82, 82
+  offset: 25, 26
+  index: 1
+lightGreen
+  rotate: false
+  xy: 3961, 451
+  size: 82, 82
+  orig: 82, 82
+  offset: 0, 0
+  index: 2
+lightRed
+  rotate: false
+  xy: 4061, 67
+  size: 31, 31
+  orig: 82, 82
+  offset: 25, 26
+  index: 1
+lightRed
+  rotate: false
+  xy: 3961, 535
+  size: 82, 82
+  orig: 82, 82
+  offset: 0, 0
+  index: 2
+lightWhite
+  rotate: false
+  xy: 4061, 100
+  size: 31, 31
+  orig: 82, 82
+  offset: 25, 26
+  index: 1
+lightWhite
+  rotate: false
+  xy: 3961, 619
+  size: 82, 82
+  orig: 82, 82
+  offset: 0, 0
+  index: 2
+lightYellow
+  rotate: false
+  xy: 4061, 133
+  size: 31, 31
+  orig: 82, 82
+  offset: 25, 26
+  index: 1
+lightYellow
+  rotate: false
+  xy: 3695, 633
+  size: 82, 82
+  orig: 82, 82
+  offset: 0, 0
+  index: 2
+station
+  rotate: false
+  xy: 1, 1
+  size: 3692, 3583
+  orig: 3867, 3583
+  offset: 175, 0
+  index: 13
+ventBlade
+  rotate: false
+  xy: 3695, 367
+  size: 264, 264
+  orig: 364, 364
+  offset: 50, 50
+  index: -1
+ventBottomYellow
+  rotate: false
+  xy: 3695, 1
+  size: 364, 364
+  orig: 364, 364
+  offset: 0, 0
+  index: -1

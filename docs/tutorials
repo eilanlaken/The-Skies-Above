@@ -1,0 +1,11 @@
+Building a NavMesh from static model
+Find shortest path (quickly) on the surface of a 3d model
+https://gamedev.stackexchange.com/questions/109726/find-shortest-path-quickly-on-the-surface-of-a-3d-model
+
+Pre-calculate triangle adjacency data, then what you'll have will basically be a navigation mesh. Any pathfinding algorithm (like A*) will be able to work on that.
+
+Building triangle adjacency data
+https://gamedev.stackexchange.com/questions/62097/building-triangle-adjacency-data
+
+The Half-Edge Data Structure
+https://www.flipcode.com/archives/The_Half-Edge_Data_Structure.shtml

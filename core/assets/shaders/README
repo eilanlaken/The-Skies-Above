@@ -1,0 +1,4 @@
+shininess values should be 0 < shininess < 1.
+Note:
+Run fbx-converter with the following options:
+.\fbx-conv-win32.exe -v -f model.fbx model.g3dj

@@ -1,0 +1,23 @@
+
+father: (f,b) (f,c) (f,d)
+mother: (m1,a) (m1,b) (m2, d)
+
+find siblings of a.
+
+(x,y) are siblings if (f,x) (m,x) and (f,y) (m,y)
+Queries should be pre-built object functions returning a defined data type.
+
+Example:
+
+class FindSiblings extends Query {
+
+    final static Array<Long> params = new Array<>();
+    final static Array<Long> results = new Array<>();
+
+    public void prepare(final long ...params);
+    public void run();
+
+    // workflow: prepare, run, results.
+
+}
+

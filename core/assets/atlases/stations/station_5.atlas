@@ -1,0 +1,82 @@
+station_5.png
+size: 4096, 4096
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+lightBlue
+  rotate: false
+  xy: 4051, 1
+  size: 31, 31
+  orig: 82, 82
+  offset: 25, 26
+  index: 1
+lightBlue
+  rotate: false
+  xy: 1, 3663
+  size: 82, 82
+  orig: 82, 82
+  offset: 0, 0
+  index: 2
+lightGreen
+  rotate: false
+  xy: 4051, 34
+  size: 31, 31
+  orig: 82, 82
+  offset: 25, 26
+  index: 1
+lightGreen
+  rotate: false
+  xy: 1, 3747
+  size: 82, 82
+  orig: 82, 82
+  offset: 0, 0
+  index: 2
+lightRed
+  rotate: false
+  xy: 4051, 67
+  size: 31, 31
+  orig: 82, 82
+  offset: 25, 26
+  index: 1
+lightRed
+  rotate: false
+  xy: 1, 3831
+  size: 82, 82
+  orig: 82, 82
+  offset: 0, 0
+  index: 2
+lightWhite
+  rotate: false
+  xy: 4051, 100
+  size: 31, 31
+  orig: 82, 82
+  offset: 25, 26
+  index: 1
+lightWhite
+  rotate: false
+  xy: 1, 3915
+  size: 82, 82
+  orig: 82, 82
+  offset: 0, 0
+  index: 2
+lightYellow
+  rotate: false
+  xy: 4051, 133
+  size: 31, 31
+  orig: 82, 82
+  offset: 25, 26
+  index: 1
+lightYellow
+  rotate: false
+  xy: 1, 3999
+  size: 82, 82
+  orig: 82, 82
+  offset: 0, 0
+  index: 2
+station
+  rotate: false
+  xy: 1, 1
+  size: 4048, 3660
+  orig: 4048, 3660
+  offset: 0, 0
+  index: 1

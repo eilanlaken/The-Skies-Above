@@ -1,0 +1,12 @@
+caterpillarBody.png
+size: 44, 210
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+caterpillarBody
+  rotate: false
+  xy: 0, 0
+  size: 44, 210
+  orig: 44, 210
+  offset: 0, 0
+  index: 1

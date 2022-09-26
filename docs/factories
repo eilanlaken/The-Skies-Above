@@ -1,0 +1,7 @@
+Factories are meant to be messy.
+Make them work.
+
+Rule: whenever there's a generation at random, the method
+should start with the word "roll".
+
+For example: rollGunType().

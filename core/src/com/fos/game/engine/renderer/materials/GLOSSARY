@@ -1,0 +1,19 @@
+"PC" = PlainColorMaterialInstance
+"PD" = PlainDiffuseMapMaterialInstance
+"DB" = PlainDiffuseBloomMapsMaterialInstance
+"RS" = DiffuseNormalMapsMaterialInstance
+"SB" = AnimatedSkyBoxSideMaterialInstance
+"PB" = DiffuseNormalSpecularRoughnessMapsMaterialInstance
+"GC" = GlowingColorMaterialInstance
+"AB" = AnimatedDiffuseBloomMapsMaterialInstance
+"PM" = DiffuseNormalParallaxMapsMaterialInstance
+"UC" = UniformColorMaterialInstance
+"NB" = DiffuseNormalBloomMapsMaterialInstance
+"VL" = VolumetricLightSourceMaterialInstance
+"ED" = DiffuseNormalSpecularRoughnessParallaxMapsMaterialInstance
+"AA" = AlbedoNormalMetallicRoughnessAOMapsMaterialInstance
+"BB" = AlbedoNormalMapsMaterialInstance
+"DM" = DiffuseMapMaterialInstance
+
+@Deprecated:
+"SD" = AnimatedDiffuseMapMaterialInstance
