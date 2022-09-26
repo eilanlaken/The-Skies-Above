@@ -5,6 +5,7 @@ import com.fos.game.engine.components.animation.FactoryAnimation;
 import com.fos.game.engine.components.camera.FactoryCamera;
 import com.fos.game.engine.components.scripts.ComponentScripts;
 import com.fos.game.engine.components.transform.FactoryTransform2D;
+import com.fos.game.engine.components.transform.FactoryTransform3D;
 import com.fos.game.engine.context.GameContext;
 import com.fos.game.engine.entities.Entity;
 import com.fos.game.engine.entities.EntityContainer;
@@ -87,16 +88,32 @@ public class SaveEntityScene extends GameScreen {
                 FactoryAnimation.create(testSpriteSheet, "testArrowGreen")
         );
 
-        String json = serializer.gson.toJson(entity);
+        Entity entityToSerialize = new Entity();
+        entityToSerialize.attachComponents(
+                FactoryTransform3D.create()
+                //new ComponentScripts()
+        );
+
+        String json = serializer.gson.toJson(entityToSerialize);
+        System.out.println("entity: " + json);
+        Entity fromJson = serializer.gson.fromJson(json, Entity.class);
+        System.out.println("entity: " + fromJson);
+        fromJson.components[]
+        /*
+        String json = serializer.gson.toJson(entityToSerialize);
         System.out.println(json);
         Entity entity1 = serializer.gson.fromJson(json, Entity.class);
-        System.out.println("entity1 " + entity1);
+        ComponentTransform3D transform3D = serializer.gson.fromJson(json, ComponentTransform3D.class);
+        System.out.println(transform3D);
+        //ComponentTransform3D t = (ComponentTransform3D) entity1.components[ComponentType.TRANSFORM_3D.ordinal()];
         String json2 = serializer.gson.toJson(entity1);
         System.out.println(json2);
+         */
 
         container.addEntity(camera);
         container.addEntity(orangeSquare);
         container.addEntity(greenSquare);
+        container.addEntity(entityToSerialize);
     }
 
     @Override

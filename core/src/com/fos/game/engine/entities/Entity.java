@@ -150,7 +150,6 @@ public class Entity implements Disposable {
         }
         if (scripts != null) {
             for (Script script : scripts) {
-                //script.entity = this;
                 script.start();
             }
         }

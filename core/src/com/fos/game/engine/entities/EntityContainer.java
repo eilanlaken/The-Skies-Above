@@ -50,21 +50,10 @@ public class EntityContainer implements Disposable {
         entity.alive = true;
         entity.currentContainer = this;
         entities.add(entity);
+        entity.localId = entities.size-1;
         if ((entity.componentsBitMask & ComponentType.PHYSICS_BODY_3D.bitMask) == ComponentType.PHYSICS_BODY_3D.bitMask) {
             btRigidBody body = (btRigidBody) entity.components[ComponentType.PHYSICS_BODY_3D.ordinal()];
             physicsWorld3D.dynamicsWorld.addRigidBody(body);
-        }
-    }
-
-    public void addAllEntities(final Entity... entities) {
-        for (Entity entity : entities) {
-            addEntity(entity);
-        }
-    }
-
-    public void addAllEntities(final Array<Entity> entities) {
-        for (Entity entity : entities) {
-            addEntity(entity);
         }
     }
 
