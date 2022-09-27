@@ -1,4 +1,4 @@
-package com.fos.game.engine.files;
+package com.fos.game.engine.files.assets;
 
 import com.badlogic.gdx.graphics.g3d.Model;
 

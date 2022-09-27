@@ -1,4 +1,4 @@
-package com.fos.game.engine.files;
+package com.fos.game.engine.files.assets;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;

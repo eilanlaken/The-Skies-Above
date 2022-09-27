@@ -2,6 +2,7 @@ package com.fos.game.screens.tests;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.fos.game.engine.components.animation.FactoryAnimation;
+import com.fos.game.engine.components.camera.ComponentCamera;
 import com.fos.game.engine.components.camera.FactoryCamera;
 import com.fos.game.engine.components.scripts.ComponentScripts;
 import com.fos.game.engine.components.transform.FactoryTransform2D;
@@ -9,8 +10,8 @@ import com.fos.game.engine.components.transform.FactoryTransform3D;
 import com.fos.game.engine.context.GameContext;
 import com.fos.game.engine.entities.Entity;
 import com.fos.game.engine.entities.EntityContainer;
-import com.fos.game.engine.files.GameAssetManager;
-import com.fos.game.engine.files.Serializer;
+import com.fos.game.engine.files.assets.GameAssetManager;
+import com.fos.game.engine.files.serialization.Stringifier;
 import com.fos.game.engine.renderer.system.Renderer;
 import com.fos.game.engine.screens.GameScreen;
 import com.fos.game.scripts.common.ParentTransform2D;
@@ -36,7 +37,7 @@ public class SaveEntityScene extends GameScreen {
     private Entity orangeSquare, greenSquare;
 
     // serialization
-    private Serializer serializer;
+    private Stringifier stringifier;
 
     public enum EntityLayers {
         LAYER_1,
@@ -45,7 +46,7 @@ public class SaveEntityScene extends GameScreen {
 
     public SaveEntityScene(final GameContext context) {
         super(context);
-        this.serializer = new Serializer();
+        this.stringifier = new Stringifier();
         this.assetManager = context.assetManager;
         this.renderer = new Renderer(false);
     }
@@ -94,11 +95,16 @@ public class SaveEntityScene extends GameScreen {
                 //new ComponentScripts()
         );
 
-        String json = serializer.gson.toJson(entityToSerialize);
+        ComponentCamera camera2 = FactoryCamera.create2DCamera(SimpleScene.EntityLayers.LAYER_1, SimpleScene.EntityLayers.LAYER_2);
+        String camera2Json = stringifier.gson.toJson(camera2);
+        System.out.println(camera2Json);
+        ComponentCamera camera3 = stringifier.gson.fromJson(camera2Json, ComponentCamera.class);
+        System.out.println(camera3);
+
+        String json = stringifier.gson.toJson(entityToSerialize);
         System.out.println("entity: " + json);
-        Entity fromJson = serializer.gson.fromJson(json, Entity.class);
+        Entity fromJson = stringifier.gson.fromJson(json, Entity.class);
         System.out.println("entity: " + fromJson);
-        fromJson.components[]
         /*
         String json = serializer.gson.toJson(entityToSerialize);
         System.out.println(json);

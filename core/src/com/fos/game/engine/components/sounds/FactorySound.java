@@ -1,8 +1,7 @@
 package com.fos.game.engine.components.sounds;
 
 import com.badlogic.gdx.audio.Sound;
-import com.fos.game.engine.components.sounds.ComponentSounds;
-import com.fos.game.engine.files.GameAssetManager;
+import com.fos.game.engine.files.assets.GameAssetManager;
 
 public class FactorySound {
 

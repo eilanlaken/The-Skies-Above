@@ -2,7 +2,7 @@ package com.fos.game.engine.context;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.fos.game.engine.files.GameAssetManager;
+import com.fos.game.engine.files.assets.GameAssetManager;
 import com.fos.game.screens.loading.LoadingScreen;
 
 public class GameContext extends Game {
