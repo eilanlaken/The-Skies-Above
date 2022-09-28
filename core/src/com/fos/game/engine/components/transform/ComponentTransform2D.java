@@ -19,17 +19,16 @@ public class ComponentTransform2D implements Component {
         this.scaleY = scaleY;
     }
 
-    @Override
-    public final ComponentType getComponentType() {
-        return ComponentType.TRANSFORM_2D;
-    }
-
     public Vector2 getPosition() {
         return transform.getPosition();
     }
-
     public float getRotation() {
         return transform.getRotation();
+    }
+
+    @Override
+    public final ComponentType getComponentType() {
+        return ComponentType.TRANSFORM_2D;
     }
 
 }

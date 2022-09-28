@@ -8,7 +8,7 @@ public class ComponentSignalEmitter implements Component {
 
     public Array<Signal> sendQueue;
 
-    public ComponentSignalEmitter() {
+    protected ComponentSignalEmitter() {
         this.sendQueue = new Array<>();
     }
 

@@ -7,9 +7,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 import com.badlogic.gdx.utils.Array;
-import com.fos.game.engine.components.lights.DirectionalLight;
+import com.fos.game.engine.components.lights.ComponentPointLight;
+import com.fos.game.engine.components.lights.ComponentDirectionalLight;
 import com.fos.game.engine.components.lights.LightingEnvironment;
-import com.fos.game.engine.components.lights.PointLight;
 import com.fos.game.engine.components.modelinstance.ModelInstance;
 import com.fos.game.engine.renderer.materials.base.BasicMaterialMap;
 import com.fos.game.engine.renderer.materials.instances.BlendAlbedoMapsMaterialInstance;
@@ -106,7 +106,7 @@ public class PBRBlendAlbedoMapsShader extends GameShader {
     }
 
     private void loadEnvironmentsParamsToGPU(final LightingEnvironment lightingEnvironment) {
-        Array<PointLight> pointLights = lightingEnvironment.pointLights;
+        Array<ComponentPointLight> pointLights = lightingEnvironment.pointLights;
         for (int i = 0; i < LightingEnvironment.MAX_POINT_LIGHTS; i++) {
             if (i < pointLights.size) {
                 shaderProgram.setUniformf(uniforms_pointLightsPositionLocations[i], pointLights.get(i).worldPosition);
@@ -114,7 +114,7 @@ public class PBRBlendAlbedoMapsShader extends GameShader {
                 shaderProgram.setUniformf(uniforms_pointLightsIntensityLocations[i], pointLights.get(i).intensity);
             }
         }
-        Array<DirectionalLight> directionalLights = lightingEnvironment.directionalLights;
+        Array<ComponentDirectionalLight> directionalLights = lightingEnvironment.directionalLights;
         for (int i = 0; i < LightingEnvironment.MAX_DIRECTIONAL_LIGHTS; i++) {
             if (i < directionalLights.size) {
                 shaderProgram.setUniformf(uniforms_directionalLightsDirectionLocations[i], directionalLights.get(i).worldDirection);

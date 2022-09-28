@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.Array;
 import com.fos.game.engine.components.animation.ComponentAnimations2D;
 import com.fos.game.engine.components.base.ComponentType;
 import com.fos.game.engine.components.camera.ComponentCamera;
-import com.fos.game.engine.components.lights.ComponentLight;
+import com.fos.game.engine.components.lights.Light;
 import com.fos.game.engine.components.lights.LightingEnvironment;
 import com.fos.game.engine.components.lights.UtilsLights;
 import com.fos.game.engine.components.modelinstance.ComponentModelInstance;
@@ -69,7 +69,7 @@ public class RenderingUtils {
             }
             if ((entity.componentsBitMask & ATTACHED_LIGHT_BIT_MASK) > 0) {
                 ComponentTransform3D transform = (ComponentTransform3D) entity.components[ComponentType.TRANSFORM_3D.ordinal()];
-                ComponentLight light = (ComponentLight) entity.components[ComponentType.LIGHT.ordinal()];
+                Light light = (Light) entity.components[ComponentType.LIGHT.ordinal()];
                 UtilsLights.applyTransformToLight(transform, light);
                 lightingEnvironmentResult.addLight(light);
             }

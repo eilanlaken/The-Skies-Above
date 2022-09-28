@@ -8,7 +8,7 @@ import com.fos.game.engine.components.animation.ComponentAnimations2D;
 import com.fos.game.engine.components.base.Component;
 import com.fos.game.engine.components.base.ComponentType;
 import com.fos.game.engine.components.camera.ComponentCamera;
-import com.fos.game.engine.components.lights.ComponentLight;
+import com.fos.game.engine.components.lights.Light;
 import com.fos.game.engine.components.modelinstance.ComponentModelInstance;
 import com.fos.game.engine.components.rigidbody.ComponentRigidBody2D;
 import com.fos.game.engine.components.rigidbody.ComponentRigidBody3D;
@@ -17,7 +17,7 @@ import com.fos.game.engine.components.scripts.Script;
 import com.fos.game.engine.components.shapes.ComponentShape2D;
 import com.fos.game.engine.components.signals.ComponentSignalEmitter;
 import com.fos.game.engine.components.signals.ComponentSignalReceiver;
-import com.fos.game.engine.components.sounds.ComponentSounds;
+import com.fos.game.engine.components.audio.ComponentSoundEffects;
 import com.fos.game.engine.components.transform.ComponentTransform2D;
 import com.fos.game.engine.components.transform.ComponentTransform3D;
 import com.fos.game.engine.components.transform.FactoryTransform2D;
@@ -83,7 +83,7 @@ public class Entity implements Disposable {
             components[ComponentType.MODEL_INSTANCE.ordinal()] = component;
             return;
         }
-        if (component instanceof ComponentLight) {
+        if (component instanceof Light) {
             components[ComponentType.LIGHT.ordinal()] = component;
             return;
         }
@@ -95,8 +95,8 @@ public class Entity implements Disposable {
             components[ComponentType.PHYSICS_BODY_3D.ordinal()] = component;
             return;
         }
-        if (component instanceof ComponentSounds) {
-            components[ComponentType.SOUNDS.ordinal()] = component;
+        if (component instanceof ComponentSoundEffects) {
+            components[ComponentType.AUDIO.ordinal()] = component;
             return;
         }
         if (component instanceof ComponentScripts) {
@@ -121,7 +121,7 @@ public class Entity implements Disposable {
         ComponentModelInstance modelInstance = (ComponentModelInstance) components[ComponentType.MODEL_INSTANCE.ordinal()];
         ComponentRigidBody2D rigidBody2d = (ComponentRigidBody2D) components[ComponentType.PHYSICS_BODY_2D.ordinal()];
         ComponentRigidBody3D rigidBody3d = (ComponentRigidBody3D) components[ComponentType.PHYSICS_BODY_3D.ordinal()];
-        ComponentLight light = (ComponentLight) components[ComponentType.LIGHT.ordinal()];
+        Light light = (Light) components[ComponentType.LIGHT.ordinal()];
         ComponentScripts scripts = (ComponentScripts) components[ComponentType.SCRIPTS.ordinal()];
 
         if (transform2D == null) {
@@ -160,7 +160,7 @@ public class Entity implements Disposable {
         ComponentRigidBody3D body = (ComponentRigidBody3D) components[ComponentType.PHYSICS_BODY_3D.ordinal()];
         ComponentTransform3D transform = (ComponentTransform3D) components[ComponentType.TRANSFORM_3D.ordinal()];
         ComponentScripts scripts = (ComponentScripts) components[ComponentType.SCRIPTS.ordinal()];
-        ComponentLight light = (ComponentLight) components[ComponentType.LIGHT.ordinal()];
+        Light light = (Light) components[ComponentType.LIGHT.ordinal()];
         ComponentAnimations2D animations = (ComponentAnimations2D) components[ComponentType.ANIMATION.ordinal()];
         ComponentCamera camera = (ComponentCamera) components[ComponentType.CAMERA.ordinal()];
 

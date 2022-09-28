@@ -8,36 +8,36 @@ public class LightingEnvironment extends com.badlogic.gdx.graphics.g3d.Environme
     public static final int MAX_SPOT_LIGHTS = 2;
     public static final int MAX_DIRECTIONAL_LIGHTS = 1;
 
-    public Array<PointLight> pointLights = new Array<>(MAX_POINT_LIGHTS);
-    public Array<DirectionalLight> directionalLights = new Array<>(MAX_DIRECTIONAL_LIGHTS);
-    public Array<SpotLight> spotLights = new Array<>(MAX_SPOT_LIGHTS);
+    public Array<ComponentPointLight> pointLights = new Array<>(MAX_POINT_LIGHTS);
+    public Array<ComponentDirectionalLight> directionalLights = new Array<>(MAX_DIRECTIONAL_LIGHTS);
+    public Array<ComponentSpotLight> spotLights = new Array<>(MAX_SPOT_LIGHTS);
 
-    public void addLight(final Object light) {
-        if (light instanceof PointLight) {
+    public void addLight(final Light light) {
+        if (light instanceof ComponentPointLight) {
             if (pointLights.size >= MAX_POINT_LIGHTS) return;
-            else pointLights.add((PointLight) light);
+            else pointLights.add((ComponentPointLight) light);
         }
-        if (light instanceof DirectionalLight) {
+        if (light instanceof ComponentDirectionalLight) {
             if (directionalLights.size >= MAX_DIRECTIONAL_LIGHTS) return;
-            directionalLights.add((DirectionalLight) light);
+            directionalLights.add((ComponentDirectionalLight) light);
         }
-        if (light instanceof SpotLight) {
+        if (light instanceof ComponentSpotLight) {
             if (spotLights.size >= MAX_SPOT_LIGHTS) return;
-            else spotLights.add((SpotLight) light);
+            else spotLights.add((ComponentSpotLight) light);
         }
     }
 
-    public void removeLight(final Object light) {
-        if (light instanceof PointLight) {
-            pointLights.removeValue((PointLight) light, true);
+    public void removeLight(final Light light) {
+        if (light instanceof ComponentPointLight) {
+            pointLights.removeValue((ComponentPointLight) light, true);
             return;
         }
-        if (light instanceof DirectionalLight) {
-            directionalLights.removeValue((DirectionalLight) light, true);
+        if (light instanceof ComponentDirectionalLight) {
+            directionalLights.removeValue((ComponentDirectionalLight) light, true);
             return;
         }
-        if (light instanceof SpotLight) {
-            spotLights.removeValue((SpotLight) light, true);
+        if (light instanceof ComponentSpotLight) {
+            spotLights.removeValue((ComponentSpotLight) light, true);
             return;
         }
     }

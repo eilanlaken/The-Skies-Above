@@ -3,9 +3,15 @@ package com.fos.game.engine.components.rigidbody;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.*;
+import com.fos.game.engine.components.base.Factory;
 import com.fos.game.engine.entities.EntityContainer;
+import com.fos.game.engine.files.assets.GameAssetManager;
 
-public class FactoryRigidBody2D {
+public class FactoryRigidBody2D extends Factory {
+
+    public FactoryRigidBody2D(final GameAssetManager assetManager) {
+        super(assetManager);
+    }
 
     public static ComponentRigidBody2D create(final EntityContainer container, float x, float y, float w, float h) {
         BodyDef bodyDef = new BodyDef();

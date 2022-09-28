@@ -15,6 +15,12 @@ public class ModelInstance extends com.badlogic.gdx.graphics.g3d.ModelInstance {
     public final Vector3 dimensions = new Vector3();
     public float radius;
 
+    protected ModelInstance(final HashMap<String, String> assetsPathsMap, final Model model, final HashMap<String, FOSMaterial> materialInstances,
+                            Matrix4 transform) {
+        super(model, transform, assetsPathsMap.get("nodeIds"));
+    }
+
+    @Deprecated
     protected ModelInstance(final Model model, final HashMap<String, FOSMaterial> materialInstances, Matrix4 transform, final String ...nodeIds) {
         super(model, transform, nodeIds);
         this.materialInstances = materialInstances;

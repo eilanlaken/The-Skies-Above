@@ -7,9 +7,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 import com.badlogic.gdx.utils.Array;
-import com.fos.game.engine.components.lights.DirectionalLight;
+import com.fos.game.engine.components.lights.ComponentDirectionalLight;
 import com.fos.game.engine.components.lights.LightingEnvironment;
-import com.fos.game.engine.components.lights.PointLight;
+import com.fos.game.engine.components.lights.ComponentPointLight;
 import com.fos.game.engine.components.modelinstance.ModelInstance;
 import com.fos.game.engine.renderer.materials.instances.DiffuseNormalMapsMaterialInstance;
 import com.fos.game.engine.renderer.shaders.base.GameShader;
@@ -115,7 +115,7 @@ public class DiffuseNormalMapsShader extends GameShader {
     private void loadEnvironmentsParamsToGPU(final LightingEnvironment renderingLightingEnvironment) {
         if (renderingLightingEnvironment == null) return;
         // load environment point lights
-        Array<PointLight> pointLights = renderingLightingEnvironment.pointLights;
+        Array<ComponentPointLight> pointLights = renderingLightingEnvironment.pointLights;
         for (int i = 0; i < LightingEnvironment.MAX_POINT_LIGHTS; i++) {
             if (i < pointLights.size) {
                 shaderProgram.setUniformf(uniforms_pointLightsPositionLocations[i], pointLights.get(i).worldPosition);
@@ -125,7 +125,7 @@ public class DiffuseNormalMapsShader extends GameShader {
         }
         // load environment directional lights
         // load environment directional lights
-        Array<DirectionalLight> directionalLights = renderingLightingEnvironment.directionalLights;
+        Array<ComponentDirectionalLight> directionalLights = renderingLightingEnvironment.directionalLights;
         for (int i = 0; i < LightingEnvironment.MAX_DIRECTIONAL_LIGHTS; i++) {
             if (i < directionalLights.size) {
                 shaderProgram.setUniformf(uniforms_directionalLightsDirectionLocations[i], directionalLights.get(i).worldDirection);

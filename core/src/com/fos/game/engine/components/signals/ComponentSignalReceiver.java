@@ -8,7 +8,7 @@ public class ComponentSignalReceiver implements Component {
 
     public Array<Signal> receivedQueue;
 
-    public ComponentSignalReceiver() {
+    protected ComponentSignalReceiver() {
         this.receivedQueue = new Array<>();
     }
 

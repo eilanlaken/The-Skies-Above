@@ -12,7 +12,7 @@ public enum ComponentType {
     CAMERA,
     ANIMATION,
     SHAPE_2D,
-    SOUNDS,
+    AUDIO,
     SIGNAL_EMITTER,
     SIGNAL_RECEIVER,
     ;

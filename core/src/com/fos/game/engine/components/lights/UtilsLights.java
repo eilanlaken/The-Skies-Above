@@ -4,19 +4,19 @@ import com.badlogic.gdx.math.Matrix4;
 
 public class UtilsLights {
 
-    public static void applyTransformToLight(final Matrix4 transform, ComponentLight light) {
+    public static void applyTransformToLight(final Matrix4 transform, Light light) {
 
     }
 
-    public static void applyTransformToLight(final Matrix4 transform, PointLight pointLight) {
+    public static void applyTransformToLight(final Matrix4 transform, ComponentPointLight componentPointLight) {
 
     }
 
-    public static void applyTransformToLight(final Matrix4 transform, DirectionalLight directionalLight) {
+    public static void applyTransformToLight(final Matrix4 transform, ComponentDirectionalLight componentDirectionalLight) {
 
     }
 
-    public static void applyTransformToLight(final Matrix4 transform, SpotLight spotLight) {
+    public static void applyTransformToLight(final Matrix4 transform, ComponentSpotLight componentSpotLight) {
 
     }
 

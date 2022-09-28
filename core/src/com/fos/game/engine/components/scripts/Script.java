@@ -1,8 +1,8 @@
 package com.fos.game.engine.components.scripts;
 
-public abstract class Script {
+public class Script {
 
-    public abstract void start();
-    public abstract void update(float delta);
+    public void start() {}
+    public void update(float delta) {}
 
 }

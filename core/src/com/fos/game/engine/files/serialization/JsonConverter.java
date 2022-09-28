@@ -1,8 +1,9 @@
 package com.fos.game.engine.files.serialization;
 
 import com.badlogic.gdx.graphics.Camera;
-import com.fos.game.engine.components.lights.ComponentLight;
-import com.fos.game.engine.components.lights.PointLight;
+import com.fos.game.engine.components.audio.ComponentSoundEffects;
+import com.fos.game.engine.components.lights.ComponentPointLight;
+import com.fos.game.engine.components.lights.Light;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;
@@ -27,7 +28,7 @@ public class JsonConverter<T> {
                 return false;
             }
         }).registerTypeAdapter(Camera.class, new CameraTypeAdapter())
-        .registerTypeAdapter(ComponentLight.class, new ComponentLightTypeAdapter());
+        .registerTypeAdapter(ComponentSoundEffects.class, new ComponentSoundEffectsTypeAdapter());
 
         this.gson = gsonBuilder.create();
     }
@@ -55,21 +56,22 @@ public class JsonConverter<T> {
         }
     }
 
-    private class ComponentLightTypeAdapter implements JsonSerializer<ComponentLight>, JsonDeserializer<ComponentLight> {
-
+    private class ComponentSoundEffectsTypeAdapter implements JsonSerializer<ComponentSoundEffects>, JsonDeserializer<ComponentSoundEffects> {
         @Override
-        public JsonElement serialize(ComponentLight src, Type typeOfSrc, JsonSerializationContext context) {
+        public JsonElement serialize(ComponentSoundEffects src, Type typeOfSrc, JsonSerializationContext context) {
             JsonObject result = new JsonObject();
-            System.out.println("here");
-            result.add("type", new JsonPrimitive(src.getClass().getCanonicalName()));
-            result.add("properties", context.serialize(src, src.getClass()));
+            String[] paths = new String[src.size];
+            for (int i = 0; i < paths.length; i++) {
+                paths[i] = src.get(i).path;
+            }
+            result.add("paths", context.serialize(paths, paths.getClass()));
             return result;
         }
 
         @Override
-        public ComponentLight deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        public ComponentSoundEffects deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+                throws JsonParseException {
             JsonObject jsonObject = json.getAsJsonObject();
-            //System.out.println("json object: " + jsonObject);
             String type = jsonObject.get("type").getAsString();
             JsonElement element = jsonObject.get("properties");
             try {
@@ -78,32 +80,6 @@ public class JsonConverter<T> {
                 throw new JsonParseException("Unknown element type: " + type, e);
             }
         }
-
-    }
-
-    private class PointLightTypeAdapter implements JsonSerializer<PointLight>, JsonDeserializer<PointLight> {
-
-        @Override
-        public JsonElement serialize(PointLight src, Type typeOfSrc, JsonSerializationContext context) {
-            JsonObject result = new JsonObject();
-            result.add("type", new JsonPrimitive(src.getClass().getCanonicalName()));
-            result.add("properties", context.serialize(src, src.getClass()));
-            return result;
-        }
-
-        @Override
-        public PointLight deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-            JsonObject jsonObject = json.getAsJsonObject();
-            //System.out.println("json object: " + jsonObject);
-            String type = jsonObject.get("type").getAsString();
-            JsonElement element = jsonObject.get("properties");
-            try {
-                return context.deserialize(element, Class.forName(type));
-            } catch (ClassNotFoundException e) {
-                throw new JsonParseException("Unknown element type: " + type, e);
-            }
-        }
-
     }
 
 }

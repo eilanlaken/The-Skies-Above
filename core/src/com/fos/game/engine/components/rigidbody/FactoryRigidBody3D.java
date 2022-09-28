@@ -9,12 +9,18 @@ import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
 import com.badlogic.gdx.physics.bullet.collision.btConvexHullShape;
 import com.badlogic.gdx.physics.bullet.collision.btShapeHull;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
+import com.fos.game.engine.components.base.Factory;
+import com.fos.game.engine.files.assets.GameAssetManager;
 
-public class FactoryRigidBody3D {
+public class FactoryRigidBody3D extends Factory {
 
     private static final Vector3 localInertia = new Vector3();
     private static final Vector3 shapeData = new Vector3();
     private static boolean bulletPhysicsInitialized = false;
+
+    public FactoryRigidBody3D(final GameAssetManager assetManager) {
+        super(assetManager);
+    }
 
     public static ComponentRigidBody3D createRigidBody(final Model model, float mass, final boolean optimized) {
         final Mesh mesh = model.meshes.get(0);

@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 import com.badlogic.gdx.utils.Array;
+import com.fos.game.engine.components.lights.ComponentPointLight;
 import com.fos.game.engine.components.lights.LightingEnvironment;
-import com.fos.game.engine.components.lights.PointLight;
 import com.fos.game.engine.components.modelinstance.ModelInstance;
 import com.fos.game.engine.renderer.materials.instances.DiffuseNormalSpecularRoughnessParallaxMapsMaterialInstance;
 import com.fos.game.engine.renderer.shaders.base.GameShader;
@@ -127,7 +127,7 @@ public class DiffuseNormalSpecularRoughnessParallaxMapsShader extends GameShader
 
     private void loadEnvironmentsParamsToGPU(final LightingEnvironment lightingEnvironment) {
         // load environment point lights
-        Array<PointLight> pointLights = lightingEnvironment.pointLights;
+        Array<ComponentPointLight> pointLights = lightingEnvironment.pointLights;
         for (int i = 0; i < LightingEnvironment.MAX_POINT_LIGHTS; i++) {
             if (i < pointLights.size) {
                 shaderProgram.setUniformf(uniforms_pointLightsPositionLocations[i], pointLights.get(i).worldPosition);

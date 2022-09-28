@@ -98,7 +98,7 @@ public class InstancedUniformColorCombinedShader {
     private void loadEnvironmentsParamsToGPU(final RenderingEnvironment renderingEnvironment) {
         if (renderingEnvironment == null) return;
         // load environment point lights
-        Array<PointLight> pointLights = renderingEnvironment.pointLights;
+        Array<ComponentPointLight> pointLights = renderingEnvironment.pointLights;
         for (int i = 0; i < RenderingEnvironment.MAX_POINT_LIGHTS; i++) {
             if (i < pointLights.size) {
                 shaderProgram.setUniformf(uniforms_pointLightsPositionLocations[i], pointLights.get(i).position);

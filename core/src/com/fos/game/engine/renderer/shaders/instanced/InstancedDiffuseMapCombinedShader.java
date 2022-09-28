@@ -117,7 +117,7 @@ public class InstancedDiffuseMapCombinedShader {
     private void loadEnvironmentsParamsToGPU(final RenderingEnvironment renderingEnvironment) {
         if (renderingEnvironment == null) return;
         // load environment point lights
-        Array<PointLight> pointLights = renderingEnvironment.pointLights;
+        Array<ComponentPointLight> pointLights = renderingEnvironment.pointLights;
         for (int i = 0; i < RenderingEnvironment.MAX_POINT_LIGHTS; i++) {
             if (i < pointLights.size) {
                 shaderProgram.setUniformf(uniforms_pointLightsPositionLocations[i], pointLights.get(i).position);
@@ -126,7 +126,7 @@ public class InstancedDiffuseMapCombinedShader {
             }
         }
         // load environment directional lights
-        Array<DirectionalLight> directionalLights = renderingEnvironment.directionalLights;
+        Array<ComponentDirectionalLight> directionalLights = renderingEnvironment.directionalLights;
         for (int i = 0; i < RenderingEnvironment.MAX_DIRECTIONAL_LIGHTS; i++) {
             if (i < directionalLights.size) {
                 shaderProgram.setUniformf(uniforms_directionalLightsDirectionLocations[i], directionalLights.get(i).direction);

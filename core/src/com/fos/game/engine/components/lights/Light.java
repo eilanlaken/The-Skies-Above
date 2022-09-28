@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.fos.game.engine.components.base.Component;
 import com.fos.game.engine.components.base.ComponentType;
 
-public abstract class ComponentLight implements Component {
+public abstract class Light implements Component {
 
     public Vector3 localPosition = new Vector3();
     public Vector3 worldPosition = new Vector3();

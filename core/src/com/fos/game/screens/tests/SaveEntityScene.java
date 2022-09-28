@@ -1,12 +1,12 @@
 package com.fos.game.screens.tests;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.fos.game.engine.components.animation.FactoryAnimation;
-import com.fos.game.engine.components.camera.ComponentCamera;
 import com.fos.game.engine.components.camera.FactoryCamera;
-import com.fos.game.engine.components.lights.ComponentLight;
-import com.fos.game.engine.components.lights.FactoryLights;
 import com.fos.game.engine.components.scripts.ComponentScripts;
+import com.fos.game.engine.components.audio.ComponentSoundEffects;
+import com.fos.game.engine.components.audio.FactoryAudio;
 import com.fos.game.engine.components.transform.FactoryTransform2D;
 import com.fos.game.engine.components.transform.FactoryTransform3D;
 import com.fos.game.engine.context.GameContext;
@@ -107,11 +107,13 @@ public class SaveEntityScene extends GameScreen {
     }
 
     private void testSerialization() {
-        ComponentLight light = FactoryLights.createPointLight();
-        System.out.println(light.intensity);
-        String light2Json = JSONConverter.gson.toJson(light);
-        System.out.println(light2Json);
-        light = JSONConverter.gson.fromJson(light2Json, ComponentLight.class);
+        ComponentSoundEffects component = context.factoryAudio.create("audio/sample.wav");
+        component.get(0).sound.play();
+        System.out.println("component: " + component);
+        String json = JSONConverter.gson.toJson(component);
+        System.out.println("json: " + json);
+        //component = JSONConverter.gson.fromJson(json, ComponentSoundEffects.class);
+        //System.out.println(component.items[0].sound.play());
     }
 
     @Override
@@ -130,6 +132,7 @@ public class SaveEntityScene extends GameScreen {
     public static Map<String, Class> getRequiredAssetsNameTypeMap() {
         HashMap<String, Class> assetNameClassMap = new HashMap<>();
         assetNameClassMap.put("atlases/test/testSpriteSheet.atlas", TextureAtlas.class);
+        assetNameClassMap.put("audio/sample.wav", Sound.class);
         return assetNameClassMap;
     }
 }
