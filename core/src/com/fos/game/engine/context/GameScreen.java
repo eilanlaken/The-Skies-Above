@@ -1,4 +1,4 @@
-package com.fos.game.engine.screens;
+package com.fos.game.engine.context;
 
 import com.badlogic.gdx.Screen;
 import com.fos.game.engine.context.GameContext;

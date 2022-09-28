@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.fos.game.engine.context.GameContext;
 import com.fos.game.engine.files.assets.GameAssetManager;
-import com.fos.game.engine.screens.GameScreen;
+import com.fos.game.engine.context.GameScreen;
 import com.fos.game.screens.tests.SaveEntityScene;
 
 import java.util.Map;

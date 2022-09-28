@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.fos.game.engine.components.animation.FactoryAnimation;
 import com.fos.game.engine.components.camera.ComponentCamera;
 import com.fos.game.engine.components.camera.FactoryCamera;
+import com.fos.game.engine.components.lights.ComponentLight;
+import com.fos.game.engine.components.lights.FactoryLights;
 import com.fos.game.engine.components.scripts.ComponentScripts;
 import com.fos.game.engine.components.transform.FactoryTransform2D;
 import com.fos.game.engine.components.transform.FactoryTransform3D;
@@ -11,9 +13,9 @@ import com.fos.game.engine.context.GameContext;
 import com.fos.game.engine.entities.Entity;
 import com.fos.game.engine.entities.EntityContainer;
 import com.fos.game.engine.files.assets.GameAssetManager;
-import com.fos.game.engine.files.serialization.Stringifier;
+import com.fos.game.engine.files.serialization.JsonConverter;
 import com.fos.game.engine.renderer.system.Renderer;
-import com.fos.game.engine.screens.GameScreen;
+import com.fos.game.engine.context.GameScreen;
 import com.fos.game.scripts.common.ParentTransform2D;
 import com.fos.game.scripts.test.OrangeSquareScript;
 import com.fos.game.scripts.test.SimpleCameraScript;
@@ -37,7 +39,7 @@ public class SaveEntityScene extends GameScreen {
     private Entity orangeSquare, greenSquare;
 
     // serialization
-    private Stringifier stringifier;
+    private JsonConverter JSONConverter;
 
     public enum EntityLayers {
         LAYER_1,
@@ -46,7 +48,7 @@ public class SaveEntityScene extends GameScreen {
 
     public SaveEntityScene(final GameContext context) {
         super(context);
-        this.stringifier = new Stringifier();
+        this.JSONConverter = new JsonConverter();
         this.assetManager = context.assetManager;
         this.renderer = new Renderer(false);
     }
@@ -95,31 +97,21 @@ public class SaveEntityScene extends GameScreen {
                 //new ComponentScripts()
         );
 
-        ComponentCamera camera2 = FactoryCamera.create2DCamera(SimpleScene.EntityLayers.LAYER_1, SimpleScene.EntityLayers.LAYER_2);
-        String camera2Json = stringifier.gson.toJson(camera2);
-        System.out.println(camera2Json);
-        ComponentCamera camera3 = stringifier.gson.fromJson(camera2Json, ComponentCamera.class);
-        System.out.println(camera3);
 
-        String json = stringifier.gson.toJson(entityToSerialize);
-        System.out.println("entity: " + json);
-        Entity fromJson = stringifier.gson.fromJson(json, Entity.class);
-        System.out.println("entity: " + fromJson);
-        /*
-        String json = serializer.gson.toJson(entityToSerialize);
-        System.out.println(json);
-        Entity entity1 = serializer.gson.fromJson(json, Entity.class);
-        ComponentTransform3D transform3D = serializer.gson.fromJson(json, ComponentTransform3D.class);
-        System.out.println(transform3D);
-        //ComponentTransform3D t = (ComponentTransform3D) entity1.components[ComponentType.TRANSFORM_3D.ordinal()];
-        String json2 = serializer.gson.toJson(entity1);
-        System.out.println(json2);
-         */
+        testSerialization();
 
         container.addEntity(camera);
         container.addEntity(orangeSquare);
         container.addEntity(greenSquare);
         container.addEntity(entityToSerialize);
+    }
+
+    private void testSerialization() {
+        ComponentLight light = FactoryLights.createPointLight();
+        System.out.println(light.intensity);
+        String light2Json = JSONConverter.gson.toJson(light);
+        System.out.println(light2Json);
+        light = JSONConverter.gson.fromJson(light2Json, ComponentLight.class);
     }
 
     @Override

@@ -10,7 +10,7 @@ import com.fos.game.engine.entities.Entity;
 import com.fos.game.engine.entities.EntityContainer;
 import com.fos.game.engine.files.assets.GameAssetManager;
 import com.fos.game.engine.renderer.system.Renderer;
-import com.fos.game.engine.screens.GameScreen;
+import com.fos.game.engine.context.GameScreen;
 
 import java.util.HashMap;
 import java.util.Map;
