@@ -20,6 +20,19 @@ import java.util.HashMap;
 // the first two characters of the id is used to encode the matching game material.
 public final class MaterialInstanceFactory {
 
+    public HashMap<String, Material> createMaterialsMap(final Model model, final String nodeId, final TextureAtlas[] spriteSheets) {
+        final Node node = nodeId == null ? model.nodes.first() : model.getNode(nodeId);
+        final Array<NodePart> parts = node.parts;
+        final HashMap<String, Material> materialsMap = new HashMap<>();
+        for (NodePart part : parts) {
+            final com.badlogic.gdx.graphics.g3d.Material gdxMaterial = part.material;
+            final Material material = createMaterial(model, gdxMaterial, spriteSheets);
+            materialsMap.put(gdxMaterial.id, material);
+        }
+        return materialsMap;
+    }
+
+    @Deprecated
     public HashMap<String, Material> createMaterialsMap(final TexturedModel texturedModel,
                                                         final String nodeId) {
         final Model model = texturedModel.model;
@@ -29,13 +42,13 @@ public final class MaterialInstanceFactory {
         final HashMap<String, Material> materialsMap = new HashMap<>();
         for (NodePart part : parts) {
             final com.badlogic.gdx.graphics.g3d.Material gdxMaterial = part.material;
-            final Material material = createFOSMaterial(model, gdxMaterial, spriteSheets);
+            final Material material = createMaterial(model, gdxMaterial, spriteSheets);
             materialsMap.put(gdxMaterial.id, material);
         }
         return materialsMap;
     }
 
-    private Material createFOSMaterial(final Model model, final com.badlogic.gdx.graphics.g3d.Material gdxMaterial, final TextureAtlas[] textureAtlases) {
+    private Material createMaterial(final Model model, final com.badlogic.gdx.graphics.g3d.Material gdxMaterial, final TextureAtlas[] textureAtlases) {
         final Class encodedMaterialClass = MaterialUtils.getEncodedMaterialClass(gdxMaterial);
         if (encodedMaterialClass == DiffuseMapMaterialInstance.class) return createDiffuseMapMaterialInstance(gdxMaterial, textureAtlases[0]);
         if (encodedMaterialClass == AlbedoNormalMapsMaterialInstance.class) return createAlbedoNormalMapsMaterialInstance(gdxMaterial, textureAtlases[0]);

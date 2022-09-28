@@ -1,5 +1,6 @@
 package com.fos.game.engine.components.modelinstance;
 
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.model.Node;
 import com.badlogic.gdx.math.Matrix4;
@@ -20,10 +21,16 @@ public class FactoryModelInstance extends Factory {
         this.materialInstanceFactory = new MaterialInstanceFactory();
     }
 
-    // TODO: implement
-    public ComponentModelInstance create(final String modelName) {
-        final Model model = assetManager.get(modelName, Model.class);
-
+    // TODO: implement. For now - support single nodeId model instance
+    public ComponentModelInstance create(final String modelFilePath, final String nodeId, final String[] textureAtlasNames) {
+        final Model model = assetManager.get(modelFilePath, Model.class);
+        final Node node = model.getNode(nodeId);
+        TextureAtlas[] atlases = new TextureAtlas[textureAtlasNames.length];
+        for (int i = 0; i < atlases.length; i++) {
+            atlases[i] = assetManager.get(textureAtlasNames[i], TextureAtlas.class);
+        }
+        Matrix4 transform = node.localTransform == null ? new Matrix4() : node.localTransform;
+        final HashMap<String, Material> materialsMap = materialInstanceFactory.createMaterialsMap(model, nodeId, atlases);
         return null;
     }
 

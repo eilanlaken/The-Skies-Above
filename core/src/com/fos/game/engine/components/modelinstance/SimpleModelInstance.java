@@ -8,8 +8,13 @@ import java.util.HashMap;
 
 public class SimpleModelInstance extends ModelInstance {
 
-    protected SimpleModelInstance(final Model model, final HashMap<String, Material> materialInstances, Matrix4 transform, final String ...nodeIds) {
-        super(model, materialInstances, transform, nodeIds);
+    protected SimpleModelInstance(final String modelFilePath, final String nodeId, final String[] atlasFilePaths, final Model model, final HashMap<String, Material> materialsMap, Matrix4 transform) {
+        super(modelFilePath, nodeId, atlasFilePaths, model, materialsMap, transform);
+    }
+
+    @Deprecated
+    protected SimpleModelInstance(final Model model, final HashMap<String, Material> materialsMap, Matrix4 transform, final String ...nodeIds) {
+        super(model, materialsMap, transform, nodeIds);
     }
 
 }

@@ -10,27 +10,40 @@ import java.util.HashMap;
 
 public class ModelInstance extends com.badlogic.gdx.graphics.g3d.ModelInstance {
 
-    public HashMap<String, Material> materialInstances;
+    public HashMap<String, Material> materialsMap;
     public final Vector3 center = new Vector3();
     public final Vector3 dimensions = new Vector3();
     public float radius;
 
-    protected ModelInstance(final HashMap<String, String> assetsPathsMap, final Model model, final HashMap<String, Material> materialInstances,
+    // assets file paths - must be saved for serialization / deserialization
+    public String modelFilePath;
+    public String nodeIds;
+    public String[] atlasesFilePaths;
+
+    protected ModelInstance(final String modelFilePath, final String nodeId, final String[] atlasFilePaths, final Model model, final HashMap<String, Material> materialsMap,
                             Matrix4 transform) {
-        super(model, transform, assetsPathsMap.get("nodeIds"));
+        super(model, transform, nodeId);
+        // set assets file paths
+        this.modelFilePath = modelFilePath;
+        this.nodeIds = nodeIds;
+        this.atlasesFilePaths = atlasFilePaths;
+        // set other data
+        this.materialsMap = materialsMap;
+        super.userData = this;
+        UtilsModelInstance.computeBoundingRegions(this);
     }
 
     @Deprecated
-    protected ModelInstance(final Model model, final HashMap<String, Material> materialInstances, Matrix4 transform, final String ...nodeIds) {
+    protected ModelInstance(final Model model, final HashMap<String, Material> materialsMap, Matrix4 transform, final String ...nodeIds) {
         super(model, transform, nodeIds);
-        this.materialInstances = materialInstances;
+        this.materialsMap = materialsMap;
         super.userData = this;
         UtilsModelInstance.computeBoundingRegions(this);
     }
 
     public Material getMaterial(final Renderable renderable) {
         final String gdxMaterialId = renderable.material.id;
-        return materialInstances.get(gdxMaterialId);
+        return materialsMap.get(gdxMaterialId);
     }
 
 }
