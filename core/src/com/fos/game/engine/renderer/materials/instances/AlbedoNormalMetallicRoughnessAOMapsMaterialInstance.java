@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.fos.game.engine.renderer.materials.base.*;
 import com.fos.game.engine.renderer.shaders.base.ShadingMethod;
 
-public class AlbedoNormalMetallicRoughnessAOMapsMaterialInstance extends FOSMaterial implements
+public class AlbedoNormalMetallicRoughnessAOMapsMaterialInstance extends Material implements
         RenderedAlbedoMap, RenderedNormalMap, RenderedPBRMap {
 
     public final float ambient;

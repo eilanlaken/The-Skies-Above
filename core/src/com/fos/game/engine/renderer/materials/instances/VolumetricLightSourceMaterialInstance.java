@@ -1,9 +1,9 @@
 package com.fos.game.engine.renderer.materials.instances;
 
-import com.fos.game.engine.renderer.materials.base.FOSMaterial;
+import com.fos.game.engine.renderer.materials.base.Material;
 import com.fos.game.engine.renderer.shaders.base.ShadingMethod;
 
-public class VolumetricLightSourceMaterialInstance extends FOSMaterial {
+public class VolumetricLightSourceMaterialInstance extends Material {
 
     public final float r, g, b;
 

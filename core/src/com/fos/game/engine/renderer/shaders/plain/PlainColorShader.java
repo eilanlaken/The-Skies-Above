@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 import com.fos.game.engine.components.modelinstance.ModelInstance;
-import com.fos.game.engine.renderer.materials.base.FOSMaterial;
+import com.fos.game.engine.renderer.materials.base.Material;
 import com.fos.game.engine.renderer.materials.instances.PlainColorMaterialInstance;
 import com.fos.game.engine.renderer.shaders.base.GameShader;
 
@@ -49,13 +49,13 @@ public class PlainColorShader extends GameShader {
     public void render(Renderable renderable) {
         final ModelInstance modelInstance = (ModelInstance) renderable.userData;
         shaderProgram.setUniformMatrix(uniform_bodyTransformLocation, renderable.worldTransform);
-        FOSMaterial fosMaterial = modelInstance.getMaterial(renderable);
-        loadMaterialParamsToGPU(fosMaterial);
+        Material material = modelInstance.getMaterial(renderable);
+        loadMaterialParamsToGPU(material);
         renderable.meshPart.render(shaderProgram);
     }
 
-    private void loadMaterialParamsToGPU(final FOSMaterial fosMaterial) {
-        final PlainColorMaterialInstance materialInstance = (PlainColorMaterialInstance) fosMaterial;
+    private void loadMaterialParamsToGPU(final Material material) {
+        final PlainColorMaterialInstance materialInstance = (PlainColorMaterialInstance) material;
         // RGB
         shaderProgram.setUniformf(uniform_rLocation, materialInstance.r);
         shaderProgram.setUniformf(uniform_gLocation, materialInstance.g);

@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Matrix4;
 import com.fos.game.engine.components.base.Factory;
 import com.fos.game.engine.components.camera.ComponentCamera;
 import com.fos.game.engine.files.assets.GameAssetManager;
-import com.fos.game.engine.renderer.materials.base.FOSMaterial;
+import com.fos.game.engine.renderer.materials.base.Material;
 import com.fos.game.engine.renderer.materials.base.MaterialInstanceFactory;
 
 import java.util.HashMap;
@@ -35,7 +35,7 @@ public class FactoryModelInstance extends Factory {
         final Model model = texturedModel.model;
         final Node node = model.getNode(nodeId);
         Matrix4 transform = node.localTransform == null ? new Matrix4() : node.localTransform;
-        final HashMap<String, FOSMaterial> materialsMap = materialInstanceFactory_dep.createMaterialsMap(camera);
+        final HashMap<String, Material> materialsMap = materialInstanceFactory_dep.createMaterialsMap(camera);
         return new SimpleModelInstance(model, materialsMap, transform, nodeId);
     }
 
@@ -45,7 +45,7 @@ public class FactoryModelInstance extends Factory {
         final Node node = model.nodes.first();
         final String nodeId = node.id;
         Matrix4 transform = node.localTransform == null ? new Matrix4() : node.localTransform;
-        final HashMap<String, FOSMaterial> materialsMap = materialInstanceFactory_dep.createMaterialsMap(texturedModel, nodeId);
+        final HashMap<String, Material> materialsMap = materialInstanceFactory_dep.createMaterialsMap(texturedModel, nodeId);
         return new SimpleModelInstance(model, materialsMap, transform, nodeId);
     }
 
@@ -54,7 +54,7 @@ public class FactoryModelInstance extends Factory {
         final Model model = texturedModel.model;
         final Node node = model.getNode(nodeId);
         Matrix4 transform = node.localTransform == null ? new Matrix4() : node.localTransform;
-        final HashMap<String, FOSMaterial> materialsMap = materialInstanceFactory_dep.createMaterialsMap(texturedModel, nodeId);
+        final HashMap<String, Material> materialsMap = materialInstanceFactory_dep.createMaterialsMap(texturedModel, nodeId);
         return new SimpleModelInstance(model, materialsMap, transform, nodeId);
     }
 
@@ -63,7 +63,7 @@ public class FactoryModelInstance extends Factory {
         final Model model = texturedModel.model;
         final Node riggedModelNode = model.getNode(riggedModelNodeId);
         Matrix4 transform = riggedModelNode.localTransform == null ? new Matrix4() : riggedModelNode.localTransform;
-        final HashMap<String, FOSMaterial> materialsMap = materialInstanceFactory_dep.createMaterialsMap(texturedModel, riggedModelNodeId);
+        final HashMap<String, Material> materialsMap = materialInstanceFactory_dep.createMaterialsMap(texturedModel, riggedModelNodeId);
         return new RiggedModelInstance(model, materialsMap, transform, riggedModelNodeId, rigHierarchyId);
     }
 

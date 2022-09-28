@@ -60,7 +60,7 @@ public class InstancedDiffuseMapCombinedShader {
     @Override
     public boolean canRender(Renderable renderable) {
         final CompoundModelInstance modelInstance = (CompoundModelInstance) renderable.userData;
-        final FOSMaterial materialInstance = modelInstance.getMaterial(renderable);
+        final Material materialInstance = modelInstance.getMaterial(renderable);
         if (materialInstance.getShadingMethod() == ShadingMethod.AnimatedDiffuseMap) return true;
         return false;
     }

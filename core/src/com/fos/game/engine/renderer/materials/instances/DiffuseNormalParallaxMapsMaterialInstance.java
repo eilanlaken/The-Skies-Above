@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.fos.game.engine.renderer.materials.base.*;
 import com.fos.game.engine.renderer.shaders.base.ShadingMethod;
 
-public class DiffuseNormalParallaxMapsMaterialInstance extends FOSMaterial implements RenderedDiffuseMap, RenderedNormalMap, RenderedParallaxMap {
+public class DiffuseNormalParallaxMapsMaterialInstance extends Material implements RenderedDiffuseMap, RenderedNormalMap, RenderedParallaxMap {
 
     public final float shineDamper;
     public final float reflectivity;

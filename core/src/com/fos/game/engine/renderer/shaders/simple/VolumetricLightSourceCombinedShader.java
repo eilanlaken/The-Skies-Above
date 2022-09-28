@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.fos.game.engine.components.lights.LightingEnvironment;
-import com.fos.game.engine.renderer.materials.base.FOSMaterial;
+import com.fos.game.engine.renderer.materials.base.Material;
 import com.fos.game.engine.renderer.shaders.base.GameShader;
 import com.fos.game.engine.renderer.materials.instances.VolumetricLightSourceMaterialInstance;
 
@@ -49,7 +49,7 @@ public class VolumetricLightSourceCombinedShader extends GameShader {
     @Override
     public boolean canRender(Renderable renderable) {
         //final CompoundModelInstance modelInstance = (CompoundModelInstance) renderable.userData;
-        //final FOSMaterial materialInstance = modelInstance.getMaterial(renderable);
+        //final Material materialInstance = modelInstance.getMaterial(renderable);
         //if (materialInstance.getShadingMethod() == ShadingMethod.VolumetricLightSourceColor) return true;
         return false;
     }
@@ -72,13 +72,13 @@ public class VolumetricLightSourceCombinedShader extends GameShader {
         shaderProgram.setUniformMatrix(uniform_bodyTransformLocation, renderable.worldTransform);
         //final CompoundModelInstance modelInstance = (CompoundModelInstance) renderable.userData;
 
-        //final FOSMaterial fosMaterial = modelInstance.getMaterial(renderable);
+        //final Material fosMaterial = modelInstance.getMaterial(renderable);
         //loadMaterialParamsToGPU(fosMaterial);
         renderable.meshPart.render(shaderProgram);
     }
 
-    private void loadMaterialParamsToGPU(final FOSMaterial fosMaterial) {
-        final VolumetricLightSourceMaterialInstance materialInstance = (VolumetricLightSourceMaterialInstance) fosMaterial;
+    private void loadMaterialParamsToGPU(final Material material) {
+        final VolumetricLightSourceMaterialInstance materialInstance = (VolumetricLightSourceMaterialInstance) material;
         // RGB
         shaderProgram.setUniformf(uniform_rLocation, materialInstance.r);
         shaderProgram.setUniformf(uniform_gLocation, materialInstance.g);

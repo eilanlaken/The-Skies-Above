@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 import com.fos.game.engine.components.modelinstance.ModelInstance;
-import com.fos.game.engine.renderer.materials.base.FOSMaterial;
+import com.fos.game.engine.renderer.materials.base.Material;
 import com.fos.game.engine.renderer.materials.instances.GlowingColorMaterialInstance;
 import com.fos.game.engine.renderer.shaders.base.GameShader;
 
@@ -42,12 +42,12 @@ public class PlainColorBloomShader extends GameShader {
     public void render(Renderable renderable) {
         final ModelInstance modelInstance = (ModelInstance) renderable.userData;
         shaderProgram.setUniformMatrix(uniform_bodyTransformLocation, renderable.worldTransform);
-        FOSMaterial fosMaterial = modelInstance.getMaterial(renderable);
-        loadMaterialParamsToGPU(fosMaterial);
+        Material material = modelInstance.getMaterial(renderable);
+        loadMaterialParamsToGPU(material);
         renderable.meshPart.render(shaderProgram);
     }
 
-    private void loadMaterialParamsToGPU(final FOSMaterial fosMaterial) {
+    private void loadMaterialParamsToGPU(final Material fosMaterial) {
         final GlowingColorMaterialInstance material = (GlowingColorMaterialInstance) fosMaterial;
         // RGB
         shaderProgram.setUniformf(uniform_rLocation, material.r);

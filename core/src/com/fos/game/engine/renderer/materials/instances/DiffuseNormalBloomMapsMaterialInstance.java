@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.fos.game.engine.renderer.materials.base.*;
 import com.fos.game.engine.renderer.shaders.base.ShadingMethod;
 
-public class DiffuseNormalBloomMapsMaterialInstance extends FOSMaterial implements RenderedDiffuseMap, RenderedNormalMap, RenderedBloomMap {
+public class DiffuseNormalBloomMapsMaterialInstance extends Material implements RenderedDiffuseMap, RenderedNormalMap, RenderedBloomMap {
 
     public final float shineDamper;
     public final float reflectivity;

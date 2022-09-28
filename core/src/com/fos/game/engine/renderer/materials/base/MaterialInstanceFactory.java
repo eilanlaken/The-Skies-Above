@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.FloatAttribute;
@@ -18,25 +17,25 @@ import com.fos.game.engine.renderer.materials.instances.*;
 import java.util.HashMap;
 
 // the libgdx Material class has an id. This is how it is loaded into the asset manager.
-// the first two characters of the id is used to encode the matching fos material.
+// the first two characters of the id is used to encode the matching game material.
 public final class MaterialInstanceFactory {
 
-    public HashMap<String, FOSMaterial> createMaterialsMap(final TexturedModel texturedModel,
-                                                           final String nodeId) {
+    public HashMap<String, Material> createMaterialsMap(final TexturedModel texturedModel,
+                                                        final String nodeId) {
         final Model model = texturedModel.model;
         final TextureAtlas[] spriteSheets = texturedModel.spriteSheets;
         final Node node = nodeId == null ? model.nodes.first() : model.getNode(nodeId);
         final Array<NodePart> parts = node.parts;
-        final HashMap<String, FOSMaterial> materialsMap = new HashMap<>();
+        final HashMap<String, Material> materialsMap = new HashMap<>();
         for (NodePart part : parts) {
-            final Material gdxMaterial = part.material;
-            final FOSMaterial fosMaterial = createFOSMaterial(model, gdxMaterial, spriteSheets);
-            materialsMap.put(gdxMaterial.id, fosMaterial);
+            final com.badlogic.gdx.graphics.g3d.Material gdxMaterial = part.material;
+            final Material material = createFOSMaterial(model, gdxMaterial, spriteSheets);
+            materialsMap.put(gdxMaterial.id, material);
         }
         return materialsMap;
     }
 
-    private FOSMaterial createFOSMaterial(final Model model, final Material gdxMaterial, final TextureAtlas[] textureAtlases) {
+    private Material createFOSMaterial(final Model model, final com.badlogic.gdx.graphics.g3d.Material gdxMaterial, final TextureAtlas[] textureAtlases) {
         final Class encodedMaterialClass = MaterialUtils.getEncodedMaterialClass(gdxMaterial);
         if (encodedMaterialClass == DiffuseMapMaterialInstance.class) return createDiffuseMapMaterialInstance(gdxMaterial, textureAtlases[0]);
         if (encodedMaterialClass == AlbedoNormalMapsMaterialInstance.class) return createAlbedoNormalMapsMaterialInstance(gdxMaterial, textureAtlases[0]);
@@ -63,7 +62,7 @@ public final class MaterialInstanceFactory {
         return null;
     }
 
-    protected static DiffuseNormalBloomMapsMaterialInstance createDiffuseNormalBloomMapsMaterialInstance(final Material source, final TextureAtlas textureAtlas) {
+    protected static DiffuseNormalBloomMapsMaterialInstance createDiffuseNormalBloomMapsMaterialInstance(final com.badlogic.gdx.graphics.g3d.Material source, final TextureAtlas textureAtlas) {
         String diffuseRegionName = source.id.substring(3);
         String normalRegionName = diffuseRegionName + "NM";
         String bloomRegionName = diffuseRegionName + "BM";
@@ -79,7 +78,7 @@ public final class MaterialInstanceFactory {
         return new DiffuseNormalBloomMapsMaterialInstance(textureAtlas, shineDamper, reflectivity, ambientComponent, diffuseRegionName, normalRegionName, bloomRegionName);
     }
 
-    protected static UniformColorMaterialInstance createUniformColorMaterialInstance(final Material source) {
+    protected static UniformColorMaterialInstance createUniformColorMaterialInstance(final com.badlogic.gdx.graphics.g3d.Material source) {
         ColorAttribute ambient = (ColorAttribute) source.get(ColorAttribute.Ambient);
         FloatAttribute shininess = (FloatAttribute) source.get(FloatAttribute.Shininess);
         ColorAttribute specular = (ColorAttribute) source.get(ColorAttribute.Specular);
@@ -93,7 +92,7 @@ public final class MaterialInstanceFactory {
         return new UniformColorMaterialInstance(diffuseColor.r, diffuseColor.g, diffuseColor.b, shineDamper, reflectivity, ambientComponent);
     }
 
-    protected static UniformColorBloomMaterialInstance createUniformColorBloomMaterialInstance(final Material source) {
+    protected static UniformColorBloomMaterialInstance createUniformColorBloomMaterialInstance(final com.badlogic.gdx.graphics.g3d.Material source) {
         ColorAttribute ambient = (ColorAttribute) source.get(ColorAttribute.Ambient);
         FloatAttribute shininess = (FloatAttribute) source.get(FloatAttribute.Shininess);
         ColorAttribute specular = (ColorAttribute) source.get(ColorAttribute.Specular);
@@ -109,7 +108,7 @@ public final class MaterialInstanceFactory {
         return new UniformColorBloomMaterialInstance(diffuseColor.r, diffuseColor.g, diffuseColor.b, intensity, shineDamper, reflectivity, ambientComponent);
     }
 
-    protected static DiffuseNormalParallaxMapsMaterialInstance createDiffuseNormalParallaxMapsMaterialInstance(final Material source, final TextureAtlas textureAtlas) {
+    protected static DiffuseNormalParallaxMapsMaterialInstance createDiffuseNormalParallaxMapsMaterialInstance(final com.badlogic.gdx.graphics.g3d.Material source, final TextureAtlas textureAtlas) {
         String diffuseRegionName = source.id.substring(3);
         String normalRegionName = diffuseRegionName + "NM";
         String parallaxRegionName = diffuseRegionName + "PM";
@@ -125,7 +124,7 @@ public final class MaterialInstanceFactory {
         return new DiffuseNormalParallaxMapsMaterialInstance(textureAtlas, shineDamper, reflectivity, ambientComponent, diffuseRegionName, normalRegionName, parallaxRegionName);
     }
 
-    protected static AnimatedDiffuseBloomMapsMaterialInstance createAnimatedDiffuseBloomMapsMaterialsInstance(final Material source, final TextureAtlas textureAtlas) {
+    protected static AnimatedDiffuseBloomMapsMaterialInstance createAnimatedDiffuseBloomMapsMaterialsInstance(final com.badlogic.gdx.graphics.g3d.Material source, final TextureAtlas textureAtlas) {
         String diffuseRegionName = source.id.substring(3);
         String bloomRegionName = diffuseRegionName + "BM";
 
@@ -135,19 +134,19 @@ public final class MaterialInstanceFactory {
         return new AnimatedDiffuseBloomMapsMaterialInstance(textureAtlas, diffuseRegionName, bloomRegionName, frameDuration, Animation.PlayMode.LOOP);
     }
 
-    protected static PlainColorMaterialInstance createPlainColorMaterialInstance(final Material gdxMaterialSource) {
+    protected static PlainColorMaterialInstance createPlainColorMaterialInstance(final com.badlogic.gdx.graphics.g3d.Material gdxMaterialSource) {
         ColorAttribute diffuse = (ColorAttribute) gdxMaterialSource.get(ColorAttribute.Diffuse);
         final Color diffuseColor = diffuse.color;
         return new PlainColorMaterialInstance(diffuseColor.r, diffuseColor.g, diffuseColor.b);
     }
 
-    protected static VolumetricLightSourceMaterialInstance createVolumetricLightSourceMaterialInstance(final Material gdxMaterialSource) {
+    protected static VolumetricLightSourceMaterialInstance createVolumetricLightSourceMaterialInstance(final com.badlogic.gdx.graphics.g3d.Material gdxMaterialSource) {
         ColorAttribute diffuse = (ColorAttribute) gdxMaterialSource.get(ColorAttribute.Diffuse);
         final Color diffuseColor = diffuse.color;
         return new VolumetricLightSourceMaterialInstance(diffuseColor.r, diffuseColor.g, diffuseColor.b);
     }
 
-    protected static DiffuseNormalMapsMaterialInstance createDiffuseNormalMapsMaterialInstance(final Material source, final TextureAtlas textureAtlas) {
+    protected static DiffuseNormalMapsMaterialInstance createDiffuseNormalMapsMaterialInstance(final com.badlogic.gdx.graphics.g3d.Material source, final TextureAtlas textureAtlas) {
         String diffuseRegionName = source.id.substring(3);
         String normalRegionName = diffuseRegionName + "NM";
 
@@ -163,12 +162,12 @@ public final class MaterialInstanceFactory {
         return new DiffuseNormalMapsMaterialInstance(textureAtlas, shineDamper, reflectivity, ambientComponent, diffuseRegionName, normalRegionName);
     }
 
-    protected static PlainDiffuseMapMaterialInstance createPlainDiffuseMapMaterialInstance(final Material source, final TextureAtlas textureAtlas) {
+    protected static PlainDiffuseMapMaterialInstance createPlainDiffuseMapMaterialInstance(final com.badlogic.gdx.graphics.g3d.Material source, final TextureAtlas textureAtlas) {
         String diffuseRegionName = source.id.substring(3);
         return new PlainDiffuseMapMaterialInstance(textureAtlas, diffuseRegionName);
     }
 
-    protected static PlainDiffuseBloomMapsMaterialInstance createPlainDiffuseBloomMapsMaterialInstance(final Material source, final TextureAtlas textureAtlas) {
+    protected static PlainDiffuseBloomMapsMaterialInstance createPlainDiffuseBloomMapsMaterialInstance(final com.badlogic.gdx.graphics.g3d.Material source, final TextureAtlas textureAtlas) {
         String diffuseRegionName = source.id.substring(3);
         String bloomRegionName = diffuseRegionName + "BM";
         ColorAttribute emissive = (ColorAttribute) source.get(ColorAttribute.Emissive);
@@ -176,7 +175,7 @@ public final class MaterialInstanceFactory {
         return new PlainDiffuseBloomMapsMaterialInstance(textureAtlas, diffuseRegionName, bloomRegionName, intensity);
     }
 
-    protected static AlbedoNormalMapsMaterialInstance createAlbedoNormalMapsMaterialInstance(final Material source, final TextureAtlas textureAtlas) {
+    protected static AlbedoNormalMapsMaterialInstance createAlbedoNormalMapsMaterialInstance(final com.badlogic.gdx.graphics.g3d.Material source, final TextureAtlas textureAtlas) {
         String albedoRegionName = source.id.substring(3);
         String normalRegionName = albedoRegionName + "NM";
 
@@ -191,7 +190,7 @@ public final class MaterialInstanceFactory {
         return new AlbedoNormalMapsMaterialInstance(textureAtlas, roughness, metallic, ambientComponent, albedoRegionName, normalRegionName);
     }
 
-    protected static AlbedoMapMaterialInstance createAlbedoMapMaterialInstance(final Material source, final TextureAtlas textureAtlas) {
+    protected static AlbedoMapMaterialInstance createAlbedoMapMaterialInstance(final com.badlogic.gdx.graphics.g3d.Material source, final TextureAtlas textureAtlas) {
         String albedoRegionName = source.id.substring(3);
 
         ColorAttribute ambient = (ColorAttribute) source.get(ColorAttribute.Ambient);
@@ -205,7 +204,7 @@ public final class MaterialInstanceFactory {
         return new AlbedoMapMaterialInstance(textureAtlas, roughness, metallic, ambientComponent, albedoRegionName);
     }
 
-    protected static DiffuseMapMaterialInstance createDiffuseMapMaterialInstance(final Material source, final TextureAtlas textureAtlas) {
+    protected static DiffuseMapMaterialInstance createDiffuseMapMaterialInstance(final com.badlogic.gdx.graphics.g3d.Material source, final TextureAtlas textureAtlas) {
         String diffuseRegionName = source.id.substring(3);
 
         ColorAttribute ambient = (ColorAttribute) source.get(ColorAttribute.Ambient);
@@ -218,7 +217,7 @@ public final class MaterialInstanceFactory {
         return new DiffuseMapMaterialInstance(textureAtlas, diffuseRegionName, shineDamper, reflectivity, ambientComponent);
     }
 
-    protected static AnimatedDiffuseMapMaterialInstance createAnimatedDiffuseMapMaterialInstance(final Material source, final TextureAtlas textureAtlas) {
+    protected static AnimatedDiffuseMapMaterialInstance createAnimatedDiffuseMapMaterialInstance(final com.badlogic.gdx.graphics.g3d.Material source, final TextureAtlas textureAtlas) {
         String diffuseRegionName = source.id.substring(3);
 
         ColorAttribute ambient = (ColorAttribute) source.get(ColorAttribute.Ambient);
@@ -232,7 +231,7 @@ public final class MaterialInstanceFactory {
         return new AnimatedDiffuseMapMaterialInstance(textureAtlas, diffuseRegionName, shineDamper, reflectivity, ambientComponent, 1, Animation.PlayMode.LOOP);
     }
 
-    protected static DiffuseNormalSpecularRoughnessMapsMaterialInstance createDiffuseNormalSpecularRoughnessMapsMaterialInstance(final Material source, final TextureAtlas textureAtlas) {
+    protected static DiffuseNormalSpecularRoughnessMapsMaterialInstance createDiffuseNormalSpecularRoughnessMapsMaterialInstance(final com.badlogic.gdx.graphics.g3d.Material source, final TextureAtlas textureAtlas) {
         String diffuseRegionName = source.id.substring(3);
         String normalRegionName = diffuseRegionName + "NM";
         String specularRegionName = diffuseRegionName + "SM";
@@ -242,7 +241,7 @@ public final class MaterialInstanceFactory {
         return new DiffuseNormalSpecularRoughnessMapsMaterialInstance(textureAtlas, ambientComponent, diffuseRegionName, normalRegionName, specularRegionName, roughnessRegionName);
     }
 
-    protected static DiffuseNormalSpecularRoughnessParallaxMapsMaterialInstance createDiffuseNormalSpecularRoughnessParallaxMapsMaterialInstance(final Material source, final TextureAtlas textureAtlas) {
+    protected static DiffuseNormalSpecularRoughnessParallaxMapsMaterialInstance createDiffuseNormalSpecularRoughnessParallaxMapsMaterialInstance(final com.badlogic.gdx.graphics.g3d.Material source, final TextureAtlas textureAtlas) {
         String diffuseRegionName = source.id.substring(3);
         String normalRegionName = diffuseRegionName + "NM";
         String specularRegionName = diffuseRegionName + "SM";
@@ -254,7 +253,7 @@ public final class MaterialInstanceFactory {
         return new DiffuseNormalSpecularRoughnessParallaxMapsMaterialInstance(textureAtlas, ambientComponent, diffuseRegionName, normalRegionName, specularRegionName, roughnessRegionName, parallaxRegionName);
     }
 
-    protected static AlbedoNormalMetallicRoughnessAOMapsMaterialInstance createAlbedoNormalMetallicRoughnessAOMapsMaterialInstance(final Material source, final TextureAtlas textureAtlas) {
+    protected static AlbedoNormalMetallicRoughnessAOMapsMaterialInstance createAlbedoNormalMetallicRoughnessAOMapsMaterialInstance(final com.badlogic.gdx.graphics.g3d.Material source, final TextureAtlas textureAtlas) {
         String albedoRegionName = source.id.substring(3);
         String normalRegionName = albedoRegionName + "NM";
         String metallicRoughnessAORegionName = albedoRegionName + "XM";
@@ -265,7 +264,7 @@ public final class MaterialInstanceFactory {
     }
 
     @Deprecated
-    protected static AnimatedSkyBoxSideMaterialInstance createSkyBoxSideMaterialInstance(final Material source, final TextureAtlas textureAtlas) {
+    protected static AnimatedSkyBoxSideMaterialInstance createSkyBoxSideMaterialInstance(final com.badlogic.gdx.graphics.g3d.Material source, final TextureAtlas textureAtlas) {
         String diffuseAnimationName = source.id.substring(3);
 
         FloatAttribute shininess = (FloatAttribute) source.get(FloatAttribute.Shininess); // <- the frame duration is encoded in the shininess value
@@ -274,7 +273,7 @@ public final class MaterialInstanceFactory {
         return new AnimatedSkyBoxSideMaterialInstance(textureAtlas, diffuseAnimationName, frameDuration);
     }
 
-    protected static GlowingColorMaterialInstance createGlowingColorMaterialInstance(final Material source) {
+    protected static GlowingColorMaterialInstance createGlowingColorMaterialInstance(final com.badlogic.gdx.graphics.g3d.Material source) {
         ColorAttribute diffuse = (ColorAttribute) source.get(ColorAttribute.Diffuse);
         final Color diffuseColor = diffuse.color;
         return new GlowingColorMaterialInstance(diffuseColor.r, diffuseColor.g, diffuseColor.b);
@@ -286,7 +285,7 @@ public final class MaterialInstanceFactory {
         for (int i = 1; i < atlases.length; i++) {
             TextureAtlas atlas = atlases[i];
             final String materialName = "MF_" + atlas.getRegions().first().name;
-            final Material material = model.getMaterial(materialName);
+            final com.badlogic.gdx.graphics.g3d.Material material = model.getMaterial(materialName);
             ColorAttribute ambientComponent = (ColorAttribute) material.get(ColorAttribute.Ambient);
             FloatAttribute shininess = (FloatAttribute) material.get(FloatAttribute.Shininess);
             ColorAttribute specular = (ColorAttribute) material.get(ColorAttribute.Specular);
@@ -301,8 +300,8 @@ public final class MaterialInstanceFactory {
         return new BlendAlbedoMapsMaterialInstance(blendMap, basicMaterialMaps);
     }
 
-    public HashMap<String, FOSMaterial> createMaterialsMap(final ComponentCamera camera) {
-        final HashMap<String, FOSMaterial> materialsMap = new HashMap<>();
+    public HashMap<String, Material> createMaterialsMap(final ComponentCamera camera) {
+        final HashMap<String, Material> materialsMap = new HashMap<>();
         final PlainTextureMaterialInstance plainTextureMaterialInstance = new PlainTextureMaterialInstance(camera.getRenderTargetTexture());
         materialsMap.put(String.valueOf(plainTextureMaterialInstance.hashCode()), plainTextureMaterialInstance);
         return materialsMap;

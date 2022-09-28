@@ -1,9 +1,9 @@
 package com.fos.game.engine.renderer.materials.instances;
 
-import com.fos.game.engine.renderer.materials.base.FOSMaterial;
+import com.fos.game.engine.renderer.materials.base.Material;
 import com.fos.game.engine.renderer.shaders.base.ShadingMethod;
 
-public class GlowingColorMaterialInstance extends FOSMaterial {
+public class GlowingColorMaterialInstance extends Material {
 
     public float r, g, b;
     public float intensity;

@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g3d.utils.RenderableSorter;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.fos.game.engine.components.modelinstance.ModelInstance;
-import com.fos.game.engine.renderer.materials.base.FOSMaterial;
+import com.fos.game.engine.renderer.materials.base.Material;
 import com.fos.game.engine.renderer.materials.base.UseTextureMaterial;
 
 import java.util.Comparator;
@@ -27,8 +27,8 @@ public class ModelInstanceSorter implements RenderableSorter, Comparator<Rendera
     public int compare(Renderable o1, Renderable o2) {
         final ModelInstance modelInstance1 = (ModelInstance) o1.userData;
         final ModelInstance modelInstance2 = (ModelInstance) o2.userData;
-        final FOSMaterial material1 = modelInstance1.getMaterial(o1);
-        final FOSMaterial material2 = modelInstance2.getMaterial(o2);
+        final Material material1 = modelInstance1.getMaterial(o1);
+        final Material material2 = modelInstance2.getMaterial(o2);
         int compareMaterials = material1.compareTo(material2);
 
         // minimize shader switching

@@ -1,9 +1,9 @@
 package com.fos.game.engine.renderer.materials.instances;
 
-import com.fos.game.engine.renderer.materials.base.FOSMaterial;
+import com.fos.game.engine.renderer.materials.base.Material;
 import com.fos.game.engine.renderer.shaders.base.ShadingMethod;
 
-public class UniformColorMaterialInstance extends FOSMaterial {
+public class UniformColorMaterialInstance extends Material {
 
     public final float shineDamper;
     public final float reflectivity;

@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.fos.game.engine.components.modelinstance.ModelInstance;
-import com.fos.game.engine.renderer.materials.base.FOSMaterial;
+import com.fos.game.engine.renderer.materials.base.Material;
 import com.fos.game.engine.renderer.shaders.base.ShadingMethod;
 import com.fos.game.engine.renderer.materials.instances.AnimatedSkyBoxSideMaterialInstance;
 
@@ -77,7 +77,7 @@ public class PlainSkyBoxCombinedShader implements Shader {
     @Override
     public boolean canRender(Renderable renderable) {
         final ModelInstance modelInstance = (ModelInstance) renderable.userData;
-        final FOSMaterial materialInstance = modelInstance.getMaterial(renderable);
+        final Material materialInstance = modelInstance.getMaterial(renderable);
         if (materialInstance.getShadingMethod() == ShadingMethod.PlainSkyBox) return true;
         return false;
     }

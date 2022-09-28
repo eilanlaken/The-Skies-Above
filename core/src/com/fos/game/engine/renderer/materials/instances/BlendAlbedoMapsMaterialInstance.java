@@ -2,10 +2,10 @@ package com.fos.game.engine.renderer.materials.instances;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.fos.game.engine.renderer.materials.base.BasicMaterialMap;
-import com.fos.game.engine.renderer.materials.base.FOSMaterial;
+import com.fos.game.engine.renderer.materials.base.Material;
 import com.fos.game.engine.renderer.shaders.base.ShadingMethod;
 
-public class BlendAlbedoMapsMaterialInstance extends FOSMaterial {
+public class BlendAlbedoMapsMaterialInstance extends Material {
 
     public final Texture blendTexture;
     public final BasicMaterialMap[] basicMaterialMaps; // supports up to 4 blended material maps.

@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g3d.utils.DefaultShaderProvider;
 import com.fos.game.engine.components.modelinstance.ModelInstance;
 import com.fos.game.engine.components.modelinstance.RiggedModelInstance;
 import com.fos.game.engine.components.modelinstance.SimpleModelInstance;
-import com.fos.game.engine.renderer.materials.base.FOSMaterial;
+import com.fos.game.engine.renderer.materials.base.Material;
 import com.fos.game.engine.renderer.shaders.base.ShadingMethod;
 import com.fos.game.engine.renderer.shaders.pbr.PBRAlbedoMapShader;
 import com.fos.game.engine.renderer.shaders.pbr.PBRAlbedoNormalMapsShader;
@@ -69,44 +69,44 @@ public class ShaderProvider extends DefaultShaderProvider {
     @Override
     public Shader getShader(Renderable renderable) {
         final ModelInstance modelInstance = (ModelInstance) renderable.userData;
-        final FOSMaterial fosMaterial = modelInstance.getMaterial(renderable);
+        final Material material = modelInstance.getMaterial(renderable);
 
         Shader shader = null;
 
         if (modelInstance instanceof SimpleModelInstance) {
-            shader = getSolidBodyShader(fosMaterial);
+            shader = getSolidBodyShader(material);
         }
         else if (modelInstance instanceof RiggedModelInstance) {
-            shader = getRiggedBodyShader(fosMaterial);
+            shader = getRiggedBodyShader(material);
         }
 
         return (shader != null) ? shader : super.getShader(renderable);
     }
 
-    private Shader getSolidBodyShader(final FOSMaterial fosMaterial) {
-        if (fosMaterial.getShadingMethod() == ShadingMethod.PBRAlbedoMap) return pbrAlbedoMapShader;
-        if (fosMaterial.getShadingMethod() == ShadingMethod.PBRAlbedoNormalMaps) return pbrAlbedoNormalMapsShader;
-        if (fosMaterial.getShadingMethod() == ShadingMethod.PBRBlendAlbedoMaps) return pbrBlendAlbedoMapsShader;
-        if (fosMaterial.getShadingMethod() == ShadingMethod.PBRAlbedoNormalMetallicRoughnessAOMaps) return pbrAlbedoNormalMetallicRoughnessAOMapsShader;
-        if (fosMaterial.getShadingMethod() == ShadingMethod.PlainColor) return plainColorDetailedShader;
-        if (fosMaterial.getShadingMethod() == ShadingMethod.PlainDiffuseMap) return plainDiffuseMapShader;
-        if (fosMaterial.getShadingMethod() == ShadingMethod.PlainDiffuseBloomMaps) return plainDiffuseBloomMapsShader;
-        if (fosMaterial.getShadingMethod() == ShadingMethod.AnimatedDiffuseMap) return diffuseMapShader;
-        if (fosMaterial.getShadingMethod() == ShadingMethod.DiffuseMap) return diffuseMapShader;
-        if (fosMaterial.getShadingMethod() == ShadingMethod.DiffuseNormalMaps) return diffuseNormalMapsShader;
-        if (fosMaterial.getShadingMethod() == ShadingMethod.DiffuseNormalSpecularRoughnessMaps) return diffuseNormalSpecularRoughnessMapsShader;
-        if (fosMaterial.getShadingMethod() == ShadingMethod.DiffuseNormalSpecularRoughnessParallaxMaps) return diffuseNormalSpecularRoughnessParallaxMapsShader;
-        if (fosMaterial.getShadingMethod() == ShadingMethod.UniformColorGlow) return plainColorBloomShader;
-        if (fosMaterial.getShadingMethod() == ShadingMethod.DiffuseBloomMaps) return diffuseBloomMapsShader;
-        if (fosMaterial.getShadingMethod() == ShadingMethod.DiffuseNormalParallaxMaps) return diffuseNormalParallaxMapsShader;
-        if (fosMaterial.getShadingMethod() == ShadingMethod.UniformColor) return uniformColorShader;
-        if (fosMaterial.getShadingMethod() == ShadingMethod.PlainSkyBox) return plainSkyBoxCombinedShader;
-        if (fosMaterial.getShadingMethod() == ShadingMethod.VolumetricLightSourceColor) return volumetricLightSourceCombinedShader;
+    private Shader getSolidBodyShader(final Material material) {
+        if (material.getShadingMethod() == ShadingMethod.PBRAlbedoMap) return pbrAlbedoMapShader;
+        if (material.getShadingMethod() == ShadingMethod.PBRAlbedoNormalMaps) return pbrAlbedoNormalMapsShader;
+        if (material.getShadingMethod() == ShadingMethod.PBRBlendAlbedoMaps) return pbrBlendAlbedoMapsShader;
+        if (material.getShadingMethod() == ShadingMethod.PBRAlbedoNormalMetallicRoughnessAOMaps) return pbrAlbedoNormalMetallicRoughnessAOMapsShader;
+        if (material.getShadingMethod() == ShadingMethod.PlainColor) return plainColorDetailedShader;
+        if (material.getShadingMethod() == ShadingMethod.PlainDiffuseMap) return plainDiffuseMapShader;
+        if (material.getShadingMethod() == ShadingMethod.PlainDiffuseBloomMaps) return plainDiffuseBloomMapsShader;
+        if (material.getShadingMethod() == ShadingMethod.AnimatedDiffuseMap) return diffuseMapShader;
+        if (material.getShadingMethod() == ShadingMethod.DiffuseMap) return diffuseMapShader;
+        if (material.getShadingMethod() == ShadingMethod.DiffuseNormalMaps) return diffuseNormalMapsShader;
+        if (material.getShadingMethod() == ShadingMethod.DiffuseNormalSpecularRoughnessMaps) return diffuseNormalSpecularRoughnessMapsShader;
+        if (material.getShadingMethod() == ShadingMethod.DiffuseNormalSpecularRoughnessParallaxMaps) return diffuseNormalSpecularRoughnessParallaxMapsShader;
+        if (material.getShadingMethod() == ShadingMethod.UniformColorGlow) return plainColorBloomShader;
+        if (material.getShadingMethod() == ShadingMethod.DiffuseBloomMaps) return diffuseBloomMapsShader;
+        if (material.getShadingMethod() == ShadingMethod.DiffuseNormalParallaxMaps) return diffuseNormalParallaxMapsShader;
+        if (material.getShadingMethod() == ShadingMethod.UniformColor) return uniformColorShader;
+        if (material.getShadingMethod() == ShadingMethod.PlainSkyBox) return plainSkyBoxCombinedShader;
+        if (material.getShadingMethod() == ShadingMethod.VolumetricLightSourceColor) return volumetricLightSourceCombinedShader;
         return null;
     }
 
-    private Shader getRiggedBodyShader(final FOSMaterial fosMaterial) {
-        if (fosMaterial.getShadingMethod() == ShadingMethod.UniformColor) return riggedUniformColorCombinedShader;
+    private Shader getRiggedBodyShader(final Material material) {
+        if (material.getShadingMethod() == ShadingMethod.UniformColor) return riggedUniformColorCombinedShader;
         return null;
     }
 

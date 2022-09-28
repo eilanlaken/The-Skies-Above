@@ -11,7 +11,7 @@ First implement HDR tone mapping and gamma post processing + bloom;
 Only then "copy paste" the shader from here:
 https://gist.github.com/galek/53557375251e1a942dfa
  */
-public class DiffuseNormalSpecularRoughnessMapsMaterialInstance extends FOSMaterial implements RenderedDiffuseMap, RenderedNormalMap, RenderedSpecularMap, RenderedRoughnessMap {
+public class DiffuseNormalSpecularRoughnessMapsMaterialInstance extends Material implements RenderedDiffuseMap, RenderedNormalMap, RenderedSpecularMap, RenderedRoughnessMap {
 
     public final float ambient;
 

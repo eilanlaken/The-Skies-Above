@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.JsonReader;
-import com.fos.game.engine.renderer.materials.base.FOSMaterial;
+import com.fos.game.engine.renderer.materials.base.Material;
 import com.fos.game.engine.components.modelinstance.UtilsModel;
 
 import java.nio.FloatBuffer;
@@ -23,7 +23,7 @@ public class GameAssetManager extends AssetManager {
     // catalogs
     public final HashMap<String, TextureAtlas> namedSpriteSheets = new HashMap<>();
     public final HashMap<String, Array<TextureAtlas.AtlasRegion>> namedAtlasRegionArrays = new HashMap<>(); // <- TODO: use this.
-    public final HashMap<String, FOSMaterial> namedMaterials = new HashMap<>();
+    public final HashMap<String, Material> namedMaterials = new HashMap<>();
 
     // buffers
     public static final Array<TextureAtlas> TEXTURE_ATLASES_ARRAY = new Array<>();

@@ -66,7 +66,7 @@ public class InstancedDiffuseNormalMapsCombinedShader {
     @Override
     public boolean canRender(Renderable renderable) {
         final CompoundModelInstance modelInstance = (CompoundModelInstance) renderable.userData;
-        final FOSMaterial materialInstance = modelInstance.getMaterial(renderable);
+        final Material materialInstance = modelInstance.getMaterial(renderable);
         if (materialInstance.getShadingMethod() == ShadingMethod.DiffuseNormalMaps) return true;
         return false;
     }

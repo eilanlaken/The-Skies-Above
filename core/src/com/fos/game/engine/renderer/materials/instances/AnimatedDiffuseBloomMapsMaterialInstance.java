@@ -2,12 +2,12 @@ package com.fos.game.engine.renderer.materials.instances;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.fos.game.engine.renderer.materials.base.FOSMaterial;
+import com.fos.game.engine.renderer.materials.base.Material;
 import com.fos.game.engine.renderer.materials.base.RenderedBloomMap;
 import com.fos.game.engine.renderer.materials.base.RenderedDiffuseMap;
 import com.fos.game.engine.renderer.shaders.base.ShadingMethod;
 
-public class AnimatedDiffuseBloomMapsMaterialInstance extends FOSMaterial implements RenderedDiffuseMap, RenderedBloomMap {
+public class AnimatedDiffuseBloomMapsMaterialInstance extends Material implements RenderedDiffuseMap, RenderedBloomMap {
 
     public final int glTextureObjectHandle;
     public final TextureAtlas spriteSheet;

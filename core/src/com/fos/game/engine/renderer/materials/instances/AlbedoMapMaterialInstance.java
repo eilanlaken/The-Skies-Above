@@ -1,11 +1,11 @@
 package com.fos.game.engine.renderer.materials.instances;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.fos.game.engine.renderer.materials.base.FOSMaterial;
+import com.fos.game.engine.renderer.materials.base.Material;
 import com.fos.game.engine.renderer.materials.base.RenderedAlbedoMap;
 import com.fos.game.engine.renderer.shaders.base.ShadingMethod;
 
-public class AlbedoMapMaterialInstance extends FOSMaterial implements RenderedAlbedoMap {
+public class AlbedoMapMaterialInstance extends Material implements RenderedAlbedoMap {
 
     public final float roughness;
     public final float metallic;
