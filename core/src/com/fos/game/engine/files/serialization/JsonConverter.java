@@ -2,8 +2,6 @@ package com.fos.game.engine.files.serialization;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.fos.game.engine.components.audio.ComponentSoundEffects;
-import com.fos.game.engine.components.lights.ComponentPointLight;
-import com.fos.game.engine.components.lights.Light;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;
@@ -62,7 +60,7 @@ public class JsonConverter<T> {
             JsonObject result = new JsonObject();
             String[] paths = new String[src.size];
             for (int i = 0; i < paths.length; i++) {
-                paths[i] = src.get(i).path;
+                paths[i] = src.get(i).filepath;
             }
             result.add("paths", context.serialize(paths, paths.getClass()));
             return result;

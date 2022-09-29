@@ -13,29 +13,29 @@ public class FactoryAnimation extends Factory {
     }
 
     public ComponentAnimations2D create(final String atlasName, final String animationName, final float frameDuration, final Animation.PlayMode playMode) {
-        TextureAtlas atlas = this.assetManager.get(atlasName, TextureAtlas.class);
-        Array<TextureAtlas.AtlasRegion> regions = atlas.findRegions(animationName);
-        return new ComponentAnimations2D(frameDuration, regions, playMode);
+        SpriteSheet spriteSheet = this.assetManager.get(atlasName, SpriteSheet.class);
+        Array<TextureAtlas.AtlasRegion> regions = spriteSheet.findRegions(animationName);
+        return new ComponentAnimations2D(spriteSheet, frameDuration, regions, playMode);
     }
 
     @Deprecated
-    public static ComponentAnimations2D create(final float frameDuration, final TextureAtlas atlas, final String name, final Animation.PlayMode playMode) {
-        Array<TextureAtlas.AtlasRegion> regions = atlas.findRegions(name);
-        return new ComponentAnimations2D(frameDuration, regions, playMode);
+    public static ComponentAnimations2D create(final float frameDuration, final SpriteSheet spriteSheet, final String name, final Animation.PlayMode playMode) {
+        Array<TextureAtlas.AtlasRegion> regions = spriteSheet.findRegions(name);
+        return new ComponentAnimations2D(spriteSheet, frameDuration, regions, playMode);
     }
 
     @Deprecated
-    public static ComponentAnimations2D create(final TextureAtlas atlas, final String name) {
+    public static ComponentAnimations2D create(final SpriteSheet spriteSheet, final String name) {
         Array<TextureAtlas.AtlasRegion> regions = new Array<>();
-        regions.add(atlas.findRegion(name));
-        return new ComponentAnimations2D(1, regions, Animation.PlayMode.NORMAL);
+        regions.add(spriteSheet.findRegion(name));
+        return new ComponentAnimations2D(spriteSheet,1, regions, Animation.PlayMode.NORMAL);
     }
 
     @Deprecated
     public static ComponentAnimations2D create(final GameAssetManager assetManager, final String atlasName, final String animationName, final float frameDuration, final Animation.PlayMode playMode) {
-        TextureAtlas atlas = assetManager.get(atlasName, TextureAtlas.class);
-        Array<TextureAtlas.AtlasRegion> regions = atlas.findRegions(animationName);
-        return new ComponentAnimations2D(frameDuration, regions, playMode);
+        SpriteSheet spriteSheet = assetManager.get(atlasName, SpriteSheet.class);
+        Array<TextureAtlas.AtlasRegion> regions = spriteSheet.findRegions(animationName);
+        return new ComponentAnimations2D(spriteSheet, frameDuration, regions, playMode);
     }
 
 }

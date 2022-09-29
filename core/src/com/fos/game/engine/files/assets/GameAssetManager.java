@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.JsonReader;
 import com.fos.game.engine.components.animation.SpriteSheet;
+import com.fos.game.engine.components.audio.SoundEffect;
 import com.fos.game.engine.renderer.materials.base.Material;
 import com.fos.game.engine.components.modelinstance.UtilsModel;
 
@@ -33,6 +34,7 @@ public class GameAssetManager extends AssetManager {
         super();
         this.setLoader(Model.class, ".inst", new G3dModelLoader(new JsonReader(), getFileHandleResolver()));
         this.setLoader(SpriteSheet.class, new SpriteSheetLoader(getFileHandleResolver()));
+        this.setLoader(SoundEffect.class, new SoundEffectLoader(getFileHandleResolver()));
     }
 
     @Override

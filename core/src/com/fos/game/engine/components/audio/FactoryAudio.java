@@ -10,18 +10,21 @@ public class FactoryAudio extends Factory {
         super(assetManager);
     }
 
+    /*
     public ComponentSoundEffects create(final String name) {
         return new ComponentSoundEffects(new SoundEffect[] {new SoundEffect(this.assetManager, name)});
     }
+     */
 
     public ComponentSoundEffects create(final String ...names) {
         SoundEffect[] soundEffects = new SoundEffect[names.length];
         for (int i = 0; i < names.length; i++) {
-            soundEffects[i] = new SoundEffect(this.assetManager, names[i]);
+            soundEffects[i] = new SoundEffect(this.assetManager.get(names[i], Sound.class), names[i]);
         }
         return new ComponentSoundEffects(soundEffects);
     }
 
+    /*
     @Deprecated
     public static ComponentSoundEffects create(final GameAssetManager assetManager, final String name) {
         return new ComponentSoundEffects(new SoundEffect[] {new SoundEffect(assetManager, name)});
@@ -35,5 +38,7 @@ public class FactoryAudio extends Factory {
         }
         return new ComponentSoundEffects(soundEffects);
     }
+
+     */
 
 }
