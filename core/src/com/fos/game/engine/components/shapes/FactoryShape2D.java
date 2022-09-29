@@ -3,11 +3,12 @@ package com.fos.game.engine.components.shapes;
 import com.badlogic.gdx.graphics.Color;
 import com.fos.game.engine.components.base.Factory;
 import com.fos.game.engine.files.assets.GameAssetManager;
+import com.fos.game.engine.files.serialization.JsonConverter;
 
 public class FactoryShape2D extends Factory {
 
-    public FactoryShape2D(final GameAssetManager assetManager) {
-        super(assetManager);
+    public FactoryShape2D(final GameAssetManager assetManager, final JsonConverter jsonConverter) {
+        super(assetManager, jsonConverter);
     }
 
     @Deprecated

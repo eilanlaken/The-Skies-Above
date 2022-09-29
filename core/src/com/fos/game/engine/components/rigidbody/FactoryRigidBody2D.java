@@ -6,11 +6,12 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.fos.game.engine.components.base.Factory;
 import com.fos.game.engine.entities.EntityContainer;
 import com.fos.game.engine.files.assets.GameAssetManager;
+import com.fos.game.engine.files.serialization.JsonConverter;
 
 public class FactoryRigidBody2D extends Factory {
 
-    public FactoryRigidBody2D(final GameAssetManager assetManager) {
-        super(assetManager);
+    public FactoryRigidBody2D(final GameAssetManager assetManager, final JsonConverter jsonConverter) {
+        super(assetManager, jsonConverter);
     }
 
     public static ComponentRigidBody2D create(final EntityContainer container, float x, float y, float w, float h) {

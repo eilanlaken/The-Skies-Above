@@ -3,11 +3,12 @@ package com.fos.game.engine.components.transform;
 import com.badlogic.gdx.math.MathUtils;
 import com.fos.game.engine.components.base.Factory;
 import com.fos.game.engine.files.assets.GameAssetManager;
+import com.fos.game.engine.files.serialization.JsonConverter;
 
 public class FactoryTransform2D extends Factory {
 
-    public FactoryTransform2D(final GameAssetManager assetManager) {
-        super(assetManager);
+    public FactoryTransform2D(final GameAssetManager assetManager, final JsonConverter jsonConverter) {
+        super(assetManager, jsonConverter);
     }
 
     @Deprecated

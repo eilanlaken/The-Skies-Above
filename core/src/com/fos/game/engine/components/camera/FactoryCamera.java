@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.fos.game.engine.components.base.Factory;
 import com.fos.game.engine.files.assets.GameAssetManager;
+import com.fos.game.engine.files.serialization.JsonConverter;
 import com.fos.game.engine.renderer.shaders.postprocessing.PostProcessingEffect;
 import com.fos.game.engine.renderer.system.RenderTarget;
 
@@ -15,8 +16,8 @@ public class FactoryCamera extends Factory {
     public static final float DEFAULT_NEAR = 0.3f;
     public static final float DEFAULT_FAR = 30000;
 
-    public FactoryCamera(final GameAssetManager assetManager) {
-        super(assetManager);
+    public FactoryCamera(final GameAssetManager assetManager, final JsonConverter jsonConverter) {
+        super(assetManager, jsonConverter);
     }
 
     @Deprecated

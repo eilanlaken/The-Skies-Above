@@ -5,11 +5,12 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
 import com.fos.game.engine.components.base.Factory;
 import com.fos.game.engine.files.assets.GameAssetManager;
+import com.fos.game.engine.files.serialization.JsonConverter;
 
 public class FactoryAnimation extends Factory {
 
-    public FactoryAnimation(final GameAssetManager assetManager) {
-        super(assetManager);
+    public FactoryAnimation(final GameAssetManager assetManager, final JsonConverter jsonConverter) {
+        super(assetManager, jsonConverter);
     }
 
     public ComponentAnimations2D create(final String atlasName, final String animationName, final float frameDuration, final Animation.PlayMode playMode) {

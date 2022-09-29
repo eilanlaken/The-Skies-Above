@@ -3,11 +3,12 @@ package com.fos.game.engine.components.audio;
 import com.badlogic.gdx.audio.Sound;
 import com.fos.game.engine.components.base.Factory;
 import com.fos.game.engine.files.assets.GameAssetManager;
+import com.fos.game.engine.files.serialization.JsonConverter;
 
 public class FactoryAudio extends Factory {
 
-    public FactoryAudio(final GameAssetManager assetManager) {
-        super(assetManager);
+    public FactoryAudio(final GameAssetManager assetManager, final JsonConverter jsonConverter) {
+        super(assetManager, jsonConverter);
     }
 
     /*
@@ -15,6 +16,10 @@ public class FactoryAudio extends Factory {
         return new ComponentSoundEffects(new SoundEffect[] {new SoundEffect(this.assetManager, name)});
     }
      */
+
+    public ComponentSoundEffects create(final SoundEffect ...soundEffects) {
+        return new ComponentSoundEffects(soundEffects);
+    }
 
     public ComponentSoundEffects create(final String ...names) {
         SoundEffect[] soundEffects = new SoundEffect[names.length];

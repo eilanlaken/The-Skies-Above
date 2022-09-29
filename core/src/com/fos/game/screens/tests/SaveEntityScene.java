@@ -38,7 +38,7 @@ public class SaveEntityScene extends GameScreen {
     private Entity orangeSquare, greenSquare;
 
     // serialization
-    private JsonConverter JSONConverter;
+    private JsonConverter jsonConverter;
 
     public enum EntityLayers {
         LAYER_1,
@@ -47,7 +47,7 @@ public class SaveEntityScene extends GameScreen {
 
     public SaveEntityScene(final GameContext context) {
         super(context);
-        this.JSONConverter = new JsonConverter();
+        this.jsonConverter = new JsonConverter();
         this.assetManager = context.assetManager;
         this.renderer = new Renderer(false);
     }
@@ -110,7 +110,7 @@ public class SaveEntityScene extends GameScreen {
         ComponentSoundEffects component = context.factoryAudio.create("audio/sample.wav");
         component.get(0).sound.play();
         System.out.println("component: " + component);
-        String json = JSONConverter.gson.toJson(component);
+        String json = jsonConverter.gson.toJson(component);
         System.out.println("json: " + json);
         //component = JSONConverter.gson.fromJson(json, ComponentSoundEffects.class);
         //System.out.println(component.items[0].sound.play());

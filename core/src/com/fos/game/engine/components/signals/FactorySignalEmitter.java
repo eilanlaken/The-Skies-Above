@@ -2,11 +2,12 @@ package com.fos.game.engine.components.signals;
 
 import com.fos.game.engine.components.base.Factory;
 import com.fos.game.engine.files.assets.GameAssetManager;
+import com.fos.game.engine.files.serialization.JsonConverter;
 
 public class FactorySignalEmitter extends Factory {
 
-    public FactorySignalEmitter(final GameAssetManager assetManager) {
-        super(assetManager);
+    public FactorySignalEmitter(final GameAssetManager assetManager, final JsonConverter jsonConverter) {
+        super(assetManager, jsonConverter);
     }
 
     public ComponentSignalEmitter create() {

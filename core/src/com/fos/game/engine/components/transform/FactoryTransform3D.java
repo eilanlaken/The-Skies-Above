@@ -4,11 +4,12 @@ import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.fos.game.engine.components.base.Factory;
 import com.fos.game.engine.files.assets.GameAssetManager;
+import com.fos.game.engine.files.serialization.JsonConverter;
 
 public class FactoryTransform3D extends Factory {
 
-    public FactoryTransform3D(final GameAssetManager assetManager) {
-        super(assetManager);
+    public FactoryTransform3D(final GameAssetManager assetManager, final JsonConverter jsonConverter) {
+        super(assetManager, jsonConverter);
     }
 
     @Deprecated

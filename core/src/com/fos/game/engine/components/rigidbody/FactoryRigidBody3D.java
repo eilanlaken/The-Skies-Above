@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.bullet.collision.btShapeHull;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.fos.game.engine.components.base.Factory;
 import com.fos.game.engine.files.assets.GameAssetManager;
+import com.fos.game.engine.files.serialization.JsonConverter;
 
 public class FactoryRigidBody3D extends Factory {
 
@@ -18,8 +19,8 @@ public class FactoryRigidBody3D extends Factory {
     private static final Vector3 shapeData = new Vector3();
     private static boolean bulletPhysicsInitialized = false;
 
-    public FactoryRigidBody3D(final GameAssetManager assetManager) {
-        super(assetManager);
+    public FactoryRigidBody3D(final GameAssetManager assetManager, final JsonConverter jsonConverter) {
+        super(assetManager, jsonConverter);
     }
 
     public static ComponentRigidBody3D createRigidBody(final Model model, float mass, final boolean optimized) {

@@ -15,12 +15,14 @@ import com.fos.game.engine.components.signals.FactorySignalReceiver;
 import com.fos.game.engine.components.transform.FactoryTransform2D;
 import com.fos.game.engine.components.transform.FactoryTransform3D;
 import com.fos.game.engine.files.assets.GameAssetManager;
+import com.fos.game.engine.files.serialization.JsonConverter;
 import com.fos.game.screens.loading.LoadingScreen;
 
 public class GameContext extends Game {
 
 	// service providers
 	public GameAssetManager assetManager;
+	public JsonConverter jsonConverter;
 	// Component Factory(s)
 	public FactoryAnimation factoryAnimation;
 	public FactoryAudio factoryAudio;
@@ -38,22 +40,23 @@ public class GameContext extends Game {
 
 	@Override
 	public void create () {
-		// create asset manager
+		// create service providers
 		this.assetManager = new GameAssetManager();
+		this.jsonConverter = new JsonConverter();
 		// create factories
-		this.factoryAnimation = new FactoryAnimation(this.assetManager);
-		this.factoryAudio = new FactoryAudio(this.assetManager);
-		this.factoryCamera = new FactoryCamera(this.assetManager);
-		this.factoryLight = new FactoryLight(this.assetManager);
-		this.factoryModelInstance = new FactoryModelInstance(this.assetManager);
-		this.factoryRigidBody2D = new FactoryRigidBody2D(this.assetManager);
-		this.factoryRigidBody3D = new FactoryRigidBody3D(this.assetManager);
-		this.factoryScripts = new FactoryScripts(this.assetManager);
-		this.factoryShape2D = new FactoryShape2D(this.assetManager);
-		this.factorySignalEmitter = new FactorySignalEmitter(this.assetManager);
-		this.factorySignalReceiver = new FactorySignalReceiver(this.assetManager);
-		this.factoryTransform2D = new FactoryTransform2D(this.assetManager);
-		this.factoryTransform3D = new FactoryTransform3D(this.assetManager);
+		this.factoryAnimation = new FactoryAnimation(this.assetManager, this.jsonConverter);
+		this.factoryAudio = new FactoryAudio(this.assetManager, this.jsonConverter);
+		this.factoryCamera = new FactoryCamera(this.assetManager, this.jsonConverter);
+		this.factoryLight = new FactoryLight(this.assetManager, this.jsonConverter);
+		this.factoryModelInstance = new FactoryModelInstance(this.assetManager, this.jsonConverter);
+		this.factoryRigidBody2D = new FactoryRigidBody2D(this.assetManager, this.jsonConverter);
+		this.factoryRigidBody3D = new FactoryRigidBody3D(this.assetManager, this.jsonConverter);
+		this.factoryScripts = new FactoryScripts(this.assetManager, this.jsonConverter);
+		this.factoryShape2D = new FactoryShape2D(this.assetManager, this.jsonConverter);
+		this.factorySignalEmitter = new FactorySignalEmitter(this.assetManager, this.jsonConverter);
+		this.factorySignalReceiver = new FactorySignalReceiver(this.assetManager, this.jsonConverter);
+		this.factoryTransform2D = new FactoryTransform2D(this.assetManager, this.jsonConverter);
+		this.factoryTransform3D = new FactoryTransform3D(this.assetManager, this.jsonConverter);
 		// set the screen to the entry screen
 		setScreen(new LoadingScreen(this));
 	}

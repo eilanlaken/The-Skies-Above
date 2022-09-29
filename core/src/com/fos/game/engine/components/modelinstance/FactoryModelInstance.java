@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Matrix4;
 import com.fos.game.engine.components.base.Factory;
 import com.fos.game.engine.components.camera.ComponentCamera;
 import com.fos.game.engine.files.assets.GameAssetManager;
+import com.fos.game.engine.files.serialization.JsonConverter;
 import com.fos.game.engine.renderer.materials.base.Material;
 import com.fos.game.engine.renderer.materials.base.MaterialInstanceFactory;
 
@@ -16,8 +17,8 @@ public class FactoryModelInstance extends Factory {
 
     private final MaterialInstanceFactory materialInstanceFactory;
 
-    public FactoryModelInstance(final GameAssetManager assetManager) {
-        super(assetManager);
+    public FactoryModelInstance(final GameAssetManager assetManager, final JsonConverter jsonConverter) {
+        super(assetManager, jsonConverter);
         this.materialInstanceFactory = new MaterialInstanceFactory();
     }
 
