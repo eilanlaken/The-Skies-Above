@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.JsonReader;
+import com.fos.game.engine.components.animation.SpriteSheet;
 import com.fos.game.engine.renderer.materials.base.Material;
 import com.fos.game.engine.components.modelinstance.UtilsModel;
 
@@ -30,7 +31,8 @@ public class GameAssetManager extends AssetManager {
 
     public GameAssetManager() {
         super();
-        this.setLoader(Model.class, ".inst", new G3dModelLoader(new JsonReader(), super.getFileHandleResolver()));
+        this.setLoader(Model.class, ".inst", new G3dModelLoader(new JsonReader(), getFileHandleResolver()));
+        this.setLoader(SpriteSheet.class, new SpriteSheetLoader(getFileHandleResolver()));
     }
 
     @Override
