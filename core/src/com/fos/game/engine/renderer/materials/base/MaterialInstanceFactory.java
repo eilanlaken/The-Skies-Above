@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.g3d.model.Node;
 import com.badlogic.gdx.graphics.g3d.model.NodePart;
 import com.badlogic.gdx.utils.Array;
 import com.fos.game.engine.components.camera.ComponentCamera;
-import com.fos.game.engine.components.modelinstance.TexturedModel;
+import com.fos.game.engine.components.modelinstance.TexturedModel_old;
 import com.fos.game.engine.renderer.materials.instances.*;
 
 import java.util.HashMap;
@@ -33,10 +33,10 @@ public final class MaterialInstanceFactory {
     }
 
     @Deprecated
-    public HashMap<String, Material> createMaterialsMap(final TexturedModel texturedModel,
+    public HashMap<String, Material> createMaterialsMap(final TexturedModel_old texturedModelOld,
                                                         final String nodeId) {
-        final Model model = texturedModel.model;
-        final TextureAtlas[] spriteSheets = texturedModel.spriteSheets;
+        final Model model = texturedModelOld.model;
+        final TextureAtlas[] spriteSheets = texturedModelOld.spriteSheets;
         final Node node = nodeId == null ? model.nodes.first() : model.getNode(nodeId);
         final Array<NodePart> parts = node.parts;
         final HashMap<String, Material> materialsMap = new HashMap<>();

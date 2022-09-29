@@ -15,18 +15,17 @@ public class ModelInstance extends com.badlogic.gdx.graphics.g3d.ModelInstance {
     public final Vector3 dimensions = new Vector3();
     public float radius;
 
-    // assets file paths - must be saved for serialization / deserialization
-    public String modelFilePath;
-    public String nodeIds;
-    public String[] atlasesFilePaths;
+    protected ModelInstance(final TexturedModel texturedModel, final HashMap<String, Material> materialsMap, Matrix4 transform, final String ...nodeIds) {
+        super(texturedModel, transform, nodeIds);
+        this.materialsMap = materialsMap;
+        super.userData = this;
+        UtilsModelInstance.computeBoundingRegions(this);
+    }
 
+    @Deprecated
     protected ModelInstance(final String modelFilePath, final String nodeId, final String[] atlasFilePaths, final Model model, final HashMap<String, Material> materialsMap,
                             Matrix4 transform) {
         super(model, transform, nodeId);
-        // set assets file paths
-        this.modelFilePath = modelFilePath;
-        this.nodeIds = nodeIds;
-        this.atlasesFilePaths = atlasFilePaths;
         // set other data
         this.materialsMap = materialsMap;
         super.userData = this;

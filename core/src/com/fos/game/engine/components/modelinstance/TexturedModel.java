@@ -1,22 +1,19 @@
 package com.fos.game.engine.components.modelinstance;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g3d.Model;
+import com.badlogic.gdx.graphics.g3d.model.data.ModelData;
+import com.fos.game.engine.components.animation.SpriteSheet;
 
-public class TexturedModel {
+// TODO: implement. Add loaders, consider all necessary file paths, etc.
+public class TexturedModel extends Model {
 
-    public final Model model;
-    public final TextureAtlas[] spriteSheets;
+    public final String filepath;
+    public final SpriteSheet[] spriteSheets;
 
-    public TexturedModel(final Model model, final TextureAtlas... spriteSheets) {
-        this.model = model;
+    public TexturedModel(final ModelData modelData, final String filepath, final SpriteSheet[] spriteSheets) {
+        super(modelData);
+        this.filepath = filepath;
         this.spriteSheets = spriteSheets;
-    }
-
-    public TexturedModel(final Model model) {
-        this.model = model;
-        this.spriteSheets = null;
     }
 
 }
