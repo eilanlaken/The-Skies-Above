@@ -5,6 +5,7 @@ import com.fos.game.engine.components.base.Factory;
 import com.fos.game.engine.files.assets.GameAssetManager;
 import com.fos.game.engine.files.serialization.JsonConverter;
 
+@Deprecated
 public class FactoryAnimation extends Factory {
 
     public FactoryAnimation(final GameAssetManager assetManager, final JsonConverter jsonConverter) {

@@ -47,7 +47,7 @@ public class SaveEntityScene extends GameScreen {
 
     public SaveEntityScene(final GameContext context) {
         super(context);
-        this.jsonConverter = new JsonConverter(context.assetManager);
+        this.jsonConverter = new JsonConverter();
         this.assetManager = context.assetManager;
         this.renderer = new Renderer(false);
     }

@@ -1,11 +1,10 @@
-package com.fos.game.engine.components.animation;
+package com.fos.game.engine.components.animations;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
 
 import java.util.HashMap;
 
-@Deprecated
 public class SpriteSheet extends TextureAtlas {
 
     public final String filepath;

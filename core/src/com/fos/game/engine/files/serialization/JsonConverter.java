@@ -9,11 +9,9 @@ import com.google.gson.*;
 
 public class JsonConverter<T> {
 
-    private final GameAssetManager assetManager;
     public final Gson gson;
 
-    public JsonConverter(final GameAssetManager assetManager) {
-        this.assetManager = assetManager;
+    public JsonConverter() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setExclusionStrategies(new ExclusionStrategy() {
             @Override
@@ -32,7 +30,7 @@ public class JsonConverter<T> {
         .registerTypeAdapter(Camera.class, new TypeAdapterCamera())
         .registerTypeAdapter(ComponentSoundEffects.class, new TypeAdapterComponentSoundEffects())
         .registerTypeAdapter(AnimationData.class, new TypeAdapterAnimationData())
-        .registerTypeAdapter(ComponentAnimations2D.class, new TypeAdapterComponentAnimations2D(assetManager))
+        .registerTypeAdapter(ComponentAnimations2D.class, new TypeAdapterComponentAnimations2D())
         ;
         this.gson = gsonBuilder.create();
     }

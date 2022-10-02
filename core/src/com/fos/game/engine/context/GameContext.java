@@ -42,7 +42,7 @@ public class GameContext extends Game {
 	public void create () {
 		// create service providers
 		this.assetManager = new GameAssetManager();
-		this.jsonConverter = new JsonConverter(this.assetManager);
+		this.jsonConverter = new JsonConverter();
 		// create factories
 		this.factoryAnimation = new FactoryAnimation(this.assetManager, this.jsonConverter);
 		this.factoryAudio = new FactoryAudio(this.assetManager, this.jsonConverter);

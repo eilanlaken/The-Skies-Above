@@ -109,8 +109,8 @@ public class SaveEntityScene2 extends GameScreen {
         System.out.println("component: " + component);
         String json = jsonConverter.gson.toJson(component);
         System.out.println("json: " + json);
-        ComponentAnimations2D deserialized = context.factoryAnimation.create(json);
-        System.out.println("deserialized: " + deserialized.elapsedTime);
+        //ComponentAnimations2D deserialized = context.factoryAnimation.create(json);
+        //System.out.println("deserialized: " + deserialized.elapsedTime);
     }
 
     @Override

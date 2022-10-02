@@ -2,17 +2,14 @@ package com.fos.game.engine.files.serialization;
 
 import com.fos.game.engine.components.animation.AnimationData;
 import com.fos.game.engine.components.animation.ComponentAnimations2D;
-import com.fos.game.engine.files.assets.GameAssetManager;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;
 
 public class TypeAdapterComponentAnimations2D implements JsonSerializer<ComponentAnimations2D>, JsonDeserializer<ComponentAnimations2D> {
 
-    private GameAssetManager assetManager;
+    protected TypeAdapterComponentAnimations2D() {
 
-    protected TypeAdapterComponentAnimations2D(final GameAssetManager assetManager) {
-        this.assetManager = assetManager;
     }
 
     @Override
@@ -35,7 +32,6 @@ public class TypeAdapterComponentAnimations2D implements JsonSerializer<Componen
         System.out.println("elapsedTime: " + elapsedTime);
         System.out.println("currentAnimation: " + currentAnimation);
         AnimationData[] data = context.deserialize(animationsData, AnimationData[].class);
-        System.out.println("data: " + data[0].spriteSheet);
         try {
 
             return context.deserialize(animationsData, AnimationData.class/*Class.forName(type)*/);

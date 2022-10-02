@@ -1,29 +1,38 @@
-package com.fos.game.engine.components.animation;
+package com.fos.game.engine.components.animations;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
+import com.fos.game.engine.components.animation.AnimationData;
 import com.fos.game.engine.components.base.Component;
 import com.fos.game.engine.components.base.ComponentType;
 
-@Deprecated
-public class ComponentAnimations2D extends Array<Animation<TextureAtlas.AtlasRegion>> implements Component {
+import java.util.HashMap;
+
+public class ComponentAnimations2D extends HashMap<String, Animation<TextureAtlas.AtlasRegion>> implements Component {
 
     public AnimationData[] animationsData;
-    public int currentAnimation = 0;
-    public float elapsedTime = 0;
+    public Animation<TextureAtlas.AtlasRegion> currentPlayingAnimation;
+    public float elapsedTime;
 
     protected ComponentAnimations2D(final AnimationData ...animationsData) {
         this.animationsData = animationsData;
+        this.elapsedTime = 0;
         for (final AnimationData data : animationsData) {
             Array<TextureAtlas.AtlasRegion> keyFrames = data.spriteSheet.findRegions(data.animationName);
             Animation<TextureAtlas.AtlasRegion> animation = new Animation<>(data.frameDuration, keyFrames, data.playMode);
-            add(animation);
+            put(data.animationName, animation);
         }
+        currentPlayingAnimation = get(animationsData[0].animationName);
     }
 
     public TextureAtlas.AtlasRegion getTextureRegion() {
-        return get(currentAnimation).getKeyFrame(elapsedTime);
+        return currentPlayingAnimation.getKeyFrame(elapsedTime);
+    }
+
+    public void setAnimations(final String name) {
+        this.currentPlayingAnimation = get(name);
+        this.elapsedTime = 0;
     }
 
     @Override
