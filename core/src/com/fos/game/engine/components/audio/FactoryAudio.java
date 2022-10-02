@@ -11,12 +11,6 @@ public class FactoryAudio extends Factory {
         super(assetManager, jsonConverter);
     }
 
-    /*
-    public ComponentSoundEffects create(final String name) {
-        return new ComponentSoundEffects(new SoundEffect[] {new SoundEffect(this.assetManager, name)});
-    }
-     */
-
     public ComponentSoundEffects create(final SoundEffect ...soundEffects) {
         return new ComponentSoundEffects(soundEffects);
     }
