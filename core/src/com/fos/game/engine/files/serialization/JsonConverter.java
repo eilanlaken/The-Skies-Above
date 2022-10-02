@@ -1,11 +1,13 @@
 package com.fos.game.engine.files.serialization;
 
 import com.badlogic.gdx.graphics.Camera;
-import com.fos.game.engine.components.animation.AnimationData;
-import com.fos.game.engine.components.animation.ComponentAnimations2D;
+import com.fos.game.engine.components.animations.AnimationData;
+import com.fos.game.engine.components.animations.ComponentAnimations2D;
 import com.fos.game.engine.components.audio.ComponentSoundEffects;
-import com.fos.game.engine.files.assets.GameAssetManager;
-import com.google.gson.*;
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class JsonConverter<T> {
 

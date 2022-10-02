@@ -1,13 +1,16 @@
 package com.fos.game.screens.tests;
 
-import com.fos.game.engine.components.animation.FactoryAnimation;
-import com.fos.game.engine.components.animation.SpriteSheet;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.utils.Array;
+import com.fos.game.engine.components.animations.AnimationData;
+import com.fos.game.engine.components.animations.ComponentAnimations2D;
+import com.fos.game.engine.components.animations.SpriteSheet;
 import com.fos.game.engine.components.audio.ComponentSoundEffects;
 import com.fos.game.engine.components.audio.SoundEffect;
 import com.fos.game.engine.components.camera.FactoryCamera;
 import com.fos.game.engine.components.scripts.ComponentScripts;
 import com.fos.game.engine.components.transform.FactoryTransform2D;
-import com.fos.game.engine.components.transform.FactoryTransform3D;
 import com.fos.game.engine.context.GameContext;
 import com.fos.game.engine.context.GameScreen;
 import com.fos.game.engine.entities.Entity;
@@ -15,7 +18,6 @@ import com.fos.game.engine.entities.EntityContainer;
 import com.fos.game.engine.files.assets.GameAssetManager;
 import com.fos.game.engine.files.serialization.JsonConverter;
 import com.fos.game.engine.renderer.system.Renderer;
-import com.fos.game.scripts.common.ParentTransform2D;
 import com.fos.game.scripts.test.OrangeSquareScript;
 import com.fos.game.scripts.test.SimpleCameraScript;
 
@@ -26,7 +28,7 @@ public class SaveEntityScene extends GameScreen {
 
     private final GameAssetManager assetManager;
 
-    // models
+    // assets
     private SpriteSheet testSpriteSheet;
     private EntityContainer container;
 
@@ -35,7 +37,7 @@ public class SaveEntityScene extends GameScreen {
 
     // entities
     private Entity camera;
-    private Entity orangeSquare, greenSquare;
+    private Entity orangeSquare;
 
     // serialization
     private JsonConverter jsonConverter;
@@ -47,7 +49,7 @@ public class SaveEntityScene extends GameScreen {
 
     public SaveEntityScene(final GameContext context) {
         super(context);
-        this.jsonConverter = new JsonConverter();
+        this.jsonConverter = context.jsonConverter;
         this.assetManager = context.assetManager;
         this.renderer = new Renderer(false);
     }
@@ -60,6 +62,8 @@ public class SaveEntityScene extends GameScreen {
 
     private void setupAssets() {
         testSpriteSheet = assetManager.get("atlases/test/testSpriteSheet.atlas", SpriteSheet.class);
+        Array<TextureAtlas.AtlasRegion> regionArray = testSpriteSheet.findRegions("testArrowOrange");
+        System.out.println("width: " + regionArray.get(0).getRegionWidth());
         System.out.println("filepath:  " + testSpriteSheet.filepath);
     }
 
@@ -68,54 +72,44 @@ public class SaveEntityScene extends GameScreen {
 
         camera = new Entity();
         camera.attachComponents(
-                FactoryCamera.create2DCamera(SimpleScene.EntityLayers.LAYER_1, SimpleScene.EntityLayers.LAYER_2),
+                FactoryCamera.create2DCamera(EntityLayers.LAYER_1, EntityLayers.LAYER_2),
                 new ComponentScripts(new SimpleCameraScript(camera))
         );
 
         orangeSquare = new Entity();
         orangeSquare.attachComponents(
                 FactoryTransform2D.create(0,0),
-                FactoryAnimation.create(testSpriteSheet, "testArrowOrange"),
+                context.factoryAnimation.create("atlases/test/testSpriteSheet.atlas", "testArrowOrange"),
                 new ComponentScripts(new OrangeSquareScript(orangeSquare))
         );
 
-        greenSquare = new Entity(
-                FactoryTransform2D.create(50,50),
-                FactoryAnimation.create(testSpriteSheet, "testArrowGreen"),
-                new ComponentScripts(new ParentTransform2D(orangeSquare))
-        );
-
-
-        Entity entity = new Entity(
-                FactoryTransform2D.create(50,50),
-                FactoryAnimation.create(testSpriteSheet, "testArrowGreen")
-        );
-
-        Entity entityToSerialize = new Entity();
-        entityToSerialize.attachComponents(
-                FactoryTransform3D.create()
-                //new ComponentScripts()
-        );
-
-
-        testSerialization();
+        testSerialization1();
+        testSerialization2();
 
         container.addEntity(camera);
         container.addEntity(orangeSquare);
-        container.addEntity(greenSquare);
-        container.addEntity(entityToSerialize);
     }
 
-    private void testSerialization() {
+    private void testSerialization1() {
         ComponentSoundEffects component = context.factoryAudio.create("audio/sample.wav", "audio/sample2.wav");
         System.out.println("component: " + component);
         String json = jsonConverter.gson.toJson(component);
         System.out.println("json: " + json);
         ComponentSoundEffects deserialized = context.factoryAudio.createFromJson(json);
         deserialized.get(0).sound.play();
+    }
 
-        //component = JSONConverter.gson.fromJson(json, ComponentSoundEffects.class);
-        //System.out.println(component.items[0].sound.play());
+    private void testSerialization2() {
+        AnimationData data1 = new AnimationData("atlases/test/testSpriteSheet.atlas", "testArrowOrange", 1, Animation.PlayMode.LOOP);
+        AnimationData data2 = new AnimationData("atlases/test/testSpriteSheet.atlas", "testArrowGreen", 2, Animation.PlayMode.LOOP_PINGPONG);
+
+        ComponentAnimations2D component = context.factoryAnimation.create(data1, data2);
+        System.out.println();
+        System.out.println("component: " + component);
+        String json = jsonConverter.gson.toJson(component);
+        System.out.println("json: " + json);
+        //ComponentAnimations2D deserialized = context.factoryAnimation.create(json);
+        //System.out.println("deserialized: " + deserialized.elapsedTime);
     }
 
     @Override

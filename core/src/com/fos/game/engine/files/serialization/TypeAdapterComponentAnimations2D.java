@@ -1,7 +1,7 @@
 package com.fos.game.engine.files.serialization;
 
-import com.fos.game.engine.components.animation.AnimationData;
-import com.fos.game.engine.components.animation.ComponentAnimations2D;
+import com.fos.game.engine.components.animations.AnimationData;
+import com.fos.game.engine.components.animations.ComponentAnimations2D;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;
@@ -16,7 +16,7 @@ public class TypeAdapterComponentAnimations2D implements JsonSerializer<Componen
     public JsonElement serialize(ComponentAnimations2D src, Type typeOfSrc, JsonSerializationContext context) {
         JsonObject result = new JsonObject();
         result.add("animationsData", context.serialize(src.animationsData, AnimationData[].class));
-        result.add("currentAnimation", new JsonPrimitive(src.currentAnimation));
+        result.add("currentAnimation", new JsonPrimitive(src.currentPlayingAnimation.getKeyFrames()[0].name));
         result.add("elapsedTime", new JsonPrimitive(src.elapsedTime));
         return result;
     }

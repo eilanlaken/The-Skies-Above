@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.fos.game.engine.context.GameContext;
 import com.fos.game.engine.context.GameScreen;
 import com.fos.game.engine.files.assets.GameAssetManager;
-import com.fos.game.screens.tests.SaveEntityScene2;
+import com.fos.game.screens.tests.SaveEntityScene;
 
 import java.util.Map;
 
@@ -25,7 +25,7 @@ public class LoadingScreen extends GameScreen {
     }
 
     private void queueAssets() {
-        Map<String, Class> assetsNameTypeMap = SaveEntityScene2.getRequiredAssetsNameTypeMap();
+        Map<String, Class> assetsNameTypeMap = SaveEntityScene.getRequiredAssetsNameTypeMap();
         for (Map.Entry<String, Class> entry : assetsNameTypeMap.entrySet()) {
             this.assetManager.load(entry.getKey(), entry.getValue());
         }
@@ -43,7 +43,7 @@ public class LoadingScreen extends GameScreen {
         while (!doneLoading) {
             if (assetManager.update()) {
                 doneLoading = true;
-                context.setScreen(new SaveEntityScene2(context));
+                context.setScreen(new SaveEntityScene(context));
             }
         }
     }
