@@ -120,7 +120,7 @@ public class Renderer implements Disposable {
             spriteBatch.setProjectionMatrix(camera.lens.combined);
             for (Entity entity : cameraEntities.getValue()) {
                 ComponentTransform2D transform2D = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
-                ComponentAnimations2D animation = (ComponentAnimations2D) entity.components[ComponentType.ANIMATION.ordinal()];
+                ComponentAnimations2D animation = (ComponentAnimations2D) entity.components[ComponentType.ANIMATIONS_2D.ordinal()];
                 TextureAtlas.AtlasRegion atlasRegion = animation.getTextureRegion();
                 spriteBatch.render(atlasRegion, transform2D, pixelsPerMeter);
                 //spriteBatch.render(atlasRegion, transform2D);

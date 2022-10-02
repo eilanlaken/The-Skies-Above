@@ -10,11 +10,13 @@ public enum ComponentType {
     PHYSICS_BODY_2D,
     SCRIPTS,
     CAMERA,
-    ANIMATION,
+    ANIMATIONS_2D,
+    ANIMATIONS_3D,
     SHAPE_2D,
     AUDIO,
     SIGNAL_EMITTER,
     SIGNAL_RECEIVER,
+    TEXT,
     ;
 
     public final short bitMask;

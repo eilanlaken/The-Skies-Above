@@ -38,6 +38,6 @@ public class ComponentAnimations2D extends HashMap<String, Animation<TextureAtla
 
     @Override
     public final ComponentType getComponentType() {
-        return ComponentType.ANIMATION;
+        return ComponentType.ANIMATIONS_2D;
     }
 }

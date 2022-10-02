@@ -54,63 +54,11 @@ public class Entity implements Disposable {
 
     public void attachComponents(final Object... componentsToAttach) {
         this.components = new Component[ComponentType.values().length];
-        for (Object component : componentsToAttach) attachComponent(component);
+        for (Object object : componentsToAttach) {
+            final Component component = (Component) object;
+            components[component.getComponentType().ordinal()] = component;
+        }
         refresh();
-    }
-
-    private void attachComponent(final Object component) {
-        if (component instanceof ComponentTransform2D) {
-            components[ComponentType.TRANSFORM_2D.ordinal()] = component;
-            return;
-        }
-        if (component instanceof ComponentTransform3D) {
-            components[ComponentType.TRANSFORM_3D.ordinal()] = component;
-            return;
-        }
-        if (component instanceof ComponentCamera) {
-            components[ComponentType.CAMERA.ordinal()] = component;
-            return;
-        }
-        if (component instanceof ComponentAnimations2D) {
-            components[ComponentType.ANIMATION.ordinal()] = component;
-            return;
-        }
-        if (component instanceof ComponentShape2D) {
-            components[ComponentType.SHAPE_2D.ordinal()] = component;
-            return;
-        }
-        if (component instanceof ComponentModelInstance) {
-            components[ComponentType.MODEL_INSTANCE.ordinal()] = component;
-            return;
-        }
-        if (component instanceof Light) {
-            components[ComponentType.LIGHT.ordinal()] = component;
-            return;
-        }
-        if (component instanceof ComponentRigidBody2D) {
-            components[ComponentType.PHYSICS_BODY_2D.ordinal()] = component;
-            return;
-        }
-        if (component instanceof ComponentRigidBody3D) {
-            components[ComponentType.PHYSICS_BODY_3D.ordinal()] = component;
-            return;
-        }
-        if (component instanceof ComponentSoundEffects) {
-            components[ComponentType.AUDIO.ordinal()] = component;
-            return;
-        }
-        if (component instanceof ComponentScripts) {
-            components[ComponentType.SCRIPTS.ordinal()] = component;
-            return;
-        }
-        if (component instanceof ComponentSignalEmitter) {
-            components[ComponentType.SIGNAL_EMITTER.ordinal()] = component;
-            return;
-        }
-        if (component instanceof ComponentSignalReceiver) {
-            components[ComponentType.SIGNAL_RECEIVER.ordinal()] = component;
-            return;
-        }
     }
 
     private void refresh() {
@@ -161,7 +109,7 @@ public class Entity implements Disposable {
         ComponentTransform3D transform = (ComponentTransform3D) components[ComponentType.TRANSFORM_3D.ordinal()];
         ComponentScripts scripts = (ComponentScripts) components[ComponentType.SCRIPTS.ordinal()];
         Light light = (Light) components[ComponentType.LIGHT.ordinal()];
-        ComponentAnimations2D animations = (ComponentAnimations2D) components[ComponentType.ANIMATION.ordinal()];
+        ComponentAnimations2D animations = (ComponentAnimations2D) components[ComponentType.ANIMATIONS_2D.ordinal()];
         ComponentCamera camera = (ComponentCamera) components[ComponentType.CAMERA.ordinal()];
 
         if (body != null) {

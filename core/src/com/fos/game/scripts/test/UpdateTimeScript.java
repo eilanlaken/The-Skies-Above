@@ -9,7 +9,7 @@ public class UpdateTimeScript extends Script {
 
     @Override
     public void start() {
-        //animations2d = (ComponentAnimations2D) entity.components[ComponentType.ANIMATION.ordinal()];
+        //animations2d = (ComponentAnimations2D) entity.components[ComponentType.ANIMATIONS_2D.ordinal()];
     }
 
     @Override

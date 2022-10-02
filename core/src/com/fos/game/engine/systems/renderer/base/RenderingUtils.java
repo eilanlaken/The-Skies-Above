@@ -23,7 +23,7 @@ import java.util.Map;
 
 public class RenderingUtils {
 
-    private static final short ENTITY_2D_BIT_MASK = ComponentType.ANIMATION.bitMask;
+    private static final short ENTITY_2D_BIT_MASK = ComponentType.ANIMATIONS_2D.bitMask;
     private static final short ENTITY_3D_BIT_MASK = ComponentType.MODEL_INSTANCE.bitMask;
     private static final short ATTACHED_LIGHT_BIT_MASK = ComponentType.LIGHT.bitMask;
     private static final short ATTACHED_CAMERA_BIT_MASK = ComponentType.CAMERA.bitMask;
@@ -148,7 +148,7 @@ public class RenderingUtils {
 
     private static boolean cull(final Entity entity, final OrthographicCamera camera) {
         ComponentTransform2D transform2D = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
-        ComponentAnimations2D animation = (ComponentAnimations2D) entity.components[ComponentType.ANIMATION.ordinal()];
+        ComponentAnimations2D animation = (ComponentAnimations2D) entity.components[ComponentType.ANIMATIONS_2D.ordinal()];
         TextureAtlas.AtlasRegion atlasRegion = animation.getTextureRegion();
         final float width = atlasRegion.getRegionWidth() * transform2D.scaleX;
         final float height = atlasRegion.getRegionHeight() * transform2D.scaleY;
