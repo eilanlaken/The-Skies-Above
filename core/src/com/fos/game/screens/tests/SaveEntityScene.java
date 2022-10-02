@@ -64,7 +64,6 @@ public class SaveEntityScene extends GameScreen {
         testSpriteSheet = assetManager.get("atlases/test/testSpriteSheet.atlas", SpriteSheet.class);
         Array<TextureAtlas.AtlasRegion> regionArray = testSpriteSheet.findRegions("testArrowOrange");
         System.out.println("width: " + regionArray.get(0).getRegionWidth());
-        System.out.println("filepath:  " + testSpriteSheet.filepath);
     }
 
     private void setupScene() {

@@ -27,7 +27,7 @@ public class SpriteSheetLoader extends SynchronousAssetLoader<SpriteSheet, Sprit
             page.texture = texture;
         }
 
-        SpriteSheet spriteSheet = new SpriteSheet(data, fileName);
+        SpriteSheet spriteSheet = new SpriteSheet(data);
         data = null;
         return spriteSheet;
     }

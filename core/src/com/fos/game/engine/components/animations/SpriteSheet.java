@@ -7,12 +7,10 @@ import java.util.HashMap;
 
 public class SpriteSheet extends TextureAtlas {
 
-    public final String filepath;
     private final HashMap<String, Array<AtlasRegion>> namedRegions = new HashMap<>();
 
-    public SpriteSheet(final TextureAtlasData data, final String filepath) {
+    public SpriteSheet(final TextureAtlasData data) {
         super(data);
-        this.filepath = filepath;
         for (TextureAtlasData.Region region : data.getRegions()) {
             String name = region.name;
             if (namedRegions.get(name) != null) continue;
