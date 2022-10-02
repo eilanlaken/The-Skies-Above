@@ -1,9 +1,11 @@
 package com.fos.game.engine.components.audio;
 
-import com.badlogic.gdx.audio.Sound;
 import com.fos.game.engine.components.base.Factory;
 import com.fos.game.engine.files.assets.GameAssetManager;
 import com.fos.game.engine.files.serialization.JsonConverter;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FactoryAudio extends Factory {
 
@@ -15,29 +17,23 @@ public class FactoryAudio extends Factory {
         return new ComponentSoundEffects(soundEffects);
     }
 
+    public ComponentSoundEffects createFromJson(final String json) {
+        HashMap<String, ArrayList> x = jsonConverter.gson.fromJson(json, HashMap.class);
+        ArrayList<String> paths = x.get("paths");
+        SoundEffect[] soundEffects = new SoundEffect[paths.size()];
+        for (int i = 0; i < soundEffects.length; i++) {
+            String path = paths.get(i);
+            soundEffects[i] = this.assetManager.get(path, SoundEffect.class);
+        }
+        return new ComponentSoundEffects(soundEffects);
+    }
+
     public ComponentSoundEffects create(final String ...names) {
         SoundEffect[] soundEffects = new SoundEffect[names.length];
         for (int i = 0; i < names.length; i++) {
-            soundEffects[i] = new SoundEffect(this.assetManager.get(names[i], Sound.class), names[i]);
+            soundEffects[i] = this.assetManager.get(names[i], SoundEffect.class);
         }
         return new ComponentSoundEffects(soundEffects);
     }
-
-    /*
-    @Deprecated
-    public static ComponentSoundEffects create(final GameAssetManager assetManager, final String name) {
-        return new ComponentSoundEffects(new SoundEffect[] {new SoundEffect(assetManager, name)});
-    }
-
-    @Deprecated
-    public static ComponentSoundEffects create(final GameAssetManager assetManager, final String ...names) {
-        SoundEffect[] soundEffects = new SoundEffect[names.length];
-        for (int i = 0; i < names.length; i++) {
-            soundEffects[i] = new SoundEffect(assetManager, names[i]);
-        }
-        return new ComponentSoundEffects(soundEffects);
-    }
-
-     */
 
 }

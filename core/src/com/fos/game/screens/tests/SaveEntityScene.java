@@ -1,9 +1,9 @@
 package com.fos.game.screens.tests;
 
-import com.badlogic.gdx.audio.Sound;
 import com.fos.game.engine.components.animation.FactoryAnimation;
 import com.fos.game.engine.components.animation.SpriteSheet;
 import com.fos.game.engine.components.audio.ComponentSoundEffects;
+import com.fos.game.engine.components.audio.SoundEffect;
 import com.fos.game.engine.components.camera.FactoryCamera;
 import com.fos.game.engine.components.scripts.ComponentScripts;
 import com.fos.game.engine.components.transform.FactoryTransform2D;
@@ -107,11 +107,12 @@ public class SaveEntityScene extends GameScreen {
     }
 
     private void testSerialization() {
-        ComponentSoundEffects component = context.factoryAudio.create("audio/sample.wav");
+        ComponentSoundEffects component = context.factoryAudio.create("audio/sample.wav", "audio/sample2.wav");
         component.get(0).sound.play();
         System.out.println("component: " + component);
         String json = jsonConverter.gson.toJson(component);
         System.out.println("json: " + json);
+        ComponentSoundEffects deserialized = context.factoryAudio.createFromJson(json);
         //component = JSONConverter.gson.fromJson(json, ComponentSoundEffects.class);
         //System.out.println(component.items[0].sound.play());
     }
@@ -132,7 +133,8 @@ public class SaveEntityScene extends GameScreen {
     public static Map<String, Class> getRequiredAssetsNameTypeMap() {
         HashMap<String, Class> assetNameClassMap = new HashMap<>();
         assetNameClassMap.put("atlases/test/testSpriteSheet.atlas", SpriteSheet.class);
-        assetNameClassMap.put("audio/sample.wav", Sound.class);
+        assetNameClassMap.put("audio/sample.wav", SoundEffect.class);
+        assetNameClassMap.put("audio/sample2.wav", SoundEffect.class);
         return assetNameClassMap;
     }
 }

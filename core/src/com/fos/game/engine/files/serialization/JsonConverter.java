@@ -54,7 +54,8 @@ public class JsonConverter<T> {
         }
     }
 
-    private class ComponentSoundEffectsTypeAdapter implements JsonSerializer<ComponentSoundEffects>, JsonDeserializer<ComponentSoundEffects> {
+    private class ComponentSoundEffectsTypeAdapter implements JsonSerializer<ComponentSoundEffects> {
+
         @Override
         public JsonElement serialize(ComponentSoundEffects src, Type typeOfSrc, JsonSerializationContext context) {
             JsonObject result = new JsonObject();
@@ -66,18 +67,6 @@ public class JsonConverter<T> {
             return result;
         }
 
-        @Override
-        public ComponentSoundEffects deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
-                throws JsonParseException {
-            JsonObject jsonObject = json.getAsJsonObject();
-            String type = jsonObject.get("type").getAsString();
-            JsonElement element = jsonObject.get("properties");
-            try {
-                return context.deserialize(element, Class.forName(type));
-            } catch (ClassNotFoundException e) {
-                throw new JsonParseException("Unknown element type: " + type, e);
-            }
-        }
     }
 
 }
