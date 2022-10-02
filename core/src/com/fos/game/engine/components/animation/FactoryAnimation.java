@@ -1,8 +1,6 @@
 package com.fos.game.engine.components.animation;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.utils.Array;
 import com.fos.game.engine.components.base.Factory;
 import com.fos.game.engine.files.assets.GameAssetManager;
 import com.fos.game.engine.files.serialization.JsonConverter;
@@ -13,30 +11,33 @@ public class FactoryAnimation extends Factory {
         super(assetManager, jsonConverter);
     }
 
-    public ComponentAnimations2D create(final String atlasName, final String animationName, final float frameDuration, final Animation.PlayMode playMode) {
-        SpriteSheet spriteSheet = this.assetManager.get(atlasName, SpriteSheet.class);
-        Array<TextureAtlas.AtlasRegion> regions = spriteSheet.findRegions(animationName);
-        return new ComponentAnimations2D(spriteSheet, frameDuration, regions, playMode);
+    public ComponentAnimations2D create(final AnimationData ...animationData) {
+        return new ComponentAnimations2D(animationData);
     }
 
-    @Deprecated
-    public static ComponentAnimations2D create(final float frameDuration, final SpriteSheet spriteSheet, final String name, final Animation.PlayMode playMode) {
-        Array<TextureAtlas.AtlasRegion> regions = spriteSheet.findRegions(name);
-        return new ComponentAnimations2D(spriteSheet, frameDuration, regions, playMode);
+    // for simple single frame animations, which are really intended to be Sprites.
+    public static ComponentAnimations2D create(final SpriteSheet spriteSheet, final String animationName) {
+        AnimationData animationData = new AnimationData(spriteSheet, animationName, 1.0f, Animation.PlayMode.NORMAL);
+        return new ComponentAnimations2D(animationData);
     }
 
-    @Deprecated
-    public static ComponentAnimations2D create(final SpriteSheet spriteSheet, final String name) {
-        Array<TextureAtlas.AtlasRegion> regions = new Array<>();
-        regions.add(spriteSheet.findRegion(name));
-        return new ComponentAnimations2D(spriteSheet,1, regions, Animation.PlayMode.NORMAL);
+    public ComponentAnimations2D create(final String json) {
+        ComponentAnimations2D component = jsonConverter.gson.fromJson(json, ComponentAnimations2D.class);
+        jsonConverter.gson.fromJson(json, ComponentAnimations2D.class);
+        System.out.println("Animations data: " + component);
+
+        System.out.println(component.animationsData[0].spriteSheet.filepath);
+        System.out.println(component.elapsedTime);
+
+        return null;
     }
 
-    @Deprecated
-    public static ComponentAnimations2D create(final GameAssetManager assetManager, final String atlasName, final String animationName, final float frameDuration, final Animation.PlayMode playMode) {
-        SpriteSheet spriteSheet = assetManager.get(atlasName, SpriteSheet.class);
-        Array<TextureAtlas.AtlasRegion> regions = spriteSheet.findRegions(animationName);
-        return new ComponentAnimations2D(spriteSheet, frameDuration, regions, playMode);
+    public ComponentAnimations2D create(final String filepath, final String animationName, final float frameDuration, final Animation.PlayMode playMode) {
+        AnimationData animationData = new AnimationData(this.assetManager.get(filepath, SpriteSheet.class), animationName, frameDuration, playMode);
+        return new ComponentAnimations2D(animationData);
     }
+
+
+
 
 }

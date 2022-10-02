@@ -8,18 +8,17 @@ import com.fos.game.engine.components.base.ComponentType;
 
 public class ComponentAnimations2D extends Array<Animation<TextureAtlas.AtlasRegion>> implements Component {
 
-    public final SpriteSheet spriteSheet;
+    public AnimationData[] animationsData;
     public int currentAnimation = 0;
     public float elapsedTime = 0;
 
-    protected ComponentAnimations2D(final SpriteSheet spriteSheet, float frameDuration, Array<TextureAtlas.AtlasRegion> keyFrames, Animation.PlayMode playMode) {
-        this.spriteSheet = spriteSheet;
-        addAll(new Animation<>(frameDuration, keyFrames, playMode));
-    }
-
-    protected ComponentAnimations2D(final SpriteSheet spriteSheet, final Animation<TextureAtlas.AtlasRegion> ...animations) {
-        this.spriteSheet = spriteSheet;
-        addAll(animations);
+    protected ComponentAnimations2D(final AnimationData ...animationsData) {
+        this.animationsData = animationsData;
+        for (final AnimationData data : animationsData) {
+            Array<TextureAtlas.AtlasRegion> keyFrames = data.spriteSheet.findRegions(data.animationName);
+            Animation<TextureAtlas.AtlasRegion> animation = new Animation<>(data.frameDuration, keyFrames, data.playMode);
+            add(animation);
+        }
     }
 
     public TextureAtlas.AtlasRegion getTextureRegion() {

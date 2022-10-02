@@ -18,8 +18,8 @@ public class FactoryAudio extends Factory {
     }
 
     public ComponentSoundEffects createFromJson(final String json) {
-        HashMap<String, ArrayList> x = jsonConverter.gson.fromJson(json, HashMap.class);
-        ArrayList<String> paths = x.get("paths");
+        HashMap<String, ArrayList> pathsMap = jsonConverter.gson.fromJson(json, HashMap.class);
+        ArrayList<String> paths = pathsMap.get("paths");
         SoundEffect[] soundEffects = new SoundEffect[paths.size()];
         for (int i = 0; i < soundEffects.length; i++) {
             String path = paths.get(i);
