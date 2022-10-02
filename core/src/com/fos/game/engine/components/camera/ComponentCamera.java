@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
 import com.fos.game.engine.components.base.Component;
 import com.fos.game.engine.components.base.ComponentType;
-import com.fos.game.engine.renderer.shaders.postprocessing.PostProcessingEffect;
-import com.fos.game.engine.renderer.system.RenderTarget;
+import com.fos.game.engine.systems.renderer.shaders.postprocessing.PostProcessingEffect;
+import com.fos.game.engine.systems.renderer.base.RenderTarget;
 
 public class ComponentCamera implements Component {
 

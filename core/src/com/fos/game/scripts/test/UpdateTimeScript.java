@@ -1,6 +1,6 @@
 package com.fos.game.scripts.test;
 
-import com.fos.game.engine.components.animations.ComponentAnimations2D;
+import com.fos.game.engine.components.animations2d.ComponentAnimations2D;
 import com.fos.game.engine.components.scripts.Script;
 
 public class UpdateTimeScript extends Script {
@@ -9,7 +9,7 @@ public class UpdateTimeScript extends Script {
 
     @Override
     public void start() {
-        //animations = (ComponentAnimations2D) entity.components[ComponentType.ANIMATION.ordinal()];
+        //animations2d = (ComponentAnimations2D) entity.components[ComponentType.ANIMATION.ordinal()];
     }
 
     @Override

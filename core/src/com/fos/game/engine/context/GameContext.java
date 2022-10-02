@@ -1,7 +1,7 @@
 package com.fos.game.engine.context;
 
 import com.badlogic.gdx.Game;
-import com.fos.game.engine.components.animations.FactoryAnimation;
+import com.fos.game.engine.components.animations2d.FactoryAnimation;
 import com.fos.game.engine.components.audio.FactoryAudio;
 import com.fos.game.engine.components.camera.FactoryCamera;
 import com.fos.game.engine.components.lights.FactoryLight;

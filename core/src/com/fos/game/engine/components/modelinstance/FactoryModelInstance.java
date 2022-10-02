@@ -8,8 +8,8 @@ import com.fos.game.engine.components.base.Factory;
 import com.fos.game.engine.components.camera.ComponentCamera;
 import com.fos.game.engine.files.assets.GameAssetManager;
 import com.fos.game.engine.files.serialization.JsonConverter;
-import com.fos.game.engine.renderer.materials.base.Material;
-import com.fos.game.engine.renderer.materials.base.MaterialInstanceFactory;
+import com.fos.game.engine.systems.renderer.materials.base.Material;
+import com.fos.game.engine.systems.renderer.materials.base.MaterialInstanceFactory;
 
 import java.util.HashMap;
 

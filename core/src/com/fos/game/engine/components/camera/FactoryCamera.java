@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.fos.game.engine.components.base.Factory;
 import com.fos.game.engine.files.assets.GameAssetManager;
 import com.fos.game.engine.files.serialization.JsonConverter;
-import com.fos.game.engine.renderer.shaders.postprocessing.PostProcessingEffect;
-import com.fos.game.engine.renderer.system.RenderTarget;
+import com.fos.game.engine.systems.renderer.shaders.postprocessing.PostProcessingEffect;
+import com.fos.game.engine.systems.renderer.base.RenderTarget;
 
 public class FactoryCamera extends Factory {
 

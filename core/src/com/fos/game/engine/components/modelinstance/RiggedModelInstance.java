@@ -2,9 +2,9 @@ package com.fos.game.engine.components.modelinstance;
 
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.math.Matrix4;
-import com.fos.game.engine.renderer.materials.base.Material;
-import com.fos.game.engine.rig.Rig;
-import com.fos.game.engine.rig.RigFactory;
+import com.fos.game.engine.systems.renderer.materials.base.Material;
+import com.fos.game.engine.components.animations3d.Rig;
+import com.fos.game.engine.components.animations3d.RigFactory;
 
 import java.util.HashMap;
 

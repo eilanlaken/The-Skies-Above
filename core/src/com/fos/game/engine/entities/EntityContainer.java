@@ -5,9 +5,9 @@ import com.badlogic.gdx.physics.bullet.dynamics.*;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.fos.game.engine.components.base.ComponentType;
-import com.fos.game.engine.physics.PhysicsWorld2D;
-import com.fos.game.engine.physics.PhysicsWorld3D;
-import com.fos.game.engine.signals.SignalRouter;
+import com.fos.game.engine.systems.physics.PhysicsWorld2D;
+import com.fos.game.engine.systems.physics.PhysicsWorld3D;
+import com.fos.game.engine.systems.signals.SignalRouter;
 
 public class EntityContainer implements Disposable {
 

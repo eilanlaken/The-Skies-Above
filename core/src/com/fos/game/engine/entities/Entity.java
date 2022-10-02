@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.utils.Disposable;
-import com.fos.game.engine.components.animations.ComponentAnimations2D;
+import com.fos.game.engine.components.animations2d.ComponentAnimations2D;
 import com.fos.game.engine.components.base.Component;
 import com.fos.game.engine.components.base.ComponentType;
 import com.fos.game.engine.components.camera.ComponentCamera;

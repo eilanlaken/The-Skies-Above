@@ -12,9 +12,9 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.JsonReader;
-import com.fos.game.engine.components.animations.SpriteSheet;
+import com.fos.game.engine.components.animations2d.SpriteSheet;
 import com.fos.game.engine.components.audio.SoundEffect;
-import com.fos.game.engine.renderer.materials.base.Material;
+import com.fos.game.engine.systems.renderer.materials.base.Material;
 import com.fos.game.engine.components.modelinstance.UtilsModel;
 
 import java.nio.FloatBuffer;
