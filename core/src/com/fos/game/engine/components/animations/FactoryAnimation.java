@@ -15,6 +15,12 @@ public class FactoryAnimation extends Factory {
         return new ComponentAnimations2D(assetManager, animationData);
     }
 
+    // for simple single frame animations, which are really intended to be Sprites.
+    public ComponentAnimations2D create(final String filepath, final String animationName) {
+        AnimationData animationData = new AnimationData(filepath, animationName, 1.0f, Animation.PlayMode.NORMAL);
+        return new ComponentAnimations2D(assetManager, animationData);
+    }
+
     public ComponentAnimations2D create(final String json) {
 
         return null;

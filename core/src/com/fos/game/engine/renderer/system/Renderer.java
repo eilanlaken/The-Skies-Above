@@ -13,7 +13,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
-import com.fos.game.engine.components.animation.ComponentAnimations2D;
+import com.fos.game.engine.components.animations.ComponentAnimations2D;
 import com.fos.game.engine.components.base.Component;
 import com.fos.game.engine.components.base.ComponentType;
 import com.fos.game.engine.components.camera.ComponentCamera;

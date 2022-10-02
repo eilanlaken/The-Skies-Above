@@ -2,9 +2,9 @@ package com.fos.game.engine.entities;
 
 import com.fos.game.engine.components.base.ComponentType;
 
-public class EntityUtils {
+class EntityUtils {
 
-    public static short computeBitMask(final Object[] components) {
+    protected static short computeBitMask(final Object[] components) {
         short mask = 0;
         for (int i = 0; i < components.length; i++) {
             Object component = components[i];

@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
-import com.fos.game.engine.components.animation.ComponentAnimations2D;
+import com.fos.game.engine.components.animations.ComponentAnimations2D;
 import com.fos.game.engine.components.base.ComponentType;
 import com.fos.game.engine.components.camera.ComponentCamera;
 import com.fos.game.engine.components.lights.Light;

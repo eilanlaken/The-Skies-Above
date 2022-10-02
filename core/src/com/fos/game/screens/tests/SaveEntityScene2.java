@@ -3,10 +3,9 @@ package com.fos.game.screens.tests;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
-import com.fos.game.engine.components.animation.AnimationData;
-import com.fos.game.engine.components.animation.ComponentAnimations2D;
-import com.fos.game.engine.components.animation.FactoryAnimation;
-import com.fos.game.engine.components.animation.SpriteSheet;
+import com.fos.game.engine.components.animations.AnimationData;
+import com.fos.game.engine.components.animations.ComponentAnimations2D;
+import com.fos.game.engine.components.animations.SpriteSheet;
 import com.fos.game.engine.components.audio.ComponentSoundEffects;
 import com.fos.game.engine.components.audio.SoundEffect;
 import com.fos.game.engine.components.camera.FactoryCamera;
@@ -80,7 +79,7 @@ public class SaveEntityScene2 extends GameScreen {
         orangeSquare = new Entity();
         orangeSquare.attachComponents(
                 FactoryTransform2D.create(0,0),
-                FactoryAnimation.create(testSpriteSheet, "testArrowOrange"),
+                context.factoryAnimation.create("atlases/test/testSpriteSheet.atlas", "testArrowOrange"),
                 new ComponentScripts(new OrangeSquareScript(orangeSquare))
         );
 
@@ -101,8 +100,8 @@ public class SaveEntityScene2 extends GameScreen {
     }
 
     private void testSerialization2() {
-        AnimationData data1 = new AnimationData(testSpriteSheet, "testArrowOrange", 1, Animation.PlayMode.LOOP);
-        AnimationData data2 = new AnimationData(testSpriteSheet, "testArrowGreen", 2, Animation.PlayMode.LOOP_PINGPONG);
+        AnimationData data1 = new AnimationData("atlases/test/testSpriteSheet.atlas", "testArrowOrange", 1, Animation.PlayMode.LOOP);
+        AnimationData data2 = new AnimationData("atlases/test/testSpriteSheet.atlas", "testArrowGreen", 2, Animation.PlayMode.LOOP_PINGPONG);
 
         ComponentAnimations2D component = context.factoryAnimation.create(data1, data2);
         System.out.println();
