@@ -5,17 +5,19 @@ import com.badlogic.gdx.physics.bullet.dynamics.*;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.fos.game.engine.ecs.components.base.ComponentType;
-import com.fos.game.engine.ecs.systems.physics.PhysicsWorld2D;
-import com.fos.game.engine.ecs.systems.physics.PhysicsWorld3D;
+import com.fos.game.engine.ecs.systems.audio.AudioPlayer;
+import com.fos.game.engine.ecs.systems.physics2d.Physics2D;
+import com.fos.game.engine.ecs.systems.physics3d.Physics3D;
 import com.fos.game.engine.ecs.systems.signals.SignalRouter;
 
 public class EntityContainer implements Disposable {
 
     // later think about possible improvements
     // systems
+    private Physics2D physics2D;
+    private Physics3D physics3D;
+    private AudioPlayer audioPlayer;
     private SignalRouter signalRouter;
-    private PhysicsWorld2D physicsWorld2D;
-    private PhysicsWorld3D physicsWorld3D;
 
     // container array
     public Array<Entity> entities;
@@ -24,25 +26,26 @@ public class EntityContainer implements Disposable {
     public EntityContainer(boolean use2DPhysics, boolean use3DPhysics) {
         if (use2DPhysics) initPhysicsWorld2D();
         if (use3DPhysics) initPhysicsWorld3D();
-        signalRouter = new SignalRouter();
+        this.audioPlayer = new AudioPlayer();
+        this.signalRouter = new SignalRouter();
         this.entities = new Array<>();
         this.toRemove = new Array<>();
     }
 
     private void initPhysicsWorld2D() {
-        this.physicsWorld2D = new PhysicsWorld2D();
+        this.physics2D = new Physics2D();
     }
 
     private void initPhysicsWorld3D() {
-        this.physicsWorld3D = new PhysicsWorld3D();
+        this.physics3D = new Physics3D();
     }
 
-    public World getPhysicsWorld2D() {
-        return physicsWorld2D.world;
+    public World getPhysics2D() {
+        return physics2D.world;
     }
 
-    public btDynamicsWorld getPhysicsWorld3D() {
-        return physicsWorld3D.dynamicsWorld;
+    public btDynamicsWorld getPhysics3D() {
+        return physics3D.dynamicsWorld;
     }
 
     public void addEntity(final Entity entity) {
@@ -53,7 +56,7 @@ public class EntityContainer implements Disposable {
         entity.localId = entities.size-1;
         if ((entity.componentsBitMask & ComponentType.PHYSICS_BODY_3D.bitMask) == ComponentType.PHYSICS_BODY_3D.bitMask) {
             btRigidBody body = (btRigidBody) entity.components[ComponentType.PHYSICS_BODY_3D.ordinal()];
-            physicsWorld3D.dynamicsWorld.addRigidBody(body);
+            physics3D.dynamicsWorld.addRigidBody(body);
         }
     }
 
@@ -71,9 +74,9 @@ public class EntityContainer implements Disposable {
         // update all scripts
         // ...
         final float delta = Math.min(1f / 30f, deltaTime);
-        if (physicsWorld3D != null) physicsWorld3D.stepSimulation(delta);
-        if (physicsWorld2D != null) physicsWorld2D.stepSimulation(deltaTime);
-        if (signalRouter != null) signalRouter.routeSignals(this);
+        if (physics3D != null) physics3D.process(this);
+        if (physics2D != null) physics2D.process(this);
+        if (signalRouter != null) signalRouter.process(this);
     }
 
     private void removeDeadEntities() {
@@ -88,7 +91,7 @@ public class EntityContainer implements Disposable {
 
     @Override
     public void dispose() {
-        if (physicsWorld2D != null) physicsWorld2D.dispose();
-        if (physicsWorld3D != null) physicsWorld3D.dispose();
+        if (physics2D != null) physics2D.dispose();
+        if (physics3D != null) physics3D.dispose();
     }
 }

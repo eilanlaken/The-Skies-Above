@@ -99,18 +99,15 @@ public class Entity implements Disposable {
         }
     }
 
-    // TODO
+    // TODO - remove (bit by bit) the update method from an entity.
+
     public void update(float delta) {
-        ComponentRigidBody3D body = (ComponentRigidBody3D) components[ComponentType.PHYSICS_BODY_3D.ordinal()];
         ComponentTransform3D transform = (ComponentTransform3D) components[ComponentType.TRANSFORM_3D.ordinal()];
         ComponentScripts scripts = (ComponentScripts) components[ComponentType.SCRIPTS.ordinal()];
         Light light = (Light) components[ComponentType.LIGHT.ordinal()];
         ComponentAnimations2D animations = (ComponentAnimations2D) components[ComponentType.ANIMATIONS_2D.ordinal()];
         ComponentCamera camera = (ComponentCamera) components[ComponentType.CAMERA.ordinal()];
 
-        if (body != null) {
-            body.getWorldTransform(transform);
-        }
         if (camera != null) {
             camera.lens.update();
         }

@@ -1,0 +1,51 @@
+How to check if sound is still playing:
+https://gamedev.stackexchange.com/questions/146223/libgdx-waiting-for-sound-or-music-to-finish
+
+===============================================================================================================
+I may have found a solution, although it is untested and will probably only work on desktop.
+
+You can query the state of a sound instance using AL10.alGetSourcei(id, AL10.AL_SOURCE_STATE). This will return an int constant signifying the state of the source. To check if the source is playing you check if the returned value is AL10.AL_PLAYING like so:
+
+// id = the value returned by sound.play()
+boolean isPlaying = AL10.alGetSourcei(id, AL10.AL_SOURCE_STATE) == AL10.AL_PLAYING;
+The problem is that we cannot access the AL10 class and methods from the Core project, so we have to delegate the task to a class created in the Desktop project.
+
+In your Core project create an interface like so:
+
+public interface SoundStateChecker {
+    public boolean isPlaying(int id);
+}
+In your Desktop project define a class like so:
+
+public class ALStateChecker implements SoundStateChecker {
+    @Override
+    public boolean isPlaying(int id) {
+        return AL10.alGetSourcei(id, AL10.AL_SOURCE_STATE) == AL10.AL_PLAYING;
+    }
+}
+Now in your Lwjgl3Launcher in your Desktop project where you create your Lwjgl3Application you simply supply an instance of your ALStateChecker to your main game class:
+
+new Lwjgl3Application(new MainClass(new ALStateChecker()), config);
+You can now use a reference to the state checker to see if the sound is playing:
+
+int dieSoundID = -1;
+int gameOverSoundID = -1;
+boolean hasShownButton = false;
+
+if (hasDied){
+    // If this sound hasn't played before...
+    if(dieSoundID == -1)
+        dieSoundID = dieSound.play();
+
+    // If this sound hasn't played before AND dieSound isn't playing...
+    if(!stateChecker.isPlaying(dieSoundID) && gameOverSoundID == -1)
+        gameOverSoundID = gameOverSound.play();
+
+    // If neither sound is playing AND they have been played before
+    // AND we haven't shown the button.
+    if(!stateChecker.isPlaying(dieSoundID) && !stateChecker.isPlaying(gameOverSoundID
+       && dieSoundID != -1 && gameOverSoundID != -1 && !hasShownButton) {
+        hasShownButton = true;
+        showButton();
+    }
+}

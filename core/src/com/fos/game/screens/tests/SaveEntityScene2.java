@@ -37,7 +37,10 @@ public class SaveEntityScene2 extends GameScreen {
     private Entity orangeSquare;
 
     // serialization
-    private JsonConverter jsonConverter;
+    // testing
+    ComponentSoundEffects componentSoundEffects;
+    ComponentAnimations2D componentAnimations2D;
+    JsonConverter jsonConverter;
 
     public enum EntityLayers {
         LAYER_1,
@@ -65,7 +68,7 @@ public class SaveEntityScene2 extends GameScreen {
         orangeSquare.attachComponents(
                 FactoryTransform2D.create(0,0),
                 context.factoryAnimation.create("atlases/test/testSpriteSheet.atlas", "testArrowOrange"),
-                context.factoryAudio.create("audio/sample.wav", "audio/sample2.wav"),
+                context.factoryAudio.create("audio/sample.wav", "audio/beep.wav"),
                 new ComponentScripts(new OrangeSquareScript(orangeSquare))
         );
 
@@ -77,10 +80,10 @@ public class SaveEntityScene2 extends GameScreen {
     }
 
     private void testSerialization1() {
-        ComponentSoundEffects component = context.factoryAudio.create("audio/sample.wav", "audio/sample2.wav");
-        component.play("audio/sample.wav");
-        System.out.println("component: " + component);
-        String json = jsonConverter.gson.toJson(component);
+        componentSoundEffects = context.factoryAudio.create("audio/sample.wav", "audio/beep.wav");
+        componentSoundEffects.play("audio/beep.wav");
+        System.out.println("component: " + componentSoundEffects);
+        String json = jsonConverter.gson.toJson(componentSoundEffects);
         System.out.println("json: " + json);
         //ComponentSoundEffects deserialize = context.factoryAudio.createFromJson(json);
         //deserialize.get(0).sound.play();
@@ -90,10 +93,10 @@ public class SaveEntityScene2 extends GameScreen {
         AnimationData data1 = new AnimationData("atlases/test/testSpriteSheet.atlas", "testArrowOrange", 1, Animation.PlayMode.LOOP);
         AnimationData data2 = new AnimationData("atlases/test/testSpriteSheet.atlas", "testArrowGreen", 2, Animation.PlayMode.LOOP_PINGPONG);
 
-        ComponentAnimations2D component = context.factoryAnimation.create(data1, data2);
+        componentAnimations2D = context.factoryAnimation.create(data1, data2);
         System.out.println();
-        System.out.println("component: " + component);
-        String json = jsonConverter.gson.toJson(component);
+        System.out.println("component: " + componentAnimations2D);
+        String json = jsonConverter.gson.toJson(componentAnimations2D);
         System.out.println("json: " + json);
         //ComponentAnimations2D deserialized = context.factoryAnimation.create(json);
         //System.out.println("deserialized: " + deserialized.elapsedTime);
@@ -110,13 +113,15 @@ public class SaveEntityScene2 extends GameScreen {
     public void update(float deltaTime) {
         final float delta = Math.min(1f / 30f, deltaTime);
         container.update(delta);
+
+        //componentSoundEffects.lastPlayingSoundEffect.sound.
     }
 
     public static Map<String, Class> getRequiredAssetsNameTypeMap() {
         HashMap<String, Class> assetNameClassMap = new HashMap<>();
         assetNameClassMap.put("atlases/test/testSpriteSheet.atlas", SpriteSheet.class);
         assetNameClassMap.put("audio/sample.wav", Sound.class);
-        assetNameClassMap.put("audio/sample2.wav", Sound.class);
+        assetNameClassMap.put("audio/beep.wav", Sound.class);
         return assetNameClassMap;
     }
 }
