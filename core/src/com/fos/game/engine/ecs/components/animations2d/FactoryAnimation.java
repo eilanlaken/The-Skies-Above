@@ -21,7 +21,7 @@ public class FactoryAnimation extends Factory {
         return new ComponentAnimations2D(assetManager, animationData);
     }
 
-    public ComponentAnimations2D create(final String json) {
+    public ComponentAnimations2D createFromJson(final String json) {
 
         return null;
     }

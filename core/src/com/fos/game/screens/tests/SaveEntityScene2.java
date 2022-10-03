@@ -1,8 +1,8 @@
 package com.fos.game.screens.tests;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.utils.Array;
+import com.fos.game.engine.context.GameContext;
+import com.fos.game.engine.context.GameScreen;
 import com.fos.game.engine.ecs.components.animations2d.AnimationData;
 import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
 import com.fos.game.engine.ecs.components.animations2d.SpriteSheet;
@@ -11,25 +11,22 @@ import com.fos.game.engine.ecs.components.audio.SoundEffect;
 import com.fos.game.engine.ecs.components.camera.FactoryCamera;
 import com.fos.game.engine.ecs.components.scripts.ComponentScripts;
 import com.fos.game.engine.ecs.components.transform.FactoryTransform2D;
-import com.fos.game.engine.context.GameContext;
-import com.fos.game.engine.context.GameScreen;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.entities.EntityContainer;
+import com.fos.game.engine.ecs.systems.renderer.base.Renderer;
 import com.fos.game.engine.files.assets.GameAssetManager;
 import com.fos.game.engine.files.serialization.JsonConverter;
-import com.fos.game.engine.ecs.systems.renderer.base.Renderer;
 import com.fos.game.scripts.test.OrangeSquareScript;
 import com.fos.game.scripts.test.SimpleCameraScript;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class SaveEntityScene extends GameScreen {
+public class SaveEntityScene2 extends GameScreen {
 
     private final GameAssetManager assetManager;
 
     // assets
-    private SpriteSheet testSpriteSheet;
     private EntityContainer container;
 
     // rendering
@@ -47,7 +44,7 @@ public class SaveEntityScene extends GameScreen {
         LAYER_2,
     }
 
-    public SaveEntityScene(final GameContext context) {
+    public SaveEntityScene2(final GameContext context) {
         super(context);
         this.jsonConverter = context.jsonConverter;
         this.assetManager = context.assetManager;
@@ -56,17 +53,6 @@ public class SaveEntityScene extends GameScreen {
 
     @Override
     public void show() {
-        setupAssets();
-        setupScene();
-    }
-
-    private void setupAssets() {
-        testSpriteSheet = assetManager.get("atlases/test/testSpriteSheet.atlas", SpriteSheet.class);
-        Array<TextureAtlas.AtlasRegion> regionArray = testSpriteSheet.findRegions("testArrowOrange");
-        System.out.println("width: " + regionArray.get(0).getRegionWidth());
-    }
-
-    private void setupScene() {
         container = new EntityContainer(false, true);
 
         camera = new Entity();
@@ -79,6 +65,7 @@ public class SaveEntityScene extends GameScreen {
         orangeSquare.attachComponents(
                 FactoryTransform2D.create(0,0),
                 context.factoryAnimation.create("atlases/test/testSpriteSheet.atlas", "testArrowOrange"),
+                context.factoryAudio.create("audio/sample.wav", "audio/sample2.wav"),
                 new ComponentScripts(new OrangeSquareScript(orangeSquare))
         );
 
