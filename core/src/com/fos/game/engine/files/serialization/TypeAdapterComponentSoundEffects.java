@@ -1,6 +1,6 @@
 package com.fos.game.engine.files.serialization;
 
-import com.fos.game.engine.components.audio.ComponentSoundEffects;
+import com.fos.game.engine.ecs.components.audio.ComponentSoundEffects;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;

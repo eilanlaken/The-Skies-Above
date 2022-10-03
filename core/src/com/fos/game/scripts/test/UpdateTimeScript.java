@@ -1,7 +1,7 @@
 package com.fos.game.scripts.test;
 
-import com.fos.game.engine.components.animations2d.ComponentAnimations2D;
-import com.fos.game.engine.components.scripts.Script;
+import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
+import com.fos.game.engine.ecs.components.scripts.Script;
 
 public class UpdateTimeScript extends Script {
 

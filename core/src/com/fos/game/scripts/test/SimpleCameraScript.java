@@ -3,10 +3,10 @@ package com.fos.game.scripts.test;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.fos.game.engine.components.base.ComponentType;
-import com.fos.game.engine.components.camera.ComponentCamera;
-import com.fos.game.engine.components.scripts.Script;
-import com.fos.game.engine.entities.Entity;
+import com.fos.game.engine.ecs.components.base.ComponentType;
+import com.fos.game.engine.ecs.components.camera.ComponentCamera;
+import com.fos.game.engine.ecs.components.scripts.Script;
+import com.fos.game.engine.ecs.entities.Entity;
 
 public class SimpleCameraScript extends Script {
 

@@ -1,6 +1,6 @@
 package com.fos.game.scripts.test;
 
-import com.fos.game.engine.components.scripts.Script;
+import com.fos.game.engine.ecs.components.scripts.Script;
 
 public class SimplePrintScript extends Script {
 

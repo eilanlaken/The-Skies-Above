@@ -2,14 +2,14 @@ package com.fos.game.screens.devtools;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g3d.Model;
-import com.fos.game.engine.components.camera.FactoryCamera;
-import com.fos.game.engine.components.scripts.ComponentScripts;
-import com.fos.game.engine.components.transform.FactoryTransform2D;
+import com.fos.game.engine.ecs.components.camera.FactoryCamera;
+import com.fos.game.engine.ecs.components.scripts.ComponentScripts;
+import com.fos.game.engine.ecs.components.transform.FactoryTransform2D;
 import com.fos.game.engine.context.GameContext;
-import com.fos.game.engine.entities.Entity;
-import com.fos.game.engine.entities.EntityContainer;
+import com.fos.game.engine.ecs.entities.Entity;
+import com.fos.game.engine.ecs.entities.EntityContainer;
 import com.fos.game.engine.files.assets.GameAssetManager;
-import com.fos.game.engine.systems.renderer.base.Renderer;
+import com.fos.game.engine.ecs.systems.renderer.base.Renderer;
 import com.fos.game.engine.context.GameScreen;
 
 import java.util.HashMap;

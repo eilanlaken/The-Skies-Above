@@ -8,7 +8,7 @@ import com.badlogic.gdx.assets.loaders.AsynchronousAssetLoader;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
-import com.fos.game.engine.components.audio.SoundEffect;
+import com.fos.game.engine.ecs.components.audio.SoundEffect;
 
 public class SoundEffectLoader extends AsynchronousAssetLoader<SoundEffect, SoundEffectLoader.SoundEffectParameter> {
 

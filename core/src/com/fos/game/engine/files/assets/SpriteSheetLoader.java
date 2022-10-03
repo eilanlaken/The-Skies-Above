@@ -10,7 +10,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
-import com.fos.game.engine.components.animations2d.SpriteSheet;
+import com.fos.game.engine.ecs.components.animations2d.SpriteSheet;
 
 public class SpriteSheetLoader extends SynchronousAssetLoader<SpriteSheet, SpriteSheetLoader.SpriteSheetParameter> {
 

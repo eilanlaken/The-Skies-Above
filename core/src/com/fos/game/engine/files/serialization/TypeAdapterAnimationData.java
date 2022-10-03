@@ -1,7 +1,7 @@
 package com.fos.game.engine.files.serialization;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.fos.game.engine.components.animations2d.AnimationData;
+import com.fos.game.engine.ecs.components.animations2d.AnimationData;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;

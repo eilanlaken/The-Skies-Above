@@ -1,11 +1,11 @@
 package com.fos.game.scripts.common;
 
 import com.badlogic.gdx.math.Vector2;
-import com.fos.game.engine.components.base.ComponentType;
-import com.fos.game.engine.components.scripts.Script;
-import com.fos.game.engine.components.transform.ComponentTransform2D;
-import com.fos.game.engine.components.transform.FactoryTransform2D;
-import com.fos.game.engine.entities.Entity;
+import com.fos.game.engine.ecs.components.base.ComponentType;
+import com.fos.game.engine.ecs.components.scripts.Script;
+import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
+import com.fos.game.engine.ecs.components.transform.FactoryTransform2D;
+import com.fos.game.engine.ecs.entities.Entity;
 
 public class ParentTransform2D extends Script {
 
