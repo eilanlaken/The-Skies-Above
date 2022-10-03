@@ -13,11 +13,11 @@ class TypeAdapterComponentSoundEffects implements JsonSerializer<ComponentSoundE
     @Override
     public JsonElement serialize(ComponentSoundEffects src, Type typeOfSrc, JsonSerializationContext context) {
         JsonObject result = new JsonObject();
-        String[] paths = new String[src.size];
+        String[] paths = new String[3/*src.size*/];
         for (int i = 0; i < paths.length; i++) {
-            paths[i] = src.get(i).filepath;
+            //paths[i] = src.get(i).filepath;
         }
-        result.add("paths", context.serialize(paths, paths.getClass()));
+        //result.add("paths", context.serialize(paths, paths.getClass()));
         return result;
     }
 

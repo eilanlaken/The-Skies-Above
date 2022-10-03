@@ -1,6 +1,5 @@
 package com.fos.game.engine.files.assets;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetLoaderParameters;
 import com.badlogic.gdx.assets.AssetManager;
@@ -20,7 +19,7 @@ public class SoundEffectLoader extends AsynchronousAssetLoader<SoundEffect, Soun
 
     @Override
     public void loadAsync(AssetManager manager, String fileName, FileHandle file, SoundEffectLoader.SoundEffectParameter parameter) {
-        soundEffect = new SoundEffect(Gdx.audio.newSound(file), fileName);
+        //soundEffect = new SoundEffect(Gdx.audio.newSound(file));
     }
 
     @Override
