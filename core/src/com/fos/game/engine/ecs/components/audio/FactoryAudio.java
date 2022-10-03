@@ -13,10 +13,19 @@ public class FactoryAudio extends Factory {
         super(assetManager, jsonConverter);
     }
 
-    public ComponentSoundEffects create(final SoundEffect ...soundEffects) {
-        return new ComponentSoundEffects(soundEffects);
+    public ComponentSoundEffects create(final SoundEffectData... soundEffectData) {
+        return new ComponentSoundEffects(assetManager, soundEffectData);
     }
 
+    public ComponentSoundEffects create(final String ...filePaths) {
+        SoundEffectData[] soundEffectData = new SoundEffectData[filePaths.length];
+        for (int i = 0; i < filePaths.length; i++) {
+            soundEffectData[i] = new SoundEffectData(filePaths[i], filePaths[i], 1.0f, 1.0f, 1.0f, 0, false);
+        }
+        return new ComponentSoundEffects(assetManager, soundEffectData);
+    }
+
+    @Deprecated
     public ComponentSoundEffects createFromJson(final String json) {
         HashMap<String, ArrayList> pathsMap = jsonConverter.gson.fromJson(json, HashMap.class);
         ArrayList<String> paths = pathsMap.get("paths");
@@ -24,14 +33,6 @@ public class FactoryAudio extends Factory {
         for (int i = 0; i < soundEffects.length; i++) {
             String path = paths.get(i);
             soundEffects[i] = this.assetManager.get(path, SoundEffect.class);
-        }
-        return new ComponentSoundEffects(soundEffects);
-    }
-
-    public ComponentSoundEffects create(final String ...names) {
-        SoundEffect[] soundEffects = new SoundEffect[names.length];
-        for (int i = 0; i < names.length; i++) {
-            soundEffects[i] = this.assetManager.get(names[i], SoundEffect.class);
         }
         return new ComponentSoundEffects(soundEffects);
     }

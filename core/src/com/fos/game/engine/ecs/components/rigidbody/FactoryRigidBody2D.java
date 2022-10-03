@@ -27,7 +27,7 @@ public class FactoryRigidBody2D extends Factory {
         fixtureDef.shape = shape;
         fixtureDef.density = 100;
 
-        ComponentRigidBody2D rigidBody2D = new ComponentRigidBody2D(container.getPhysicsWorld2D().createBody(bodyDef));
+        ComponentRigidBody2D rigidBody2D = new ComponentRigidBody2D(container.getPhysics2D().createBody(bodyDef));
         rigidBody2D.body.setTransform(0, 0, 0);
         //rigidBody2D.body.setTransform(0, 0, 90 * MathUtils.degreesToRadians);
         shape.dispose();
@@ -49,7 +49,7 @@ public class FactoryRigidBody2D extends Factory {
         fixtureDef.filter.categoryBits = 0;
         fixtureDef.filter.maskBits = 0;
 
-        ComponentRigidBody2D rigidBody2D = new ComponentRigidBody2D(container.getPhysicsWorld2D().createBody(bodyDef));
+        ComponentRigidBody2D rigidBody2D = new ComponentRigidBody2D(container.getPhysics2D().createBody(bodyDef));
         //rigidBody2D.body.setTransform(0, 0, 0);
         rigidBody2D.body.setTransform(0, 0, 90 * MathUtils.degreesToRadians);
         shape.dispose();
@@ -70,7 +70,7 @@ public class FactoryRigidBody2D extends Factory {
         fixtureDef.filter.categoryBits = 0;
         fixtureDef.filter.maskBits = 0;
 
-        ComponentRigidBody2D componentRigidBody2D = new ComponentRigidBody2D(container.getPhysicsWorld2D().createBody(bodyDef));
+        ComponentRigidBody2D componentRigidBody2D = new ComponentRigidBody2D(container.getPhysics2D().createBody(bodyDef));
         componentRigidBody2D.body.setTransform(0, 0, 90 * MathUtils.degreesToRadians);
         shape.dispose();
         return componentRigidBody2D;
@@ -80,7 +80,7 @@ public class FactoryRigidBody2D extends Factory {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
         bodyDef.position.set(0, 0);
-        Body body = container.getPhysicsWorld2D().createBody(bodyDef);
+        Body body = container.getPhysics2D().createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(1.59375f/2, 1.59375f/2);
         FixtureDef fixtureDef = new FixtureDef();
@@ -103,7 +103,7 @@ public class FactoryRigidBody2D extends Factory {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
         bodyDef.position.set(0, 0);
-        Body body = container.getPhysicsWorld2D().createBody(bodyDef);
+        Body body = container.getPhysics2D().createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(width / 2 / ppm, height / 2 / ppm);
         FixtureDef fixtureDef = new FixtureDef();
@@ -126,7 +126,7 @@ public class FactoryRigidBody2D extends Factory {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(0, 0);
-        Body body = container.getPhysicsWorld2D().createBody(bodyDef);
+        Body body = container.getPhysics2D().createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(scale * width / 2 / ppm, scale * height / 2 / ppm);
         FixtureDef fixtureDef = new FixtureDef();

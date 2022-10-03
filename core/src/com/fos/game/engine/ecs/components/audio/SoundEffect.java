@@ -4,21 +4,20 @@ import com.badlogic.gdx.audio.Sound;
 
 public class SoundEffect {
 
-    public final String filepath;
     public Sound sound;
+    public float pitch;
+    public float volume;
+    public float pan;
+    public int priority;
+    public boolean loop;
 
-    public SoundEffect(final Sound sound, final String filepath) {
+    public SoundEffect(final Sound sound, float pitch, float volume, float pan, int priority, boolean loop) {
         this.sound = sound;
-        this.filepath = filepath;
+        this.pitch = pitch;
+        this.volume = volume;
+        this.pan = pan;
+        this.priority = priority;
+        this.loop = loop;
     }
-
-    /*
-    @Deprecated
-    protected SoundEffect(final GameAssetManager assetManager, final String path) {
-        this.filepath = path;
-        this.sound = assetManager.get(path, Sound.class);
-    }
-
-     */
 
 }

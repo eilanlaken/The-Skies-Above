@@ -2,7 +2,9 @@ package com.fos.game.engine.files.assets;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Mesh;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
@@ -13,9 +15,8 @@ import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.JsonReader;
 import com.fos.game.engine.ecs.components.animations2d.SpriteSheet;
-import com.fos.game.engine.ecs.components.audio.SoundEffect;
-import com.fos.game.engine.ecs.systems.renderer.materials.base.Material;
 import com.fos.game.engine.ecs.components.modelinstance.UtilsModel;
+import com.fos.game.engine.ecs.systems.renderer.materials.base.Material;
 
 import java.nio.FloatBuffer;
 import java.util.HashMap;
@@ -34,7 +35,7 @@ public class GameAssetManager extends AssetManager {
         super();
         this.setLoader(Model.class, ".inst", new G3dModelLoader(new JsonReader(), getFileHandleResolver()));
         this.setLoader(SpriteSheet.class, new SpriteSheetLoader(getFileHandleResolver()));
-        this.setLoader(SoundEffect.class, new SoundEffectLoader(getFileHandleResolver()));
+        //this.setLoader(SoundEffect.class, new SoundEffectLoader(getFileHandleResolver()));
     }
 
     @Override

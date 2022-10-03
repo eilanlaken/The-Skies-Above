@@ -7,8 +7,9 @@ import com.fos.game.engine.ecs.components.signals.ComponentSignalReceiver;
 import com.fos.game.engine.ecs.components.signals.Signal;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.entities.EntityContainer;
+import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
 
-public class SignalRouter {
+public class SignalRouter implements EntitiesProcessor {
 
     private final Array<Entity> signalEmitters;
     private final Array<Entity> signalReceivers;
@@ -20,7 +21,8 @@ public class SignalRouter {
         this.signals = new Array<>();
     }
 
-    public void routeSignals(final EntityContainer entityContainer) {
+    @Override
+    public void process(final EntityContainer entityContainer) {
         SignalRouterUtils.prepare(entityContainer.entities, signalEmitters, signalReceivers, signals);
         // flush the receive queue for all signal receivers
         for (final Entity entity : signalReceivers) {
