@@ -1,51 +1,51 @@
 package com.fos.game.screens.loading;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.fos.game.engine.context.GameContext;
-import com.fos.game.engine.context.GameScreen;
+import com.fos.game.engine.context.GameScreen2;
 import com.fos.game.engine.files.assets.GameAssetManager;
-import com.fos.game.screens.tests.SaveEntityScene2;
+import com.fos.game.screens.tests.SaveEntityScene3;
 
 import java.util.Map;
 
-public class LoadingScreen extends GameScreen {
+public class LoadingScreen2 extends GameScreen2 {
 
     private final GameAssetManager assetManager;
     private boolean doneLoading = false;
 
-    public LoadingScreen(final GameContext context) {
+    public LoadingScreen2(final GameContext context) {
         super(context);
-        assetManager = context.assetManager;
+        this.assetManager = context.assetManager;
     }
 
     @Override
-    public void show() {
+    protected void start() {
         queueAssets();
     }
 
-    private void queueAssets() {
-        Map<String, Class> assetsNameTypeMap = SaveEntityScene2.getRequiredAssetsNameTypeMap();
-        for (Map.Entry<String, Class> entry : assetsNameTypeMap.entrySet()) {
-            this.assetManager.load(entry.getKey(), entry.getValue());
-        }
-    }
-
     @Override
-    public void render(float deltaTime) {
-        update(deltaTime);
-        Gdx.gl.glClearColor(0,1,0,0);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-    }
-
-    @Override
-    public void update(float deltaTime) {
+    protected void update(float delta) {
         while (!doneLoading) {
             if (assetManager.update()) {
                 doneLoading = true;
-                context.setScreen(new SaveEntityScene2(context));
+                context.setScreen(new SaveEntityScene3(context));
             }
         }
     }
 
+    @Override
+    public void resize(int width, int height) {
+
+    }
+
+    @Override
+    public void dispose() {
+
+    }
+
+    private void queueAssets() {
+        Map<String, Class> assetsNameTypeMap = SaveEntityScene3.getRequiredAssetsNameTypeMap();
+        for (Map.Entry<String, Class> entry : assetsNameTypeMap.entrySet()) {
+            this.assetManager.load(entry.getKey(), entry.getValue());
+        }
+    }
 }

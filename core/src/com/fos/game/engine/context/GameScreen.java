@@ -1,22 +1,28 @@
 package com.fos.game.engine.context;
 
 import com.badlogic.gdx.Screen;
-import com.fos.game.engine.context.GameContext;
 
-public abstract class GameScreen implements Screen {
+public abstract class GameScreen2 implements Screen {
 
     protected final GameContext context;
 
-    public GameScreen(final GameContext context) {
+    public GameScreen2(final GameContext context) {
         this.context = context;
     }
 
-    public abstract void update(float deltaTime);
+    @Override
+    public final void show() {
+        this.start();
+    }
+
+    protected abstract void start();
 
     @Override
-    public void resize(int width, int height) {
-
+    public final void render(float delta) {
+        this.update(delta);
     }
+
+    protected abstract void update(float delta);
 
     @Override
     public void pause() {
@@ -30,11 +36,6 @@ public abstract class GameScreen implements Screen {
 
     @Override
     public void hide() {
-
-    }
-
-    @Override
-    public void dispose() {
 
     }
 
