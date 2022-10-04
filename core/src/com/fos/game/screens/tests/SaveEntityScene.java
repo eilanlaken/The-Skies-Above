@@ -3,7 +3,7 @@ package com.fos.game.screens.tests;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.fos.game.engine.context.GameContext;
-import com.fos.game.engine.context.GameScreen2;
+import com.fos.game.engine.context.GameScreen;
 import com.fos.game.engine.ecs.components.animations2d.AnimationData;
 import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
 import com.fos.game.engine.ecs.components.animations2d.SpriteSheet;
@@ -20,7 +20,7 @@ import com.fos.game.scripts.test.SimpleCameraScript;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SaveEntityScene3 extends GameScreen2 {
+public class SaveEntityScene extends GameScreen {
 
     // assets
     private EntityContainer container;
@@ -40,7 +40,7 @@ public class SaveEntityScene3 extends GameScreen2 {
         LAYER_2,
     }
 
-    public SaveEntityScene3(final GameContext context) {
+    public SaveEntityScene(final GameContext context) {
         super(context);
         this.jsonConverter = context.jsonConverter;
     }

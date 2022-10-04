@@ -1,18 +1,18 @@
 package com.fos.game.screens.loading;
 
 import com.fos.game.engine.context.GameContext;
-import com.fos.game.engine.context.GameScreen2;
+import com.fos.game.engine.context.GameScreen;
 import com.fos.game.engine.files.assets.GameAssetManager;
-import com.fos.game.screens.tests.SaveEntityScene3;
+import com.fos.game.screens.tests.SaveEntityScene;
 
 import java.util.Map;
 
-public class LoadingScreen2 extends GameScreen2 {
+public class LoadingScreen extends GameScreen {
 
     private final GameAssetManager assetManager;
     private boolean doneLoading = false;
 
-    public LoadingScreen2(final GameContext context) {
+    public LoadingScreen(final GameContext context) {
         super(context);
         this.assetManager = context.assetManager;
     }
@@ -27,7 +27,7 @@ public class LoadingScreen2 extends GameScreen2 {
         while (!doneLoading) {
             if (assetManager.update()) {
                 doneLoading = true;
-                context.setScreen(new SaveEntityScene3(context));
+                context.setScreen(new SaveEntityScene(context));
             }
         }
     }
@@ -43,7 +43,7 @@ public class LoadingScreen2 extends GameScreen2 {
     }
 
     private void queueAssets() {
-        Map<String, Class> assetsNameTypeMap = SaveEntityScene3.getRequiredAssetsNameTypeMap();
+        Map<String, Class> assetsNameTypeMap = SaveEntityScene.getRequiredAssetsNameTypeMap();
         for (Map.Entry<String, Class> entry : assetsNameTypeMap.entrySet()) {
             this.assetManager.load(entry.getKey(), entry.getValue());
         }

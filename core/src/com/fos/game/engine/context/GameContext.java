@@ -16,7 +16,7 @@ import com.fos.game.engine.ecs.components.transform.FactoryTransform2D;
 import com.fos.game.engine.ecs.components.transform.FactoryTransform3D;
 import com.fos.game.engine.files.assets.GameAssetManager;
 import com.fos.game.engine.files.serialization.JsonConverter;
-import com.fos.game.screens.loading.LoadingScreen2;
+import com.fos.game.screens.loading.LoadingScreen;
 
 public class GameContext extends Game {
 
@@ -58,7 +58,7 @@ public class GameContext extends Game {
 		this.factoryTransform2D = new FactoryTransform2D(this.assetManager, this.jsonConverter);
 		this.factoryTransform3D = new FactoryTransform3D(this.assetManager, this.jsonConverter);
 		// set the screen to the entry screen
-		setScreen(new LoadingScreen2(this));
+		setScreen(new LoadingScreen(this));
 	}
 
 	@Override

@@ -2,11 +2,11 @@ package com.fos.game.engine.context;
 
 import com.badlogic.gdx.Screen;
 
-public abstract class GameScreen2 implements Screen {
+public abstract class GameScreen implements Screen {
 
     protected final GameContext context;
 
-    public GameScreen2(final GameContext context) {
+    public GameScreen(final GameContext context) {
         this.context = context;
     }
 
