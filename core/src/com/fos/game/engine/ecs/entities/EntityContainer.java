@@ -23,13 +23,19 @@ public class EntityContainer implements Disposable {
     private Array<Entity> toAdd;
     private Array<Entity> toRemove;
 
+    // TODO: correct this system.
+    private Physics2D physics2D = new Physics2D();
+    private Physics3D physics3D = new Physics3D();
+
     public EntityContainer() {
         this.entities = new Array<>();
         this.toRemove = new Array<>();
         this.toAdd = new Array<>();
         this.systemEntitiesMap.put(new AudioPlayer(), new Array<Entity>());
-        this.systemEntitiesMap.put(new Physics2D(), new Array<Entity>());
-        this.systemEntitiesMap.put(new Physics3D(), new Array<Entity>());
+        //this.systemEntitiesMap.put(new Physics2D(), new Array<Entity>());
+        //this.systemEntitiesMap.put(new Physics3D(), new Array<Entity>());
+        this.systemEntitiesMap.put(physics2D, new Array<Entity>());
+        this.systemEntitiesMap.put(physics3D, new Array<Entity>());
         this.systemEntitiesMap.put(new Renderer(), new Array<Entity>());
         this.systemEntitiesMap.put(new ScriptsUpdater(), new Array<Entity>());
         this.systemEntitiesMap.put(new SignalRouter(), new Array<Entity>());
@@ -75,12 +81,10 @@ public class EntityContainer implements Disposable {
 
 
     public World getPhysics2D() {
-        return null;
-        //return physics2D.world;
+        return physics2D.world;
     }
     public btDynamicsWorld getPhysics3D() {
-        return null;
-        //return physics3D.dynamicsWorld;
+        return physics3D.dynamicsWorld;
     }
 
     @Override

@@ -3,7 +3,7 @@ package com.fos.game.screens.tests;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.fos.game.engine.context.GameContext;
-import com.fos.game.engine.context.GameScreen;
+import com.fos.game.engine.context.GameScreen2;
 import com.fos.game.engine.ecs.components.animations2d.AnimationData;
 import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
 import com.fos.game.engine.ecs.components.animations2d.SpriteSheet;
@@ -13,8 +13,6 @@ import com.fos.game.engine.ecs.components.scripts.ComponentScripts;
 import com.fos.game.engine.ecs.components.transform.FactoryTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.entities.EntityContainer;
-import com.fos.game.engine.ecs.systems.renderer.base.Renderer;
-import com.fos.game.engine.files.assets.GameAssetManager;
 import com.fos.game.engine.files.serialization.JsonConverter;
 import com.fos.game.scripts.test.OrangeSquareScript;
 import com.fos.game.scripts.test.SimpleCameraScript;
@@ -22,15 +20,10 @@ import com.fos.game.scripts.test.SimpleCameraScript;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SaveEntityScene2 extends GameScreen {
-
-    private final GameAssetManager assetManager;
+public class SaveEntityScene3 extends GameScreen2 {
 
     // assets
     private EntityContainer container;
-
-    // rendering
-    private Renderer renderer;
 
     // entities
     private Entity camera;
@@ -47,15 +40,13 @@ public class SaveEntityScene2 extends GameScreen {
         LAYER_2,
     }
 
-    public SaveEntityScene2(final GameContext context) {
+    public SaveEntityScene3(final GameContext context) {
         super(context);
         this.jsonConverter = context.jsonConverter;
-        this.assetManager = context.assetManager;
-        this.renderer = new Renderer();
     }
 
     @Override
-    public void show() {
+    public void start() {
         container = new EntityContainer();
 
         camera = new Entity();
@@ -103,13 +94,6 @@ public class SaveEntityScene2 extends GameScreen {
     }
 
     @Override
-    public void render(float deltaTime) {
-        update(deltaTime);
-
-        //renderer.process(container);
-    }
-
-    @Override
     public void update(float deltaTime) {
         final float delta = Math.min(1f / 30f, deltaTime);
         container.update(delta);
@@ -123,5 +107,15 @@ public class SaveEntityScene2 extends GameScreen {
         assetNameClassMap.put("audio/sample.wav", Sound.class);
         assetNameClassMap.put("audio/beep.wav", Sound.class);
         return assetNameClassMap;
+    }
+
+    @Override
+    public void resize(int width, int height) {
+
+    }
+
+    @Override
+    public void dispose() {
+
     }
 }
