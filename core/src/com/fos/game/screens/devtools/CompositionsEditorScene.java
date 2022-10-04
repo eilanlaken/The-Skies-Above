@@ -35,7 +35,7 @@ public class CompositionsEditorScene extends GameScreen {
     public CompositionsEditorScene(final GameContext context) {
         super(context);
         this.assetManager = context.assetManager;
-        this.renderer = new Renderer(false);
+        this.renderer = new Renderer();
     }
 
     @Override
@@ -49,7 +49,7 @@ public class CompositionsEditorScene extends GameScreen {
     }
 
     private void setupScene() {
-        container = new EntityContainer(false, true);
+        container = new EntityContainer();
 
         /*
         Script cameraScript = new Script() {
@@ -127,7 +127,7 @@ public class CompositionsEditorScene extends GameScreen {
     public void render(float deltaTime) {
         update(deltaTime);
 
-        renderer.render(container);
+        //renderer.process(container);
     }
 
     @Override

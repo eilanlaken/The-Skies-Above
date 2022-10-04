@@ -8,8 +8,8 @@ import com.fos.game.engine.ecs.entities.Entity;
 
 public class SignalRouterUtils {
 
-    private static final short ENTITY_SIGNAL_EMITTER_BITMASK = ComponentType.SIGNAL_EMITTER.bitMask;
-    private static final short ENTITY_SIGNAL_RECEIVER_BITMASK = ComponentType.SIGNAL_RECEIVER.bitMask;
+    protected static final short ENTITY_SIGNAL_EMITTER_BITMASK = ComponentType.SIGNAL_EMITTER.bitMask;
+    protected static final short ENTITY_SIGNAL_RECEIVER_BITMASK = ComponentType.SIGNAL_RECEIVER.bitMask;
 
     protected static void prepare(final Array<Entity> allEntities,
                                   final Array<Entity> messageEmitters,

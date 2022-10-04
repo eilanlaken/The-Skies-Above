@@ -1,97 +1,93 @@
 package com.fos.game.engine.ecs.entities;
 
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.physics.bullet.dynamics.*;
+import com.badlogic.gdx.physics.bullet.dynamics.btDynamicsWorld;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
-import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.systems.audio.AudioPlayer;
+import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
 import com.fos.game.engine.ecs.systems.physics2d.Physics2D;
 import com.fos.game.engine.ecs.systems.physics3d.Physics3D;
+import com.fos.game.engine.ecs.systems.renderer.base.Renderer;
+import com.fos.game.engine.ecs.systems.scripting.ScriptsUpdater;
 import com.fos.game.engine.ecs.systems.signals.SignalRouter;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class EntityContainer implements Disposable {
 
-    // later think about possible improvements
-    // systems
-    private Physics2D physics2D;
-    private Physics3D physics3D;
-    private AudioPlayer audioPlayer;
-    private SignalRouter signalRouter;
-
     // container array
     public Array<Entity> entities;
-    public Array<Entity> toRemove;
+    private HashMap<EntitiesProcessor, Array<Entity>> systemEntitiesMap = new HashMap<>();
+    private Array<Entity> toAdd;
+    private Array<Entity> toRemove;
 
-    public EntityContainer(boolean use2DPhysics, boolean use3DPhysics) {
-        if (use2DPhysics) initPhysicsWorld2D();
-        if (use3DPhysics) initPhysicsWorld3D();
-        this.audioPlayer = new AudioPlayer();
-        this.signalRouter = new SignalRouter();
+    public EntityContainer() {
         this.entities = new Array<>();
         this.toRemove = new Array<>();
+        this.toAdd = new Array<>();
+        this.systemEntitiesMap.put(new AudioPlayer(), new Array<Entity>());
+        this.systemEntitiesMap.put(new Physics2D(), new Array<Entity>());
+        this.systemEntitiesMap.put(new Physics3D(), new Array<Entity>());
+        this.systemEntitiesMap.put(new Renderer(), new Array<Entity>());
+        this.systemEntitiesMap.put(new ScriptsUpdater(), new Array<Entity>());
+        this.systemEntitiesMap.put(new SignalRouter(), new Array<Entity>());
     }
 
-    private void initPhysicsWorld2D() {
-        this.physics2D = new Physics2D();
-    }
-
-    private void initPhysicsWorld3D() {
-        this.physics3D = new Physics3D();
-    }
-
-    public World getPhysics2D() {
-        return physics2D.world;
-    }
-
-    public btDynamicsWorld getPhysics3D() {
-        return physics3D.dynamicsWorld;
-    }
-
+    // TODO: implement like it should be. Delete this shit.
     public void addEntity(final Entity entity) {
-        // TODO: implement like it should be
-        entity.alive = true;
+        entity.active = true;
         entity.currentContainer = this;
         entities.add(entity);
         entity.localId = entities.size-1;
+        /*
         if ((entity.componentsBitMask & ComponentType.PHYSICS_BODY_3D.bitMask) == ComponentType.PHYSICS_BODY_3D.bitMask) {
             btRigidBody body = (btRigidBody) entity.components[ComponentType.PHYSICS_BODY_3D.ordinal()];
             physics3D.dynamicsWorld.addRigidBody(body);
         }
-    }
-
-    public void removeEntity(final Entity entity) {
-        // TODO: if (hasPhysics) ...
-
-        entities.removeValue(entity, true);
+         */
     }
 
     public void update(float deltaTime) {
-        // update all entities
-        removeDeadEntities();
-        // entity update should be refactored into systems.
-        for (Entity entity : entities) entity.update(deltaTime);
-        // update all scripts
-        // ...
-        final float delta = Math.min(1f / 30f, deltaTime);
-        if (physics3D != null) physics3D.process(this);
-        if (physics2D != null) physics2D.process(this);
-        if (signalRouter != null) signalRouter.process(this);
+        for (final Entity entity : this.toRemove) {
+            // TODO: if has physics...
+            this.entities.removeValue(entity, true);
+        }
+        this.toRemove.clear();
+        for (final Entity entity : this.toAdd) {
+            // TODO: if has physics...
+            this.entities.add(entity);
+        }
+        this.toAdd.clear();
+
+
+        for (Entity entity : entities) entity.update(deltaTime); // TODO: this should be gone. No update() method on entities. entity update should be refactored into systems.
+
+        EntityContainerUtils.prepareForProcessing(entities, systemEntitiesMap);
+        for (final Map.Entry<EntitiesProcessor, Array<Entity>> systemEntitiesMapEntry : systemEntitiesMap.entrySet()) {
+            final EntitiesProcessor entitiesProcessor = systemEntitiesMapEntry.getKey();
+            final Array<Entity> processorEntities = systemEntitiesMapEntry.getValue();
+            entitiesProcessor.process(processorEntities);
+        }
     }
 
-    private void removeDeadEntities() {
-        this.toRemove.clear();
-        for (Entity entity : entities) {
-            if (!entity.alive) toRemove.add(entity);
-        }
-        for (Entity entity : toRemove) {
-            removeEntity(entity);
-        }
+
+
+    public World getPhysics2D() {
+        return null;
+        //return physics2D.world;
+    }
+    public btDynamicsWorld getPhysics3D() {
+        return null;
+        //return physics3D.dynamicsWorld;
     }
 
     @Override
     public void dispose() {
-        if (physics2D != null) physics2D.dispose();
-        if (physics3D != null) physics3D.dispose();
+        for(final Map.Entry<EntitiesProcessor, Array<Entity>> entry : systemEntitiesMap.entrySet()) {
+            final EntitiesProcessor entitiesProcessor = entry.getKey();
+            if (entitiesProcessor instanceof Disposable) ((Disposable) entitiesProcessor).dispose();
+        }
     }
 }

@@ -1,16 +1,18 @@
 package com.fos.game.engine.ecs.systems.scripting;
 
-import com.fos.game.engine.ecs.entities.EntityContainer;
+import com.badlogic.gdx.utils.Array;
+import com.fos.game.engine.ecs.entities.Entity;
+import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
 
-public class ScriptsUpdater {
+public class ScriptsUpdater implements EntitiesProcessor {
 
-    public ScriptsUpdater() {
+    @Override
+    public void process(Array<Entity> entities) {
 
     }
 
-    public void updateScripts(final EntityContainer container, final float delta) {
-
+    @Override
+    public boolean shouldProcess(Entity entity) {
+        return (entity.componentsBitMask & ScriptsUpdaterUtils.SCRIPTED_ENTITY_BIT_MASK) > 0;
     }
-
-
 }

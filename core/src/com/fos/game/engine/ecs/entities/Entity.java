@@ -28,7 +28,7 @@ public class Entity implements Disposable {
     public Object[] components;
     public short componentsBitMask;
     public int layer;
-    public boolean alive = false;
+    public boolean active = true;
 
     public Entity() {
         this.layer = 0b000001;

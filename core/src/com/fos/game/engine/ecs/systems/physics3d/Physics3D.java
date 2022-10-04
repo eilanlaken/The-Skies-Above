@@ -14,7 +14,6 @@ import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.rigidbody.ComponentRigidBody3D;
 import com.fos.game.engine.ecs.components.transform.ComponentTransform3D;
 import com.fos.game.engine.ecs.entities.Entity;
-import com.fos.game.engine.ecs.entities.EntityContainer;
 import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
 
 public class Physics3D implements EntitiesProcessor, Disposable {
@@ -26,8 +25,6 @@ public class Physics3D implements EntitiesProcessor, Disposable {
     private btDbvtBroadphase broadPhase;
     // TODO: implement customizable contact listener that interacts with scripting logic.
     private ContactListener contactListener;
-
-    private Array<Entity> physicsEntities = new Array<>();
 
     public Physics3D() {
         Bullet.init();
@@ -52,10 +49,9 @@ public class Physics3D implements EntitiesProcessor, Disposable {
     }
 
     @Override
-    public void process(final EntityContainer container) {
-        Physics3DUtils.fillPhysics3DEntitiesArray(container, physicsEntities);
+    public void process(final Array<Entity> entities) {
         // sync transforms: bullet3D's and transform component
-        for (final Entity entity : physicsEntities) {
+        for (final Entity entity : entities) {
             ComponentRigidBody3D body = (ComponentRigidBody3D) entity.components[ComponentType.PHYSICS_BODY_3D.ordinal()];
             ComponentTransform3D transform = (ComponentTransform3D) entity.components[ComponentType.TRANSFORM_3D.ordinal()];
             body.getWorldTransform(transform);
@@ -63,6 +59,11 @@ public class Physics3D implements EntitiesProcessor, Disposable {
         // step bullet3D simulation
         final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
         dynamicsWorld.stepSimulation(delta, 5, 1f/60f);
+    }
+
+    @Override
+    public boolean shouldProcess(Entity entity) {
+        return (entity.componentsBitMask & Physics3DUtils.PHYSICS_3D_BIT_MASK) > 0;
     }
 
     @Override

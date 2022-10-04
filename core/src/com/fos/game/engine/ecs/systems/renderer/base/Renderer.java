@@ -22,13 +22,13 @@ import com.fos.game.engine.ecs.components.modelinstance.ComponentModelInstance;
 import com.fos.game.engine.ecs.components.modelinstance.ModelInstance;
 import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
-import com.fos.game.engine.ecs.entities.EntityContainer;
+import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
 import com.fos.game.engine.ecs.systems.renderer.shaders.postprocessing.PostProcessingShaderProgram;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class Renderer implements Disposable {
+public class Renderer implements EntitiesProcessor, Disposable {
 
     public static final String NO_CAMERA_IN_CONTAINER_EXCEPTION_MESSAGE = "Entity Container must contain at least 1 (one) " +
             "Entity with a" + ComponentCamera.class.getSimpleName() + " " + Component.class.getSimpleName() + " in order to render.";
@@ -40,7 +40,6 @@ public class Renderer implements Disposable {
     private Box2DDebugRenderer box2DDebugRenderer;
     private ShapeRenderer shapeRenderer;
     public float pixelsPerMeter;
-    public boolean debugMode;
 
     private PostProcessingShaderProgram postProcessingShaderProgram;
     private FrameBuffer frameBuffer;
@@ -50,13 +49,12 @@ public class Renderer implements Disposable {
     private final LightingEnvironment lightingEnvironment = new LightingEnvironment();
     private final Map<RenderTarget, Array<ComponentCamera>> renderTargetCamerasMap = new HashMap<>();
 
-    public Renderer(boolean debugMode) {
+    public Renderer() {
         this.modelBatch = new ModelBatch(new ShaderProvider(), new ModelInstanceSorter());
         this.spriteBatch = new SpriteBatch();
         this.box2DDebugRenderer = new Box2DDebugRenderer();
         this.shapeRenderer = new ShapeRenderer();
         this.pixelsPerMeter = DEFAULT_PIXELS_PER_METER;
-        this.debugMode = debugMode;
         this.postProcessingShaderProgram = new PostProcessingShaderProgram();
         /* create FrameBuffer */
         final GLFrameBuffer.FrameBufferBuilder frameBufferBuilderScene = new GLFrameBuffer.FrameBufferBuilder(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -71,8 +69,9 @@ public class Renderer implements Disposable {
         }
     }
 
-    public void render(final EntityContainer container) {
-        RenderingUtils.prepareForRendering(container.entities, lightingEnvironment, camera2DEntitiesMap, camera3DEntitiesMap, renderTargetCamerasMap);
+    @Override
+    public void process(final Array<Entity> entities) {
+        RenderingUtils.prepareForRendering(entities, lightingEnvironment, camera2DEntitiesMap, camera3DEntitiesMap, renderTargetCamerasMap);
         int camera3DCount = camera3DEntitiesMap.size();
         int camera2DCount = camera2DEntitiesMap.size();
         if (camera2DCount == 0 && camera3DCount == 0) throw new IllegalStateException(NO_CAMERA_IN_CONTAINER_EXCEPTION_MESSAGE);
@@ -131,8 +130,18 @@ public class Renderer implements Disposable {
     }
 
     @Override
-    public void dispose() {
+    // TODO: fix to make more efficient using bitwise operations.
+    public boolean shouldProcess(Entity entity) {
+        if ((entity.componentsBitMask & RenderingUtils.ENTITY_2D_BIT_MASK) > 0) return true;
+        if ((entity.componentsBitMask & RenderingUtils.ENTITY_3D_BIT_MASK) > 0) return true;
+        if ((entity.componentsBitMask & RenderingUtils.ATTACHED_LIGHT_BIT_MASK) > 0) return true;
+        if ((entity.componentsBitMask & RenderingUtils.ATTACHED_CAMERA_BIT_MASK) > 0) return true;
+        return false;
+    }
 
+    @Override
+    public void dispose() {
+        // TODO: implement as it should be.
     }
 
 }

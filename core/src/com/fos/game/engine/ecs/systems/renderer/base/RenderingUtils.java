@@ -23,10 +23,10 @@ import java.util.Map;
 
 public class RenderingUtils {
 
-    private static final short ENTITY_2D_BIT_MASK = ComponentType.ANIMATIONS_2D.bitMask;
-    private static final short ENTITY_3D_BIT_MASK = ComponentType.MODEL_INSTANCE.bitMask;
-    private static final short ATTACHED_LIGHT_BIT_MASK = ComponentType.LIGHT.bitMask;
-    private static final short ATTACHED_CAMERA_BIT_MASK = ComponentType.CAMERA.bitMask;
+    protected static final short ENTITY_2D_BIT_MASK = ComponentType.ANIMATIONS_2D.bitMask;
+    protected static final short ENTITY_3D_BIT_MASK = ComponentType.MODEL_INSTANCE.bitMask;
+    protected static final short ATTACHED_LIGHT_BIT_MASK = ComponentType.LIGHT.bitMask;
+    protected static final short ATTACHED_CAMERA_BIT_MASK = ComponentType.CAMERA.bitMask;
 
     private static final Vector3 position = new Vector3();
     private static final Array<Entity> rendered2DEntities = new Array<>();

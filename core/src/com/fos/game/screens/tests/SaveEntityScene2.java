@@ -51,12 +51,12 @@ public class SaveEntityScene2 extends GameScreen {
         super(context);
         this.jsonConverter = context.jsonConverter;
         this.assetManager = context.assetManager;
-        this.renderer = new Renderer(false);
+        this.renderer = new Renderer();
     }
 
     @Override
     public void show() {
-        container = new EntityContainer(false, true);
+        container = new EntityContainer();
 
         camera = new Entity();
         camera.attachComponents(
@@ -106,7 +106,7 @@ public class SaveEntityScene2 extends GameScreen {
     public void render(float deltaTime) {
         update(deltaTime);
 
-        renderer.render(container);
+        renderer.process(container);
     }
 
     @Override
