@@ -9,6 +9,22 @@ import java.util.Set;
 
 public class EntityContainerUtils {
 
+    protected static void removeEntities(final EntityContainer container) {
+        for (final Entity entity : container.toRemove) {
+            // TODO: if has physics...
+            container.entities.removeValue(entity, true);
+        }
+        container.toRemove.clear();
+    }
+
+    protected static void addEntities(final EntityContainer container) {
+        for (final Entity entity : container.toAdd) {
+            // TODO: if has physics...
+            container.entities.add(entity);
+        }
+        container.toAdd.clear();
+    }
+
     protected static void prepareForProcessing(final Array<Entity> allEntities, HashMap<EntitiesProcessor, Array<Entity>> systemEntitiesMapResult) {
         Set<Map.Entry<EntitiesProcessor, Array<Entity>>> entrySet = systemEntitiesMapResult.entrySet();
         for (final Map.Entry<EntitiesProcessor, Array<Entity>> entry : entrySet) {
@@ -20,6 +36,14 @@ public class EntityContainerUtils {
                 final Array<Entity> entities = entry.getValue();
                 if (entitiesProcessor.shouldProcess(entity)) entities.add(entity);
             }
+        }
+    }
+
+    protected static void process(final HashMap<EntitiesProcessor, Array<Entity>> systemEntitiesMap) {
+        for (final Map.Entry<EntitiesProcessor, Array<Entity>> systemEntitiesMapEntry : systemEntitiesMap.entrySet()) {
+            final EntitiesProcessor entitiesProcessor = systemEntitiesMapEntry.getKey();
+            final Array<Entity> processorEntities = systemEntitiesMapEntry.getValue();
+            entitiesProcessor.process(processorEntities);
         }
     }
 

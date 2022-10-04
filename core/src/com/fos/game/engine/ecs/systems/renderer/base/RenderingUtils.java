@@ -75,9 +75,10 @@ public class RenderingUtils {
             }
             if ((entity.componentsBitMask & ATTACHED_CAMERA_BIT_MASK) > 0) {
                 final ComponentCamera componentCamera = (ComponentCamera) entity.components[ComponentType.CAMERA.ordinal()];
-                final Camera camera = componentCamera.lens;
-                if (camera instanceof OrthographicCamera) cameras2D.add(componentCamera);
-                if (camera instanceof PerspectiveCamera) cameras3D.add(componentCamera);
+                final Camera lens = componentCamera.lens;
+                lens.update();
+                if (lens instanceof OrthographicCamera) cameras2D.add(componentCamera);
+                if (lens instanceof PerspectiveCamera) cameras3D.add(componentCamera);
             }
         }
     }

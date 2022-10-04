@@ -18,10 +18,10 @@ import java.util.Map;
 public class EntityContainer implements Disposable {
 
     // container array
-    public Array<Entity> entities;
-    private HashMap<EntitiesProcessor, Array<Entity>> systemEntitiesMap = new HashMap<>();
-    private Array<Entity> toAdd;
-    private Array<Entity> toRemove;
+    protected Array<Entity> entities;
+    protected HashMap<EntitiesProcessor, Array<Entity>> systemEntitiesMap = new HashMap<>();
+    protected Array<Entity> toAdd;
+    protected Array<Entity> toRemove;
 
     // TODO: correct this system.
     private Physics2D physics2D = new Physics2D();
@@ -56,29 +56,12 @@ public class EntityContainer implements Disposable {
     }
 
     public void update(float deltaTime) {
-        for (final Entity entity : this.toRemove) {
-            // TODO: if has physics...
-            this.entities.removeValue(entity, true);
-        }
-        this.toRemove.clear();
-        for (final Entity entity : this.toAdd) {
-            // TODO: if has physics...
-            this.entities.add(entity);
-        }
-        this.toAdd.clear();
-
-
+        EntityContainerUtils.removeEntities(this);
+        EntityContainerUtils.addEntities(this);
         for (Entity entity : entities) entity.update(deltaTime); // TODO: this should be gone. No update() method on entities. entity update should be refactored into systems.
-
         EntityContainerUtils.prepareForProcessing(entities, systemEntitiesMap);
-        for (final Map.Entry<EntitiesProcessor, Array<Entity>> systemEntitiesMapEntry : systemEntitiesMap.entrySet()) {
-            final EntitiesProcessor entitiesProcessor = systemEntitiesMapEntry.getKey();
-            final Array<Entity> processorEntities = systemEntitiesMapEntry.getValue();
-            entitiesProcessor.process(processorEntities);
-        }
+        EntityContainerUtils.process(systemEntitiesMap);
     }
-
-
 
     public World getPhysics2D() {
         return physics2D.world;
