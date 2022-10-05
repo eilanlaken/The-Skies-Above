@@ -1,4 +1,4 @@
-package com.fos.game.engine.ecs.components.lights;
+package com.fos.game.engine.ecs.components.lights3d;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;

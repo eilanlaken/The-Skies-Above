@@ -1,4 +1,4 @@
-package com.fos.game.engine.ecs.components.lights;
+package com.fos.game.engine.ecs.components.lights3d;
 
 import com.fos.game.engine.ecs.components.base.Factory;
 import com.fos.game.engine.files.assets.GameAssetManager;

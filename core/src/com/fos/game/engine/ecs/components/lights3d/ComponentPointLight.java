@@ -1,4 +1,4 @@
-package com.fos.game.engine.ecs.components.lights;
+package com.fos.game.engine.ecs.components.lights3d;
 
 public class ComponentPointLight extends Light {
 

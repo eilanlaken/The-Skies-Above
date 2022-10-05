@@ -1,4 +1,4 @@
-package com.fos.game.engine.ecs.components.rigidbody;
+package com.fos.game.engine.ecs.components.rigidbody2d;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
@@ -14,6 +14,7 @@ public class FactoryRigidBody2D extends Factory {
         super(assetManager, jsonConverter);
     }
 
+    @Deprecated
     public static ComponentRigidBody2D create(final EntityContainer container, float x, float y, float w, float h) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -34,6 +35,7 @@ public class FactoryRigidBody2D extends Factory {
         return rigidBody2D;
     }
 
+    @Deprecated
     public static ComponentRigidBody2D create(final EntityContainer container) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -56,6 +58,7 @@ public class FactoryRigidBody2D extends Factory {
         return rigidBody2D;
     }
 
+    @Deprecated
     public static ComponentRigidBody2D create2(final EntityContainer container, BodyDef.BodyType bodyType) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = bodyType;
@@ -76,6 +79,7 @@ public class FactoryRigidBody2D extends Factory {
         return componentRigidBody2D;
     }
 
+    @Deprecated
     public static ComponentRigidBody2D create3(final EntityContainer container) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
@@ -93,6 +97,7 @@ public class FactoryRigidBody2D extends Factory {
         return new ComponentRigidBody2D(body);
     }
 
+    @Deprecated
     public static ComponentRigidBody2D create4(final EntityContainer container, final TextureAtlas.AtlasRegion region, final float ppm) {
         final float width = region.getRegionWidth();
         final float height = region.getRegionHeight();
@@ -116,6 +121,7 @@ public class FactoryRigidBody2D extends Factory {
         return new ComponentRigidBody2D(body);
     }
 
+    @Deprecated
     public static ComponentRigidBody2D create5(final EntityContainer container, final TextureAtlas.AtlasRegion region, final float ppm, final float scale) {
         final float width = region.getRegionWidth();
         final float height = region.getRegionHeight();

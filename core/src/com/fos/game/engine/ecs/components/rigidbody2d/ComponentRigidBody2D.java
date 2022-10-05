@@ -1,4 +1,4 @@
-package com.fos.game.engine.ecs.components.rigidbody;
+package com.fos.game.engine.ecs.components.rigidbody2d;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.fos.game.engine.ecs.components.base.Component;

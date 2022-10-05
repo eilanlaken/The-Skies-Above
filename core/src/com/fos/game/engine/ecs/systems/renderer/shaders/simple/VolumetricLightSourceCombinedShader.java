@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.fos.game.engine.ecs.components.lights.LightingEnvironment;
+import com.fos.game.engine.ecs.components.lights3d.LightingEnvironment;
 import com.fos.game.engine.ecs.systems.renderer.materials.base.Material;
 import com.fos.game.engine.ecs.systems.renderer.shaders.base.GameShader;
 import com.fos.game.engine.ecs.systems.renderer.materials.instances.VolumetricLightSourceMaterialInstance;

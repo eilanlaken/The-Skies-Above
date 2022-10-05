@@ -1,9 +1,9 @@
-package com.fos.game.engine.ecs.components.rigidbody;
+package com.fos.game.engine.ecs.components.rigidbody2d;
 
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 
-public class UtilsRigidBody {
+public class UtilsRigidBody2D {
 
     public static final float PPM = 32;
 

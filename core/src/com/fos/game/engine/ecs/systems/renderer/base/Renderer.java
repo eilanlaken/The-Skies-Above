@@ -17,7 +17,7 @@ import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
 import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
-import com.fos.game.engine.ecs.components.lights.LightingEnvironment;
+import com.fos.game.engine.ecs.components.lights3d.LightingEnvironment;
 import com.fos.game.engine.ecs.components.modelinstance.ComponentModelInstance;
 import com.fos.game.engine.ecs.components.modelinstance.ModelInstance;
 import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
