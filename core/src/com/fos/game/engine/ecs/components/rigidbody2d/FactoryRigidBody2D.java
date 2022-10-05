@@ -14,7 +14,10 @@ public class FactoryRigidBody2D extends Factory {
         super(assetManager, jsonConverter);
     }
 
+    public ComponentRigidBody2D create(final RigidBody2DData data) {
 
+        return null;
+    }
 
 
 
@@ -26,7 +29,7 @@ public class FactoryRigidBody2D extends Factory {
     @Deprecated
     public static ComponentRigidBody2D create(final EntityContainer container, float x, float y, float w, float h) {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.type = BodyDef.BodyType.StaticBody;
         bodyDef.position.set(x, y);
         bodyDef.fixedRotation = true;
 
@@ -47,12 +50,12 @@ public class FactoryRigidBody2D extends Factory {
     @Deprecated
     public static ComponentRigidBody2D create(final EntityContainer container) {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.type = BodyDef.BodyType.StaticBody;
         bodyDef.position.set(0, 0);
         bodyDef.fixedRotation = true;
 
         CircleShape shape = new CircleShape();
-        shape.setRadius(1/2f);
+        shape.setRadius(50f);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;

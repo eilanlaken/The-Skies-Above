@@ -13,17 +13,13 @@ public class Physics2D implements EntitiesProcessor, Disposable {
     public World world;
 
     public Physics2D() {
-        this(new Vector2()); // <- no gravity
-    }
-
-    public Physics2D(final Vector2 gravity) {
-        this.world = new World(new Vector2(gravity.x,gravity.y), true);
+        this.world = new World(new Vector2(), true);
     }
 
     @Override
     public void process(final Array<Entity> entities) {
         final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
-        world.step(delta, 6, 2);
+        this.world.step(delta, 6, 2);
     }
 
     @Override

@@ -23,8 +23,8 @@ import java.util.Map;
 
 public class RenderingUtils {
 
-    protected static final short ENTITY_2D_BIT_MASK = ComponentType.ANIMATIONS_2D.bitMask;
-    protected static final short ENTITY_3D_BIT_MASK = ComponentType.MODEL_INSTANCE.bitMask;
+    protected static final short ATTACHED_ANIMATIONS_2D_BIT_MASK = ComponentType.ANIMATIONS_2D.bitMask;
+    protected static final short ATTACHED_MODEL_INSTANCE_BIT_MASK = ComponentType.MODEL_INSTANCE.bitMask;
     protected static final short ATTACHED_LIGHT_BIT_MASK = ComponentType.LIGHT.bitMask;
     protected static final short ATTACHED_CAMERA_BIT_MASK = ComponentType.CAMERA.bitMask;
 
@@ -61,10 +61,10 @@ public class RenderingUtils {
         rendered3DEntities.clear();
         lightingEnvironmentResult.clearLights();
         for (Entity entity : entities) {
-            if ((entity.componentsBitMask & ENTITY_2D_BIT_MASK) > 0) {
+            if ((entity.componentsBitMask & ATTACHED_ANIMATIONS_2D_BIT_MASK) > 0) {
                 rendered2DEntities.add(entity);
             }
-            if ((entity.componentsBitMask & ENTITY_3D_BIT_MASK) > 0) {
+            if ((entity.componentsBitMask & ATTACHED_MODEL_INSTANCE_BIT_MASK) > 0) {
                 rendered3DEntities.add(entity);
             }
             if ((entity.componentsBitMask & ATTACHED_LIGHT_BIT_MASK) > 0) {

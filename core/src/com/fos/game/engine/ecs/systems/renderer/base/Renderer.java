@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.GLFrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
@@ -20,6 +20,7 @@ import com.fos.game.engine.ecs.components.camera.ComponentCamera;
 import com.fos.game.engine.ecs.components.lights3d.LightingEnvironment;
 import com.fos.game.engine.ecs.components.modelinstance.ComponentModelInstance;
 import com.fos.game.engine.ecs.components.modelinstance.ModelInstance;
+import com.fos.game.engine.ecs.components.rigidbody2d.ComponentRigidBody2D;
 import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
@@ -32,14 +33,15 @@ public class Renderer implements EntitiesProcessor, Disposable {
 
     public static final String NO_CAMERA_IN_CONTAINER_EXCEPTION_MESSAGE = "Entity Container must contain at least 1 (one) " +
             "Entity with a" + ComponentCamera.class.getSimpleName() + " " + Component.class.getSimpleName() + " in order to render.";
-    public static final float DEFAULT_PIXELS_PER_METER = 32;
     public static final float DEFAULT_GAMMA = 1f / 2.2f;
 
     private ModelBatch modelBatch;
     private SpriteBatch spriteBatch;
-    private Box2DDebugRenderer box2DDebugRenderer;
+    private Physics2DDebugRenderer physics2DDebugRenderer;
     private ShapeRenderer shapeRenderer;
+    // config
     public float pixelsPerMeter;
+    public boolean debugMode;
 
     private PostProcessingShaderProgram postProcessingShaderProgram;
     private FrameBuffer frameBuffer;
@@ -52,9 +54,10 @@ public class Renderer implements EntitiesProcessor, Disposable {
     public Renderer() {
         this.modelBatch = new ModelBatch(new ShaderProvider(), new ModelInstanceSorter());
         this.spriteBatch = new SpriteBatch();
-        this.box2DDebugRenderer = new Box2DDebugRenderer();
+        this.physics2DDebugRenderer = new Physics2DDebugRenderer();
         this.shapeRenderer = new ShapeRenderer();
-        this.pixelsPerMeter = DEFAULT_PIXELS_PER_METER;
+        this.pixelsPerMeter = Config.DEFAULT.pixelsPerMeter;
+        this.debugMode = Config.DEFAULT.debugMode;
         this.postProcessingShaderProgram = new PostProcessingShaderProgram();
         /* create FrameBuffer */
         final GLFrameBuffer.FrameBufferBuilder frameBufferBuilderScene = new GLFrameBuffer.FrameBufferBuilder(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -83,6 +86,7 @@ public class Renderer implements EntitiesProcessor, Disposable {
     private void renderToTarget(final RenderTarget renderTarget) {
         final FrameBuffer secondaryFrameBuffer = renderTarget == null ? frameBuffer : renderTarget.secondaryFrameBuffer;
         final FrameBuffer primaryFrameBuffer = renderTarget == null ? null : renderTarget.primaryFrameBuffer;
+        // render 3D scene
         secondaryFrameBuffer.begin();
         Gdx.gl.glClearColor(0,0,0,0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
@@ -99,9 +103,8 @@ public class Renderer implements EntitiesProcessor, Disposable {
         }
         modelBatch.end();
         secondaryFrameBuffer.end();
-
-        // revise later for 2D rendering
         if (primaryFrameBuffer != null) primaryFrameBuffer.begin();
+        // render 2D scene
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         spriteBatch.setShader(null);
@@ -114,6 +117,7 @@ public class Renderer implements EntitiesProcessor, Disposable {
         region.flip(false, true);
         spriteBatch.draw(region, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         spriteBatch.setShader(null);
+        // draw all 2d atlas regions
         for (Map.Entry<ComponentCamera, Array<Entity>> cameraEntities : camera2DEntitiesMap.entrySet()) {
             ComponentCamera camera = cameraEntities.getKey();
             spriteBatch.setProjectionMatrix(camera.lens.combined);
@@ -127,14 +131,34 @@ public class Renderer implements EntitiesProcessor, Disposable {
             }
         }
         spriteBatch.end();
+
+        // TODO: test. If debug mode, render shapes for 2d entities with physics.
+        if (debugMode) {
+            physics2DDebugRenderer.begin();
+            for (Map.Entry<ComponentCamera, Array<Entity>> cameraEntities : camera2DEntitiesMap.entrySet()) {
+                ComponentCamera camera = cameraEntities.getKey();
+                //physics2DDebugRenderer.setProjectionMatrix(camera.lens.combined);
+                for (Entity entity : cameraEntities.getValue()) {
+                    final ComponentRigidBody2D componentRigidBody2D = (ComponentRigidBody2D) entity.components[ComponentType.PHYSICS_BODY_2D.ordinal()];
+                    if (componentRigidBody2D == null) continue;
+                    System.out.println("drawing");
+                    final Body body = componentRigidBody2D.body;
+                    physics2DDebugRenderer.renderBody(body);
+                }
+            }
+            physics2DDebugRenderer.end();
+        }
+        //shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        //shapeRenderer.rect(0,0,80,80);
+        //shapeRenderer.end();
         if (primaryFrameBuffer != null) primaryFrameBuffer.end();
     }
 
     @Override
     // TODO: fix to make more efficient using bitwise operations.
     public boolean shouldProcess(Entity entity) {
-        if ((entity.componentsBitMask & RenderingUtils.ENTITY_2D_BIT_MASK) > 0) return true;
-        if ((entity.componentsBitMask & RenderingUtils.ENTITY_3D_BIT_MASK) > 0) return true;
+        if ((entity.componentsBitMask & RenderingUtils.ATTACHED_ANIMATIONS_2D_BIT_MASK) > 0) return true;
+        if ((entity.componentsBitMask & RenderingUtils.ATTACHED_MODEL_INSTANCE_BIT_MASK) > 0) return true;
         if ((entity.componentsBitMask & RenderingUtils.ATTACHED_LIGHT_BIT_MASK) > 0) return true;
         if ((entity.componentsBitMask & RenderingUtils.ATTACHED_CAMERA_BIT_MASK) > 0) return true;
         return false;
@@ -144,5 +168,23 @@ public class Renderer implements EntitiesProcessor, Disposable {
     public void dispose() {
         // TODO: implement as it should be.
     }
+
+    public void config(final Config config) {
+        this.pixelsPerMeter = config.pixelsPerMeter;
+        this.debugMode = config.debugMode;
+    }
+
+    public static final class Config {
+
+        public static final Config DEFAULT = new Config(32, true);
+        public final boolean debugMode;
+        public final float pixelsPerMeter;
+
+        public Config(final float pixelsPerMeter, final boolean debugMode) {
+            this.debugMode = debugMode;
+            this.pixelsPerMeter = pixelsPerMeter;
+        }
+    }
+
 
 }

@@ -4,6 +4,7 @@ import com.fos.game.engine.context.GameContext;
 import com.fos.game.engine.context.Scene;
 import com.fos.game.engine.ecs.components.animations2d.SpriteSheet;
 import com.fos.game.engine.ecs.components.camera.FactoryCamera;
+import com.fos.game.engine.ecs.components.rigidbody2d.FactoryRigidBody2D;
 import com.fos.game.engine.ecs.components.scripts.ComponentScripts;
 import com.fos.game.engine.ecs.components.transform.FactoryTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
@@ -39,6 +40,7 @@ public class Physics2DTestScene extends Scene {
         orangeSquare.attachComponents(
                 FactoryTransform2D.create(0,0),
                 context.factoryAnimation2D.create("atlases/test/testSpriteSheet.atlas", "animatedArrow"),
+                FactoryRigidBody2D.create(container),
                 new ComponentScripts(new OrangeSquareScript(orangeSquare))
         );
 
