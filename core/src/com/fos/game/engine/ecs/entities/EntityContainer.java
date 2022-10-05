@@ -18,27 +18,26 @@ import java.util.Map;
 public class EntityContainer implements Disposable {
 
     // container array
-    protected Array<Entity> entities;
-    protected HashMap<EntitiesProcessor, Array<Entity>> systemEntitiesMap = new HashMap<>();
-    protected Array<Entity> toAdd;
-    protected Array<Entity> toRemove;
+    protected Array<Entity> entities = new Array<>();
+    protected Array<Entity> toAdd = new Array<>();
+    protected Array<Entity> toRemove = new Array<>();
 
-    // TODO: correct this system.
-    private Physics2D physics2D = new Physics2D();
-    private Physics3D physics3D = new Physics3D();
+    // systems
+    protected HashMap<EntitiesProcessor, Array<Entity>> systemEntitiesMap = new HashMap<>();
+    protected AudioPlayer audioPlayer = new AudioPlayer();
+    protected Physics2D physics2D = new Physics2D();
+    protected Physics3D physics3D = new Physics3D();
+    protected Renderer renderer = new Renderer();
+    protected ScriptsUpdater scriptsUpdater = new ScriptsUpdater();
+    protected SignalRouter signalRouter = new SignalRouter();
 
     public EntityContainer() {
-        this.entities = new Array<>();
-        this.toRemove = new Array<>();
-        this.toAdd = new Array<>();
-        this.systemEntitiesMap.put(new AudioPlayer(), new Array<Entity>());
-        //this.systemEntitiesMap.put(new Physics2D(), new Array<Entity>());
-        //this.systemEntitiesMap.put(new Physics3D(), new Array<Entity>());
+        this.systemEntitiesMap.put(audioPlayer, new Array<Entity>());
         this.systemEntitiesMap.put(physics2D, new Array<Entity>());
         this.systemEntitiesMap.put(physics3D, new Array<Entity>());
-        this.systemEntitiesMap.put(new Renderer(), new Array<Entity>());
-        this.systemEntitiesMap.put(new ScriptsUpdater(), new Array<Entity>());
-        this.systemEntitiesMap.put(new SignalRouter(), new Array<Entity>());
+        this.systemEntitiesMap.put(renderer, new Array<Entity>());
+        this.systemEntitiesMap.put(scriptsUpdater, new Array<Entity>());
+        this.systemEntitiesMap.put(signalRouter, new Array<Entity>());
     }
 
     // TODO: implement like it should be. Delete this shit.
