@@ -58,7 +58,6 @@ public class EntityContainer implements Disposable {
     public void update(float deltaTime) {
         EntityContainerUtils.removeEntities(this);
         EntityContainerUtils.addEntities(this);
-        for (Entity entity : entities) entity.update(deltaTime); // TODO: this should be gone. No update() method on entities. entity update should be refactored into systems.
         EntityContainerUtils.prepareForProcessing(entities, systemEntitiesMap);
         EntityContainerUtils.process(systemEntitiesMap);
     }

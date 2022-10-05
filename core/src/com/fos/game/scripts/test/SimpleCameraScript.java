@@ -31,7 +31,6 @@ public class SimpleCameraScript extends Script {
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) lens.position.y -= 1f;
         if (Gdx.input.isKeyPressed(Input.Keys.PLUS)) lens.zoom += 0.1f;
         if (Gdx.input.isKeyPressed(Input.Keys.MINUS)) lens.zoom -= 0.1f;
-        lens.update();
     }
 
 }

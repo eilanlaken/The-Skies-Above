@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.utils.Disposable;
-import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
 import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.lights.Light;
@@ -95,25 +94,6 @@ public class Entity implements Disposable {
             for (Script script : scripts) {
                 script.start();
             }
-        }
-    }
-
-    // TODO - remove (bit by bit) the update method from an entity.
-    public void update(float delta) {
-        ComponentTransform3D transform = (ComponentTransform3D) components[ComponentType.TRANSFORM_3D.ordinal()];
-        ComponentScripts scripts = (ComponentScripts) components[ComponentType.SCRIPTS.ordinal()];
-        Light light = (Light) components[ComponentType.LIGHT.ordinal()];
-        ComponentAnimations2D animations = (ComponentAnimations2D) components[ComponentType.ANIMATIONS_2D.ordinal()];
-
-        if (scripts != null) {
-            for (Script script : scripts) script.update(delta);
-        }
-        if (light != null) {
-            // TODO: update offset and position properly: this.position + rotation * offset -> light.position or something like that.
-            transform.getTranslation(light.worldPosition);
-        }
-        if (animations != null) {
-            
         }
     }
 
