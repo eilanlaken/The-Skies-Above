@@ -36,6 +36,10 @@ public class ComponentAnimations2D extends HashMap<String, Animation<TextureAtla
         this.elapsedTime = 0;
     }
 
+    public void advanceTime(final float delta) {
+        this.elapsedTime += delta;
+    }
+
     @Override
     public final ComponentType getComponentType() {
         return ComponentType.ANIMATIONS_2D;

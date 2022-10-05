@@ -3,7 +3,7 @@ package com.fos.game.screens.loading;
 import com.fos.game.engine.context.GameContext;
 import com.fos.game.engine.context.Scene;
 import com.fos.game.engine.files.assets.GameAssetManager;
-import com.fos.game.screens.tests.SaveEntityScene;
+import com.fos.game.screens.tests.Physics2DTestScene;
 
 import java.util.Map;
 
@@ -27,7 +27,7 @@ public class LoadingScreen extends Scene {
         while (!doneLoading) {
             if (assetManager.update()) {
                 doneLoading = true;
-                context.setScreen(new SaveEntityScene(context));
+                context.setScreen(new Physics2DTestScene(context));
             }
         }
     }
@@ -43,7 +43,7 @@ public class LoadingScreen extends Scene {
     }
 
     private void queueAssets() {
-        Map<String, Class> assetsNameTypeMap = SaveEntityScene.getRequiredAssetsNameTypeMap();
+        Map<String, Class> assetsNameTypeMap = Physics2DTestScene.getRequiredAssetsNameTypeMap();
         for (Map.Entry<String, Class> entry : assetsNameTypeMap.entrySet()) {
             this.assetManager.load(entry.getKey(), entry.getValue());
         }

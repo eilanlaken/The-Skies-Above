@@ -120,9 +120,10 @@ public class Renderer implements EntitiesProcessor, Disposable {
             for (Entity entity : cameraEntities.getValue()) {
                 ComponentTransform2D transform2D = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
                 ComponentAnimations2D animation = (ComponentAnimations2D) entity.components[ComponentType.ANIMATIONS_2D.ordinal()];
+                final float delta = Gdx.graphics.getDeltaTime();
+                animation.advanceTime(delta);
                 TextureAtlas.AtlasRegion atlasRegion = animation.getTextureRegion();
                 spriteBatch.render(atlasRegion, transform2D, pixelsPerMeter);
-                //spriteBatch.render(atlasRegion, transform2D);
             }
         }
         spriteBatch.end();
