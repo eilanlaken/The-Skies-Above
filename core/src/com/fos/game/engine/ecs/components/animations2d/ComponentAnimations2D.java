@@ -11,14 +11,14 @@ import java.util.HashMap;
 
 public class ComponentAnimations2D extends HashMap<String, Animation<TextureAtlas.AtlasRegion>> implements Component {
 
-    public AnimationData[] animationsData;
+    public Animation2DData[] animationsData;
     public Animation<TextureAtlas.AtlasRegion> currentPlayingAnimation;
     public float elapsedTime;
 
-    protected ComponentAnimations2D(final GameAssetManager assetManager, final AnimationData ...animationsData) {
+    protected ComponentAnimations2D(final GameAssetManager assetManager, final Animation2DData...animationsData) {
         this.animationsData = animationsData;
         this.elapsedTime = 0;
-        for (final AnimationData data : animationsData) {
+        for (final Animation2DData data : animationsData) {
             SpriteSheet spriteSheet = assetManager.get(data.filepath, SpriteSheet.class);
             Array<TextureAtlas.AtlasRegion> keyFrames = spriteSheet.findRegions(data.animationName);
             Animation<TextureAtlas.AtlasRegion> animation = new Animation<>(data.frameDuration, keyFrames, data.playMode);

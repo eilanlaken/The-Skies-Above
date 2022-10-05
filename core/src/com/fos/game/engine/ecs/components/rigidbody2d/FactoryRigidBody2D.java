@@ -14,6 +14,15 @@ public class FactoryRigidBody2D extends Factory {
         super(assetManager, jsonConverter);
     }
 
+
+
+
+
+
+
+
+
+
     @Deprecated
     public static ComponentRigidBody2D create(final EntityContainer container, float x, float y, float w, float h) {
         BodyDef bodyDef = new BodyDef();

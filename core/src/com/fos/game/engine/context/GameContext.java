@@ -1,7 +1,7 @@
 package com.fos.game.engine.context;
 
 import com.badlogic.gdx.Game;
-import com.fos.game.engine.ecs.components.animations2d.FactoryAnimation;
+import com.fos.game.engine.ecs.components.animations2d.FactoryAnimation2D;
 import com.fos.game.engine.ecs.components.audio.FactoryAudio;
 import com.fos.game.engine.ecs.components.camera.FactoryCamera;
 import com.fos.game.engine.ecs.components.lights3d.FactoryLight;
@@ -24,7 +24,7 @@ public class GameContext extends Game {
 	public GameAssetManager assetManager;
 	public JsonConverter jsonConverter;
 	// Component Factory(s)
-	public FactoryAnimation factoryAnimation;
+	public FactoryAnimation2D factoryAnimation2D;
 	public FactoryAudio factoryAudio;
 	public FactoryCamera factoryCamera;
 	public FactoryLight factoryLight;
@@ -44,7 +44,7 @@ public class GameContext extends Game {
 		this.assetManager = new GameAssetManager();
 		this.jsonConverter = new JsonConverter();
 		// create factories
-		this.factoryAnimation = new FactoryAnimation(this.assetManager, this.jsonConverter);
+		this.factoryAnimation2D = new FactoryAnimation2D(this.assetManager, this.jsonConverter);
 		this.factoryAudio = new FactoryAudio(this.assetManager, this.jsonConverter);
 		this.factoryCamera = new FactoryCamera(this.assetManager, this.jsonConverter);
 		this.factoryLight = new FactoryLight(this.assetManager, this.jsonConverter);

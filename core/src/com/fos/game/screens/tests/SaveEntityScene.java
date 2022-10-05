@@ -4,7 +4,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.fos.game.engine.context.GameContext;
 import com.fos.game.engine.context.Scene;
-import com.fos.game.engine.ecs.components.animations2d.AnimationData;
+import com.fos.game.engine.ecs.components.animations2d.Animation2DData;
 import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
 import com.fos.game.engine.ecs.components.animations2d.SpriteSheet;
 import com.fos.game.engine.ecs.components.audio.ComponentSoundEffects;
@@ -58,7 +58,7 @@ public class SaveEntityScene extends Scene {
         orangeSquare = new Entity();
         orangeSquare.attachComponents(
                 FactoryTransform2D.create(0,0),
-                context.factoryAnimation.create("atlases/test/testSpriteSheet.atlas", "testArrowOrange"),
+                context.factoryAnimation2D.create("atlases/test/testSpriteSheet.atlas", "testArrowOrange"),
                 context.factoryAudio.create("audio/sample.wav", "audio/beep.wav"),
                 new ComponentScripts(new OrangeSquareScript(orangeSquare))
         );
@@ -81,10 +81,10 @@ public class SaveEntityScene extends Scene {
     }
 
     private void testSerialization2() {
-        AnimationData data1 = new AnimationData("atlases/test/testSpriteSheet.atlas", "testArrowOrange", 1, Animation.PlayMode.LOOP);
-        AnimationData data2 = new AnimationData("atlases/test/testSpriteSheet.atlas", "testArrowGreen", 2, Animation.PlayMode.LOOP_PINGPONG);
+        Animation2DData data1 = new Animation2DData("atlases/test/testSpriteSheet.atlas", "testArrowOrange", 1, Animation.PlayMode.LOOP);
+        Animation2DData data2 = new Animation2DData("atlases/test/testSpriteSheet.atlas", "testArrowGreen", 2, Animation.PlayMode.LOOP_PINGPONG);
 
-        componentAnimations2D = context.factoryAnimation.create(data1, data2);
+        componentAnimations2D = context.factoryAnimation2D.create(data1, data2);
         System.out.println();
         System.out.println("component: " + componentAnimations2D);
         String json = jsonConverter.gson.toJson(componentAnimations2D);
@@ -101,12 +101,9 @@ public class SaveEntityScene extends Scene {
         //componentSoundEffects.lastPlayingSoundEffect.sound.
     }
 
-    public static Map<String, Class> getRequiredAssetsNameTypeMap() {
-        HashMap<String, Class> assetNameClassMap = new HashMap<>();
-        assetNameClassMap.put("atlases/test/testSpriteSheet.atlas", SpriteSheet.class);
-        assetNameClassMap.put("audio/sample.wav", Sound.class);
-        assetNameClassMap.put("audio/beep.wav", Sound.class);
-        return assetNameClassMap;
+    @Override
+    public void hide() {
+
     }
 
     @Override
@@ -118,4 +115,13 @@ public class SaveEntityScene extends Scene {
     public void dispose() {
 
     }
+
+    public static Map<String, Class> getRequiredAssetsNameTypeMap() {
+        HashMap<String, Class> assetNameClassMap = new HashMap<>();
+        assetNameClassMap.put("atlases/test/testSpriteSheet.atlas", SpriteSheet.class);
+        assetNameClassMap.put("audio/sample.wav", Sound.class);
+        assetNameClassMap.put("audio/beep.wav", Sound.class);
+        return assetNameClassMap;
+    }
+
 }

@@ -5,20 +5,20 @@ import com.fos.game.engine.ecs.components.base.Factory;
 import com.fos.game.engine.files.assets.GameAssetManager;
 import com.fos.game.engine.files.serialization.JsonConverter;
 
-public class FactoryAnimation extends Factory {
+public class FactoryAnimation2D extends Factory {
 
-    public FactoryAnimation(final GameAssetManager assetManager, final JsonConverter jsonConverter) {
+    public FactoryAnimation2D(final GameAssetManager assetManager, final JsonConverter jsonConverter) {
         super(assetManager, jsonConverter);
     }
 
-    public ComponentAnimations2D create(final AnimationData ...animationData) {
-        return new ComponentAnimations2D(assetManager, animationData);
+    public ComponentAnimations2D create(final Animation2DData... animation2DData) {
+        return new ComponentAnimations2D(assetManager, animation2DData);
     }
 
     // for simple single frame animations2d, which are really intended to be Sprites.
     public ComponentAnimations2D create(final String filepath, final String animationName) {
-        AnimationData animationData = new AnimationData(filepath, animationName, 1.0f, Animation.PlayMode.NORMAL);
-        return new ComponentAnimations2D(assetManager, animationData);
+        Animation2DData animation2DData = new Animation2DData(filepath, animationName, 1.0f, Animation.PlayMode.NORMAL);
+        return new ComponentAnimations2D(assetManager, animation2DData);
     }
 
     public ComponentAnimations2D createFromJson(final String json) {
@@ -27,8 +27,8 @@ public class FactoryAnimation extends Factory {
     }
 
     public ComponentAnimations2D create(final String filepath, final String animationName, final float frameDuration, final Animation.PlayMode playMode) {
-        AnimationData animationData = new AnimationData(filepath, animationName, frameDuration, playMode);
-        return new ComponentAnimations2D(assetManager, animationData);
+        Animation2DData animation2DData = new Animation2DData(filepath, animationName, frameDuration, playMode);
+        return new ComponentAnimations2D(assetManager, animation2DData);
     }
 
 

@@ -1,6 +1,6 @@
 package com.fos.game.engine.files.serialization;
 
-import com.fos.game.engine.ecs.components.animations2d.AnimationData;
+import com.fos.game.engine.ecs.components.animations2d.Animation2DData;
 import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
 import com.google.gson.*;
 
@@ -15,7 +15,7 @@ public class TypeAdapterComponentAnimations2D implements JsonSerializer<Componen
     @Override
     public JsonElement serialize(ComponentAnimations2D src, Type typeOfSrc, JsonSerializationContext context) {
         JsonObject result = new JsonObject();
-        result.add("animationsData", context.serialize(src.animationsData, AnimationData[].class));
+        result.add("animationsData", context.serialize(src.animationsData, Animation2DData[].class));
         result.add("currentAnimation", new JsonPrimitive(src.currentPlayingAnimation.getKeyFrames()[0].name));
         result.add("elapsedTime", new JsonPrimitive(src.elapsedTime));
         return result;
@@ -31,10 +31,10 @@ public class TypeAdapterComponentAnimations2D implements JsonSerializer<Componen
         System.out.println("animationsData: " + animationsData);
         System.out.println("elapsedTime: " + elapsedTime);
         System.out.println("currentAnimation: " + currentAnimation);
-        AnimationData[] data = context.deserialize(animationsData, AnimationData[].class);
+        Animation2DData[] data = context.deserialize(animationsData, Animation2DData[].class);
         try {
 
-            return context.deserialize(animationsData, AnimationData.class/*Class.forName(type)*/);
+            return context.deserialize(animationsData, Animation2DData.class/*Class.forName(type)*/);
         } catch (Exception e) {
             throw new JsonParseException("Unknown element type: " + animationsData, e);
         }

@@ -1,15 +1,15 @@
 package com.fos.game.engine.files.serialization;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.fos.game.engine.ecs.components.animations2d.AnimationData;
+import com.fos.game.engine.ecs.components.animations2d.Animation2DData;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;
 
-public class TypeAdapterAnimationData implements JsonSerializer<AnimationData> {
+public class TypeAdapterAnimationData implements JsonSerializer<Animation2DData> {
 
     @Override
-    public JsonElement serialize(AnimationData src, Type typeOfSrc, JsonSerializationContext context) {
+    public JsonElement serialize(Animation2DData src, Type typeOfSrc, JsonSerializationContext context) {
         JsonObject result = new JsonObject();
         result.add("filepath", new JsonPrimitive(src.filepath));
         result.add("animationName", new JsonPrimitive(src.animationName));

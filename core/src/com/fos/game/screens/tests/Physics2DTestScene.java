@@ -1,6 +1,5 @@
 package com.fos.game.screens.tests;
 
-import com.badlogic.gdx.audio.Sound;
 import com.fos.game.engine.context.GameContext;
 import com.fos.game.engine.context.Scene;
 import com.fos.game.engine.ecs.components.animations2d.SpriteSheet;
@@ -39,8 +38,7 @@ public class Physics2DTestScene extends Scene {
         orangeSquare = new Entity();
         orangeSquare.attachComponents(
                 FactoryTransform2D.create(0,0),
-                context.factoryAnimation.create("atlases/test/testSpriteSheet.atlas", "animatedArrow"),
-                context.factoryAudio.create("audio/sample.wav", "audio/beep.wav"),
+                context.factoryAnimation2D.create("atlases/test/testSpriteSheet.atlas", "animatedArrow"),
                 new ComponentScripts(new OrangeSquareScript(orangeSquare))
         );
 
@@ -60,6 +58,11 @@ public class Physics2DTestScene extends Scene {
     }
 
     @Override
+    public void hide() {
+
+    }
+
+    @Override
     public void dispose() {
 
     }
@@ -67,8 +70,6 @@ public class Physics2DTestScene extends Scene {
     public static Map<String, Class> getRequiredAssetsNameTypeMap() {
         HashMap<String, Class> assetNameClassMap = new HashMap<>();
         assetNameClassMap.put("atlases/test/testSpriteSheet.atlas", SpriteSheet.class);
-        assetNameClassMap.put("audio/sample.wav", Sound.class);
-        assetNameClassMap.put("audio/beep.wav", Sound.class);
         return assetNameClassMap;
     }
 }

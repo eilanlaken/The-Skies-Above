@@ -38,6 +38,11 @@ public class LoadingScreen extends Scene {
     }
 
     @Override
+    public void hide() {
+
+    }
+
+    @Override
     public void dispose() {
 
     }
