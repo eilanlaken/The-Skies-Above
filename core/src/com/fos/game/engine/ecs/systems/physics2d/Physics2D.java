@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
+import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.physics2d.ComponentJoint2D;
 import com.fos.game.engine.ecs.components.physics2d.ComponentRigidBody2D;
 import com.fos.game.engine.ecs.entities.Entity;
@@ -24,12 +25,11 @@ public class Physics2D implements EntitiesProcessor, Disposable {
         this.world.step(delta, 6, 2);
     }
 
-    public void addBody(final ComponentRigidBody2D componentRigidBody2D) {
-        Physics2DUtils.addRigidBody2D(world, componentRigidBody2D);
-    }
-
-    public void addJoint(final ComponentJoint2D componentJoint2D) {
-        Physics2DUtils.addJoint(world, componentJoint2D);
+    public void addPhysics(final Entity entity) {
+        ComponentRigidBody2D body2D = (ComponentRigidBody2D) entity.components[ComponentType.PHYSICS_2D_BODY.ordinal()];
+        ComponentJoint2D joint2D = (ComponentJoint2D) entity.components[ComponentType.PHYSICS_2D_JOINT.ordinal()];
+        if (body2D != null) Physics2DUtils.addRigidBody2D(world, entity, body2D);
+        if (joint2D != null) Physics2DUtils.addJoint(world, entity, joint2D);
     }
 
     @Override

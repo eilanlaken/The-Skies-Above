@@ -5,17 +5,19 @@ import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.physics2d.ComponentJoint2D;
 import com.fos.game.engine.ecs.components.physics2d.ComponentRigidBody2D;
 import com.fos.game.engine.ecs.components.physics2d.RigidBody2DData;
+import com.fos.game.engine.ecs.entities.Entity;
 
 public class Physics2DUtils {
 
     protected static final short PHYSICS_2D_BIT_MASK = ComponentType.PHYSICS_2D_BODY.bitMask;
 
-    protected static void addRigidBody2D(final World world, final ComponentRigidBody2D componentRigidBody2D) {
+    protected static void addRigidBody2D(final World world, final Entity entity, final ComponentRigidBody2D componentRigidBody2D) {
         RigidBody2DData data = componentRigidBody2D.data;
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = data.bodyType;
         bodyDef.position.set(data.positionX, data.positionY);
         componentRigidBody2D.body = world.createBody(bodyDef);
+        componentRigidBody2D.body.setUserData(entity);
         bodyDef.fixedRotation = false;
         Shape shape = getShape(data);
         FixtureDef fixtureDef = new FixtureDef();
@@ -28,8 +30,9 @@ public class Physics2DUtils {
         shape.dispose();
     }
 
-    protected static void addJoint(final World world, final ComponentJoint2D componentJoint2D) {
+    protected static void addJoint(final World world, final Entity entity, final ComponentJoint2D componentJoint2D) {
         componentJoint2D.joint = world.createJoint(componentJoint2D.data.jointDef);
+        componentJoint2D.joint.setUserData(entity);
     }
 
     private static Shape getShape(final RigidBody2DData data) {

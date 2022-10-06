@@ -81,6 +81,7 @@ public class Box2DDebugRendererTestScene7 extends Scene {
                 18, 0.5f,
                 1,1,1,false)
         );
+        floor.body.setUserData(floor);
         entities.add(floor);
 
     }
@@ -173,6 +174,31 @@ public class Box2DDebugRendererTestScene7 extends Scene {
             return shape;
         }
         return null;
+    }
+
+    private ContactListener getContactListener() {
+        ContactListener contactListener = new ContactListener() {
+            @Override
+            public void beginContact(Contact contact) {
+
+            }
+
+            @Override
+            public void endContact(Contact contact) {
+
+            }
+
+            @Override
+            public void preSolve(Contact contact, Manifold oldManifold) {
+
+            }
+
+            @Override
+            public void postSolve(Contact contact, ContactImpulse impulse) {
+
+            }
+        };
+        return contactListener;
     }
 
     public static Map<String, Class> getRequiredAssetsNameTypeMap() {

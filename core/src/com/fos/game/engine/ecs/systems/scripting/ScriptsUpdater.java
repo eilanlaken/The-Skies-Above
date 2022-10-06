@@ -21,6 +21,13 @@ public class ScriptsUpdater implements EntitiesProcessor {
         }
     }
 
+    public void startScripts(final Entity entity) {
+        ComponentScripts scripts = (ComponentScripts) entity.components[ComponentType.SCRIPTS.ordinal()];
+        if (scripts != null) {
+            for (Script script : scripts) script.start();
+        }
+    }
+
     @Override
     public boolean shouldProcess(Entity entity) {
         return (entity.componentsBitMask & ScriptsUpdaterUtils.SCRIPTED_ENTITY_BIT_MASK) > 0;

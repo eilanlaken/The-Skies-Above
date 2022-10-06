@@ -1,11 +1,6 @@
 package com.fos.game.engine.ecs.entities;
 
 import com.badlogic.gdx.utils.Array;
-import com.fos.game.engine.ecs.components.base.ComponentType;
-import com.fos.game.engine.ecs.components.physics2d.ComponentJoint2D;
-import com.fos.game.engine.ecs.components.physics2d.ComponentRigidBody2D;
-import com.fos.game.engine.ecs.components.scripts.ComponentScripts;
-import com.fos.game.engine.ecs.components.scripts.Script;
 import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
 
 import java.util.HashMap;
@@ -25,20 +20,8 @@ public class EntityContainerUtils {
     protected static void addEntities(final EntityContainer container) {
         for (final Entity entity : container.toAdd) {
             container.entities.add(entity);
-            // TODO: if has physics...
-            ComponentRigidBody2D rigidBody2D = (ComponentRigidBody2D) entity.components[ComponentType.PHYSICS_2D_BODY.ordinal()];
-            ComponentJoint2D joint2D = (ComponentJoint2D) entity.components[ComponentType.PHYSICS_2D_JOINT.ordinal()];
-            if (rigidBody2D != null) {
-                container.physics2D.addBody(rigidBody2D);
-            }
-            if (joint2D != null) {
-                container.physics2D.addJoint(joint2D);
-            }
-            // TODO: if has scripts attached
-            ComponentScripts scripts = (ComponentScripts) entity.components[ComponentType.SCRIPTS.ordinal()];
-            if (scripts != null) {
-                for (Script script : scripts) script.start();
-            }
+            container.physics2D.addPhysics(entity);
+            container.scriptsUpdater.startScripts(entity);
         }
         container.toAdd.clear();
     }
