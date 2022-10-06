@@ -15,8 +15,7 @@ public class FactoryRigidBody2D extends Factory {
     }
 
     public ComponentRigidBody2D create(final RigidBody2DData data) {
-
-        return null;
+        return new ComponentRigidBody2D(data);
     }
 
 
