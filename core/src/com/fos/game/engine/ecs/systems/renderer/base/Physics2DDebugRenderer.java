@@ -8,7 +8,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 public class Physics2DDebugRenderer extends Box2DDebugRenderer {
 
     public Physics2DDebugRenderer() {
-        super(true, true, true, true, true, true);
+        super(true, true, false, true, true, true);
     }
 
     public void begin() {

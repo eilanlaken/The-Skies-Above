@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.GLFrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
@@ -20,7 +20,6 @@ import com.fos.game.engine.ecs.components.camera.ComponentCamera;
 import com.fos.game.engine.ecs.components.lights3d.LightingEnvironment;
 import com.fos.game.engine.ecs.components.modelinstance.ComponentModelInstance;
 import com.fos.game.engine.ecs.components.modelinstance.ModelInstance;
-import com.fos.game.engine.ecs.components.rigidbody2d.ComponentRigidBody2D;
 import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
@@ -37,7 +36,11 @@ public class Renderer implements EntitiesProcessor, Disposable {
 
     private ModelBatch modelBatch;
     private SpriteBatch spriteBatch;
+
+    // TODO: test
     private Physics2DDebugRenderer physics2DDebugRenderer;
+    private Box2DDebugRenderer box2DDebugRenderer;
+
     private ShapeRenderer shapeRenderer;
     // config
     public float pixelsPerMeter;
@@ -54,7 +57,11 @@ public class Renderer implements EntitiesProcessor, Disposable {
     public Renderer() {
         this.modelBatch = new ModelBatch(new ShaderProvider(), new ModelInstanceSorter());
         this.spriteBatch = new SpriteBatch();
+
+        // TODO: test
         this.physics2DDebugRenderer = new Physics2DDebugRenderer();
+        this.box2DDebugRenderer = new Box2DDebugRenderer();
+
         this.shapeRenderer = new ShapeRenderer();
         this.pixelsPerMeter = Config.DEFAULT.pixelsPerMeter;
         this.debugMode = Config.DEFAULT.debugMode;
@@ -134,19 +141,12 @@ public class Renderer implements EntitiesProcessor, Disposable {
 
         // TODO: test. If debug mode, render shapes for 2d entities with physics.
         if (debugMode) {
-            physics2DDebugRenderer.begin();
             for (Map.Entry<ComponentCamera, Array<Entity>> cameraEntities : camera2DEntitiesMap.entrySet()) {
                 ComponentCamera camera = cameraEntities.getKey();
                 //physics2DDebugRenderer.setProjectionMatrix(camera.lens.combined);
-                for (Entity entity : cameraEntities.getValue()) {
-                    final ComponentRigidBody2D componentRigidBody2D = (ComponentRigidBody2D) entity.components[ComponentType.PHYSICS_BODY_2D.ordinal()];
-                    if (componentRigidBody2D == null) continue;
-                    System.out.println("drawing");
-                    final Body body = componentRigidBody2D.body;
-                    physics2DDebugRenderer.renderBody(body);
-                }
+
+
             }
-            physics2DDebugRenderer.end();
         }
         //shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         //shapeRenderer.rect(0,0,80,80);

@@ -12,7 +12,7 @@ public class ComponentRigidBody3D extends btRigidBody implements Component {
 
     @Override
     public final ComponentType getComponentType() {
-        return ComponentType.PHYSICS_BODY_3D;
+        return ComponentType.PHYSICS_3D;
     }
 
 }

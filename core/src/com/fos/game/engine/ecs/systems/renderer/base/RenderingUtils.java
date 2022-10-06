@@ -74,6 +74,7 @@ public class RenderingUtils {
                 lightingEnvironmentResult.addLight(light);
             }
             if ((entity.componentsBitMask & ATTACHED_CAMERA_BIT_MASK) > 0) {
+                // TODO: sync between the transform of the entity to the position of the camera.
                 final ComponentCamera componentCamera = (ComponentCamera) entity.components[ComponentType.CAMERA.ordinal()];
                 final Camera lens = componentCamera.lens;
                 lens.update();

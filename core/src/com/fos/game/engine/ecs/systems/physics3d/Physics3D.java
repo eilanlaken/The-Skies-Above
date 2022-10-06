@@ -52,7 +52,7 @@ public class Physics3D implements EntitiesProcessor, Disposable {
     public void process(final Array<Entity> entities) {
         // sync transforms: bullet3D's and transform component
         for (final Entity entity : entities) {
-            ComponentRigidBody3D body = (ComponentRigidBody3D) entity.components[ComponentType.PHYSICS_BODY_3D.ordinal()];
+            ComponentRigidBody3D body = (ComponentRigidBody3D) entity.components[ComponentType.PHYSICS_3D.ordinal()];
             ComponentTransform3D transform = (ComponentTransform3D) entity.components[ComponentType.TRANSFORM_3D.ordinal()];
             body.getWorldTransform(transform);
         }

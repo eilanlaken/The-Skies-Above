@@ -20,6 +20,23 @@ public class FactoryCamera extends Factory {
         super(assetManager, jsonConverter);
     }
 
+    public ComponentCamera createCamera2D(final Camera2DData data) {
+        OrthographicCamera lens = new OrthographicCamera();
+        lens.setToOrtho(false, data.viewportWidth, data.viewportHeight);
+        lens.position.set(data.positionX, data.positionY, 0);
+        lens.zoom = data.zoom;
+        lens.update();
+        return new ComponentCamera(lens, UtilsCameras.computeRenderedLayersBitMask(data.layers), null);
+    }
+
+    public ComponentCamera createCamera2D(final float viewportWidth, final float viewportHeight, final Enum ...layers) {
+        OrthographicCamera lens = new OrthographicCamera();
+        lens.setToOrtho(false, viewportWidth, viewportHeight);
+        lens.position.set(0,0,0);
+        lens.update();
+        return new ComponentCamera(lens, UtilsCameras.computeRenderedLayersBitMask(layers), null);
+    }
+
     @Deprecated
     public static ComponentCamera create2DCamera(final Enum ...categories) {
         OrthographicCamera lens = new OrthographicCamera();
