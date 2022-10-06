@@ -6,8 +6,14 @@ import com.fos.game.engine.ecs.components.base.ComponentType;
 
 public class ComponentRigidBody2D implements Component {
 
+    public RigidBody2DData data;
     public Body body;
 
+    protected ComponentRigidBody2D(final RigidBody2DData data) {
+        this.data = data;
+    }
+
+    @Deprecated
     protected ComponentRigidBody2D(final Body body) {
         this.body = body;
     }

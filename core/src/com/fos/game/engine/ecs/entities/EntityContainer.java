@@ -24,12 +24,12 @@ public class EntityContainer implements Disposable {
 
     // systems
     protected HashMap<EntitiesProcessor, Array<Entity>> systemEntitiesMap = new HashMap<>();
-    protected AudioPlayer audioPlayer = new AudioPlayer();
-    protected Physics2D physics2D = new Physics2D();
-    protected Physics3D physics3D = new Physics3D();
-    protected Renderer renderer = new Renderer();
-    protected ScriptsUpdater scriptsUpdater = new ScriptsUpdater();
-    protected SignalRouter signalRouter = new SignalRouter();
+    public AudioPlayer audioPlayer = new AudioPlayer();
+    public Physics2D physics2D = new Physics2D();
+    public Physics3D physics3D = new Physics3D();
+    public Renderer renderer = new Renderer();
+    public ScriptsUpdater scriptsUpdater = new ScriptsUpdater();
+    public SignalRouter signalRouter = new SignalRouter();
 
     public EntityContainer() {
         this.systemEntitiesMap.put(audioPlayer, new Array<Entity>());
@@ -61,6 +61,7 @@ public class EntityContainer implements Disposable {
         EntityContainerUtils.process(systemEntitiesMap);
     }
 
+    @Deprecated
     public World getPhysics2D() {
         return physics2D.world;
     }

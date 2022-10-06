@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
+import com.fos.game.engine.ecs.components.rigidbody2d.ComponentRigidBody2D;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
 
@@ -20,6 +21,10 @@ public class Physics2D implements EntitiesProcessor, Disposable {
     public void process(final Array<Entity> entities) {
         final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
         this.world.step(delta, 6, 2);
+    }
+
+    public void addBody(final ComponentRigidBody2D componentRigidBody2D) {
+        Physics2DUtils.addRigidBody2D(world, componentRigidBody2D);
     }
 
     @Override
