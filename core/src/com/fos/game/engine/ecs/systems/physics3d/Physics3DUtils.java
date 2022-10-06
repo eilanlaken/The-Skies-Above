@@ -4,7 +4,7 @@ import com.fos.game.engine.ecs.components.base.ComponentType;
 
 public class Physics3DUtils {
 
-    protected static final short PHYSICS_3D_BIT_MASK = ComponentType.PHYSICS_3D.bitMask;
+    protected static final short PHYSICS_3D_BIT_MASK = ComponentType.PHYSICS_3D_BODY.bitMask;
 
     /*
     protected static void fillPhysics3DEntitiesArray(final EntityContainer container, final Array<Entity> result) {

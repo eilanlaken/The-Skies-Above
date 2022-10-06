@@ -26,8 +26,8 @@ public class EntityContainerUtils {
         for (final Entity entity : container.toAdd) {
             container.entities.add(entity);
             // TODO: if has physics...
-            ComponentRigidBody2D rigidBody2D = (ComponentRigidBody2D) entity.components[ComponentType.PHYSICS_2D.ordinal()];
-            ComponentJoint2D joint2D = (ComponentJoint2D) entity.components[ComponentType.PHYSICS_2D.ordinal()];
+            ComponentRigidBody2D rigidBody2D = (ComponentRigidBody2D) entity.components[ComponentType.PHYSICS_2D_BODY.ordinal()];
+            ComponentJoint2D joint2D = (ComponentJoint2D) entity.components[ComponentType.PHYSICS_2D_JOINT.ordinal()];
             if (rigidBody2D != null) {
                 container.physics2D.addBody(rigidBody2D);
             }

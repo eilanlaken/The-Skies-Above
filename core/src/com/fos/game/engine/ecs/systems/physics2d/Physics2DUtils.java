@@ -8,7 +8,7 @@ import com.fos.game.engine.ecs.components.physics2d.RigidBody2DData;
 
 public class Physics2DUtils {
 
-    protected static final short PHYSICS_2D_BIT_MASK = ComponentType.PHYSICS_2D.bitMask;
+    protected static final short PHYSICS_2D_BIT_MASK = ComponentType.PHYSICS_2D_BODY.bitMask;
 
     protected static void addRigidBody2D(final World world, final ComponentRigidBody2D componentRigidBody2D) {
         RigidBody2DData data = componentRigidBody2D.data;

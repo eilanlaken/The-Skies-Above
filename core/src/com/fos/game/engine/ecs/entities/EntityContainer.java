@@ -8,7 +8,7 @@ import com.fos.game.engine.ecs.systems.audio.AudioPlayer;
 import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
 import com.fos.game.engine.ecs.systems.physics2d.Physics2D;
 import com.fos.game.engine.ecs.systems.physics3d.Physics3D;
-import com.fos.game.engine.ecs.systems.renderer.base.Renderer;
+import com.fos.game.engine.ecs.systems.renderer.base.Renderer_old;
 import com.fos.game.engine.ecs.systems.scripting.ScriptsUpdater;
 import com.fos.game.engine.ecs.systems.signals.SignalRouter;
 
@@ -27,7 +27,7 @@ public class EntityContainer implements Disposable {
     public AudioPlayer audioPlayer = new AudioPlayer();
     public Physics2D physics2D = new Physics2D();
     public Physics3D physics3D = new Physics3D();
-    public Renderer renderer = new Renderer();
+    public Renderer_old rendererOld = new Renderer_old();
     public ScriptsUpdater scriptsUpdater = new ScriptsUpdater();
     public SignalRouter signalRouter = new SignalRouter();
 
@@ -35,7 +35,7 @@ public class EntityContainer implements Disposable {
         this.systemEntitiesMap.put(audioPlayer, new Array<Entity>());
         this.systemEntitiesMap.put(physics2D, new Array<Entity>());
         this.systemEntitiesMap.put(physics3D, new Array<Entity>());
-        this.systemEntitiesMap.put(renderer, new Array<Entity>());
+        this.systemEntitiesMap.put(rendererOld, new Array<Entity>());
         this.systemEntitiesMap.put(scriptsUpdater, new Array<Entity>());
         this.systemEntitiesMap.put(signalRouter, new Array<Entity>());
     }

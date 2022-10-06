@@ -61,8 +61,8 @@ public class Entity implements Disposable {
         ComponentTransform2D transform2D = (ComponentTransform2D) components[ComponentType.TRANSFORM_2D.ordinal()];
         ComponentTransform3D transform3d = (ComponentTransform3D) components[ComponentType.TRANSFORM_3D.ordinal()];
         ComponentModelInstance modelInstance = (ComponentModelInstance) components[ComponentType.MODEL_INSTANCE.ordinal()];
-        ComponentRigidBody2D rigidBody2d = (ComponentRigidBody2D) components[ComponentType.PHYSICS_2D.ordinal()];
-        ComponentRigidBody3D rigidBody3d = (ComponentRigidBody3D) components[ComponentType.PHYSICS_3D.ordinal()];
+        ComponentRigidBody2D rigidBody2d = (ComponentRigidBody2D) components[ComponentType.PHYSICS_2D_BODY.ordinal()];
+        ComponentRigidBody3D rigidBody3d = (ComponentRigidBody3D) components[ComponentType.PHYSICS_3D_BODY.ordinal()];
         Light light = (Light) components[ComponentType.LIGHT.ordinal()];
         ComponentScripts scripts = (ComponentScripts) components[ComponentType.SCRIPTS.ordinal()];
 
@@ -99,8 +99,8 @@ public class Entity implements Disposable {
 
     @Override
     public void dispose() {
-        if (components[ComponentType.PHYSICS_3D.ordinal()] != null) {
-            btRigidBody body = (btRigidBody) components[ComponentType.PHYSICS_3D.ordinal()];
+        if (components[ComponentType.PHYSICS_3D_BODY.ordinal()] != null) {
+            btRigidBody body = (btRigidBody) components[ComponentType.PHYSICS_3D_BODY.ordinal()];
             body.getCollisionShape().dispose();
             body.dispose();
         }
