@@ -44,6 +44,7 @@ public class Box2DDebugRendererTestScene7 extends Scene {
     @Override
     protected void start() {
         world = new World(new Vector2(0,-10), true);
+        world.setContactListener(getContactListener());
         entities = new Array<>();
         camera = context.factoryCamera.createCamera2D(20, 20 * Gdx.graphics.getHeight() / Gdx.graphics.getWidth());
 
@@ -60,6 +61,7 @@ public class Box2DDebugRendererTestScene7 extends Scene {
                     camera.lens.viewportWidth,
                     camera.lens.viewportHeight,
                     1,1,1,false));
+            entityMini.body.setUserData(entityMini);
             entities.add(entityMini);
         }
 
@@ -180,12 +182,16 @@ public class Box2DDebugRendererTestScene7 extends Scene {
         ContactListener contactListener = new ContactListener() {
             @Override
             public void beginContact(Contact contact) {
-
+                EntityMini entityMiniA = (EntityMini) contact.getFixtureA().getBody().getUserData();
+                EntityMini entityMiniB = (EntityMini) contact.getFixtureB().getBody().getUserData();
+                System.out.println("beging contact: " + entityMiniA  + " : " + entityMiniB);
             }
 
             @Override
             public void endContact(Contact contact) {
-
+                EntityMini entityMiniA = (EntityMini) contact.getFixtureA().getBody().getUserData();
+                EntityMini entityMiniB = (EntityMini) contact.getFixtureB().getBody().getUserData();
+                System.out.println("end contact: " + entityMiniA  + " : " + entityMiniB);
             }
 
             @Override

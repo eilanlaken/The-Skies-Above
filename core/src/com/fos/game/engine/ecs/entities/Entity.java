@@ -19,7 +19,7 @@ import com.fos.game.engine.ecs.components.transform.FactoryTransform3D;
 
 public class Entity implements Disposable {
 
-    public EntityContainer currentContainer;
+    public EntityContainer container;
 
     public int localId = -1; // effectively its index in the current entity container's entities array
     public int globalId = -1; // a global unique identifier; Only persistent and "important" Entities has a globalId.
@@ -28,6 +28,7 @@ public class Entity implements Disposable {
     public int layer;
     public boolean active = true;
 
+    @Deprecated
     public Entity() {
         this.layer = 0b000001;
     }

@@ -19,7 +19,9 @@ public class EntityContainerUtils {
 
     protected static void addEntities(final EntityContainer container) {
         for (final Entity entity : container.toAdd) {
+            entity.container = container;
             container.entities.add(entity);
+            entity.localId = container.entities.size - 1;
             container.physics2D.addPhysics(entity);
             container.scriptsUpdater.startScripts(entity);
         }

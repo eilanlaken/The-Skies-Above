@@ -41,9 +41,10 @@ public class EntityContainer implements Disposable {
     }
 
     // TODO: implement like it should be. Delete this shit.
+    @Deprecated
     public void addEntity(final Entity entity) {
         entity.active = true;
-        entity.currentContainer = this;
+        entity.container = this;
         entities.add(entity);
         entity.localId = entities.size-1;
         /*
