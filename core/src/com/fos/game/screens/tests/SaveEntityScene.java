@@ -96,7 +96,7 @@ public class SaveEntityScene extends Scene {
     @Override
     public void update(float deltaTime) {
         final float delta = Math.min(1f / 30f, deltaTime);
-        container.update(delta);
+        container.update();
 
         //componentSoundEffects.lastPlayingSoundEffect.sound.
     }

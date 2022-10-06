@@ -2,6 +2,7 @@ package com.fos.game.engine.ecs.systems.physics2d;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
@@ -10,6 +11,7 @@ import com.fos.game.engine.ecs.components.physics2d.ComponentJoint2D;
 import com.fos.game.engine.ecs.components.physics2d.ComponentRigidBody2D;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
+import com.fos.game.engine.ecs.systems.base.SystemConfig;
 
 public class Physics2D implements EntitiesProcessor, Disposable {
 
@@ -40,5 +42,16 @@ public class Physics2D implements EntitiesProcessor, Disposable {
     @Override
     public void dispose() {
         world.dispose();
+    }
+
+    public void config(final Config config) {
+        this.world.setContactListener(config.contactListener);
+    }
+
+    public static final class Config extends SystemConfig {
+        public final ContactListener contactListener;
+        public Config(final ContactListener contactListener) {
+            this.contactListener = contactListener;
+        }
     }
 }

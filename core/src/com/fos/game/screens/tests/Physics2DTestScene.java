@@ -51,7 +51,7 @@ public class Physics2DTestScene extends Scene {
     @Override
     protected void update(float delta) {
         delta = Math.min(1f / 30f, delta);
-        container.update(delta);
+        container.update();
     }
 
     @Override

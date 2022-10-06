@@ -24,6 +24,7 @@ import com.fos.game.engine.ecs.components.physics2d.ComponentRigidBody2D;
 import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
+import com.fos.game.engine.ecs.systems.base.SystemConfig;
 import com.fos.game.engine.ecs.systems.renderer.shaders.postprocessing.PostProcessingShaderProgram;
 
 import java.util.HashMap;
@@ -171,11 +172,9 @@ public class Renderer implements EntitiesProcessor, Disposable {
         this.debugMode = config.debugMode;
     }
 
-    public static final class Config {
-
+    public static final class Config extends SystemConfig {
         public static final Config DEFAULT = new Config(true);
         public final boolean debugMode;
-
         public Config(final boolean debugMode) {
             this.debugMode = debugMode;
         }

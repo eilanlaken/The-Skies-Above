@@ -6,9 +6,10 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.fos.game.engine.ecs.systems.audio.AudioPlayer;
 import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
+import com.fos.game.engine.ecs.systems.base.SystemConfig;
 import com.fos.game.engine.ecs.systems.physics2d.Physics2D;
 import com.fos.game.engine.ecs.systems.physics3d.Physics3D;
-import com.fos.game.engine.ecs.systems.renderer.base.Renderer_old;
+import com.fos.game.engine.ecs.systems.renderer.base.Renderer;
 import com.fos.game.engine.ecs.systems.scripting.ScriptsUpdater;
 import com.fos.game.engine.ecs.systems.signals.SignalRouter;
 
@@ -27,7 +28,8 @@ public class EntityContainer implements Disposable {
     public AudioPlayer audioPlayer = new AudioPlayer();
     public Physics2D physics2D = new Physics2D();
     public Physics3D physics3D = new Physics3D();
-    public Renderer_old rendererOld = new Renderer_old();
+    public Renderer renderer = new Renderer();
+    //public Renderer_old rendererOld = new Renderer_old();
     public ScriptsUpdater scriptsUpdater = new ScriptsUpdater();
     public SignalRouter signalRouter = new SignalRouter();
 
@@ -35,7 +37,9 @@ public class EntityContainer implements Disposable {
         this.systemEntitiesMap.put(audioPlayer, new Array<Entity>());
         this.systemEntitiesMap.put(physics2D, new Array<Entity>());
         this.systemEntitiesMap.put(physics3D, new Array<Entity>());
-        this.systemEntitiesMap.put(rendererOld, new Array<Entity>());
+        // TODO: remove old renderer. 
+        //this.systemEntitiesMap.put(rendererOld, new Array<Entity>());
+        this.systemEntitiesMap.put(renderer, new Array<Entity>());
         this.systemEntitiesMap.put(scriptsUpdater, new Array<Entity>());
         this.systemEntitiesMap.put(signalRouter, new Array<Entity>());
     }
@@ -55,7 +59,7 @@ public class EntityContainer implements Disposable {
          */
     }
 
-    public void update(float deltaTime) {
+    public void update() {
         EntityContainerUtils.removeEntities(this);
         EntityContainerUtils.addEntities(this);
         EntityContainerUtils.prepareForProcessing(entities, systemEntitiesMap);
@@ -66,8 +70,17 @@ public class EntityContainer implements Disposable {
     public World getPhysics2D() {
         return physics2D.world;
     }
+    @Deprecated
     public btDynamicsWorld getPhysics3D() {
         return physics3D.dynamicsWorld;
+    }
+
+    public void config(final SystemConfig ...configs) {
+        for (final SystemConfig config : configs) {
+            if (config instanceof Renderer.Config) renderer.config((Renderer.Config) config);
+            if (config instanceof Physics2D.Config) physics2D.config((Physics2D.Config) config);
+            // .. configure other systems.
+        }
     }
 
     @Override
