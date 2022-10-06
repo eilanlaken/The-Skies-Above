@@ -9,12 +9,13 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 import com.badlogic.gdx.utils.Array;
 import com.fos.game.engine.context.GameContext;
 import com.fos.game.engine.context.Scene;
 import com.fos.game.engine.ecs.components.animations2d.SpriteSheet;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
-import com.fos.game.engine.ecs.components.rigidbody2d.RigidBody2DData;
+import com.fos.game.engine.ecs.components.physics2d.RigidBody2DData;
 import com.fos.game.engine.ecs.systems.renderer.base.Physics2DDebugRenderer;
 import com.fos.game.engine.ecs.systems.renderer.base.SpriteBatch;
 
@@ -33,6 +34,7 @@ public class Box2DDebugRendererTestScene6 extends Scene {
     class EntityMini {
         Animation<TextureAtlas.AtlasRegion> animation;
         Body body;
+        Joint joint;
     }
 
     public Box2DDebugRendererTestScene6(final GameContext context) {
@@ -45,6 +47,7 @@ public class Box2DDebugRendererTestScene6 extends Scene {
         entities = new Array<>();
         camera = context.factoryCamera.createCamera2D(20, 20 * Gdx.graphics.getHeight() / Gdx.graphics.getWidth());
 
+        // create entities with bodies
         for (int i = 0; i < 10; i++) {
             EntityMini entityMini = new EntityMini();
             entityMini.animation = new Animation<>(1,
@@ -60,6 +63,16 @@ public class Box2DDebugRendererTestScene6 extends Scene {
             entities.add(entityMini);
         }
 
+        // create entities with joints
+        for (int i = 0; i < 3; i++) {
+            EntityMini entityMini = new EntityMini();
+            WeldJointDef def = new WeldJointDef();
+            def.initialize(entities.get(i).body, entities.get(i + 2).body, new Vector2(1,1));
+            entityMini.joint = world.createJoint(def);
+            entities.add(entityMini);
+        }
+
+        // create floor
         EntityMini floor = new EntityMini();
         floor.body = createBody(world, new RigidBody2DData(
                 BodyDef.BodyType.StaticBody,
@@ -90,7 +103,10 @@ public class Box2DDebugRendererTestScene6 extends Scene {
         physics2DDebugRenderer.begin();
         physics2DDebugRenderer.setProjectionMatrix(camera.lens.combined);
         for (EntityMini entityMini : entities) {
-            physics2DDebugRenderer.renderBody(entityMini.body);
+            Body body = entityMini.body;
+            Joint joint = entityMini.joint;
+            if (body != null) physics2DDebugRenderer.drawBody(entityMini.body);
+            if (joint != null) physics2DDebugRenderer.drawJoint(entityMini.joint);
         }
         physics2DDebugRenderer.end();
 

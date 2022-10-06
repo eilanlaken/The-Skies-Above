@@ -2,8 +2,9 @@ package com.fos.game.engine.ecs.systems.physics2d;
 
 import com.badlogic.gdx.physics.box2d.*;
 import com.fos.game.engine.ecs.components.base.ComponentType;
-import com.fos.game.engine.ecs.components.rigidbody2d.ComponentRigidBody2D;
-import com.fos.game.engine.ecs.components.rigidbody2d.RigidBody2DData;
+import com.fos.game.engine.ecs.components.physics2d.ComponentJoint2D;
+import com.fos.game.engine.ecs.components.physics2d.ComponentRigidBody2D;
+import com.fos.game.engine.ecs.components.physics2d.RigidBody2DData;
 
 public class Physics2DUtils {
 
@@ -25,6 +26,10 @@ public class Physics2DUtils {
         fixtureDef.restitution = data.restitution;
         componentRigidBody2D.body.createFixture(fixtureDef);
         shape.dispose();
+    }
+
+    protected static void addJoint(final World world, final ComponentJoint2D componentJoint2D) {
+        componentJoint2D.joint = world.createJoint(componentJoint2D.data.jointDef);
     }
 
     private static Shape getShape(final RigidBody2DData data) {

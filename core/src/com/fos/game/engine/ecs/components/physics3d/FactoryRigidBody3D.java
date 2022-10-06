@@ -1,4 +1,4 @@
-package com.fos.game.engine.ecs.components.rigidbody3d;
+package com.fos.game.engine.ecs.components.physics3d;
 
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.g3d.Model;

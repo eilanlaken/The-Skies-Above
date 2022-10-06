@@ -2,7 +2,8 @@ package com.fos.game.engine.ecs.entities;
 
 import com.badlogic.gdx.utils.Array;
 import com.fos.game.engine.ecs.components.base.ComponentType;
-import com.fos.game.engine.ecs.components.rigidbody2d.ComponentRigidBody2D;
+import com.fos.game.engine.ecs.components.physics2d.ComponentJoint2D;
+import com.fos.game.engine.ecs.components.physics2d.ComponentRigidBody2D;
 import com.fos.game.engine.ecs.components.scripts.ComponentScripts;
 import com.fos.game.engine.ecs.components.scripts.Script;
 import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
@@ -26,8 +27,12 @@ public class EntityContainerUtils {
             container.entities.add(entity);
             // TODO: if has physics...
             ComponentRigidBody2D rigidBody2D = (ComponentRigidBody2D) entity.components[ComponentType.PHYSICS_2D.ordinal()];
+            ComponentJoint2D joint2D = (ComponentJoint2D) entity.components[ComponentType.PHYSICS_2D.ordinal()];
             if (rigidBody2D != null) {
                 container.physics2D.addBody(rigidBody2D);
+            }
+            if (joint2D != null) {
+                container.physics2D.addJoint(joint2D);
             }
             // TODO: if has scripts attached
             ComponentScripts scripts = (ComponentScripts) entity.components[ComponentType.SCRIPTS.ordinal()];

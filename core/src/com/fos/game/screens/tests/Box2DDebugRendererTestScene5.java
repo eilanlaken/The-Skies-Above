@@ -14,7 +14,7 @@ import com.fos.game.engine.context.GameContext;
 import com.fos.game.engine.context.Scene;
 import com.fos.game.engine.ecs.components.animations2d.SpriteSheet;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
-import com.fos.game.engine.ecs.components.rigidbody2d.RigidBody2DData;
+import com.fos.game.engine.ecs.components.physics2d.RigidBody2DData;
 import com.fos.game.engine.ecs.systems.renderer.base.Physics2DDebugRenderer;
 import com.fos.game.engine.ecs.systems.renderer.base.SpriteBatch;
 
@@ -90,7 +90,7 @@ public class Box2DDebugRendererTestScene5 extends Scene {
         physics2DDebugRenderer.begin();
         physics2DDebugRenderer.setProjectionMatrix(camera.lens.combined);
         for (EntityMini entityMini : entities) {
-            physics2DDebugRenderer.renderBody(entityMini.body);
+            physics2DDebugRenderer.drawBody(entityMini.body);
         }
         physics2DDebugRenderer.end();
 

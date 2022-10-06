@@ -111,8 +111,8 @@ public class Box2DDebugRendererTestScene2 extends Scene {
 
         physics2DDebugRenderer.begin();
         physics2DDebugRenderer.setProjectionMatrix(camera.lens.combined);
-        physics2DDebugRenderer.renderBody(body1);
-        physics2DDebugRenderer.renderBody(body2);
+        physics2DDebugRenderer.drawBody(body1);
+        physics2DDebugRenderer.drawBody(body2);
         physics2DDebugRenderer.end();
 
         OrthographicCamera orthographicCamera = (OrthographicCamera) camera.lens;

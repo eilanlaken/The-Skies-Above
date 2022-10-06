@@ -97,8 +97,8 @@ public class Box2DDebugRendererTestScene extends Scene {
 
         physics2DDebugRenderer.begin();
         physics2DDebugRenderer.setProjectionMatrix(camera.combined);
-        physics2DDebugRenderer.renderBody(body1);
-        physics2DDebugRenderer.renderBody(body2);
+        physics2DDebugRenderer.drawBody(body1);
+        physics2DDebugRenderer.drawBody(body2);
         physics2DDebugRenderer.end();
 
         if (Gdx.input.isKeyPressed(Input.Keys.Z))

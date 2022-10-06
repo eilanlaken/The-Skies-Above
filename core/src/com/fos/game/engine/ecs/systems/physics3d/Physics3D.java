@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.bullet.dynamics.*;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.fos.game.engine.ecs.components.base.ComponentType;
-import com.fos.game.engine.ecs.components.rigidbody3d.ComponentRigidBody3D;
+import com.fos.game.engine.ecs.components.physics3d.ComponentRigidBody3D;
 import com.fos.game.engine.ecs.components.transform.ComponentTransform3D;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;

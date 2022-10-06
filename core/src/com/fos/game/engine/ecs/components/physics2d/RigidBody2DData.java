@@ -1,4 +1,4 @@
-package com.fos.game.engine.ecs.components.rigidbody2d;
+package com.fos.game.engine.ecs.components.physics2d;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.BodyDef;
