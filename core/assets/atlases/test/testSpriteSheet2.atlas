@@ -1,0 +1,40 @@
+testSpriteSheet2.png
+size: 64, 128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+blue
+  rotate: false
+  xy: 1, 1
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: 1
+green
+  rotate: false
+  xy: 1, 95
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: 1
+orange
+  rotate: false
+  xy: 43, 53
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: 1
+purple
+  rotate: false
+  xy: 53, 1
+  size: 10, 10
+  orig: 10, 10
+  offset: 0, 0
+  index: 1
+red
+  rotate: false
+  xy: 1, 53
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: 1

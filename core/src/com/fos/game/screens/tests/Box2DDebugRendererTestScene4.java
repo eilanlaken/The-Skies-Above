@@ -69,7 +69,7 @@ public class Box2DDebugRendererTestScene4 extends Scene {
 
         entityMini1 = new EntityMini();
         entityMini1.animation = new Animation<>(1,
-                context.assetManager.get("atlases/test/testSpriteSheet.atlas", SpriteSheet.class).findRegions("animatedArrow"));
+                context.assetManager.get("atlases/test/testSpriteSheet2.atlas", SpriteSheet.class).findRegions("red"));
         entityMini1.body = body2;
     }
 
@@ -81,8 +81,8 @@ public class Box2DDebugRendererTestScene4 extends Scene {
         bodyDef2.fixedRotation = true;
         PolygonShape shape = new PolygonShape();
 
-        final float textureWidth = 30;
-        final float textureHeight = 30;
+        final float textureWidth = 40;
+        final float textureHeight = 40;
 
         final float w = textureWidth * viewportWidth / Gdx.graphics.getWidth();
         final float h = textureHeight * viewportHeight / Gdx.graphics.getHeight();
@@ -140,6 +140,7 @@ public class Box2DDebugRendererTestScene4 extends Scene {
     public static Map<String, Class> getRequiredAssetsNameTypeMap() {
         HashMap<String, Class> assetNameClassMap = new HashMap<>();
         assetNameClassMap.put("atlases/test/testSpriteSheet.atlas", SpriteSheet.class);
+        assetNameClassMap.put("atlases/test/testSpriteSheet2.atlas", SpriteSheet.class);
         return assetNameClassMap;
     }
 }
