@@ -11,27 +11,27 @@ public class SignalRouterUtils {
     protected static final short ENTITY_SIGNAL_EMITTER_BITMASK = ComponentType.SIGNAL_EMITTER.bitMask;
     protected static final short ENTITY_SIGNAL_RECEIVER_BITMASK = ComponentType.SIGNAL_RECEIVER.bitMask;
 
-    protected static void prepare(final Array<Entity> allEntities,
+    protected static void prepare(final Array<Entity> entities,
                                   final Array<Entity> messageEmitters,
                                   final Array<Entity> messageReceivers,
                                   final Array<Signal> signals) {
-        collectMessageEmittersEntities(allEntities, messageEmitters);
-        collectMessageReceivingEntities(allEntities, messageReceivers);
+        collectMessageEmittersEntities(entities, messageEmitters);
+        collectMessageReceivingEntities(entities, messageReceivers);
         collectAllSignals(messageEmitters, signals);
     }
 
-    private static void collectMessageEmittersEntities(final Array<Entity> allEntities, Array<Entity> messageEmittersResult) {
+    private static void collectMessageEmittersEntities(final Array<Entity> entities, Array<Entity> messageEmittersResult) {
         messageEmittersResult.clear();
-        for (final Entity entity : allEntities) {
+        for (final Entity entity : entities) {
             if ((entity.componentsBitMask & ENTITY_SIGNAL_EMITTER_BITMASK) > 0) {
                 messageEmittersResult.add(entity);
             }
         }
     }
 
-    private static void collectMessageReceivingEntities(final Array<Entity> allEntities, Array<Entity> messageReceiversResult) {
+    private static void collectMessageReceivingEntities(final Array<Entity> entities, Array<Entity> messageReceiversResult) {
         messageReceiversResult.clear();
-        for (final Entity entity : allEntities) {
+        for (final Entity entity : entities) {
             if ((entity.componentsBitMask & ENTITY_SIGNAL_RECEIVER_BITMASK) > 0) {
                 messageReceiversResult.add(entity);
             }
@@ -39,9 +39,10 @@ public class SignalRouterUtils {
     }
 
     private static void collectAllSignals(final Array<Entity> messageEmitters, Array<Signal> signalsResult) {
+        signalsResult.clear();
         for (final Entity entity : messageEmitters) {
             final ComponentSignalEmitter signalEmitter = (ComponentSignalEmitter) entity.components[ComponentType.SIGNAL_EMITTER.ordinal()];
-            signalsResult.addAll(signalEmitter.sendQueue);
+            signalsResult.addAll(signalEmitter.sendSignals);
         }
     }
 }

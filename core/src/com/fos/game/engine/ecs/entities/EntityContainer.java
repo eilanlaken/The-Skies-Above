@@ -37,7 +37,7 @@ public class EntityContainer implements Disposable {
         this.systemEntitiesMap.put(audioPlayer, new Array<Entity>());
         this.systemEntitiesMap.put(physics2D, new Array<Entity>());
         this.systemEntitiesMap.put(physics3D, new Array<Entity>());
-        // TODO: remove old renderer. 
+        // TODO: remove old renderer.
         //this.systemEntitiesMap.put(rendererOld, new Array<Entity>());
         this.systemEntitiesMap.put(renderer, new Array<Entity>());
         this.systemEntitiesMap.put(scriptsUpdater, new Array<Entity>());
@@ -47,6 +47,8 @@ public class EntityContainer implements Disposable {
     // TODO: implement like it should be. Delete this shit.
     @Deprecated
     public void addEntity(final Entity entity) {
+        this.toAdd.add(entity);
+        /*
         entity.active = true;
         entity.container = this;
         entities.add(entity);

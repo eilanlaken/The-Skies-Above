@@ -10,11 +10,10 @@ import com.fos.game.engine.ecs.entities.Entity;
 
 public class SimpleCameraScript extends Script {
 
-    private transient Entity entity;
     private OrthographicCamera lens;
 
     public SimpleCameraScript(final Entity entity) {
-        this.entity = entity;
+        super(entity);
     }
 
     @Override

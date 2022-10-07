@@ -4,11 +4,9 @@ import com.fos.game.engine.ecs.entities.Entity;
 
 public abstract class Signal {
 
-    public final Entity source;
     public final Object message;
 
-    protected Signal(final Entity source, final Object message) {
-        this.source = source;
+    protected Signal(final Object message) {
         this.message = message;
     }
 

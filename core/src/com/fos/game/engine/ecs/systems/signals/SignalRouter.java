@@ -26,20 +26,20 @@ public class SignalRouter implements EntitiesProcessor {
         // flush the receive queue for all signal receivers
         for (final Entity entity : signalReceivers) {
             final ComponentSignalReceiver signalReceiver = (ComponentSignalReceiver) entity.components[ComponentType.SIGNAL_RECEIVER.ordinal()];
-            signalReceiver.receivedQueue.clear();
+            signalReceiver.receivedSignals.clear();
         }
         // refill receivers' signals array with updated signals
         for (final Signal signal : signals) {
             for (final Entity entity : signalReceivers) {
                 if (!signal.isTarget(entity)) continue;
                 final ComponentSignalReceiver signalReceiver = (ComponentSignalReceiver) entity.components[ComponentType.SIGNAL_RECEIVER.ordinal()];
-                signalReceiver.receivedQueue.add(signal);
+                signalReceiver.receivedSignals.add(signal);
             }
         }
         // flush the send queue for all signal emitters
         for (final Entity entity : signalEmitters) {
             final ComponentSignalEmitter signalEmitter = (ComponentSignalEmitter) entity.components[ComponentType.SIGNAL_EMITTER.ordinal()];
-            signalEmitter.sendQueue.clear();
+            signalEmitter.sendSignals.clear();
         }
     }
 

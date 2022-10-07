@@ -6,10 +6,10 @@ import com.fos.game.engine.ecs.components.base.ComponentType;
 
 public class ComponentSignalReceiver implements Component {
 
-    public Array<Signal> receivedQueue;
+    public Array<Signal> receivedSignals;
 
     protected ComponentSignalReceiver() {
-        this.receivedQueue = new Array<>();
+        this.receivedSignals = new Array<>();
     }
 
     @Override

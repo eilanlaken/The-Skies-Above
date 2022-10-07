@@ -11,13 +11,12 @@ public class ParentTransform2D extends Script {
 
     private final Vector2 vector2 = new Vector2();
 
-    private transient Entity entity;
     private transient ComponentTransform2D transform2D;
     private transient ComponentTransform2D initialTransform2D;
     private transient ComponentTransform2D parentTransform2D;
 
     public ParentTransform2D(Entity entity) {
-        this.entity = entity;
+        super(entity);
         this.parentTransform2D =  (ComponentTransform2D) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
     }
 

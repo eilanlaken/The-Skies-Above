@@ -4,6 +4,7 @@ import com.fos.game.engine.context.GameContext;
 import com.fos.game.engine.context.Scene;
 import com.fos.game.engine.files.assets.GameAssetManager;
 import com.fos.game.screens.tests.Box2DDebugRendererTestScene7;
+import com.fos.game.screens.tests.SignalTestScreen;
 
 import java.util.Map;
 
@@ -27,7 +28,7 @@ public class LoadingScreen extends Scene {
         while (!doneLoading) {
             if (assetManager.update()) {
                 doneLoading = true;
-                context.setScreen(new Box2DDebugRendererTestScene7(context));
+                context.setScreen(new SignalTestScreen(context));
             }
         }
     }

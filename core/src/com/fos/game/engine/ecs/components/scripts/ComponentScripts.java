@@ -7,7 +7,6 @@ import com.fos.game.engine.ecs.components.base.ComponentType;
 public class ComponentScripts extends Array<Script> implements Component {
 
     public ComponentScripts(Script ...scripts) {
-        super();
         addAll(scripts);
     }
 

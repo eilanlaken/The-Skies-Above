@@ -10,12 +10,11 @@ import com.fos.game.engine.ecs.entities.Entity;
 
 public class OrangeSquareScript extends Script {
 
-    private transient Entity entity;
     private transient ComponentTransform2D transform2D;
     private transient Vector2 position = new Vector2();
 
     public OrangeSquareScript(final Entity entity) {
-        this.entity = entity;
+        super(entity);
     }
 
     @Override

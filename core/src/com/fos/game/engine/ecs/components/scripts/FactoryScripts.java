@@ -10,8 +10,8 @@ public class FactoryScripts extends Factory {
         super(assetManager, jsonConverter);
     }
 
-    public ComponentScripts create() {
-        return null;
+    public ComponentScripts create(final Script ...scripts) {
+        return new ComponentScripts(scripts);
     }
 
 }

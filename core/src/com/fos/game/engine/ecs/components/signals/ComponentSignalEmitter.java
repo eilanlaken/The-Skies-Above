@@ -6,10 +6,10 @@ import com.fos.game.engine.ecs.components.base.ComponentType;
 
 public class ComponentSignalEmitter implements Component {
 
-    public Array<Signal> sendQueue;
+    public Array<Signal> sendSignals;
 
     protected ComponentSignalEmitter() {
-        this.sendQueue = new Array<>();
+        this.sendSignals = new Array<>();
     }
 
     @Override
