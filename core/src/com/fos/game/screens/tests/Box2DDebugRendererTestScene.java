@@ -55,7 +55,7 @@ public class Box2DDebugRendererTestScene extends Scene {
         for (int i = 0; i < 10; i++) {
             EntityMini entityMini = new EntityMini();
             entityMini.transform2D = context.factoryTransform2D.
-                    create(MathUtils.random(-10, 10), MathUtils.random(-1, 4), 1, 0, 1, 1);
+                    create(MathUtils.random(-10, 10), MathUtils.random(-1, 4), 1, MathUtils.random(0, 2 * (float)Math.PI), 1, 1);
             entityMini.animation = new Animation<>(1,
                     context.assetManager.get("atlases/test/testSpriteSheet2.atlas", SpriteSheet.class).findRegions(getRandomRegion()));
             entityMini.body = createBody(world, new RigidBody2DData(
