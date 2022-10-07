@@ -3,8 +3,7 @@ package com.fos.game.screens.loading;
 import com.fos.game.engine.context.GameContext;
 import com.fos.game.engine.context.Scene;
 import com.fos.game.engine.files.assets.GameAssetManager;
-import com.fos.game.screens.tests.Box2DDebugRendererTestScene7;
-import com.fos.game.screens.tests.SignalTestScreen;
+import com.fos.game.screens.tests.NewSystemsTestScene;
 
 import java.util.Map;
 
@@ -28,7 +27,7 @@ public class LoadingScreen extends Scene {
         while (!doneLoading) {
             if (assetManager.update()) {
                 doneLoading = true;
-                context.setScreen(new SignalTestScreen(context));
+                context.setScreen(new NewSystemsTestScene(context));
             }
         }
     }
@@ -49,7 +48,7 @@ public class LoadingScreen extends Scene {
     }
 
     private void queueAssets() {
-        Map<String, Class> assetsNameTypeMap = Box2DDebugRendererTestScene7.getRequiredAssetsNameTypeMap();
+        Map<String, Class> assetsNameTypeMap = NewSystemsTestScene.getRequiredAssetsNameTypeMap();
         for (Map.Entry<String, Class> entry : assetsNameTypeMap.entrySet()) {
             this.assetManager.load(entry.getKey(), entry.getValue());
         }
