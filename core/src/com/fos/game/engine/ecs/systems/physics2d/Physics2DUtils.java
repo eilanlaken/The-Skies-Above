@@ -1,24 +1,44 @@
 package com.fos.game.engine.ecs.systems.physics2d;
 
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Array;
 import com.fos.game.engine.ecs.components.base.ComponentType;
+import com.fos.game.engine.ecs.components.lights2d.ComponentLight2D;
 import com.fos.game.engine.ecs.components.physics2d.ComponentJoint2D;
 import com.fos.game.engine.ecs.components.physics2d.ComponentRigidBody2D;
 import com.fos.game.engine.ecs.components.physics2d.RigidBody2DData;
+import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 
 public class Physics2DUtils {
 
     protected static final int PHYSICS_2D_BIT_MASK = ComponentType.PHYSICS_2D_BODY.bitMask;
 
-    protected static void addRigidBody2D(final World world, final Entity entity, final ComponentRigidBody2D componentRigidBody2D) {
+    protected static void prepare(final Array<Entity> entities, Array<Entity> bodiesResult, Array<Entity> jointsResult, Array<Entity> lightsResult) {
+        bodiesResult.clear();
+        jointsResult.clear();
+        lightsResult.clear();
+        for (final Entity entity : entities) {
+            ComponentRigidBody2D body = (ComponentRigidBody2D) entity.components[ComponentType.PHYSICS_2D_BODY.ordinal()];
+            ComponentJoint2D joint = (ComponentJoint2D) entity.components[ComponentType.PHYSICS_2D_JOINT.ordinal()];
+            ComponentLight2D light = (ComponentLight2D) entity.components[ComponentType.LIGHT_2D.ordinal()];
+            if (body != null) bodiesResult.add(entity);
+            if (joint != null) jointsResult.add(entity);
+            if (light != null) lightsResult.add(entity);
+        }
+    }
+
+    protected static void addRigidBody2D(final World world, final Entity entity, final ComponentRigidBody2D componentRigidBody2D,
+                                         final ComponentTransform2D transform2D) {
         RigidBody2DData data = componentRigidBody2D.data;
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = data.bodyType;
-        bodyDef.position.set(data.positionX, data.positionY);
+        bodyDef.position.set(transform2D.getPosition().x, transform2D.getPosition().y);
+        bodyDef.angle = transform2D.transform.getRotation();
         componentRigidBody2D.body = world.createBody(bodyDef);
         componentRigidBody2D.body.setUserData(entity);
-        bodyDef.fixedRotation = false;
+        transform2D.transform = componentRigidBody2D.body.getTransform();
+        //bodyDef.fixedRotation = false;
         Shape shape = getShape(data);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;

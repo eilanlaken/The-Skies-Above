@@ -6,11 +6,18 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
+import com.badlogic.gdx.utils.Array;
 import com.fos.game.engine.context.GameContext;
 import com.fos.game.engine.context.Scene;
 import com.fos.game.engine.ecs.components.animations2d.SpriteSheet;
+import com.fos.game.engine.ecs.components.camera.ComponentCamera;
+import com.fos.game.engine.ecs.components.physics2d.RigidBody2DData;
+import com.fos.game.engine.ecs.components.physics2d.UtilsRigidBody2D;
+import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
 import com.fos.game.engine.ecs.systems.renderer.base.Physics2DDebugRenderer;
 import com.fos.game.engine.ecs.systems.renderer.base.SpriteBatch;
 
@@ -20,21 +27,17 @@ import java.util.Map;
 public class Box2DDebugRendererTestScene extends Scene {
 
     private World world;
+    Array<EntityMini> entities;
+    private ComponentCamera camera;
 
-    EntityMini entityMini1;
-    EntityMini entityMini2;
-
-    private Body body1, body2;
-    private OrthographicCamera camera;
-
-    int capture = 160;
     SpriteBatch spriteBatch = new SpriteBatch();
-    Box2DDebugRenderer box2DDebugRenderer = new Box2DDebugRenderer();
     Physics2DDebugRenderer physics2DDebugRenderer = new Physics2DDebugRenderer();
 
     class EntityMini {
+        ComponentTransform2D transform2D;
         Animation<TextureAtlas.AtlasRegion> animation;
         Body body;
+        Joint joint;
     }
 
     public Box2DDebugRendererTestScene(final GameContext context) {
@@ -44,43 +47,51 @@ public class Box2DDebugRendererTestScene extends Scene {
     @Override
     protected void start() {
         world = new World(new Vector2(0,-10), true);
-        camera = new OrthographicCamera(capture, capture * Gdx.graphics.getHeight() / Gdx.graphics.getWidth());
+        world.setContactListener(getContactListener());
+        entities = new Array<>();
+        camera = context.factoryCamera.createCamera2D(20, 20 * Gdx.graphics.getHeight() / Gdx.graphics.getWidth());
 
+        // create entities with bodies
+        for (int i = 0; i < 10; i++) {
+            EntityMini entityMini = new EntityMini();
+            entityMini.transform2D = context.factoryTransform2D.
+                    create(MathUtils.random(-10, 10), MathUtils.random(-1, 4), 1, 0, 1, 1);
+            entityMini.animation = new Animation<>(1,
+                    context.assetManager.get("atlases/test/testSpriteSheet2.atlas", SpriteSheet.class).findRegions(getRandomRegion()));
+            entityMini.body = createBody(world, new RigidBody2DData(
+                    BodyDef.BodyType.DynamicBody,
+                    RigidBody2DData.Shape.RECTANGLE,
+                    UtilsRigidBody2D.getBox2DWidth(entityMini.animation.getKeyFrame(0), camera.lens.viewportWidth),
+                    UtilsRigidBody2D.getBox2DHeight(entityMini.animation.getKeyFrame(0), camera.lens.viewportHeight),
+                    1,1,0.2f,false),
+                    entityMini.transform2D);
+            entityMini.body.setUserData(entityMini);
+            entityMini.transform2D.transform = entityMini.body.getTransform();
+            entities.add(entityMini);
+        }
 
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(0, 0);
-        body1 = world.createBody(bodyDef);
-        CircleShape circle = new CircleShape();
-        circle.setRadius(1f);
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = circle;
-        fixtureDef.density = 0.5f;
-        fixtureDef.friction = 0.0f;
-        fixtureDef.restitution = 0.6f; // Make it bounce a little bit
-        body1.createFixture(fixtureDef);
-        circle.dispose();
+        // create entities with joints
+        for (int i = 0; i < 3; i++) {
+            EntityMini entityMini = new EntityMini();
+            WeldJointDef def = new WeldJointDef();
+            def.initialize(entities.get(i).body, entities.get(i + 2).body, new Vector2(1,1));
+            entityMini.joint = world.createJoint(def);
+            entities.add(entityMini);
+        }
 
+        // create floor
+        EntityMini floor = new EntityMini();
+        floor.transform2D = context.factoryTransform2D.create(0, -4.5f, 1, 0, 1, 1);
+        floor.body = createBody(world, new RigidBody2DData(
+                BodyDef.BodyType.StaticBody,
+                RigidBody2DData.Shape.RECTANGLE,
+                18, 0.5f,
+                1,1,1,false),
+                floor.transform2D
+        );
+        floor.body.setUserData(floor);
+        entities.add(floor);
 
-        BodyDef bodyDef2 = new BodyDef();
-        bodyDef2.type = BodyDef.BodyType.StaticBody;;
-        bodyDef2.position.set(0, -1);
-        body2 = world.createBody(bodyDef2);
-        bodyDef2.fixedRotation = true;
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(1f,1f);
-        FixtureDef fixtureDef2 = new FixtureDef();
-        fixtureDef2.shape = shape;
-        fixtureDef2.density = 100;
-        fixtureDef2.isSensor = false;
-        body2.createFixture(fixtureDef2);
-        shape.dispose();
-
-
-        entityMini1 = new EntityMini();
-        entityMini1.animation = new Animation<>(1,
-                context.assetManager.get("atlases/test/testSpriteSheet.atlas", SpriteSheet.class).findRegions("animatedArrow"));
-        entityMini1.body = body2;
     }
 
     @Override
@@ -91,21 +102,32 @@ public class Box2DDebugRendererTestScene extends Scene {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         spriteBatch.begin();
-        spriteBatch.setProjectionMatrix(camera.combined);
-        spriteBatch.draw(entityMini1.animation.getKeyFrame(0), entityMini1.body, capture, capture * Gdx.graphics.getHeight() / Gdx.graphics.getWidth());
+        spriteBatch.setProjectionMatrix(camera.lens.combined);
+        for (EntityMini entityMini : entities) {
+            if (entityMini.animation == null) continue;
+            //spriteBatch.draw(entityMini.animation.getKeyFrame(0), entityMini.body, camera.lens.viewportWidth, camera.lens.viewportHeight);
+            entityMini.transform2D.transform.setPosition(entityMini.body.getPosition());
+            entityMini.transform2D.transform.setOrientation(entityMini.body.getTransform().getOrientation());
+            spriteBatch.draw(entityMini.animation.getKeyFrame(0), entityMini.transform2D, camera.lens.viewportWidth, camera.lens.viewportHeight);
+        }
         spriteBatch.end();
 
         physics2DDebugRenderer.begin();
-        physics2DDebugRenderer.setProjectionMatrix(camera.combined);
-        physics2DDebugRenderer.drawBody(body1);
-        physics2DDebugRenderer.drawBody(body2);
+        physics2DDebugRenderer.setProjectionMatrix(camera.lens.combined);
+        for (EntityMini entityMini : entities) {
+            Body body = entityMini.body;
+            Joint joint = entityMini.joint;
+            if (body != null) physics2DDebugRenderer.drawBody(entityMini.body);
+            if (joint != null) physics2DDebugRenderer.drawJoint(entityMini.joint);
+        }
         physics2DDebugRenderer.end();
 
+        OrthographicCamera orthographicCamera = (OrthographicCamera) camera.lens;
         if (Gdx.input.isKeyPressed(Input.Keys.Z))
-            camera.zoom += 0.1f;
+            orthographicCamera.zoom += 0.1f;
         if (Gdx.input.isKeyPressed(Input.Keys.A))
-            camera.zoom -= 0.1f;
-        camera.update();
+            orthographicCamera.zoom -= 0.1f;
+        camera.lens.update();
     }
 
     @Override
@@ -123,9 +145,83 @@ public class Box2DDebugRendererTestScene extends Scene {
 
     }
 
+    private String getRandomRegion() {
+        int rand = MathUtils.random(0, 5);
+        if (rand == 0) return "blue";
+        if (rand == 1) return "green";
+        if (rand == 2) return "orange";
+        if (rand == 3) return "purple";
+        if (rand == 4) return "red";
+        return "blue";
+    }
+
+
+    private Body createBody(World world, RigidBody2DData data, ComponentTransform2D transform2D) {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = data.bodyType;
+        bodyDef.position.set(transform2D.getPosition().x, transform2D.getPosition().y);
+        bodyDef.angle = transform2D.transform.getRotation();
+        Body body = world.createBody(bodyDef);
+        bodyDef.fixedRotation = false;
+        Shape shape = getShape(data);
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.density = data.density;
+        fixtureDef.isSensor = data.isSensor;
+        fixtureDef.friction = data.friction;
+        fixtureDef.restitution = data.restitution;
+        body.createFixture(fixtureDef);
+        shape.dispose();
+        return body;
+    }
+
+    private Shape getShape(final RigidBody2DData data) {
+        if (data.shape == RigidBody2DData.Shape.CIRCLE) {
+            CircleShape shape = new CircleShape();
+            shape.setRadius((data.width + data.height) * 0.5f); // average of width and height
+            return shape;
+        }
+        if (data.shape == RigidBody2DData.Shape.RECTANGLE) {
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox(data.width / 2, data.height / 2);
+            return shape;
+        }
+        return null;
+    }
+
+    private ContactListener getContactListener() {
+        ContactListener contactListener = new ContactListener() {
+            @Override
+            public void beginContact(Contact contact) {
+                EntityMini entityMiniA = (EntityMini) contact.getFixtureA().getBody().getUserData();
+                EntityMini entityMiniB = (EntityMini) contact.getFixtureB().getBody().getUserData();
+                System.out.println("beging contact: " + entityMiniA  + " : " + entityMiniB);
+            }
+
+            @Override
+            public void endContact(Contact contact) {
+                EntityMini entityMiniA = (EntityMini) contact.getFixtureA().getBody().getUserData();
+                EntityMini entityMiniB = (EntityMini) contact.getFixtureB().getBody().getUserData();
+                System.out.println("end contact: " + entityMiniA  + " : " + entityMiniB);
+            }
+
+            @Override
+            public void preSolve(Contact contact, Manifold oldManifold) {
+
+            }
+
+            @Override
+            public void postSolve(Contact contact, ContactImpulse impulse) {
+
+            }
+        };
+        return contactListener;
+    }
+
     public static Map<String, Class> getRequiredAssetsNameTypeMap() {
         HashMap<String, Class> assetNameClassMap = new HashMap<>();
         assetNameClassMap.put("atlases/test/testSpriteSheet.atlas", SpriteSheet.class);
+        assetNameClassMap.put("atlases/test/testSpriteSheet2.atlas", SpriteSheet.class);
         return assetNameClassMap;
     }
 }

@@ -1,6 +1,5 @@
 package com.fos.game.engine.ecs.components.physics2d;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 
 public class RigidBody2DData {
@@ -10,8 +9,6 @@ public class RigidBody2DData {
     }
 
     public final BodyDef.BodyType bodyType;
-    public final float positionX;
-    public final float positionY;
     public final Shape shape;
     public final float width;
     public final float height;
@@ -20,23 +17,8 @@ public class RigidBody2DData {
     public final float restitution;
     public final boolean isSensor;
 
-    public RigidBody2DData(BodyDef.BodyType bodyType, float positionX, float positionY, TextureRegion region, float viewportWidth, float viewportHeight, float density, float friction, float restitution, boolean isSensor) {
+    public RigidBody2DData(BodyDef.BodyType bodyType, Shape shape, float width, float height, float density, float friction, float restitution, boolean isSensor) {
         this.bodyType = bodyType;
-        this.positionX = positionX;
-        this.positionY = positionY;
-        this.shape = Shape.RECTANGLE;
-        this.width = UtilsRigidBody2D.getBox2DWidth(region, viewportWidth);
-        this.height = UtilsRigidBody2D.getBox2DHeight(region, viewportHeight);
-        this.density = density;
-        this.friction = friction;
-        this.restitution = restitution;
-        this.isSensor = isSensor;
-    }
-
-    public RigidBody2DData(BodyDef.BodyType bodyType, float positionX, float positionY, Shape shape, float width, float height, float density, float friction, float restitution, boolean isSensor) {
-        this.bodyType = bodyType;
-        this.positionX = positionX;
-        this.positionY = positionY;
         this.shape = shape;
         this.width = width;
         this.height = height;
@@ -45,4 +27,5 @@ public class RigidBody2DData {
         this.restitution = restitution;
         this.isSensor = isSensor;
     }
+
 }

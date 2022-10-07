@@ -11,6 +11,10 @@ public class FactoryTransform2D extends Factory {
         super(assetManager, jsonConverter);
     }
 
+    public ComponentTransform2D create(float x, float y, float z, float angle, float scaleX, float scaleY) {
+        return new ComponentTransform2D(x,y,z,angle,scaleX,scaleY);
+    }
+
     @Deprecated
     public static ComponentTransform2D create() {
         return new ComponentTransform2D(0,0,0,0,1, 1);
@@ -28,14 +32,9 @@ public class FactoryTransform2D extends Factory {
     }
 
     @Deprecated
-    public static ComponentTransform2D create(float x, float y, float z, float angle, float scaleX, float scaleY) {
-        float angleRadians = angle * MathUtils.degreesToRadians;
-        return new ComponentTransform2D(x, y, z, angleRadians, scaleX, scaleY);
-    }
-
-    @Deprecated
     public static ComponentTransform2D copy(final ComponentTransform2D transform2D) {
-        return create(transform2D.getPosition().x, transform2D.getPosition().y, transform2D.z, transform2D.getRotation(), transform2D.scaleX, transform2D.scaleY);
+        //return create(transform2D.getPosition().x, transform2D.getPosition().y, transform2D.z, transform2D.getRotation(), transform2D.scaleX, transform2D.scaleY);
+        return null;
     }
 
 

@@ -62,7 +62,7 @@ public class Entity implements Disposable {
         ComponentModelInstance modelInstance = (ComponentModelInstance) components[ComponentType.MODEL_INSTANCE.ordinal()];
         ComponentRigidBody2D rigidBody2d = (ComponentRigidBody2D) components[ComponentType.PHYSICS_2D_BODY.ordinal()];
         ComponentRigidBody3D rigidBody3d = (ComponentRigidBody3D) components[ComponentType.PHYSICS_3D_BODY.ordinal()];
-        Light light = (Light) components[ComponentType.LIGHT.ordinal()];
+        Light light = (Light) components[ComponentType.LIGHT_3D.ordinal()];
 
         if (transform2D == null) {
             components[ComponentType.TRANSFORM_2D.ordinal()] = FactoryTransform2D.create();

@@ -4,7 +4,8 @@ public enum ComponentType {
 
     TRANSFORM_2D,
     TRANSFORM_3D,
-    LIGHT,
+    LIGHT_2D,
+    LIGHT_3D,
     MODEL_INSTANCE,
     PHYSICS_2D_BODY,
     PHYSICS_2D_JOINT,

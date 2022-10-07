@@ -25,7 +25,7 @@ public class RenderingUtils {
 
     protected static final int ATTACHED_ANIMATIONS_2D_BIT_MASK = ComponentType.ANIMATIONS_2D.bitMask;
     protected static final int ATTACHED_MODEL_INSTANCE_BIT_MASK = ComponentType.MODEL_INSTANCE.bitMask;
-    protected static final int ATTACHED_LIGHT_BIT_MASK = ComponentType.LIGHT.bitMask;
+    protected static final int ATTACHED_LIGHT_BIT_MASK = ComponentType.LIGHT_3D.bitMask;
     protected static final int ATTACHED_CAMERA_BIT_MASK = ComponentType.CAMERA.bitMask;
 
     private static final Vector3 position = new Vector3();
@@ -69,7 +69,7 @@ public class RenderingUtils {
             }
             if ((entity.componentsBitMask & ATTACHED_LIGHT_BIT_MASK) > 0) {
                 ComponentTransform3D transform = (ComponentTransform3D) entity.components[ComponentType.TRANSFORM_3D.ordinal()];
-                Light light = (Light) entity.components[ComponentType.LIGHT.ordinal()];
+                Light light = (Light) entity.components[ComponentType.LIGHT_3D.ordinal()];
                 UtilsLights.applyTransformToLight(transform, light);
                 lightingEnvironmentResult.addLight(light);
             }
