@@ -4,14 +4,14 @@ import com.fos.game.engine.ecs.components.base.Factory;
 import com.fos.game.engine.files.assets.GameAssetManager;
 import com.fos.game.engine.files.serialization.JsonConverter;
 
-public class FactorySignalReceiver extends Factory {
+public class FactorySignalBox extends Factory {
 
-    public FactorySignalReceiver(final GameAssetManager assetManager, final JsonConverter jsonConverter) {
+    public FactorySignalBox(final GameAssetManager assetManager, final JsonConverter jsonConverter) {
         super(assetManager, jsonConverter);
     }
 
-    public ComponentSignalReceiver create() {
-        return new ComponentSignalReceiver();
+    public ComponentSignalBox create() {
+        return new ComponentSignalBox();
     }
 
 }

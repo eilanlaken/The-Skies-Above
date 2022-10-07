@@ -10,8 +10,7 @@ import com.fos.game.engine.ecs.components.physics2d.FactoryRigidBody2D;
 import com.fos.game.engine.ecs.components.physics3d.FactoryRigidBody3D;
 import com.fos.game.engine.ecs.components.scripts.FactoryScripts;
 import com.fos.game.engine.ecs.components.shapes.FactoryShape2D;
-import com.fos.game.engine.ecs.components.signals.FactorySignalEmitter;
-import com.fos.game.engine.ecs.components.signals.FactorySignalReceiver;
+import com.fos.game.engine.ecs.components.signals.FactorySignalBox;
 import com.fos.game.engine.ecs.components.transform.FactoryTransform2D;
 import com.fos.game.engine.ecs.components.transform.FactoryTransform3D;
 import com.fos.game.engine.files.assets.GameAssetManager;
@@ -33,8 +32,7 @@ public class GameContext extends Game {
 	public FactoryRigidBody3D factoryRigidBody3D;
 	public FactoryScripts factoryScripts;
 	public FactoryShape2D factoryShape2D;
-	public FactorySignalEmitter factorySignalEmitter;
-	public FactorySignalReceiver factorySignalReceiver;
+	public FactorySignalBox factorySignalBox;
 	public FactoryTransform2D factoryTransform2D;
 	public FactoryTransform3D factoryTransform3D;
 
@@ -53,8 +51,7 @@ public class GameContext extends Game {
 		this.factoryRigidBody3D = new FactoryRigidBody3D(this.assetManager, this.jsonConverter);
 		this.factoryScripts = new FactoryScripts(this.assetManager, this.jsonConverter);
 		this.factoryShape2D = new FactoryShape2D(this.assetManager, this.jsonConverter);
-		this.factorySignalEmitter = new FactorySignalEmitter(this.assetManager, this.jsonConverter);
-		this.factorySignalReceiver = new FactorySignalReceiver(this.assetManager, this.jsonConverter);
+		this.factorySignalBox = new FactorySignalBox(this.assetManager, this.jsonConverter);
 		this.factoryTransform2D = new FactoryTransform2D(this.assetManager, this.jsonConverter);
 		this.factoryTransform3D = new FactoryTransform3D(this.assetManager, this.jsonConverter);
 		// set the screen to the entry screen

@@ -8,11 +8,11 @@ import com.fos.game.engine.ecs.entities.EntityContainer;
 import com.fos.game.scripts.test.PeriodicReadTestScript;
 import com.fos.game.scripts.test.PeriodicSendTestScript;
 
-public class SignalTestScreen extends Scene {
+public class SignalTestScene extends Scene {
 
     EntityContainer container;
 
-    public SignalTestScreen(GameContext context) {
+    public SignalTestScene(GameContext context) {
         super(context);
     }
 
@@ -21,12 +21,12 @@ public class SignalTestScreen extends Scene {
         container = new EntityContainer();
         Entity entity1 = new Entity();
         entity1.attachComponents(
-                context.factorySignalEmitter.create(),
+                context.factorySignalBox.create(),
                 context.factoryScripts.create(new PeriodicSendTestScript(entity1))
         );
         Entity entity2 = new Entity();
         entity2.attachComponents(
-                context.factorySignalReceiver.create(),
+                context.factorySignalBox.create(),
                 context.factoryScripts.create(new PeriodicReadTestScript(entity2))
         );
 

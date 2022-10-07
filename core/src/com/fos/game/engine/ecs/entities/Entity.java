@@ -10,8 +10,6 @@ import com.fos.game.engine.ecs.components.lights3d.Light;
 import com.fos.game.engine.ecs.components.modelinstance.ComponentModelInstance;
 import com.fos.game.engine.ecs.components.physics2d.ComponentRigidBody2D;
 import com.fos.game.engine.ecs.components.physics3d.ComponentRigidBody3D;
-import com.fos.game.engine.ecs.components.scripts.ComponentScripts;
-import com.fos.game.engine.ecs.components.scripts.Script;
 import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
 import com.fos.game.engine.ecs.components.transform.ComponentTransform3D;
 import com.fos.game.engine.ecs.components.transform.FactoryTransform2D;
@@ -65,7 +63,6 @@ public class Entity implements Disposable {
         ComponentRigidBody2D rigidBody2d = (ComponentRigidBody2D) components[ComponentType.PHYSICS_2D_BODY.ordinal()];
         ComponentRigidBody3D rigidBody3d = (ComponentRigidBody3D) components[ComponentType.PHYSICS_3D_BODY.ordinal()];
         Light light = (Light) components[ComponentType.LIGHT.ordinal()];
-        ComponentScripts scripts = (ComponentScripts) components[ComponentType.SCRIPTS.ordinal()];
 
         if (transform2D == null) {
             components[ComponentType.TRANSFORM_2D.ordinal()] = FactoryTransform2D.create();
@@ -90,11 +87,6 @@ public class Entity implements Disposable {
         }
         if (light != null) {
 
-        }
-        if (scripts != null) {
-            for (Script script : scripts) {
-                script.start();
-            }
         }
     }
 

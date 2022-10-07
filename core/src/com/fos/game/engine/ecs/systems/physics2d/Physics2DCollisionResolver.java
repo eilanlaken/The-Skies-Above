@@ -5,7 +5,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.fos.game.engine.ecs.components.base.ComponentType;
-import com.fos.game.engine.ecs.components.signals.ComponentSignalEmitter;
+import com.fos.game.engine.ecs.components.signals.ComponentSignalBox;
 import com.fos.game.engine.ecs.components.signals.Signal;
 import com.fos.game.engine.ecs.entities.Entity;
 
@@ -16,9 +16,10 @@ public class Physics2DCollisionResolver implements ContactListener {
         Entity entityA = (Entity) contact.getFixtureA().getBody().getUserData();
         Entity entityB = (Entity) contact.getFixtureB().getBody().getUserData();
 
-        ComponentSignalEmitter signalEmitterA = (ComponentSignalEmitter) entityA.components[ComponentType.SIGNAL_EMITTER.ordinal()];
-        if (signalEmitterA != null) {
-            signalEmitterA.sendSignals.add(new CollisionSignal(entityA, entityB, contact));
+        ComponentSignalBox signalReceiverA = (ComponentSignalBox) entityA.components[ComponentType.SIGNAL_BOX.ordinal()];
+        if (signalReceiverA != null) {
+            // the only current reasonable way to make sure a signal
+            signalReceiverA.receivedSignals.add(new CollisionSignal(entityA, entityB, contact));
         }
 
     }

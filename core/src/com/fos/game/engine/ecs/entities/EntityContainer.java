@@ -33,6 +33,7 @@ public class EntityContainer implements Disposable {
     public ScriptsUpdater scriptsUpdater = new ScriptsUpdater();
     public SignalRouter signalRouter = new SignalRouter();
 
+
     public EntityContainer() {
         this.systemEntitiesMap.put(audioPlayer, new Array<Entity>());
         this.systemEntitiesMap.put(physics2D, new Array<Entity>());

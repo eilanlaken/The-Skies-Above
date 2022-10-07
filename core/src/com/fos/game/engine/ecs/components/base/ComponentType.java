@@ -15,12 +15,11 @@ public enum ComponentType {
     ANIMATIONS_3D,
     SHAPE_2D,
     AUDIO,
-    SIGNAL_EMITTER,
-    SIGNAL_RECEIVER,
+    SIGNAL_BOX,
     TEXT,
     ;
 
-    public final short bitMask;
+    public final int bitMask;
 
     ComponentType() {
         this.bitMask = (short) (0b000001 << ordinal());

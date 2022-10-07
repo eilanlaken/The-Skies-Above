@@ -2,13 +2,13 @@ package com.fos.game.scripts.test;
 
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.scripts.Script;
-import com.fos.game.engine.ecs.components.signals.ComponentSignalEmitter;
+import com.fos.game.engine.ecs.components.signals.ComponentSignalBox;
 import com.fos.game.engine.ecs.components.signals.Signal;
 import com.fos.game.engine.ecs.entities.Entity;
 
 public class PeriodicSendTestScript extends Script {
 
-    ComponentSignalEmitter signalEmitter;
+    ComponentSignalBox signalBox;
 
     float elapsedTime = 0;
 
@@ -18,7 +18,7 @@ public class PeriodicSendTestScript extends Script {
 
     @Override
     public void start() {
-        signalEmitter = (ComponentSignalEmitter) entity.components[ComponentType.SIGNAL_EMITTER.ordinal()];
+        signalBox = (ComponentSignalBox) entity.components[ComponentType.SIGNAL_BOX.ordinal()];
     }
 
     @Override
@@ -26,7 +26,7 @@ public class PeriodicSendTestScript extends Script {
         elapsedTime += delta;
         if (elapsedTime >= 3) {
             elapsedTime = 0;
-            signalEmitter.sendSignals.add(new Signal("Hello" + elapsedTime) {
+            signalBox.signalsToSend.add(new Signal("Hello" + elapsedTime) {
                 @Override
                 public boolean isTarget(Entity other) {
                     return  other != entity;

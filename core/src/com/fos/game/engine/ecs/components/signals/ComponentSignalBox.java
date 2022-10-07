@@ -4,16 +4,18 @@ import com.badlogic.gdx.utils.Array;
 import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 
-public class ComponentSignalReceiver implements Component {
+public class ComponentSignalBox implements Component {
 
+    public Array<Signal> signalsToSend;
     public Array<Signal> receivedSignals;
 
-    protected ComponentSignalReceiver() {
+    protected ComponentSignalBox() {
+        this.signalsToSend = new Array<>();
         this.receivedSignals = new Array<>();
     }
 
     @Override
     public ComponentType getComponentType() {
-        return ComponentType.SIGNAL_RECEIVER;
+        return ComponentType.SIGNAL_BOX;
     }
 }

@@ -4,7 +4,7 @@ import com.fos.game.engine.ecs.components.base.ComponentType;
 
 public class AudioUtils {
 
-    protected static final short AUDIO_BIT_MASK = ComponentType.AUDIO.bitMask;
+    protected static final int AUDIO_BIT_MASK = ComponentType.AUDIO.bitMask;
 
     /*
     private static final Comparator<ComponentSoundEffects> soundEffectsPriorityComparator = new Comparator<Entity>() {

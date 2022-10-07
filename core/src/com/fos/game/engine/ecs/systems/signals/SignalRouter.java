@@ -2,52 +2,40 @@ package com.fos.game.engine.ecs.systems.signals;
 
 import com.badlogic.gdx.utils.Array;
 import com.fos.game.engine.ecs.components.base.ComponentType;
-import com.fos.game.engine.ecs.components.signals.ComponentSignalEmitter;
-import com.fos.game.engine.ecs.components.signals.ComponentSignalReceiver;
+import com.fos.game.engine.ecs.components.signals.ComponentSignalBox;
 import com.fos.game.engine.ecs.components.signals.Signal;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
 
 public class SignalRouter implements EntitiesProcessor {
 
-    private final Array<Entity> signalEmitters;
-    private final Array<Entity> signalReceivers;
     private final Array<Signal> signals;
 
     public SignalRouter() {
-        this.signalEmitters = new Array<>();
-        this.signalReceivers = new Array<>();
         this.signals = new Array<>();
     }
 
     @Override
     public void process(final Array<Entity> entities) {
-        SignalRouterUtils.prepare(entities, signalEmitters, signalReceivers, signals);
-        // flush the receive queue for all signal receivers
-        for (final Entity entity : signalReceivers) {
-            final ComponentSignalReceiver signalReceiver = (ComponentSignalReceiver) entity.components[ComponentType.SIGNAL_RECEIVER.ordinal()];
-            signalReceiver.receivedSignals.clear();
+        SignalRouterUtils.collectAllUnsentSignals(entities, signals);
+        // flush the send and receive queues for all entities
+        for (final Entity entity : entities) {
+            final ComponentSignalBox signalBox = (ComponentSignalBox) entity.components[ComponentType.SIGNAL_BOX.ordinal()];
+            signalBox.signalsToSend.clear();
+            signalBox.receivedSignals.clear();
         }
-        // refill receivers' signals array with updated signals
+        // deliver all signals to their targets
         for (final Signal signal : signals) {
-            for (final Entity entity : signalReceivers) {
+            for (final Entity entity : entities) {
                 if (!signal.isTarget(entity)) continue;
-                final ComponentSignalReceiver signalReceiver = (ComponentSignalReceiver) entity.components[ComponentType.SIGNAL_RECEIVER.ordinal()];
-                signalReceiver.receivedSignals.add(signal);
+                final ComponentSignalBox signalBox = (ComponentSignalBox) entity.components[ComponentType.SIGNAL_BOX.ordinal()];
+                signalBox.receivedSignals.add(signal);
             }
-        }
-        // flush the send queue for all signal emitters
-        for (final Entity entity : signalEmitters) {
-            final ComponentSignalEmitter signalEmitter = (ComponentSignalEmitter) entity.components[ComponentType.SIGNAL_EMITTER.ordinal()];
-            signalEmitter.sendSignals.clear();
         }
     }
 
     @Override
-    // TODO: fix to make more efficient using bitwise operations.
     public boolean shouldProcess(Entity entity) {
-        if ((entity.componentsBitMask & SignalRouterUtils.ENTITY_SIGNAL_EMITTER_BITMASK) > 0) return true;
-        if ((entity.componentsBitMask & SignalRouterUtils.ENTITY_SIGNAL_RECEIVER_BITMASK) > 0) return true;
-        return false;
+        return ((entity.componentsBitMask & SignalRouterUtils.ENTITY_SIGNALING_BITMASK) > 0);
     }
 }
