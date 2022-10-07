@@ -80,7 +80,6 @@ public class EntityContainer implements Disposable {
     public void config(final SystemConfig ...configs) {
         for (final SystemConfig config : configs) {
             if (config instanceof Renderer.Config) renderer.config((Renderer.Config) config);
-            if (config instanceof Physics2D.Config) physics2D.config((Physics2D.Config) config);
             // .. configure other systems.
         }
     }
