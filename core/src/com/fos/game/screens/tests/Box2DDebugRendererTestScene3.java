@@ -33,7 +33,7 @@ public class Box2DDebugRendererTestScene3 extends Scene {
 
     SpriteBatch spriteBatch = new SpriteBatch();
     Physics2DDebugRenderer physics2DDebugRenderer = new Physics2DDebugRenderer();
-    
+
 
     class EntityMini {
         ComponentTransform2D transform2D;
