@@ -15,6 +15,7 @@ import com.fos.game.engine.context.GameContext;
 import com.fos.game.engine.context.Scene;
 import com.fos.game.engine.ecs.components.animations2d.SpriteSheet;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
+import com.fos.game.engine.ecs.components.camera2d.ComponentCamera2D;
 import com.fos.game.engine.ecs.components.physics2d.RigidBody2DData;
 import com.fos.game.engine.ecs.components.physics2d.UtilsRigidBody2D;
 import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
@@ -28,10 +29,11 @@ public class Box2DDebugRendererTestScene extends Scene {
 
     private World world;
     Array<EntityMini> entities;
-    private ComponentCamera camera;
+    private ComponentCamera2D camera;
 
     SpriteBatch spriteBatch = new SpriteBatch();
     Physics2DDebugRenderer physics2DDebugRenderer = new Physics2DDebugRenderer();
+
 
     class EntityMini {
         ComponentTransform2D transform2D;
@@ -49,7 +51,7 @@ public class Box2DDebugRendererTestScene extends Scene {
         world = new World(new Vector2(0,-10), true);
         world.setContactListener(getContactListener());
         entities = new Array<>();
-        camera = context.factoryCamera.createCamera2D(20, 20 * Gdx.graphics.getHeight() / Gdx.graphics.getWidth());
+        camera = context.factoryCamera2D.createCamera2D(30, 30 * Gdx.graphics.getHeight() / Gdx.graphics.getWidth());
 
         // create entities with bodies
         for (int i = 0; i < 10; i++) {
@@ -61,8 +63,8 @@ public class Box2DDebugRendererTestScene extends Scene {
             entityMini.body = createBody(world, new RigidBody2DData(
                     BodyDef.BodyType.DynamicBody,
                     RigidBody2DData.Shape.RECTANGLE,
-                    UtilsRigidBody2D.getBox2DWidth(entityMini.animation.getKeyFrame(0), camera.lens.viewportWidth),
-                    UtilsRigidBody2D.getBox2DHeight(entityMini.animation.getKeyFrame(0), camera.lens.viewportHeight),
+                    UtilsRigidBody2D.getBox2DLength(entityMini.animation.getKeyFrame(0).getRegionWidth(), camera.pixelsPerMeterX),
+                    UtilsRigidBody2D.getBox2DLength(entityMini.animation.getKeyFrame(0).getRegionHeight(), camera.pixelsPerMeterY),
                     1,1,0.2f,false),
                     entityMini.transform2D);
             entityMini.body.setUserData(entityMini);
@@ -86,7 +88,7 @@ public class Box2DDebugRendererTestScene extends Scene {
                 BodyDef.BodyType.StaticBody,
                 RigidBody2DData.Shape.RECTANGLE,
                 18, 0.5f,
-                1,1,1,false),
+                1,1,0.2f,false),
                 floor.transform2D
         );
         floor.body.setUserData(floor);
@@ -105,10 +107,9 @@ public class Box2DDebugRendererTestScene extends Scene {
         spriteBatch.setProjectionMatrix(camera.lens.combined);
         for (EntityMini entityMini : entities) {
             if (entityMini.animation == null) continue;
-            //spriteBatch.draw(entityMini.animation.getKeyFrame(0), entityMini.body, camera.lens.viewportWidth, camera.lens.viewportHeight);
             entityMini.transform2D.transform.setPosition(entityMini.body.getPosition());
             entityMini.transform2D.transform.setOrientation(entityMini.body.getTransform().getOrientation());
-            spriteBatch.draw(entityMini.animation.getKeyFrame(0), entityMini.transform2D, camera.lens.viewportWidth, camera.lens.viewportHeight);
+            spriteBatch.draw2(entityMini.animation.getKeyFrame(0), entityMini.transform2D, camera.pixelsPerMeterX, camera.pixelsPerMeterY);
         }
         spriteBatch.end();
 
@@ -127,12 +128,33 @@ public class Box2DDebugRendererTestScene extends Scene {
             orthographicCamera.zoom += 0.1f;
         if (Gdx.input.isKeyPressed(Input.Keys.A))
             orthographicCamera.zoom -= 0.1f;
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+            EntityMini entityMini = new EntityMini();
+            entityMini.transform2D = context.factoryTransform2D.
+                    create(MathUtils.random(-10, 10), MathUtils.random(-1, 4), 1, MathUtils.random(0, 2 * (float)Math.PI), 1, 1);
+            entityMini.animation = new Animation<>(1,
+                    context.assetManager.get("atlases/test/testSpriteSheet2.atlas", SpriteSheet.class).findRegions(getRandomRegion()));
+            entityMini.body = createBody(world, new RigidBody2DData(
+                            BodyDef.BodyType.DynamicBody,
+                            RigidBody2DData.Shape.RECTANGLE,
+                            UtilsRigidBody2D.getBox2DLength(entityMini.animation.getKeyFrame(0).getRegionWidth(), camera.pixelsPerMeterX),
+                            UtilsRigidBody2D.getBox2DLength(entityMini.animation.getKeyFrame(0).getRegionHeight(), camera.pixelsPerMeterY),
+                            1,1,0.2f,false),
+                    entityMini.transform2D);
+            entityMini.body.setUserData(entityMini);
+            entityMini.transform2D.transform = entityMini.body.getTransform();
+            entities.add(entityMini);
+        }
+
         camera.lens.update();
     }
 
     @Override
     public void resize(int width, int height) {
-
+        camera.lens.viewportWidth = camera.viewWorldWidth;
+        camera.lens.viewportHeight = camera.viewWorldWidth * (float) height / width;
+        camera.lens.update();
     }
 
     @Override
@@ -195,14 +217,14 @@ public class Box2DDebugRendererTestScene extends Scene {
             public void beginContact(Contact contact) {
                 EntityMini entityMiniA = (EntityMini) contact.getFixtureA().getBody().getUserData();
                 EntityMini entityMiniB = (EntityMini) contact.getFixtureB().getBody().getUserData();
-                System.out.println("beging contact: " + entityMiniA  + " : " + entityMiniB);
+                //System.out.println("beging contact: " + entityMiniA  + " : " + entityMiniB);
             }
 
             @Override
             public void endContact(Contact contact) {
                 EntityMini entityMiniA = (EntityMini) contact.getFixtureA().getBody().getUserData();
                 EntityMini entityMiniB = (EntityMini) contact.getFixtureB().getBody().getUserData();
-                System.out.println("end contact: " + entityMiniA  + " : " + entityMiniB);
+                //System.out.println("end contact: " + entityMiniA  + " : " + entityMiniB);
             }
 
             @Override
