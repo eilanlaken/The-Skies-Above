@@ -7,12 +7,13 @@ import com.fos.game.engine.ecs.components.lights2d.ComponentLight2D;
 import com.fos.game.engine.ecs.components.physics2d.ComponentJoint2D;
 import com.fos.game.engine.ecs.components.physics2d.ComponentRigidBody2D;
 import com.fos.game.engine.ecs.components.physics2d.RigidBody2DData;
-import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
+import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 
 public class Physics2DUtils {
 
-    protected static final int PHYSICS_2D_BIT_MASK = ComponentType.PHYSICS_2D_BODY.bitMask;
+    //protected static final int PHYSICS_2D_BIT_MASK = ComponentType.PHYSICS_2D_BODY.bitMask;
+    protected static final int PHYSICS_2D_BIT_MASK = ComponentType.PHYSICS_2D_BODY.bitMask | ComponentType.PHYSICS_2D_JOINT.bitMask | ComponentType.LIGHT_2D.bitMask;
 
     protected static void prepare(final Array<Entity> entities, Array<Entity> bodiesResult, Array<Entity> jointsResult, Array<Entity> lightsResult) {
         bodiesResult.clear();

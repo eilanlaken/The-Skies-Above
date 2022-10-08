@@ -1,22 +1,21 @@
-package com.fos.game.engine.ecs.components.camera;
+package com.fos.game.engine.ecs.components.camera3d;
 
-import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
 import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
-import com.fos.game.engine.ecs.systems.renderer.shaders.postprocessing.PostProcessingEffect;
 import com.fos.game.engine.ecs.systems.renderer.base.RenderTarget;
+import com.fos.game.engine.ecs.systems.renderer.shaders.postprocessing.PostProcessingEffect;
 
-@Deprecated
-public class ComponentCamera implements Component {
+public class ComponentCamera3D implements Component {
 
     public final int layersBitMask;
-    public Camera lens;
+    public PerspectiveCamera lens;
     public RenderTarget renderTarget;
     public Array<PostProcessingEffect> postProcessingEffects;
 
-    protected ComponentCamera(Camera lens, final int layersBitMask, final RenderTarget.RenderTargetParams renderTargetParams, final PostProcessingEffect... postProcessingEffects) {
+    protected ComponentCamera3D(PerspectiveCamera lens, final int layersBitMask, final RenderTarget.RenderTargetParams renderTargetParams, final PostProcessingEffect... postProcessingEffects) {
         this.layersBitMask = layersBitMask;
         this.lens = lens;
         renderTarget = renderTargetParams == null ? null : new RenderTarget(renderTargetParams);

@@ -9,6 +9,7 @@ import com.fos.game.engine.files.serialization.JsonConverter;
 import com.fos.game.engine.ecs.systems.renderer.shaders.postprocessing.PostProcessingEffect;
 import com.fos.game.engine.ecs.systems.renderer.base.RenderTarget;
 
+@Deprecated
 public class FactoryCamera extends Factory {
 
     public static final int RENDER_ALL_LAYERS_MASK = 0b11111111111111111111111111111111;

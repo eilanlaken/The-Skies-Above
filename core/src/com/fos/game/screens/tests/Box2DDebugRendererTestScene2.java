@@ -24,7 +24,7 @@ import com.fos.game.engine.ecs.systems.renderer.base.SpriteBatch;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Box2DDebugRendererTestScene extends Scene {
+public class Box2DDebugRendererTestScene2 extends Scene {
 
     private World world;
     Array<EntityMini> entities;
@@ -40,7 +40,7 @@ public class Box2DDebugRendererTestScene extends Scene {
         Joint joint;
     }
 
-    public Box2DDebugRendererTestScene(final GameContext context) {
+    public Box2DDebugRendererTestScene2(final GameContext context) {
         super(context);
     }
 
@@ -50,7 +50,7 @@ public class Box2DDebugRendererTestScene extends Scene {
         world.setContactListener(getContactListener());
         entities = new Array<>();
         camera = context.factoryCamera.createCamera2D(20, 20 * Gdx.graphics.getHeight() / Gdx.graphics.getWidth());
-
+        System.out.println("z is " + camera.lens.position.z);
         // create entities with bodies
         for (int i = 0; i < 10; i++) {
             EntityMini entityMini = new EntityMini();

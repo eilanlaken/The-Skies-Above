@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.GLFrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
@@ -20,16 +19,19 @@ import com.fos.game.engine.ecs.components.camera.ComponentCamera;
 import com.fos.game.engine.ecs.components.lights3d.LightingEnvironment;
 import com.fos.game.engine.ecs.components.modelinstance.ComponentModelInstance;
 import com.fos.game.engine.ecs.components.modelinstance.ModelInstance;
+import com.fos.game.engine.ecs.components.physics2d.ComponentJoint2D;
+import com.fos.game.engine.ecs.components.physics2d.ComponentRigidBody2D;
 import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
+import com.fos.game.engine.ecs.systems.base.SystemConfig;
 import com.fos.game.engine.ecs.systems.renderer.shaders.postprocessing.PostProcessingShaderProgram;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Deprecated
-public class Renderer_old implements EntitiesProcessor, Disposable {
+public class Renderer_old2 implements EntitiesProcessor, Disposable {
 
     public static final String NO_CAMERA_IN_CONTAINER_EXCEPTION_MESSAGE = "Entity Container must contain at least 1 (one) " +
             "Entity with a" + ComponentCamera.class.getSimpleName() + " " + Component.class.getSimpleName() + " in order to render.";
@@ -37,14 +39,9 @@ public class Renderer_old implements EntitiesProcessor, Disposable {
 
     private ModelBatch modelBatch;
     private SpriteBatch spriteBatch;
-
-    // TODO: test
     private Physics2DDebugRenderer physics2DDebugRenderer;
-    private Box2DDebugRenderer box2DDebugRenderer;
-
     private ShapeRenderer shapeRenderer;
     // config
-    public float pixelsPerMeter;
     public boolean debugMode;
 
     private PostProcessingShaderProgram postProcessingShaderProgram;
@@ -55,16 +52,11 @@ public class Renderer_old implements EntitiesProcessor, Disposable {
     private final LightingEnvironment lightingEnvironment = new LightingEnvironment();
     private final Map<RenderTarget, Array<ComponentCamera>> renderTargetCamerasMap = new HashMap<>();
 
-    public Renderer_old() {
+    public Renderer_old2() {
         this.modelBatch = new ModelBatch(new ShaderProvider(), new ModelInstanceSorter());
         this.spriteBatch = new SpriteBatch();
-
-        // TODO: test
         this.physics2DDebugRenderer = new Physics2DDebugRenderer();
-        this.box2DDebugRenderer = new Box2DDebugRenderer();
-
         this.shapeRenderer = new ShapeRenderer();
-        this.pixelsPerMeter = Config.DEFAULT.pixelsPerMeter;
         this.debugMode = Config.DEFAULT.debugMode;
         this.postProcessingShaderProgram = new PostProcessingShaderProgram();
         /* create FrameBuffer */
@@ -135,23 +127,27 @@ public class Renderer_old implements EntitiesProcessor, Disposable {
                 final float delta = Gdx.graphics.getDeltaTime();
                 animation.advanceTime(delta);
                 TextureAtlas.AtlasRegion atlasRegion = animation.getTextureRegion();
-                spriteBatch.render(atlasRegion, transform2D, pixelsPerMeter);
+                spriteBatch.draw(atlasRegion, transform2D, camera.lens.viewportWidth, camera.lens.viewportHeight);
             }
         }
         spriteBatch.end();
 
         // TODO: test. If debug mode, render shapes for 2d entities with physics.
+        physics2DDebugRenderer.begin();
         if (debugMode) {
             for (Map.Entry<ComponentCamera, Array<Entity>> cameraEntities : camera2DEntitiesMap.entrySet()) {
                 ComponentCamera camera = cameraEntities.getKey();
-                //physics2DDebugRenderer.setProjectionMatrix(camera.lens.combined);
-
-
+                physics2DDebugRenderer.setProjectionMatrix(camera.lens.combined);
+                for (Entity entity : cameraEntities.getValue()) {
+                    ComponentRigidBody2D rigidBody2D = (ComponentRigidBody2D) entity.components[ComponentType.PHYSICS_2D_BODY.ordinal()];
+                    ComponentJoint2D joint2D = (ComponentJoint2D) entity.components[ComponentType.PHYSICS_2D_JOINT.ordinal()];
+                    if (rigidBody2D != null) physics2DDebugRenderer.drawBody(rigidBody2D.body);
+                    if (joint2D != null) physics2DDebugRenderer.drawJoint(joint2D.joint);
+                }
             }
         }
-        //shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        //shapeRenderer.rect(0,0,80,80);
-        //shapeRenderer.end();
+        physics2DDebugRenderer.end();
+
         if (primaryFrameBuffer != null) primaryFrameBuffer.end();
     }
 
@@ -162,6 +158,8 @@ public class Renderer_old implements EntitiesProcessor, Disposable {
         if ((entity.componentsBitMask & RenderingUtils_old.ATTACHED_MODEL_INSTANCE_BIT_MASK) > 0) return true;
         if ((entity.componentsBitMask & RenderingUtils_old.ATTACHED_LIGHT_BIT_MASK) > 0) return true;
         if ((entity.componentsBitMask & RenderingUtils_old.ATTACHED_CAMERA_BIT_MASK) > 0) return true;
+        if (debugMode && (entity.componentsBitMask & ComponentType.PHYSICS_2D_BODY.bitMask) > 0) return true;
+        if (debugMode && (entity.componentsBitMask & ComponentType.PHYSICS_2D_JOINT.bitMask) > 0) return true;
         return false;
     }
 
@@ -171,19 +169,14 @@ public class Renderer_old implements EntitiesProcessor, Disposable {
     }
 
     public void config(final Config config) {
-        this.pixelsPerMeter = config.pixelsPerMeter;
         this.debugMode = config.debugMode;
     }
 
-    public static final class Config {
-
-        public static final Config DEFAULT = new Config(32, true);
+    public static final class Config extends SystemConfig {
+        public static final Config DEFAULT = new Config(true);
         public final boolean debugMode;
-        public final float pixelsPerMeter;
-
-        public Config(final float pixelsPerMeter, final boolean debugMode) {
+        public Config(final boolean debugMode) {
             this.debugMode = debugMode;
-            this.pixelsPerMeter = pixelsPerMeter;
         }
     }
 

@@ -1,4 +1,4 @@
-package com.fos.game.engine.ecs.components.transform;
+package com.fos.game.engine.ecs.components.transform3d;
 
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
