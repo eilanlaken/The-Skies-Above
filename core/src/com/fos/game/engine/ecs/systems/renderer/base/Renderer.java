@@ -71,18 +71,19 @@ public class Renderer implements EntitiesProcessor, Disposable {
     @Override
     public void process(final Array<Entity> entities) {
         RendererUtils.prepareForRendering(entities, lightingEnvironment, camera2DEntitiesMap, camera3DEntitiesMap, renderTargetCameras2DMap, renderTargetCameras3DMap);
-        for (Map.Entry<RenderTarget, Array<ComponentCamera2D>> renderTargetCameras : renderTargetCameras2DMap.entrySet()) {
-            renderToTarget(renderTargetCameras.getKey());
+        for (Map.Entry<RenderTarget, Array<ComponentCamera3D>> renderTargetCameras3D : renderTargetCameras3DMap.entrySet()) {
+            render3DSceneToTarget(renderTargetCameras3D.getKey());
         }
-        for (Map.Entry<RenderTarget, Array<ComponentCamera3D>> renderTargetCameras : renderTargetCameras3DMap.entrySet()) {
-            renderToTarget(renderTargetCameras.getKey());
+        for (Map.Entry<RenderTarget, Array<ComponentCamera2D>> renderTargetCameras2D : renderTargetCameras2DMap.entrySet()) {
+            render2DSceneToTarget(renderTargetCameras2D.getKey());
         }
     }
 
-    private void renderToTarget(final RenderTarget renderTarget) {
+    // TODO: test 3d rendering
+    private void render3DSceneToTarget(final RenderTarget renderTarget) {
         final FrameBuffer secondaryFrameBuffer = renderTarget == null ? frameBuffer : renderTarget.secondaryFrameBuffer;
         final FrameBuffer primaryFrameBuffer = renderTarget == null ? null : renderTarget.primaryFrameBuffer;
-        // render 3D scene
+        // render 3D scene to secondary frame buffer
         secondaryFrameBuffer.begin();
         Gdx.gl.glClearColor(0,0,0,0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
@@ -99,8 +100,9 @@ public class Renderer implements EntitiesProcessor, Disposable {
         }
         modelBatch.end();
         secondaryFrameBuffer.end();
+
+        // render output + post processing to primary frame buffer
         if (primaryFrameBuffer != null) primaryFrameBuffer.begin();
-        // render 2D scene
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         spriteBatch.setShader(null);
@@ -113,7 +115,18 @@ public class Renderer implements EntitiesProcessor, Disposable {
         region.flip(false, true);
         spriteBatch.draw(region, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         spriteBatch.setShader(null);
-        // draw all 2d atlas regions
+        spriteBatch.end();
+    }
+
+    // TODO: test 2d rendering
+    private void render2DSceneToTarget(final RenderTarget renderTarget) {
+        final FrameBuffer primaryFrameBuffer = renderTarget == null ? null : renderTarget.primaryFrameBuffer;
+        if (primaryFrameBuffer != null) primaryFrameBuffer.begin();
+        Gdx.gl.glClearColor(0,0,0,1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+        spriteBatch.setShader(null);
+        spriteBatch.begin();
+        if (primaryFrameBuffer != null) primaryFrameBuffer.end();
         for (Map.Entry<ComponentCamera2D, Array<Entity>> cameraEntities : camera2DEntitiesMap.entrySet()) {
             ComponentCamera2D camera = cameraEntities.getKey();
             spriteBatch.setProjectionMatrix(camera.lens.combined);
@@ -126,7 +139,6 @@ public class Renderer implements EntitiesProcessor, Disposable {
         }
         spriteBatch.end();
 
-        // TODO: test. If debug mode, render shapes for 2d entities with physics.
         physics2DDebugRenderer.begin();
         if (debugMode) {
             for (Map.Entry<ComponentCamera2D, Array<Entity>> cameraEntities : camera2DEntitiesMap.entrySet()) {
@@ -141,8 +153,6 @@ public class Renderer implements EntitiesProcessor, Disposable {
             }
         }
         physics2DDebugRenderer.end();
-
-        if (primaryFrameBuffer != null) primaryFrameBuffer.end();
     }
 
     @Override
