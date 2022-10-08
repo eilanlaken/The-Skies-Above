@@ -1,5 +1,6 @@
 package com.fos.game.engine.ecs.components.camera2d;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
@@ -12,12 +13,20 @@ public class ComponentCamera2D implements Component {
 
     public final int layersBitMask;
     public OrthographicCamera lens;
+    public final float viewWorldWidth;
+    public final float viewWorldHeight;
+    public final float pixelsPerMeterX;
+    public final float pixelsPerMeterY;
     public RenderTarget renderTarget;
     public Array<PostProcessingEffect> postProcessingEffects;
 
     protected ComponentCamera2D(OrthographicCamera lens, final int layersBitMask, final RenderTarget.RenderTargetParams renderTargetParams, final PostProcessingEffect... postProcessingEffects) {
         this.layersBitMask = layersBitMask;
         this.lens = lens;
+        this.viewWorldWidth = lens.viewportWidth;
+        this.viewWorldHeight = lens.viewportHeight;
+        this.pixelsPerMeterX = (float) Gdx.graphics.getWidth() / lens.viewportWidth;
+        this.pixelsPerMeterY = (float) Gdx.graphics.getHeight() / lens.viewportHeight;
         renderTarget = renderTargetParams == null ? null : new RenderTarget(renderTargetParams);
         this.postProcessingEffects = new Array<>(postProcessingEffects);
     }

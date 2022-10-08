@@ -4,6 +4,7 @@ import com.fos.game.engine.context.GameContext;
 import com.fos.game.engine.context.Scene;
 import com.fos.game.engine.files.assets.GameAssetManager;
 import com.fos.game.screens.tests.Box2DDebugRendererTestScene2;
+import com.fos.game.screens.tests.Box2DDebugRendererTestScene3;
 
 import java.util.Map;
 
@@ -27,7 +28,7 @@ public class LoadingScreen extends Scene {
         while (!doneLoading) {
             if (assetManager.update()) {
                 doneLoading = true;
-                context.setScreen(new Box2DDebugRendererTestScene2(context));
+                context.setScreen(new Box2DDebugRendererTestScene3(context));
             }
         }
     }
@@ -48,7 +49,7 @@ public class LoadingScreen extends Scene {
     }
 
     private void queueAssets() {
-        Map<String, Class> assetsNameTypeMap = Box2DDebugRendererTestScene2.getRequiredAssetsNameTypeMap();
+        Map<String, Class> assetsNameTypeMap = Box2DDebugRendererTestScene3.getRequiredAssetsNameTypeMap();
         for (Map.Entry<String, Class> entry : assetsNameTypeMap.entrySet()) {
             this.assetManager.load(entry.getKey(), entry.getValue());
         }

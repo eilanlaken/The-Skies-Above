@@ -4,6 +4,8 @@ import com.badlogic.gdx.Game;
 import com.fos.game.engine.ecs.components.animations2d.FactoryAnimation2D;
 import com.fos.game.engine.ecs.components.audio.FactoryAudio;
 import com.fos.game.engine.ecs.components.camera.FactoryCamera;
+import com.fos.game.engine.ecs.components.camera2d.FactoryCamera2D;
+import com.fos.game.engine.ecs.components.camera3d.FactoryCamera3D;
 import com.fos.game.engine.ecs.components.lights3d.FactoryLight;
 import com.fos.game.engine.ecs.components.modelinstance.FactoryModelInstance;
 import com.fos.game.engine.ecs.components.physics2d.FactoryRigidBody2D;
@@ -25,7 +27,10 @@ public class GameContext extends Game {
 	// Component Factory(s)
 	public FactoryAnimation2D factoryAnimation2D;
 	public FactoryAudio factoryAudio;
+	@Deprecated
 	public FactoryCamera factoryCamera;
+	public FactoryCamera2D factoryCamera2D;
+	public FactoryCamera3D factoryCamera3D;
 	public FactoryLight factoryLight;
 	public FactoryModelInstance factoryModelInstance;
 	public FactoryRigidBody2D factoryRigidBody2D;
@@ -45,6 +50,8 @@ public class GameContext extends Game {
 		this.factoryAnimation2D = new FactoryAnimation2D(this.assetManager, this.jsonConverter);
 		this.factoryAudio = new FactoryAudio(this.assetManager, this.jsonConverter);
 		this.factoryCamera = new FactoryCamera(this.assetManager, this.jsonConverter);
+		this.factoryCamera2D = new FactoryCamera2D(this.assetManager, this.jsonConverter);
+		this.factoryCamera3D = new FactoryCamera3D(this.assetManager, this.jsonConverter);
 		this.factoryLight = new FactoryLight(this.assetManager, this.jsonConverter);
 		this.factoryModelInstance = new FactoryModelInstance(this.assetManager, this.jsonConverter);
 		this.factoryRigidBody2D = new FactoryRigidBody2D(this.assetManager, this.jsonConverter);
