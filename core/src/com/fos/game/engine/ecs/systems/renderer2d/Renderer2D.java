@@ -2,20 +2,25 @@ package com.fos.game.engine.ecs.systems.renderer2d;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.camera2d.ComponentCamera2D;
 import com.fos.game.engine.ecs.components.lights2d.ComponentLight2D;
+import com.fos.game.engine.ecs.components.physics2d.ComponentJoint2D;
+import com.fos.game.engine.ecs.components.physics2d.ComponentRigidBody2D;
 import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
 import com.fos.game.engine.ecs.systems.base.SystemConfig;
 import com.fos.game.engine.ecs.systems.renderer.base.RenderTarget;
-import com.fos.game.engine.ecs.systems.renderer.base.Renderer;
+import com.fos.game.screens.tests.Lights2DTestScene4;
 
 import java.util.Map;
 
@@ -29,14 +34,14 @@ public class Renderer2D implements EntitiesProcessor, Disposable {
     private Array<Entity> attachedAnimations;
     private Array<Entity> attachedPhysics;
     private Array<Entity> attachedLight;
-    private Array<ComponentCamera2D> cameras;
+    private Array<ComponentCamera2D> allCameras;
 
     public Renderer2D() {
         this.spriteBatch = new SpriteBatch();
         this.physics2DDebugRenderer = new Physics2DDebugRenderer();
         this.shapeRenderer = new ShapeRenderer();
-        this.debugMode = Renderer.Config.DEFAULT.debugMode;
-        this.cameras = new Array<>();
+        this.debugMode = Renderer2D.Config.DEFAULT.debugMode;
+        this.allCameras = new Array<>();
         this.attachedAnimations = new Array<>();
         this.attachedPhysics = new Array<>();
         this.attachedLight = new Array<>();
@@ -44,8 +49,7 @@ public class Renderer2D implements EntitiesProcessor, Disposable {
 
     @Override
     public void process(Array<Entity> entities) {
-        cameras.clear();
-        entities.sort(Renderer2DUtils.rendering2DComparator);
+        allCameras.clear();
         for (Entity entity : entities) {
             if ((entity.componentsBitMask & ComponentType.ANIMATIONS_2D.bitMask) > 0) {
                 ComponentAnimations2D animation = (ComponentAnimations2D) entity.components[ComponentType.ANIMATIONS_2D.ordinal()];
@@ -58,7 +62,7 @@ public class Renderer2D implements EntitiesProcessor, Disposable {
                 final ComponentTransform2D transform2D = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
                 final ComponentCamera2D camera2D = (ComponentCamera2D) entity.components[ComponentType.CAMERA_2D.ordinal()];
                 Renderer2DUtils.applyTransform(transform2D, camera2D);
-                cameras.add(camera2D);
+                allCameras.add(camera2D);
             }
             if ((entity.componentsBitMask & ComponentType.LIGHT_2D.bitMask) > 0) {
                 // TODO: test
@@ -75,22 +79,53 @@ public class Renderer2D implements EntitiesProcessor, Disposable {
             }
         }
 
-        RuntimeException exception = Renderer2DUtils.checkForCamerasErrors(cameras);
+        RuntimeException exception = Renderer2DUtils.checkForCamerasErrors(allCameras);
         if (exception != null) throw new RuntimeException();
 
-        Map<RenderTarget, Array<ComponentCamera2D>> renderTargetCamerasMap = Renderer2DUtils.getRenderTargetCamerasMap(cameras);
+        Map<RenderTarget, Array<ComponentCamera2D>> renderTargetCamerasMap = Renderer2DUtils.getRenderTargetCamerasMap(allCameras);
+        Map<ComponentCamera2D, Array<Entity>> cameraEntitiesMap = Renderer2DUtils.getCameraEntitiesMap(allCameras, entities);
+
         for (Map.Entry<RenderTarget, Array<ComponentCamera2D>> renderTargetCameras : renderTargetCamerasMap.entrySet()) {
             final RenderTarget renderTarget = renderTargetCameras.getKey();
             final Array<ComponentCamera2D> camerasForRenderTarget = renderTargetCameras.getValue();
-            renderToTarget(renderTarget, camerasForRenderTarget, entities);
+            camerasForRenderTarget.sort(Renderer2DUtils.camerasComparator);
+            renderToTarget(renderTarget, camerasForRenderTarget, cameraEntitiesMap);
         }
     }
 
-    private void renderToTarget(final RenderTarget renderTarget, final Array<ComponentCamera2D> camera2DS, final Array<Entity> entities) {
+    private void renderToTarget(final RenderTarget renderTarget, final Array<ComponentCamera2D> cameras, final Map<ComponentCamera2D, Array<Entity>> cameraEntitiesMap) {
         final FrameBuffer primaryFrameBuffer = renderTarget == null ? null : renderTarget.primaryFrameBuffer;
         if (primaryFrameBuffer != null) primaryFrameBuffer.begin();
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+        spriteBatch.begin();
+        for (final ComponentCamera2D camera : cameras) {
+            spriteBatch.setProjectionMatrix(camera.lens.combined);
+            for (Entity entity : cameraEntitiesMap.get(camera)) {
+                ComponentAnimations2D animation = (ComponentAnimations2D) entity.components[ComponentType.ANIMATIONS_2D.ordinal()];
+                if (animation == null) continue;
+                ComponentTransform2D transform2D = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
+                final float delta = Gdx.graphics.getDeltaTime();
+                animation.advanceTime(delta);
+                TextureAtlas.AtlasRegion atlasRegion = animation.getTextureRegion();
+                spriteBatch.draw(atlasRegion, transform2D, camera.pixelsPerMeterX, camera.pixelsPerMeterY);
+            }
+        }
+        spriteBatch.end();
+
+        if (debugMode) {
+            physics2DDebugRenderer.begin();
+            for (final ComponentCamera2D camera : cameras) {
+                physics2DDebugRenderer.setProjectionMatrix(camera.lens.combined);
+                for (Entity entity : cameraEntitiesMap.get(camera)) {
+                    ComponentRigidBody2D rigidBody2D = (ComponentRigidBody2D) entity.components[ComponentType.PHYSICS_2D_BODY.ordinal()];
+                    ComponentJoint2D joint2D = (ComponentJoint2D) entity.components[ComponentType.PHYSICS_2D_JOINT.ordinal()];
+                    if (rigidBody2D.body != null) physics2DDebugRenderer.drawBody(rigidBody2D.body);
+                    if (joint2D.joint != null) physics2DDebugRenderer.drawJoint(joint2D.joint);
+                }
+            }
+            physics2DDebugRenderer.end();
+        }
 
         if (primaryFrameBuffer != null) primaryFrameBuffer.end();
     }

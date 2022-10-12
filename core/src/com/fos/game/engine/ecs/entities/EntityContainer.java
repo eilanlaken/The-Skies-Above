@@ -29,7 +29,7 @@ public class EntityContainer implements Disposable {
     public AudioPlayer audioPlayer = new AudioPlayer();
     public Physics2D physics2D = new Physics2D();
     public Physics3D physics3D = new Physics3D();
-    
+
     // TODO: test new renderer.
     //public Renderer renderer = new Renderer();
     public Renderer2D renderer2D = new Renderer2D();

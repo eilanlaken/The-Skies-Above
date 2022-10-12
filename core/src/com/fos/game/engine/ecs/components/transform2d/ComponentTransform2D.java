@@ -8,11 +8,11 @@ import com.fos.game.engine.ecs.components.base.ComponentType;
 public class ComponentTransform2D implements Component {
 
     public Transform transform;
-    @Deprecated public float z;
+    public float z;
     public float scaleX;
     public float scaleY;
 
-    protected ComponentTransform2D(float x, float y, float angle, float scaleX, float scaleY) {
+    protected ComponentTransform2D(float x, float y, float z,float angle, float scaleX, float scaleY) {
         this.transform = new Transform(new Vector2(x,y), angle);
         this.scaleX = scaleX;
         this.scaleY = scaleY;

@@ -39,7 +39,7 @@ public class Renderer2DSortTestScene extends Scene {
         }
 
         System.out.println("unsorted: " + entities);
-        entities.sort(Renderer2DUtils.rendering2DComparator);
+        entities.sort(Renderer2DUtils.camerasComparator);
         System.out.println("sorted: " + entities);
     }
 

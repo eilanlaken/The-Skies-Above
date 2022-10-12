@@ -31,13 +31,16 @@ public class Renderer2DUtils {
             | ComponentType.LIGHT_2D.bitMask
             | ComponentType.CAMERA_2D.bitMask;
 
-    private static Map<RenderTarget, Array<ComponentCamera2D>> renderTargetCamerasResult;
+    private static Map<RenderTarget, Array<ComponentCamera2D>> renderTargetCamerasResult = new HashMap<>();
+    private static Map<ComponentCamera2D, Array<Entity>> cameraEntitiesMapResult = new HashMap<>();
 
     // TODO: change back to protected
-    public static final Comparator<Entity> rendering2DComparator = new Comparator<Entity>() {
+    public static final Comparator<Entity> entitiesComparator = new Comparator<Entity>() {
         @Override
         public int compare(Entity e1, Entity e2) {
-            int depthSort = Float.compare(e1.layer, e2.layer);
+            final float z1 = ((ComponentTransform2D) e1.components[ComponentType.TRANSFORM_2D.ordinal()]).z;
+            final float z2 = ((ComponentTransform2D) e2.components[ComponentType.TRANSFORM_2D.ordinal()]).z;
+            int depthSort = Float.compare(z1, z2);
             if (depthSort != 0) return depthSort;
 
             Component animations1 = (Component) e1.components[ComponentType.ANIMATIONS_2D.ordinal()];
@@ -56,7 +59,14 @@ public class Renderer2DUtils {
             if (light1 != null && animations1 == null && light2 != null & animations2 != null) return 1;
             if (light1 == null && animations1 != null && light2 != null & animations2 != null) return -1;
 
-            return 0;
+            return Float.compare(e1.layer, e2.layer);
+        }
+    };
+
+    public static final Comparator<ComponentCamera2D> camerasComparator = new Comparator<ComponentCamera2D>() {
+        @Override
+        public int compare(ComponentCamera2D c1, ComponentCamera2D c2) {
+            return Float.compare(c1.depth, c2.depth);
         }
     };
 
@@ -72,7 +82,6 @@ public class Renderer2DUtils {
     }
 
     protected static Map<RenderTarget, Array<ComponentCamera2D>> getRenderTargetCamerasMap(final Array<ComponentCamera2D> cameras) {
-        if (renderTargetCamerasResult == null)  renderTargetCamerasResult = new HashMap<>();
         renderTargetCamerasResult.clear();
         // scan all 2D cameras for render targets
         for (ComponentCamera2D camera2D : cameras) {
@@ -85,6 +94,24 @@ public class Renderer2DUtils {
             camerasForRenderTarget.add(camera2D);
         }
         return renderTargetCamerasResult;
+    }
+
+    protected static Map<ComponentCamera2D, Array<Entity>> getCameraEntitiesMap(final Array<ComponentCamera2D> cameras, final Array<Entity> entities) {
+        cameraEntitiesMapResult.clear();
+        for (ComponentCamera2D camera : cameras) {
+            Array<Entity> entitiesRenderedWithCamera = cameraEntitiesMapResult.get(camera);
+            if (entitiesRenderedWithCamera == null) {
+                entitiesRenderedWithCamera = new Array<>();
+                cameraEntitiesMapResult.put(camera, entitiesRenderedWithCamera);
+            }
+            for (Entity entity : entities) {
+                if (!((entity.layer & camera.layersBitMask) > 0)) continue;
+                if (Renderer2DUtils.cull(entity, camera.lens)) continue;
+                entitiesRenderedWithCamera.add(entity);
+            }
+            entitiesRenderedWithCamera.sort(entitiesComparator);
+        }
+        return cameraEntitiesMapResult;
     }
 
     protected static RuntimeException checkForCamerasErrors(final Array<ComponentCamera2D> cameras) {

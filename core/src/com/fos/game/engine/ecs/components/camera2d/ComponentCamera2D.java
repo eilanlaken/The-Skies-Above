@@ -15,20 +15,22 @@ import java.util.Set;
 
 public class ComponentCamera2D implements Component {
 
-    public final Set<Enum> layers;
-    public final int layersBitMask;
+    public Set<Enum> layers;
+    public int layersBitMask;
+    public float depth;
     public OrthographicCamera lens;
-    public final float viewWorldWidth;
-    public final float viewWorldHeight;
-    public final float pixelsPerMeterX;
-    public final float pixelsPerMeterY;
+    public float viewWorldWidth;
+    public float viewWorldHeight;
+    public float pixelsPerMeterX;
+    public float pixelsPerMeterY;
     public RenderTarget renderTarget;
     public Array<PostProcessingEffect> postProcessingEffects;
 
-    protected ComponentCamera2D(OrthographicCamera lens, final Enum[] layers, final RenderTarget.RenderTargetParams renderTargetParams, final PostProcessingEffect... postProcessingEffects) {
+    protected ComponentCamera2D(OrthographicCamera lens, final Enum[] layers, float depth, final RenderTarget.RenderTargetParams renderTargetParams, final PostProcessingEffect... postProcessingEffects) {
         this.layers = new HashSet<>();
         this.layers.addAll(Arrays.asList(layers));
         this.layersBitMask = UtilsCameras2D.computeRenderedLayersBitMask(layers);
+        this.depth = depth;
         this.lens = lens;
         this.viewWorldWidth = lens.viewportWidth;
         this.viewWorldHeight = lens.viewportHeight;
