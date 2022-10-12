@@ -9,7 +9,8 @@ import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
 import com.fos.game.engine.ecs.systems.base.SystemConfig;
 import com.fos.game.engine.ecs.systems.physics2d.Physics2D;
 import com.fos.game.engine.ecs.systems.physics3d.Physics3D;
-import com.fos.game.engine.ecs.systems.renderer.base.Renderer;
+//import com.fos.game.engine.ecs.systems.renderer.base.Renderer;
+import com.fos.game.engine.ecs.systems.renderer2d.Renderer2D;
 import com.fos.game.engine.ecs.systems.scripting.ScriptsUpdater;
 import com.fos.game.engine.ecs.systems.signals.SignalRouter;
 
@@ -28,7 +29,11 @@ public class EntityContainer implements Disposable {
     public AudioPlayer audioPlayer = new AudioPlayer();
     public Physics2D physics2D = new Physics2D();
     public Physics3D physics3D = new Physics3D();
-    public Renderer renderer = new Renderer();
+    
+    // TODO: test new renderer.
+    //public Renderer renderer = new Renderer();
+    public Renderer2D renderer2D = new Renderer2D();
+
     public ScriptsUpdater scriptsUpdater = new ScriptsUpdater();
     public SignalRouter signalRouter = new SignalRouter();
 
@@ -38,8 +43,8 @@ public class EntityContainer implements Disposable {
         this.systemEntitiesMap.put(physics2D, new Array<Entity>());
         this.systemEntitiesMap.put(physics3D, new Array<Entity>());
         // TODO: remove old renderer.
-        //this.systemEntitiesMap.put(rendererOld2, new Array<Entity>());
-        this.systemEntitiesMap.put(renderer, new Array<Entity>());
+        //this.systemEntitiesMap.put(renderer, new Array<Entity>());
+        this.systemEntitiesMap.put(renderer2D, new Array<Entity>());
         this.systemEntitiesMap.put(scriptsUpdater, new Array<Entity>());
         this.systemEntitiesMap.put(signalRouter, new Array<Entity>());
     }
@@ -68,7 +73,7 @@ public class EntityContainer implements Disposable {
 
     public void config(final SystemConfig ...configs) {
         for (final SystemConfig config : configs) {
-            if (config instanceof Renderer.Config) renderer.config((Renderer.Config) config);
+            if (config instanceof Renderer2D.Config) renderer2D.config((Renderer2D.Config) config);
             // .. configure other systems.
         }
     }

@@ -29,6 +29,7 @@ import com.fos.game.engine.ecs.systems.renderer.shaders.postprocessing.PostProce
 import java.util.HashMap;
 import java.util.Map;
 
+@Deprecated
 public class Renderer implements EntitiesProcessor, Disposable {
 
     public static final String NO_CAMERA_IN_CONTAINER_EXCEPTION_MESSAGE = "Entity Container must contain at least 1 (one) " +
