@@ -49,10 +49,13 @@ public class EntityContainer implements Disposable {
         this.systemEntitiesMap.put(signalRouter, new Array<Entity>());
     }
 
-    // TODO: implement like it should be. Delete this shit.
-    @Deprecated
+
     public void addEntity(final Entity entity) {
         this.toAdd.add(entity);
+    }
+
+    public void removeEntity(final Entity entity) {
+        this.toRemove.add(entity);
     }
 
     public void update() {

@@ -5,8 +5,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
@@ -20,7 +18,6 @@ import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
 import com.fos.game.engine.ecs.systems.base.SystemConfig;
 import com.fos.game.engine.ecs.systems.renderer.base.RenderTarget;
-import com.fos.game.screens.tests.Lights2DTestScene4;
 
 import java.util.Map;
 
@@ -49,7 +46,10 @@ public class Renderer2D implements EntitiesProcessor, Disposable {
 
     @Override
     public void process(Array<Entity> entities) {
-        allCameras.clear();
+        this.allCameras.clear();
+        this.attachedAnimations.clear();
+        this.attachedPhysics.clear();
+        this.attachedLight.clear();
         for (Entity entity : entities) {
             if ((entity.componentsBitMask & ComponentType.ANIMATIONS_2D.bitMask) > 0) {
                 ComponentAnimations2D animation = (ComponentAnimations2D) entity.components[ComponentType.ANIMATIONS_2D.ordinal()];
@@ -98,6 +98,9 @@ public class Renderer2D implements EntitiesProcessor, Disposable {
         if (primaryFrameBuffer != null) primaryFrameBuffer.begin();
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+
+        System.out.println("cameras size: " + cameras.size);
+        System.out.println(cameraEntitiesMap);
         spriteBatch.begin();
         for (final ComponentCamera2D camera : cameras) {
             spriteBatch.setProjectionMatrix(camera.lens.combined);
@@ -120,8 +123,8 @@ public class Renderer2D implements EntitiesProcessor, Disposable {
                 for (Entity entity : cameraEntitiesMap.get(camera)) {
                     ComponentRigidBody2D rigidBody2D = (ComponentRigidBody2D) entity.components[ComponentType.PHYSICS_2D_BODY.ordinal()];
                     ComponentJoint2D joint2D = (ComponentJoint2D) entity.components[ComponentType.PHYSICS_2D_JOINT.ordinal()];
-                    if (rigidBody2D.body != null) physics2DDebugRenderer.drawBody(rigidBody2D.body);
-                    if (joint2D.joint != null) physics2DDebugRenderer.drawJoint(joint2D.joint);
+                    if (rigidBody2D != null) physics2DDebugRenderer.drawBody(rigidBody2D.body);
+                    if (joint2D != null) physics2DDebugRenderer.drawJoint(joint2D.joint);
                 }
             }
             physics2DDebugRenderer.end();
