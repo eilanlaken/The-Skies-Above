@@ -3,7 +3,6 @@ package com.fos.game.engine.ecs.systems.physics2d;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.fos.game.engine.ecs.components.base.ComponentType;
-import com.fos.game.engine.ecs.components.lights2d.ComponentLight2D;
 import com.fos.game.engine.ecs.components.physics2d.ComponentJoint2D;
 import com.fos.game.engine.ecs.components.physics2d.ComponentRigidBody2D;
 import com.fos.game.engine.ecs.components.physics2d.RigidBody2DData;
@@ -15,17 +14,14 @@ public class Physics2DUtils {
     //protected static final int PHYSICS_2D_BIT_MASK = ComponentType.PHYSICS_2D_BODY.bitMask;
     protected static final int PHYSICS_2D_BIT_MASK = ComponentType.PHYSICS_2D_BODY.bitMask | ComponentType.PHYSICS_2D_JOINT.bitMask | ComponentType.LIGHT_2D.bitMask;
 
-    protected static void prepare(final Array<Entity> entities, Array<Entity> bodiesResult, Array<Entity> jointsResult, Array<Entity> lightsResult) {
+    protected static void prepare(final Array<Entity> entities, Array<Entity> bodiesResult, Array<Entity> jointsResult) {
         bodiesResult.clear();
         jointsResult.clear();
-        lightsResult.clear();
         for (final Entity entity : entities) {
             ComponentRigidBody2D body = (ComponentRigidBody2D) entity.components[ComponentType.PHYSICS_2D_BODY.ordinal()];
             ComponentJoint2D joint = (ComponentJoint2D) entity.components[ComponentType.PHYSICS_2D_JOINT.ordinal()];
-            ComponentLight2D light = (ComponentLight2D) entity.components[ComponentType.LIGHT_2D.ordinal()];
             if (body != null) bodiesResult.add(entity);
             if (joint != null) jointsResult.add(entity);
-            if (light != null) lightsResult.add(entity);
         }
     }
 

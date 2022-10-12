@@ -9,9 +9,10 @@ import com.fos.game.engine.ecs.systems.renderer.shaders.postprocessing.PostProce
 
 public class RenderTarget {
 
-    protected final FrameBuffer secondaryFrameBuffer;
-    protected final FrameBuffer primaryFrameBuffer;
-    protected final PostProcessingShaderProgram postProcessingShaderProgram;
+    // TODO: change to protected.
+    public final FrameBuffer secondaryFrameBuffer;
+    public final FrameBuffer primaryFrameBuffer;
+    public final PostProcessingShaderProgram postProcessingShaderProgram;
 
     public RenderTarget(final RenderTargetParams params) {
         // build "behind the scenes" frame buffer

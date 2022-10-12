@@ -9,8 +9,13 @@ import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.systems.renderer.base.RenderTarget;
 import com.fos.game.engine.ecs.systems.renderer.shaders.postprocessing.PostProcessingEffect;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 public class ComponentCamera2D implements Component {
 
+    public final Set<Enum> layers;
     public final int layersBitMask;
     public OrthographicCamera lens;
     public final float viewWorldWidth;
@@ -20,8 +25,10 @@ public class ComponentCamera2D implements Component {
     public RenderTarget renderTarget;
     public Array<PostProcessingEffect> postProcessingEffects;
 
-    protected ComponentCamera2D(OrthographicCamera lens, final int layersBitMask, final RenderTarget.RenderTargetParams renderTargetParams, final PostProcessingEffect... postProcessingEffects) {
-        this.layersBitMask = layersBitMask;
+    protected ComponentCamera2D(OrthographicCamera lens, final Enum[] layers, final RenderTarget.RenderTargetParams renderTargetParams, final PostProcessingEffect... postProcessingEffects) {
+        this.layers = new HashSet<>();
+        this.layers.addAll(Arrays.asList(layers));
+        this.layersBitMask = UtilsCameras2D.computeRenderedLayersBitMask(layers);
         this.lens = lens;
         this.viewWorldWidth = lens.viewportWidth;
         this.viewWorldHeight = lens.viewportHeight;
@@ -31,7 +38,7 @@ public class ComponentCamera2D implements Component {
         this.postProcessingEffects = new Array<>(postProcessingEffects);
     }
 
-    public boolean renderToTexture() {
+    public boolean isRenderToTexture() {
         return renderTarget != null;
     }
 

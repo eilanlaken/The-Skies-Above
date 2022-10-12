@@ -49,7 +49,7 @@ public class Entity implements Disposable {
         this.components = new Component[ComponentType.values().length];
         for (Object object : componentsToAttach) {
             final Component component = (Component) object;
-            components[component.getComponentType().ordinal()] = component;
+            if (component != null) components[component.getComponentType().ordinal()] = component;
         }
         refresh();
     }
@@ -101,7 +101,12 @@ public class Entity implements Disposable {
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName() + ": " + localId;
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("e_:");
+        if (components[ComponentType.ANIMATIONS_2D.ordinal()] != null) stringBuilder.append("A-");
+        if (components[ComponentType.LIGHT_2D.ordinal()] != null) stringBuilder.append("L-");
+        stringBuilder.append(layer);
+        return stringBuilder.toString();
     }
 
 }

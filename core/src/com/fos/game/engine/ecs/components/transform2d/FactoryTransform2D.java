@@ -12,23 +12,23 @@ public class FactoryTransform2D extends Factory {
     }
 
     public ComponentTransform2D create(float x, float y, float z, float angle, float scaleX, float scaleY) {
-        return new ComponentTransform2D(x,y,z,angle,scaleX,scaleY);
+        return new ComponentTransform2D(x,y,angle,scaleX,scaleY);
     }
 
     @Deprecated
     public static ComponentTransform2D create() {
-        return new ComponentTransform2D(0,0,0,0,1, 1);
+        return new ComponentTransform2D(0,0,0,1, 1);
     }
 
     @Deprecated
     public static ComponentTransform2D create(float x, float y) {
-        return new ComponentTransform2D(x, y, 0, 0, 1, 1);
+        return new ComponentTransform2D(x, y, 0, 1, 1);
     }
 
     @Deprecated
     public static ComponentTransform2D create(float x, float y, float angle) {
         float angleRadians = angle * MathUtils.degreesToRadians;
-        return new ComponentTransform2D(x, y, angleRadians, 0, 1, 1);
+        return new ComponentTransform2D(x, y, angleRadians, 1, 1);
     }
 
     @Deprecated

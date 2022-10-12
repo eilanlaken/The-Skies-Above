@@ -8,13 +8,12 @@ import com.fos.game.engine.ecs.components.base.ComponentType;
 public class ComponentTransform2D implements Component {
 
     public Transform transform;
-    public float z;
+    @Deprecated public float z;
     public float scaleX;
     public float scaleY;
 
-    protected ComponentTransform2D(float x, float y, float z, float angle, float scaleX, float scaleY) {
+    protected ComponentTransform2D(float x, float y, float angle, float scaleX, float scaleY) {
         this.transform = new Transform(new Vector2(x,y), angle);
-        this.z = z;
         this.scaleX = scaleX;
         this.scaleY = scaleY;
     }
@@ -22,9 +21,7 @@ public class ComponentTransform2D implements Component {
     public Vector2 getPosition() {
         return transform.getPosition();
     }
-    public float getRotation() {
-        return transform.getRotation();
-    }
+    public float getRotation() { return transform.getRotation(); }
 
     @Override
     public final ComponentType getComponentType() {

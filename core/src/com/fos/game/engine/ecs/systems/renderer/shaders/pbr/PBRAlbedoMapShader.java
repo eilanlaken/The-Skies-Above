@@ -13,7 +13,7 @@ import com.fos.game.engine.ecs.components.lights3d.LightingEnvironment;
 import com.fos.game.engine.ecs.components.modelinstance.ModelInstance;
 import com.fos.game.engine.ecs.systems.renderer.materials.instances.AlbedoMapMaterialInstance;
 import com.fos.game.engine.ecs.systems.renderer.shaders.base.GameShader;
-import com.fos.game.engine.ecs.systems.renderer.base.Renderer_old;
+import com.fos.game.engine.ecs.systems.renderer.base.Renderer;
 
 public class PBRAlbedoMapShader extends GameShader {
 
@@ -119,7 +119,7 @@ public class PBRAlbedoMapShader extends GameShader {
             }
         }
 
-        float gamma = Renderer_old.DEFAULT_GAMMA;
+        float gamma = Renderer.DEFAULT_GAMMA;
         shaderProgram.setUniformf(uniform_gammaLocation, gamma);
     }
 

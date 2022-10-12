@@ -1,5 +1,6 @@
 package com.fos.game.engine.ecs.systems.physics2d;
 
+import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -17,18 +18,19 @@ public class Physics2D implements EntitiesProcessor, Disposable {
 
     // TODO: make protected
     public World world;
+    protected RayHandler rayHandler;
 
     private final Array<Entity> bodies = new Array<>();
     private final Array<Entity> joints = new Array<>();
-    private final Array<Entity> lights = new Array<>();
 
     public Physics2D() {
         this.world = new World(new Vector2(), true);
+        this.rayHandler = new RayHandler(this.world);
     }
 
     @Override
     public void process(final Array<Entity> entities) {
-        Physics2DUtils.prepare(entities, bodies, joints, lights);
+        Physics2DUtils.prepare(entities, bodies, joints);
         final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
         this.world.step(delta, 6, 2);
         for (Entity entity : bodies) {

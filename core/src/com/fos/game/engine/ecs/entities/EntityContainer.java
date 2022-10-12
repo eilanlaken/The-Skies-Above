@@ -28,7 +28,6 @@ public class EntityContainer implements Disposable {
     public AudioPlayer audioPlayer = new AudioPlayer();
     public Physics2D physics2D = new Physics2D();
     public Physics3D physics3D = new Physics3D();
-    //public Renderer_old2 rendererOld2 = new Renderer_old2();
     public Renderer renderer = new Renderer();
     public ScriptsUpdater scriptsUpdater = new ScriptsUpdater();
     public SignalRouter signalRouter = new SignalRouter();

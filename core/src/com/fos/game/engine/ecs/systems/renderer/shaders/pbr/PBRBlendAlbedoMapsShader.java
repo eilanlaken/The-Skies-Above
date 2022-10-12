@@ -14,7 +14,7 @@ import com.fos.game.engine.ecs.components.modelinstance.ModelInstance;
 import com.fos.game.engine.ecs.systems.renderer.materials.base.BasicMaterialMap;
 import com.fos.game.engine.ecs.systems.renderer.materials.instances.BlendAlbedoMapsMaterialInstance;
 import com.fos.game.engine.ecs.systems.renderer.shaders.base.GameShader;
-import com.fos.game.engine.ecs.systems.renderer.base.Renderer_old;
+import com.fos.game.engine.ecs.systems.renderer.base.Renderer;
 
 public class PBRBlendAlbedoMapsShader extends GameShader {
 
@@ -122,7 +122,7 @@ public class PBRBlendAlbedoMapsShader extends GameShader {
                 shaderProgram.setUniformf(uniforms_directionalLightsIntensityLocations[i], directionalLights.get(i).intensity);
             }
         }
-        float gamma = Renderer_old.DEFAULT_GAMMA;
+        float gamma = Renderer.DEFAULT_GAMMA;
         shaderProgram.setUniformf(uniform_gammaLocation, gamma);
     }
 

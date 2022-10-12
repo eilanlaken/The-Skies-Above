@@ -4,9 +4,9 @@ import com.fos.game.engine.ecs.components.base.Factory;
 import com.fos.game.engine.files.assets.GameAssetManager;
 import com.fos.game.engine.files.serialization.JsonConverter;
 
-public class FactoryLight extends Factory {
+public class FactoryLight3D extends Factory {
 
-    public FactoryLight(final GameAssetManager assetManager, final JsonConverter jsonConverter) {
+    public FactoryLight3D(final GameAssetManager assetManager, final JsonConverter jsonConverter) {
         super(assetManager, jsonConverter);
     }
 
