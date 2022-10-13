@@ -100,7 +100,6 @@ public class Renderer2D implements EntitiesProcessor, Disposable {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         System.out.println("cameras size: " + cameras.size);
-        System.out.println(cameraEntitiesMap);
         spriteBatch.begin();
         for (final ComponentCamera2D camera : cameras) {
             spriteBatch.setProjectionMatrix(camera.lens.combined);
@@ -108,6 +107,8 @@ public class Renderer2D implements EntitiesProcessor, Disposable {
                 ComponentAnimations2D animation = (ComponentAnimations2D) entity.components[ComponentType.ANIMATIONS_2D.ordinal()];
                 if (animation == null) continue;
                 ComponentTransform2D transform2D = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
+                System.out.println(transform2D.z);
+
                 final float delta = Gdx.graphics.getDeltaTime();
                 animation.advanceTime(delta);
                 TextureAtlas.AtlasRegion atlasRegion = animation.getTextureRegion();

@@ -16,6 +16,7 @@ public class ComponentTransform2D implements Component {
         this.transform = new Transform(new Vector2(x,y), angle);
         this.scaleX = scaleX;
         this.scaleY = scaleY;
+        this.z = z;
     }
 
     public Vector2 getPosition() {

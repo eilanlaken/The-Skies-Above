@@ -14,8 +14,8 @@ public class BigSystemsTestScene extends Scene {
 
     public enum Layers {
         CAMERA,
+        BULLET,
         CHARACTER,
-        ENEMY,
         UI,
     }
 
@@ -37,11 +37,21 @@ public class BigSystemsTestScene extends Scene {
             container.addEntity(entity);
         }
 
+        for (int i = 0; i < 5; i++) {
+            Entity entity = new Entity(Layers.BULLET);
+            entity.attachComponents(
+                    context.factoryTransform2D.create(-5 + i,0,-1,0,1,1),
+                    context.factoryAnimation2D.create("atlases/test/testSpriteSheet2.atlas", "green")
+            );
+            container.addEntity(entity);
+        }
+
         Entity camera = new Entity(Layers.CAMERA);
         camera.attachComponents(
-                context.factoryTransform2D.create(0,0,0,0,1,1),
-                context.factoryCamera2D.createCamera2D(30, 30 * (float) Gdx.graphics.getHeight() / Gdx.graphics.getWidth(), Layers.CHARACTER)
+                context.factoryTransform2D.create(0,0,1,0,1,1),
+                context.factoryCamera2D.createCamera2D(30, 30 * (float) Gdx.graphics.getHeight() / Gdx.graphics.getWidth(), Layers.CHARACTER, Layers.BULLET)
         );
+
         container.addEntity(camera);
 
     }

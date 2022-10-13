@@ -40,6 +40,7 @@ public class Renderer2DUtils {
         public int compare(Entity e1, Entity e2) {
             final float z1 = ((ComponentTransform2D) e1.components[ComponentType.TRANSFORM_2D.ordinal()]).z;
             final float z2 = ((ComponentTransform2D) e2.components[ComponentType.TRANSFORM_2D.ordinal()]).z;
+            System.out.println("z1 = " + z1 + " z2 = " + z2);
             int depthSort = Float.compare(z1, z2);
             if (depthSort != 0) return depthSort;
 
