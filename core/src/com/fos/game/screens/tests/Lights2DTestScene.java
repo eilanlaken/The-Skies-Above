@@ -206,10 +206,8 @@ public class Lights2DTestScene extends Scene {
 
         // FOLLOW MOUSE
         Vector3 v = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-        Vector3 a = camera.lens.unproject(v);
-        System.out.println("a: " + a.x + " , " + a.y);
-        mouse.body.setTransform(a.x, a.y,0);
-
+        camera.lens.unproject(v);
+        mouse.body.setTransform(v.x, v.y,0);
     }
 
     @Override
