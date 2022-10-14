@@ -78,15 +78,13 @@ public class BigSystemsTestScene extends Scene {
                 context.factoryCamera2D.createCamera2D(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), Layers.UI)
         );
         container.addEntity(cameraUI);
-
     }
 
     @Override
     protected void update(float delta) {
         container.update();
-
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            transform2DCameraBullets.add(-1,0);
+            transform2DCameraBullets.translate(-1,0);
             System.out.println("transform x: " + transform2DCameraBullets.transform.getPosition().x);
             System.out.println("camera lens x: " + camera2DBullets.lens.position.x);
         }

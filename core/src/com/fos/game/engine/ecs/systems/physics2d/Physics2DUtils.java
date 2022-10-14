@@ -39,6 +39,9 @@ public class Physics2DUtils {
         Shape shape = getShape(data);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
+        fixtureDef.filter.categoryBits = data.filter.categoryBits;
+        fixtureDef.filter.maskBits = data.filter.maskBits;
+        fixtureDef.filter.groupIndex = data.filter.groupIndex;
         fixtureDef.density = data.density;
         fixtureDef.isSensor = data.isSensor;
         fixtureDef.friction = data.friction;

@@ -1,7 +1,5 @@
 package com.fos.game.screens.tests;
 
-import box2dLight.ConeLight;
-import box2dLight.DirectionalLight;
 import box2dLight.PointLight;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
@@ -25,6 +23,7 @@ import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
 import com.fos.game.engine.ecs.systems.renderer_old.base.Physics2DDebugRenderer;
 import com.fos.game.engine.ecs.systems.renderer_old.base.SpriteBatch;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,9 +36,7 @@ public class Lights2DTestScene extends Scene {
     SpriteBatch spriteBatch = new SpriteBatch();
     Physics2DDebugRenderer physics2DDebugRenderer = new Physics2DDebugRenderer();
     RayHandler rayHandler;
-    PointLight pointLight;
-    DirectionalLight directionalLight;
-    ConeLight coneLight;
+    PointLight pointLight1, pointLight2, pointLight3;
 
     class EntityMini {
         ComponentTransform2D transform2D;
@@ -58,25 +55,30 @@ public class Lights2DTestScene extends Scene {
         world.setContactListener(getContactListener());
         rayHandler = new RayHandler(world);
         rayHandler.setAmbientLight(0.2f);
-        pointLight = new PointLight(rayHandler, 100, Color.BLUE, 5, 0,0);
-        coneLight = new ConeLight(rayHandler, 200, Color.RED, 5, 0, 0, 0, 15);
+        pointLight1 = new PointLight(rayHandler, 100, Color.BLUE, 5, 0,0);
+        pointLight2 = new PointLight(rayHandler, 100, Color.RED, 5, 2,2);
+        pointLight3 = new PointLight(rayHandler, 100, Color.RED, 5, 2,2);
+        //coneLight = new ConeLight(rayHandler1, 200, Color.RED, 5, 0, 0, 0, 15);
         //directionalLight = new DirectionalLight(rayHandler, 100, Color.LIME, 30);
 
         entities = new Array<>();
         camera = context.factoryCamera2D.createCamera2D(30, 30 * Gdx.graphics.getHeight() / Gdx.graphics.getWidth());
 
-        // create entities with bodies
         for (int i = 0; i < 10; i++) {
             EntityMini entityMini = new EntityMini();
             entityMini.transform2D = context.factoryTransform2D.
                     create(MathUtils.random(-10, 10), MathUtils.random(-1, 4), 1, MathUtils.random(0, 2 * (float)Math.PI), 1, 1);
             entityMini.animation = new Animation<>(1,
                     context.assetManager.get("atlases/test/testSpriteSheet2.atlas", SpriteSheet.class).findRegions(getRandomRegion()));
+            Filter filter = new Filter();
+            filter.categoryBits = 0x0001;
+            filter.maskBits = 0x0011;
             entityMini.body = createBody(world, new RigidBody2DData(
                     BodyDef.BodyType.DynamicBody,
                     RigidBody2DData.Shape.RECTANGLE,
                     UtilsRigidBody2D.getBox2DLength(entityMini.animation.getKeyFrame(0).getRegionWidth(), camera.pixelsPerMeterX),
                     UtilsRigidBody2D.getBox2DLength(entityMini.animation.getKeyFrame(0).getRegionHeight(), camera.pixelsPerMeterY),
+                    filter,
                     1,1,0.2f,false),
                     entityMini.transform2D);
             entityMini.body.setUserData(entityMini);
@@ -98,10 +100,13 @@ public class Lights2DTestScene extends Scene {
         // create floor
         EntityMini floor = new EntityMini();
         floor.transform2D = context.factoryTransform2D.create(0, -4.5f, 1, 0, 1, 1);
+        Filter filter = new Filter();
+        filter.categoryBits = 0x0010;
+        filter.maskBits = 0x0101;
         floor.body = createBody(world, new RigidBody2DData(
                 BodyDef.BodyType.StaticBody,
                 RigidBody2DData.Shape.RECTANGLE,
-                18, 0.5f,
+                18, 0.5f, filter,
                 1,1,0.2f,false),
                 floor.transform2D
         );
@@ -113,13 +118,23 @@ public class Lights2DTestScene extends Scene {
     @Override
     protected void update(float delta) {
         world.step(delta, 6, 2);
+        entities.sort(new Comparator<EntityMini>() {
+            @Override
+            public int compare(EntityMini o1, EntityMini o2) {
+                final float z1 = o1.transform2D.z;
+                final float z2 = o2.transform2D.z;
+                return Float.compare(z1, z2);
+            }
+        });
         rayHandler.update();
 
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
-        spriteBatch.begin();
+        camera.lens.update();
+        rayHandler.setCombinedMatrix(camera.lens);
         spriteBatch.setProjectionMatrix(camera.lens.combined);
+        spriteBatch.begin();
         for (EntityMini entityMini : entities) {
             if (entityMini.animation == null) continue;
             entityMini.transform2D.transform.setPosition(entityMini.body.getPosition());
@@ -127,10 +142,11 @@ public class Lights2DTestScene extends Scene {
             spriteBatch.draw2(entityMini.animation.getKeyFrame(0), entityMini.transform2D, camera.pixelsPerMeterX, camera.pixelsPerMeterY);
         }
         spriteBatch.end();
+        // the ambient light is determined by the last rendered RayHandler.
+        rayHandler.render();
 
         physics2DDebugRenderer.begin();
         physics2DDebugRenderer.setProjectionMatrix(camera.lens.combined);
-        rayHandler.setCombinedMatrix(camera.lens);
         for (EntityMini entityMini : entities) {
             Body body = entityMini.body;
             Joint joint = entityMini.joint;
@@ -145,7 +161,7 @@ public class Lights2DTestScene extends Scene {
         if (Gdx.input.isKeyPressed(Input.Keys.A))
             orthographicCamera.zoom -= 0.1f;
         if (Gdx.input.isKeyJustPressed(Input.Keys.K))
-            coneLight.remove();
+            pointLight1.setActive(!pointLight1.isActive());
 
         if (Gdx.input.isKeyPressed(Input.Keys.R)) {
             EntityMini entityMini = new EntityMini();
@@ -153,11 +169,15 @@ public class Lights2DTestScene extends Scene {
                     create(MathUtils.random(-10, 10), MathUtils.random(-1, 4), 1, MathUtils.random(0, 2 * (float)Math.PI), 1, 1);
             entityMini.animation = new Animation<>(1,
                     context.assetManager.get("atlases/test/testSpriteSheet2.atlas", SpriteSheet.class).findRegions(getRandomRegion()));
+            Filter filter = new Filter();
+            filter.categoryBits = 0x0100;
+            filter.maskBits = 0x0010;
             entityMini.body = createBody(world, new RigidBody2DData(
                             BodyDef.BodyType.DynamicBody,
                             RigidBody2DData.Shape.RECTANGLE,
                             UtilsRigidBody2D.getBox2DLength(entityMini.animation.getKeyFrame(0).getRegionWidth(), camera.pixelsPerMeterX),
                             UtilsRigidBody2D.getBox2DLength(entityMini.animation.getKeyFrame(0).getRegionHeight(), camera.pixelsPerMeterY),
+                            filter,
                             1,1,0.2f,false),
                     entityMini.transform2D);
             entityMini.body.setUserData(entityMini);
@@ -165,8 +185,6 @@ public class Lights2DTestScene extends Scene {
             entities.add(entityMini);
         }
 
-        camera.lens.update();
-        rayHandler.render();
     }
 
     @Override
@@ -207,6 +225,9 @@ public class Lights2DTestScene extends Scene {
         Shape shape = getShape(data);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
+        fixtureDef.filter.categoryBits = data.filter.categoryBits;
+        fixtureDef.filter.maskBits = data.filter.maskBits;
+        fixtureDef.filter.groupIndex = data.filter.groupIndex;
         fixtureDef.density = data.density;
         fixtureDef.isSensor = data.isSensor;
         fixtureDef.friction = data.friction;

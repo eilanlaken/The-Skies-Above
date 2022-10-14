@@ -23,7 +23,7 @@ public class ComponentTransform2D implements Component {
         return transform.getPosition();
     }
     public float getRotation() { return transform.getRotation(); }
-    public void add(float dx, float dy) {
+    public void translate(float dx, float dy) {
         transform.vals[Transform.POS_X] += dx;
         transform.vals[Transform.POS_Y] += dy;
     }
