@@ -7,7 +7,7 @@ import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
 import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.cameras.ComponentCamera2D;
-import com.fos.game.engine.core.g2d.RenderTarget;
+import com.fos.game.engine.core.graphics.g2d.RenderTarget;
 import com.fos.game.engine.ecs.components.lights2d.ComponentLight2D;
 import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
@@ -40,7 +40,6 @@ public class Renderer2DUtils {
         public int compare(Entity e1, Entity e2) {
             final float z1 = ((ComponentTransform2D) e1.components[ComponentType.TRANSFORM_2D.ordinal()]).z;
             final float z2 = ((ComponentTransform2D) e2.components[ComponentType.TRANSFORM_2D.ordinal()]).z;
-            System.out.println("z1 = " + z1 + " z2 = " + z2);
             int depthSort = Float.compare(z1, z2);
             if (depthSort != 0) return depthSort;
 

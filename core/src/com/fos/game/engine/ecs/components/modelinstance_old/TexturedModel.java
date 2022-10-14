@@ -2,7 +2,7 @@ package com.fos.game.engine.ecs.components.modelinstance_old;
 
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.model.data.ModelData;
-import com.fos.game.engine.core.g2d.SpriteSheet;
+import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
 
 // TODO: implement. Add loaders, consider all necessary file paths, etc.
 public class TexturedModel extends Model {

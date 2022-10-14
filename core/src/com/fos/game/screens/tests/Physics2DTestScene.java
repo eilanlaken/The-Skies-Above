@@ -2,7 +2,7 @@ package com.fos.game.screens.tests;
 
 import com.fos.game.engine.context.GameContext;
 import com.fos.game.engine.context.Scene;
-import com.fos.game.engine.core.g2d.SpriteSheet;
+import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
 import com.fos.game.engine.ecs.components.camera_old.FactoryCamera;
 import com.fos.game.engine.ecs.components.physics2d.FactoryRigidBody2D;
 import com.fos.game.engine.ecs.components.scripts.ComponentScripts;
