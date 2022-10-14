@@ -18,8 +18,8 @@ import com.fos.game.engine.ecs.components.cameras.ComponentCamera2D;
 import com.fos.game.engine.ecs.components.physics2d.RigidBody2DData;
 import com.fos.game.engine.ecs.components.physics2d.UtilsRigidBody2D;
 import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
-import com.fos.game.engine.ecs.systems.renderer.base.Physics2DDebugRenderer;
-import com.fos.game.engine.ecs.systems.renderer.base.SpriteBatch;
+import com.fos.game.engine.ecs.systems.renderer_old.base.Physics2DDebugRenderer;
+import com.fos.game.engine.ecs.systems.renderer_old.base.SpriteBatch;
 
 import java.util.HashMap;
 import java.util.Map;

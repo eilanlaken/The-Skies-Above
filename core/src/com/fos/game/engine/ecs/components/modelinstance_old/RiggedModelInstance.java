@@ -2,7 +2,7 @@ package com.fos.game.engine.ecs.components.modelinstance_old;
 
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.math.Matrix4;
-import com.fos.game.engine.ecs.systems.renderer.materials.base.Material;
+import com.fos.game.engine.ecs.systems.renderer_old.materials.base.Material;
 import com.fos.game.engine.ecs.components.animations3d.Rig;
 import com.fos.game.engine.ecs.components.animations3d.RigFactory;
 

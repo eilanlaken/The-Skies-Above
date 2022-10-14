@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
 import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
-import com.fos.game.engine.ecs.systems.renderer.shaders.postprocessing.PostProcessingEffect;
+import com.fos.game.engine.ecs.systems.renderer_old.shaders.postprocessing.PostProcessingEffect;
 
 import java.util.Arrays;
 import java.util.HashSet;

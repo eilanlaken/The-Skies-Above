@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.fos.game.engine.ecs.components.base.ComponentType;
-import com.fos.game.engine.ecs.components.camera.ComponentCamera;
+import com.fos.game.engine.ecs.components.camera_old.ComponentCamera;
 import com.fos.game.engine.ecs.components.scripts.Script;
 import com.fos.game.engine.ecs.entities.Entity;
 

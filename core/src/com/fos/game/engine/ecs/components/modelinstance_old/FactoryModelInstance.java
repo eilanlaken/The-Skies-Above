@@ -5,11 +5,11 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.model.Node;
 import com.badlogic.gdx.math.Matrix4;
 import com.fos.game.engine.ecs.components.base.Factory;
-import com.fos.game.engine.ecs.components.camera.ComponentCamera;
+import com.fos.game.engine.ecs.components.camera_old.ComponentCamera;
 import com.fos.game.engine.core.files.assets.GameAssetManager;
 import com.fos.game.engine.core.files.serialization.JsonConverter;
-import com.fos.game.engine.ecs.systems.renderer.materials.base.Material;
-import com.fos.game.engine.ecs.systems.renderer.materials.base.MaterialInstanceFactory;
+import com.fos.game.engine.ecs.systems.renderer_old.materials.base.Material;
+import com.fos.game.engine.ecs.systems.renderer_old.materials.base.MaterialInstanceFactory;
 
 import java.util.HashMap;
 

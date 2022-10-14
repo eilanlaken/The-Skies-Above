@@ -2,7 +2,7 @@ package com.fos.game.screens.tests;
 
 import com.fos.game.engine.context.GameContext;
 import com.fos.game.engine.context.Scene;
-import com.fos.game.engine.ecs.components.camera.FactoryCamera;
+import com.fos.game.engine.ecs.components.camera_old.FactoryCamera;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.entities.EntityContainer;
 import com.fos.game.scripts.test.PeriodicReadTestScript;

@@ -3,7 +3,7 @@ package com.fos.game.engine.context;
 import com.badlogic.gdx.Game;
 import com.fos.game.engine.ecs.components.animations2d.FactoryAnimation2D;
 import com.fos.game.engine.ecs.components.audio.FactoryAudio;
-import com.fos.game.engine.ecs.components.camera.FactoryCamera;
+import com.fos.game.engine.ecs.components.camera_old.FactoryCamera;
 import com.fos.game.engine.ecs.components.cameras.FactoryCamera2D;
 import com.fos.game.engine.ecs.components.cameras.FactoryCamera3D;
 import com.fos.game.engine.ecs.components.lights2d.FactoryLight2D;

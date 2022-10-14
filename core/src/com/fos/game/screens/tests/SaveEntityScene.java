@@ -8,7 +8,7 @@ import com.fos.game.engine.ecs.components.animations2d.Animation2DData;
 import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
 import com.fos.game.engine.ecs.components.animations2d.SpriteSheet;
 import com.fos.game.engine.ecs.components.audio.ComponentSoundEffects;
-import com.fos.game.engine.ecs.components.camera.FactoryCamera;
+import com.fos.game.engine.ecs.components.camera_old.FactoryCamera;
 import com.fos.game.engine.ecs.components.scripts.ComponentScripts;
 import com.fos.game.engine.ecs.components.transform2d.FactoryTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
