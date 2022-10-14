@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.Array;
 import com.fos.game.engine.ecs.components.lights3d.ComponentPointLight;
 import com.fos.game.engine.ecs.components.lights3d.ComponentDirectionalLight;
 import com.fos.game.engine.ecs.components.lights3d.LightingEnvironment;
-import com.fos.game.engine.ecs.components.modelinstance.ModelInstance;
+import com.fos.game.engine.ecs.components.modelinstance_old.ModelInstance;
 import com.fos.game.engine.ecs.systems.renderer.materials.base.BasicMaterialMap;
 import com.fos.game.engine.ecs.systems.renderer.materials.instances.BlendAlbedoMapsMaterialInstance;
 import com.fos.game.engine.ecs.systems.renderer.shaders.base.GameShader;

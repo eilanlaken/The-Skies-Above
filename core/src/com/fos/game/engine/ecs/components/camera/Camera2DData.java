@@ -1,5 +1,6 @@
 package com.fos.game.engine.ecs.components.camera;
 
+@Deprecated
 public class Camera2DData {
 
     public final Enum[] layers;

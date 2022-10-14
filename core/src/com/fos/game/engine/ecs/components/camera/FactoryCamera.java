@@ -4,8 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.fos.game.engine.ecs.components.base.Factory;
-import com.fos.game.engine.files.assets.GameAssetManager;
-import com.fos.game.engine.files.serialization.JsonConverter;
+import com.fos.game.engine.core.files.assets.GameAssetManager;
+import com.fos.game.engine.core.files.serialization.JsonConverter;
 import com.fos.game.engine.ecs.systems.renderer.shaders.postprocessing.PostProcessingEffect;
 import com.fos.game.engine.ecs.systems.renderer.base.RenderTarget;
 

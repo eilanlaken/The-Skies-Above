@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
-import com.fos.game.engine.ecs.components.modelinstance.ModelInstance;
+import com.fos.game.engine.ecs.components.modelinstance_old.ModelInstance;
 import com.fos.game.engine.ecs.systems.renderer.materials.instances.PlainDiffuseMapMaterialInstance;
 import com.fos.game.engine.ecs.systems.renderer.shaders.base.GameShader;
 

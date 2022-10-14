@@ -7,6 +7,7 @@ import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.entities.EntityContainer;
 import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
 
+@Deprecated
 public class AudioPlayer implements EntitiesProcessor {
 
     private final Array<ComponentSoundEffects> soundEffects = new Array<>();

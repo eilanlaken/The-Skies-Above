@@ -4,11 +4,11 @@ import com.badlogic.gdx.Game;
 import com.fos.game.engine.ecs.components.animations2d.FactoryAnimation2D;
 import com.fos.game.engine.ecs.components.audio.FactoryAudio;
 import com.fos.game.engine.ecs.components.camera.FactoryCamera;
-import com.fos.game.engine.ecs.components.camera2d.FactoryCamera2D;
-import com.fos.game.engine.ecs.components.camera3d.FactoryCamera3D;
+import com.fos.game.engine.ecs.components.cameras.FactoryCamera2D;
+import com.fos.game.engine.ecs.components.cameras.FactoryCamera3D;
 import com.fos.game.engine.ecs.components.lights2d.FactoryLight2D;
 import com.fos.game.engine.ecs.components.lights3d.FactoryLight3D;
-import com.fos.game.engine.ecs.components.modelinstance.FactoryModelInstance;
+import com.fos.game.engine.ecs.components.modelinstance_old.FactoryModelInstance;
 import com.fos.game.engine.ecs.components.physics2d.FactoryRigidBody2D;
 import com.fos.game.engine.ecs.components.physics3d.FactoryRigidBody3D;
 import com.fos.game.engine.ecs.components.scripts.FactoryScripts;
@@ -16,8 +16,8 @@ import com.fos.game.engine.ecs.components.shapes.FactoryShape2D;
 import com.fos.game.engine.ecs.components.signals.FactorySignalBox;
 import com.fos.game.engine.ecs.components.transform2d.FactoryTransform2D;
 import com.fos.game.engine.ecs.components.transform3d.FactoryTransform3D;
-import com.fos.game.engine.files.assets.GameAssetManager;
-import com.fos.game.engine.files.serialization.JsonConverter;
+import com.fos.game.engine.core.files.assets.GameAssetManager;
+import com.fos.game.engine.core.files.serialization.JsonConverter;
 import com.fos.game.screens.loading.LoadingScreen;
 
 public class GameContext extends Game {

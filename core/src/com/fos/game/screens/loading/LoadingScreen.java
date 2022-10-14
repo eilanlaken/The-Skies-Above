@@ -2,7 +2,7 @@ package com.fos.game.screens.loading;
 
 import com.fos.game.engine.context.GameContext;
 import com.fos.game.engine.context.Scene;
-import com.fos.game.engine.files.assets.GameAssetManager;
+import com.fos.game.engine.core.files.assets.GameAssetManager;
 import com.fos.game.screens.tests.BigSystemsTestScene;
 
 import java.util.Map;

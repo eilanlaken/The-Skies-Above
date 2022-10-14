@@ -2,8 +2,8 @@ package com.fos.game.engine.ecs.components.animations2d;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.fos.game.engine.ecs.components.base.Factory;
-import com.fos.game.engine.files.assets.GameAssetManager;
-import com.fos.game.engine.files.serialization.JsonConverter;
+import com.fos.game.engine.core.files.assets.GameAssetManager;
+import com.fos.game.engine.core.files.serialization.JsonConverter;
 
 public class FactoryAnimation2D extends Factory {
 

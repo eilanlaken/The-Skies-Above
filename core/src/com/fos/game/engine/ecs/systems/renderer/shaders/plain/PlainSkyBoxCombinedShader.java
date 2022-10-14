@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.fos.game.engine.ecs.components.modelinstance.ModelInstance;
+import com.fos.game.engine.ecs.components.modelinstance_old.ModelInstance;
 import com.fos.game.engine.ecs.systems.renderer.materials.base.Material;
 import com.fos.game.engine.ecs.systems.renderer.shaders.base.ShadingMethod;
 import com.fos.game.engine.ecs.systems.renderer.materials.instances.AnimatedSkyBoxSideMaterialInstance;

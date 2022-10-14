@@ -10,8 +10,8 @@ import com.badlogic.gdx.physics.bullet.collision.btConvexHullShape;
 import com.badlogic.gdx.physics.bullet.collision.btShapeHull;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.fos.game.engine.ecs.components.base.Factory;
-import com.fos.game.engine.files.assets.GameAssetManager;
-import com.fos.game.engine.files.serialization.JsonConverter;
+import com.fos.game.engine.core.files.assets.GameAssetManager;
+import com.fos.game.engine.core.files.serialization.JsonConverter;
 
 public class FactoryRigidBody3D extends Factory {
 

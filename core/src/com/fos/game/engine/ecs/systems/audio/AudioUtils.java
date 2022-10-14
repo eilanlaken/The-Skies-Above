@@ -2,6 +2,7 @@ package com.fos.game.engine.ecs.systems.audio;
 
 import com.fos.game.engine.ecs.components.base.ComponentType;
 
+@Deprecated
 public class AudioUtils {
 
     protected static final int AUDIO_BIT_MASK = ComponentType.AUDIO.bitMask;

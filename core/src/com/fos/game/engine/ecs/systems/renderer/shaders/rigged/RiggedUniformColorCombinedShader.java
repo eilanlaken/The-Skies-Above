@@ -11,7 +11,7 @@ import com.fos.game.engine.ecs.components.lights3d.ComponentPointLight;
 import com.fos.game.engine.ecs.components.lights3d.ComponentDirectionalLight;
 import com.fos.game.engine.ecs.components.lights3d.LightingEnvironment;
 import com.fos.game.engine.ecs.components.lights3d.ComponentSpotLight;
-import com.fos.game.engine.ecs.components.modelinstance.RiggedModelInstance;
+import com.fos.game.engine.ecs.components.modelinstance_old.RiggedModelInstance;
 import com.fos.game.engine.ecs.systems.renderer.materials.instances.UniformColorMaterialInstance;
 import com.fos.game.engine.ecs.systems.renderer.shaders.base.GameShader;
 

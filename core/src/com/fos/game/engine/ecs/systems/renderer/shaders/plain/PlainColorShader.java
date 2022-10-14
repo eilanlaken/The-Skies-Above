@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
-import com.fos.game.engine.ecs.components.modelinstance.ModelInstance;
+import com.fos.game.engine.ecs.components.modelinstance_old.ModelInstance;
 import com.fos.game.engine.ecs.systems.renderer.materials.base.Material;
 import com.fos.game.engine.ecs.systems.renderer.materials.instances.PlainColorMaterialInstance;
 import com.fos.game.engine.ecs.systems.renderer.shaders.base.GameShader;

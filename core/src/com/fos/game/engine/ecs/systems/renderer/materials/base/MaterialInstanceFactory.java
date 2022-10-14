@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.g3d.model.Node;
 import com.badlogic.gdx.graphics.g3d.model.NodePart;
 import com.badlogic.gdx.utils.Array;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
-import com.fos.game.engine.ecs.components.modelinstance.TexturedModel_old;
+import com.fos.game.engine.ecs.components.modelinstance_old.TexturedModel_old;
 import com.fos.game.engine.ecs.systems.renderer.materials.instances.*;
 
 import java.util.HashMap;

@@ -2,6 +2,7 @@ package com.fos.game.engine.ecs.components.camera;
 
 import com.badlogic.gdx.utils.Array;
 
+@Deprecated
 public class UtilsCameras {
 
     public static int computeRenderedLayersBitMask(final Array<Enum> layers) {

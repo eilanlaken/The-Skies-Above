@@ -13,7 +13,7 @@ import com.fos.game.engine.ecs.components.scripts.ComponentScripts;
 import com.fos.game.engine.ecs.components.transform2d.FactoryTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.entities.EntityContainer;
-import com.fos.game.engine.files.serialization.JsonConverter;
+import com.fos.game.engine.core.files.serialization.JsonConverter;
 import com.fos.game.scripts.test.OrangeSquareScript;
 import com.fos.game.scripts.test.SimpleCameraScript;
 

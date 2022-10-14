@@ -16,7 +16,7 @@ import com.badlogic.gdx.utils.Array;
 import com.fos.game.engine.context.GameContext;
 import com.fos.game.engine.context.Scene;
 import com.fos.game.engine.ecs.components.animations2d.SpriteSheet;
-import com.fos.game.engine.ecs.components.camera2d.ComponentCamera2D;
+import com.fos.game.engine.ecs.components.cameras.ComponentCamera2D;
 import com.fos.game.engine.ecs.components.physics2d.RigidBody2DData;
 import com.fos.game.engine.ecs.components.physics2d.UtilsRigidBody2D;
 import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;

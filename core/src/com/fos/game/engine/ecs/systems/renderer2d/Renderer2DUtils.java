@@ -6,11 +6,11 @@ import com.badlogic.gdx.utils.Array;
 import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
 import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
-import com.fos.game.engine.ecs.components.camera2d.ComponentCamera2D;
+import com.fos.game.engine.ecs.components.cameras.ComponentCamera2D;
+import com.fos.game.engine.ecs.components.cameras.RenderTarget;
 import com.fos.game.engine.ecs.components.lights2d.ComponentLight2D;
 import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
-import com.fos.game.engine.ecs.systems.renderer.base.RenderTarget;
 
 import java.util.*;
 

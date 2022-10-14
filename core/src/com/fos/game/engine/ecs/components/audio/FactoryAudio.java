@@ -1,8 +1,8 @@
 package com.fos.game.engine.ecs.components.audio;
 
 import com.fos.game.engine.ecs.components.base.Factory;
-import com.fos.game.engine.files.assets.GameAssetManager;
-import com.fos.game.engine.files.serialization.JsonConverter;
+import com.fos.game.engine.core.files.assets.GameAssetManager;
+import com.fos.game.engine.core.files.serialization.JsonConverter;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.lights3d.Light;
-import com.fos.game.engine.ecs.components.modelinstance.ComponentModelInstance;
+import com.fos.game.engine.ecs.components.modelinstance_old.ComponentModelInstance;
 import com.fos.game.engine.ecs.components.physics2d.ComponentRigidBody2D;
 import com.fos.game.engine.ecs.components.physics3d.ComponentRigidBody3D;
 import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;

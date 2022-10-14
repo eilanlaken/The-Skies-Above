@@ -4,7 +4,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Array;
 import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
-import com.fos.game.engine.files.assets.GameAssetManager;
+import com.fos.game.engine.core.files.assets.GameAssetManager;
 
 import java.util.HashMap;
 

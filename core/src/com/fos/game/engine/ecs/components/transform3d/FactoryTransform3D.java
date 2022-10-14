@@ -3,8 +3,8 @@ package com.fos.game.engine.ecs.components.transform3d;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.fos.game.engine.ecs.components.base.Factory;
-import com.fos.game.engine.files.assets.GameAssetManager;
-import com.fos.game.engine.files.serialization.JsonConverter;
+import com.fos.game.engine.core.files.assets.GameAssetManager;
+import com.fos.game.engine.core.files.serialization.JsonConverter;
 
 public class FactoryTransform3D extends Factory {
 
