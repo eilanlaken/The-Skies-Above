@@ -54,6 +54,7 @@ public class Entity implements Disposable {
         refresh();
     }
 
+    @Deprecated // TODO: deprecate.
     private void refresh() {
         componentsBitMask = EntityUtils.computeBitMask(this.components);
 
@@ -90,6 +91,10 @@ public class Entity implements Disposable {
         }
     }
 
+    public Object getComponent(final ComponentType componentType) {
+        return components[componentType.ordinal()];
+    }
+
     @Override
     public void dispose() {
         if (components[ComponentType.PHYSICS_3D_BODY.ordinal()] != null) {
@@ -98,16 +103,6 @@ public class Entity implements Disposable {
             body.dispose();
         }
     }
-
-//    @Override
-//    public String toString() {
-//        StringBuilder stringBuilder = new StringBuilder();
-//        stringBuilder.append("e_:");
-//        if (components[ComponentType.ANIMATIONS_2D.ordinal()] != null) stringBuilder.append("A-");
-//        if (components[ComponentType.LIGHT_2D.ordinal()] != null) stringBuilder.append("L-");
-//        stringBuilder.append(layer);
-//        return stringBuilder.toString();
-//    }
 
     @Override
     public String toString() {

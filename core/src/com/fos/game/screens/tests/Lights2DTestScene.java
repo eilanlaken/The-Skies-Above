@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.fos.game.engine.context.GameContext;
@@ -45,6 +46,8 @@ public class Lights2DTestScene extends Scene {
         Joint joint;
     }
 
+    EntityMini mouse;
+
     public Lights2DTestScene(final GameContext context) {
         super(context);
     }
@@ -62,7 +65,7 @@ public class Lights2DTestScene extends Scene {
         //directionalLight = new DirectionalLight(rayHandler, 100, Color.LIME, 30);
 
         entities = new Array<>();
-        camera = context.factoryCamera2D.createCamera2D(30, 30 * Gdx.graphics.getHeight() / Gdx.graphics.getWidth());
+        camera = context.factoryCamera2D.createCamera2D(30, 30 * (float) Gdx.graphics.getHeight() / Gdx.graphics.getWidth());
 
         for (int i = 0; i < 10; i++) {
             EntityMini entityMini = new EntityMini();
@@ -96,6 +99,22 @@ public class Lights2DTestScene extends Scene {
             entities.add(entityMini);
         }
         */
+
+        // create mouse follow
+        mouse = new EntityMini();
+        mouse.transform2D = context.factoryTransform2D.create(0, 0f, 1, 0, 1, 1);
+        mouse.animation = new Animation<>(1,
+                context.assetManager.get("atlases/test/testSpriteSheet2.atlas", SpriteSheet.class).findRegions("purple"));
+        mouse.body = createBody(world, new RigidBody2DData(
+                        BodyDef.BodyType.KinematicBody,
+                        RigidBody2DData.Shape.RECTANGLE,
+                        UtilsRigidBody2D.getBox2DLength(mouse.animation.getKeyFrame(0).getRegionWidth(), camera.pixelsPerMeterX),
+                        UtilsRigidBody2D.getBox2DLength(mouse.animation.getKeyFrame(0).getRegionHeight(), camera.pixelsPerMeterY),
+                        new Filter(),
+                        1,1,0.2f,false),
+                        mouse.transform2D
+        );
+        entities.add(mouse);
 
         // create floor
         EntityMini floor = new EntityMini();
@@ -184,6 +203,12 @@ public class Lights2DTestScene extends Scene {
             entityMini.transform2D.transform = entityMini.body.getTransform();
             entities.add(entityMini);
         }
+
+        // FOLLOW MOUSE
+        Vector3 v = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        Vector3 a = camera.lens.unproject(v);
+        System.out.println("a: " + a.x + " , " + a.y);
+        mouse.body.setTransform(a.x, a.y,0);
 
     }
 

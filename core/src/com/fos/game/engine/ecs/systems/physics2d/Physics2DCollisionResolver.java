@@ -16,17 +16,31 @@ public class Physics2DCollisionResolver implements ContactListener {
         Entity entityA = (Entity) contact.getFixtureA().getBody().getUserData();
         Entity entityB = (Entity) contact.getFixtureB().getBody().getUserData();
 
-        ComponentSignalBox signalReceiverA = (ComponentSignalBox) entityA.components[ComponentType.SIGNAL_BOX.ordinal()];
-        if (signalReceiverA != null) {
-            // the only current reasonable way to make sure a signal
-            signalReceiverA.receivedSignals.add(new CollisionSignal(entityA, entityB, contact));
+        ComponentSignalBox signalBoxA = (ComponentSignalBox) entityA.components[ComponentType.SIGNAL_BOX.ordinal()];
+        if (signalBoxA != null) {
+            signalBoxA.signalsToSend.add(new BeginCollisionSignal(entityA, contact, entityB));
         }
 
+        ComponentSignalBox signalBoxB = (ComponentSignalBox) entityB.components[ComponentType.SIGNAL_BOX.ordinal()];
+        if (signalBoxB != null) {
+            signalBoxB.signalsToSend.add(new BeginCollisionSignal(entityB, contact, entityA));
+        }
     }
 
     @Override
     public void endContact(Contact contact) {
+        Entity entityA = (Entity) contact.getFixtureA().getBody().getUserData();
+        Entity entityB = (Entity) contact.getFixtureB().getBody().getUserData();
 
+        ComponentSignalBox signalBoxA = (ComponentSignalBox) entityA.components[ComponentType.SIGNAL_BOX.ordinal()];
+        if (signalBoxA != null) {
+            signalBoxA.signalsToSend.add(new EndCollisionSignal(entityA, contact, entityB));
+        }
+
+        ComponentSignalBox signalBoxB = (ComponentSignalBox) entityB.components[ComponentType.SIGNAL_BOX.ordinal()];
+        if (signalBoxB != null) {
+            signalBoxB.signalsToSend.add(new EndCollisionSignal(entityB, contact, entityA));
+        }
     }
 
     @Override
@@ -39,11 +53,27 @@ public class Physics2DCollisionResolver implements ContactListener {
 
     }
 
-    private static final class CollisionSignal extends Signal {
+
+    public static final class BeginCollisionSignal extends Signal {
 
         private final Entity target;
 
-        protected CollisionSignal(Entity target, Entity collidedWith, Contact contact) {
+        protected BeginCollisionSignal(Entity target, Contact contact, Entity collidedWith) {
+            super(new Collision(contact, collidedWith));
+            this.target = target;
+        }
+
+        @Override
+        public boolean isTarget(Entity entity) {
+            return this.target == entity;
+        }
+    }
+
+    public static final class EndCollisionSignal extends Signal {
+
+        private final Entity target;
+
+        protected EndCollisionSignal(Entity target, Contact contact, Entity collidedWith) {
             super(new Collision(contact, collidedWith));
             this.target = target;
         }
