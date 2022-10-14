@@ -1,4 +1,4 @@
-package com.fos.game.engine.ecs.components.cameras;
+package com.fos.game.engine.core.g2d;
 
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Texture;

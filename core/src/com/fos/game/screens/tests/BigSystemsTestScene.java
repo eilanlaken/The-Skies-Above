@@ -3,7 +3,7 @@ package com.fos.game.screens.tests;
 import com.badlogic.gdx.Gdx;
 import com.fos.game.engine.context.GameContext;
 import com.fos.game.engine.context.Scene;
-import com.fos.game.engine.ecs.components.animations2d.SpriteSheet;
+import com.fos.game.engine.core.g2d.SpriteSheet;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.entities.EntityContainer;
 

@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.JsonReader;
-import com.fos.game.engine.ecs.components.animations2d.SpriteSheet;
+import com.fos.game.engine.core.g2d.SpriteSheet;
 import com.fos.game.engine.ecs.components.modelinstance_old.UtilsModel;
 import com.fos.game.engine.ecs.systems.renderer_old.materials.base.Material;
 

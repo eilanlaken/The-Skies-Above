@@ -1,4 +1,4 @@
-package com.fos.game.engine.ecs.systems.renderer2d;
+package com.fos.game.engine.core.g2d;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;

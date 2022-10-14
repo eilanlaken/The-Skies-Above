@@ -1,6 +1,5 @@
-package com.fos.game.engine.ecs.systems.renderer2d;
+package com.fos.game.engine.core.g2d;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
@@ -8,10 +7,6 @@ import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
 public class SpriteBatch extends com.badlogic.gdx.graphics.g2d.SpriteBatch {
 
     public void draw(final TextureAtlas.AtlasRegion region, final ComponentTransform2D transform2D, final float pixelsPerMeterX, final float pixelsPerMeterY) {
-        final float screenWidth = Gdx.graphics.getWidth();
-        final float screenHeight = Gdx.graphics.getHeight();
-        //final float stretchXFactor = viewportWidth / screenWidth;
-        //final float stretchYFactor = viewportHeight / screenHeight;
         final float x = transform2D.getPosition().x;
         final float y = transform2D.getPosition().y;
         final float rotation = transform2D.getRotation() * MathUtils.radiansToDegrees;

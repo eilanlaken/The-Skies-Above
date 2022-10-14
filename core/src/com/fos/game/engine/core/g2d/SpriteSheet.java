@@ -1,4 +1,4 @@
-package com.fos.game.engine.ecs.components.animations2d;
+package com.fos.game.engine.core.g2d;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
