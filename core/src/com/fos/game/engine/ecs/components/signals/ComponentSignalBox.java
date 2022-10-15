@@ -8,6 +8,7 @@ public class ComponentSignalBox implements Component {
 
     public Array<Signal> signalsToSend;
     public Array<Signal> receivedSignals;
+    public boolean active = true;
 
     protected ComponentSignalBox() {
         this.signalsToSend = new Array<>();

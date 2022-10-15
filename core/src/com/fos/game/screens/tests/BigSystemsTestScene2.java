@@ -11,6 +11,8 @@ import com.fos.game.engine.ecs.components.cameras.ComponentCamera2D;
 import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.entities.EntityContainer;
+import com.fos.game.scripts.test.PeriodicReadTestScript;
+import com.fos.game.scripts.test.PeriodicSendTestScript;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -69,9 +71,11 @@ public class BigSystemsTestScene2 extends Scene {
         // TODO: implement
         Entity mouse = new Entity(Layers.MOUSE);
         mouse.attachComponents(
-
-                context.factoryAnimation2D.create("atlases/test/testSpriteSheet2.atlas", "purple")
+                context.factorySignalBox.create(),
+                context.factoryAnimation2D.create("atlases/test/testSpriteSheet2.atlas", "purple"),
+                context.factoryScripts.create(new PeriodicSendTestScript(mouse))
         );
+        container.addEntity(mouse);
 
         Entity cameraScene = new Entity(Layers.CAMERA);
         transform2DCameraBullets = context.factoryTransform2D.create(0,0,1,0,1,1);
@@ -79,7 +83,9 @@ public class BigSystemsTestScene2 extends Scene {
         camera2DBullets.depth = 6;
         cameraScene.attachComponents(
                 transform2DCameraBullets,
-                camera2DBullets
+                camera2DBullets,
+                context.factorySignalBox.create(),
+                context.factoryScripts.create(new PeriodicReadTestScript(cameraScene))
         );
         container.addEntity(cameraScene);
 

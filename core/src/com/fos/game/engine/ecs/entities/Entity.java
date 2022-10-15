@@ -22,7 +22,7 @@ public class Entity implements Disposable {
     public int localId = -1; // effectively its index in the current entity container's entities array
     public int globalId = -1; // a global unique identifier; Only persistent and "important" Entities has a globalId.
     public Object[] components;
-    public short componentsBitMask;
+    public int componentsBitMask;
     public int layer;
     public boolean active = true;
 

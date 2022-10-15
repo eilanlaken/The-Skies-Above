@@ -6,6 +6,8 @@ import com.fos.game.engine.ecs.components.base.ComponentType;
 
 public class ComponentScripts extends Array<Script> implements Component {
 
+    public boolean active = true;
+
     public ComponentScripts(Script ...scripts) {
         addAll(scripts);
     }

@@ -21,9 +21,6 @@ public class Renderer2DUtils {
             "to render the same layer(s). Different " + ComponentCamera2D.class.getSimpleName() + "(s) " +
             " must render different layers.";
 
-    private static String CAMERAS_ERROR_NO_CAMERAS_IN_CONTAINER = "Error: no " + ComponentCamera2D.class.getSimpleName() + "(s) " + " in container. " +
-            "You must create at least 1 " + ComponentCamera2D.class.getSimpleName() + " in order to produce an image.";
-
     private static Set<Enum> currentRenderedLayers = new HashSet<>();
 
     protected static final int ATTACHED_GRAPHICS_2D_COMPONENT =
@@ -123,7 +120,6 @@ public class Renderer2DUtils {
     }
 
     protected static RuntimeException checkForCamerasErrors(final Array<ComponentCamera2D> cameras) {
-        if (cameras == null || cameras.size <= 0) return new RuntimeException(CAMERAS_ERROR_NO_CAMERAS_IN_CONTAINER);
         currentRenderedLayers.clear();
         for (final ComponentCamera2D camera : cameras) {
             for (final Enum layer : camera.layers) {

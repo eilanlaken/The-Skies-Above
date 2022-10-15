@@ -14,6 +14,7 @@ public class SignalRouterUtils {
         signalsResult.clear();
         for (final Entity entity : entities) {
             final ComponentSignalBox signalBox = (ComponentSignalBox) entity.components[ComponentType.SIGNAL_BOX.ordinal()];
+            if (!signalBox.active) continue;
             signalsResult.addAll(signalBox.signalsToSend);
         }
     }

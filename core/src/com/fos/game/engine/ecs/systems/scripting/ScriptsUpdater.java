@@ -15,6 +15,7 @@ public class ScriptsUpdater implements EntitiesProcessor {
         final float delta = Gdx.graphics.getDeltaTime();
         for (Entity entity : entities) {
             ComponentScripts scripts = (ComponentScripts) entity.components[ComponentType.SCRIPTS.ordinal()];
+            if (!scripts.active) continue;
             for (Script script : scripts) {
                 script.update(delta);
             }

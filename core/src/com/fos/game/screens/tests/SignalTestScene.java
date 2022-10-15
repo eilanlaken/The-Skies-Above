@@ -8,6 +8,8 @@ import com.fos.game.engine.ecs.entities.EntityContainer;
 import com.fos.game.scripts.test.PeriodicReadTestScript;
 import com.fos.game.scripts.test.PeriodicSendTestScript;
 
+import static com.fos.game.engine.ecs.components.base.ComponentType.SIGNAL_BOX;
+
 public class SignalTestScene extends Scene {
 
     EntityContainer container;
@@ -24,11 +26,16 @@ public class SignalTestScene extends Scene {
                 context.factorySignalBox.create(),
                 context.factoryScripts.create(new PeriodicSendTestScript(entity1))
         );
+        System.out.println("e1: " + entity1.componentsBitMask);
+        System.out.println(SIGNAL_BOX.ordinal());
+
         Entity entity2 = new Entity();
         entity2.attachComponents(
                 context.factorySignalBox.create(),
                 context.factoryScripts.create(new PeriodicReadTestScript(entity2))
         );
+        System.out.println("e2: " + entity1.componentsBitMask);
+
 
         Entity camera = new Entity();
         camera.attachComponents(

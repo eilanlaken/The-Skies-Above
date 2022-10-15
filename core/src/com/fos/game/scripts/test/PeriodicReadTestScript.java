@@ -16,7 +16,7 @@ public class PeriodicReadTestScript extends Script {
 
     @Override
     public void start() {
-        signalBox = (ComponentSignalBox) entity.components[ComponentType.SIGNAL_BOX.ordinal()];
+        signalBox = (ComponentSignalBox) entity.getComponent(ComponentType.SIGNAL_BOX);
     }
 
     @Override

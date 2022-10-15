@@ -17,6 +17,8 @@ public class SignalRouter implements EntitiesProcessor {
 
     @Override
     public void process(final Array<Entity> entities) {
+        //System.out.println("entities: " + entities.size);
+
         SignalRouterUtils.collectAllUnsentSignals(entities, signals);
         // flush the send and receive queues for all entities
         for (final Entity entity : entities) {

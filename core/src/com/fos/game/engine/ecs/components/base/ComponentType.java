@@ -25,7 +25,7 @@ public enum ComponentType {
     public final int bitMask;
 
     ComponentType() {
-        this.bitMask = (short) (0b000001 << ordinal());
+        this.bitMask = 0b000001 << ordinal();
     }
 
 }
