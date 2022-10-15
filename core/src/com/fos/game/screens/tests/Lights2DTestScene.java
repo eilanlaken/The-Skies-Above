@@ -204,6 +204,16 @@ public class Lights2DTestScene extends Scene {
             entities.add(entityMini);
         }
 
+        // activate and deactivate bodies
+        EntityMini entityMini = entities.get(0);
+        if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
+            entityMini.body.setActive(!entityMini.body.isActive()); // <- active / inactive bodies will maintain linear and angular velocity.
+            //entityMini.body.setAwake(!entityMini.body.isAwake());
+        }
+        System.out.println(entityMini.body.getLinearVelocity());
+        System.out.println(entityMini.body.getAngularVelocity());
+
+
         // FOLLOW MOUSE
         Vector3 v = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         camera.lens.unproject(v);

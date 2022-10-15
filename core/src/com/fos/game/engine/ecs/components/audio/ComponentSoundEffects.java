@@ -1,17 +1,16 @@
 package com.fos.game.engine.ecs.components.audio;
 
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.utils.Array;
+import com.fos.game.engine.core.files.assets.GameAssetManager;
 import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
-import com.fos.game.engine.core.files.assets.GameAssetManager;
 
 import java.util.HashMap;
 
+// TODO: removes this "extends".
 public class ComponentSoundEffects extends HashMap<String, SoundEffect> implements Component {
 
     public SoundEffectData[] soundEffectsData;
-    public final Array<SoundEffect> toPlay = new Array<>();
 
     public ComponentSoundEffects(final GameAssetManager assetManager, final SoundEffectData ...soundEffectsData) {
         this.soundEffectsData = soundEffectsData;
@@ -23,10 +22,9 @@ public class ComponentSoundEffects extends HashMap<String, SoundEffect> implemen
 
     // TODO: move logic for a dedicated system.
     public void play(final String ...names) {
-        toPlay.clear();
         for (final String name : names) {
             final SoundEffect soundEffect = get(name);
-            toPlay.add(soundEffect);
+            soundEffect.sound.play();
         }
     }
 
