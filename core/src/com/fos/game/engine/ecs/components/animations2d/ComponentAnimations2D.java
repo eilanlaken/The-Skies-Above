@@ -10,22 +10,25 @@ import com.fos.game.engine.core.files.assets.GameAssetManager;
 
 import java.util.HashMap;
 
-public class ComponentAnimations2D extends HashMap<String, Animation<TextureAtlas.AtlasRegion>> implements Component {
+public class ComponentAnimations2D implements Component {
 
     public Animation2DData[] animationsData;
+    public HashMap<String, Animation<TextureAtlas.AtlasRegion>> animations;
     public Animation<TextureAtlas.AtlasRegion> currentPlayingAnimation;
     public float elapsedTime;
+    public boolean active = true;
 
     protected ComponentAnimations2D(final GameAssetManager assetManager, final Animation2DData...animationsData) {
         this.animationsData = animationsData;
+        animations = new HashMap<>();
         this.elapsedTime = 0;
         for (final Animation2DData data : animationsData) {
             SpriteSheet spriteSheet = assetManager.get(data.filepath, SpriteSheet.class);
             Array<TextureAtlas.AtlasRegion> keyFrames = spriteSheet.findRegions(data.animationName);
             Animation<TextureAtlas.AtlasRegion> animation = new Animation<>(data.frameDuration, keyFrames, data.playMode);
-            put(data.animationName, animation);
+            animations.put(data.animationName, animation);
         }
-        currentPlayingAnimation = get(animationsData[0].animationName);
+        currentPlayingAnimation = animations.get(animationsData[0].animationName);
     }
 
     public TextureAtlas.AtlasRegion getTextureRegion() {
@@ -33,7 +36,7 @@ public class ComponentAnimations2D extends HashMap<String, Animation<TextureAtla
     }
 
     public void setAnimations(final String name) {
-        this.currentPlayingAnimation = get(name);
+        this.currentPlayingAnimation = animations.get(name);
         this.elapsedTime = 0;
     }
 

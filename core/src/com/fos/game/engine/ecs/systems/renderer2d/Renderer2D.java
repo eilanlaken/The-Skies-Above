@@ -30,9 +30,6 @@ public class Renderer2D implements EntitiesProcessor, Disposable {
     private ShapeRenderer shapeRenderer;
     public boolean debugMode;
 
-    private Array<Entity> attachedAnimations;
-    private Array<Entity> attachedPhysics;
-    private Array<Entity> attachedLight;
     private Array<ComponentCamera2D> allCameras;
 
     public Renderer2D() {
@@ -41,23 +38,16 @@ public class Renderer2D implements EntitiesProcessor, Disposable {
         this.shapeRenderer = new ShapeRenderer();
         this.debugMode = Renderer2D.Config.DEFAULT.debugMode;
         this.allCameras = new Array<>();
-        this.attachedAnimations = new Array<>();
-        this.attachedPhysics = new Array<>();
-        this.attachedLight = new Array<>();
     }
 
     @Override
     public void process(Array<Entity> entities) {
         this.allCameras.clear();
-        this.attachedAnimations.clear();
-        this.attachedPhysics.clear();
-        this.attachedLight.clear();
         for (Entity entity : entities) {
             if ((entity.componentsBitMask & ComponentType.ANIMATIONS_2D.bitMask) > 0) {
                 ComponentAnimations2D animation = (ComponentAnimations2D) entity.components[ComponentType.ANIMATIONS_2D.ordinal()];
                 final float delta = Gdx.graphics.getDeltaTime();
                 animation.advanceTime(delta);
-                attachedAnimations.add(entity);
             }
             if ((entity.componentsBitMask & ComponentType.CAMERA_2D.bitMask) > 0) {
                 // TODO: test
@@ -71,13 +61,6 @@ public class Renderer2D implements EntitiesProcessor, Disposable {
                 final ComponentTransform2D transform2D = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
                 final ComponentLight2D light2D = (ComponentLight2D) entity.components[ComponentType.LIGHT_2D.ordinal()];
                 Renderer2DUtils.applyTransform(transform2D, light2D);
-                attachedLight.add(entity);
-            }
-            if ((entity.componentsBitMask & ComponentType.PHYSICS_2D_BODY.bitMask) > 0) {
-                attachedPhysics.add(entity);
-            }
-            if ((entity.componentsBitMask & ComponentType.PHYSICS_2D_JOINT.bitMask) > 0) {
-                attachedPhysics.add(entity);
             }
         }
 
@@ -106,7 +89,7 @@ public class Renderer2D implements EntitiesProcessor, Disposable {
             spriteBatch.setProjectionMatrix(camera.lens.combined);
             for (Entity entity : cameraEntitiesMap.get(camera)) {
                 ComponentAnimations2D animation = (ComponentAnimations2D) entity.components[ComponentType.ANIMATIONS_2D.ordinal()];
-                if (animation == null) continue;
+                if (animation == null || !animation.active) continue;
                 ComponentTransform2D transform2D = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
                 final float delta = Gdx.graphics.getDeltaTime();
                 animation.advanceTime(delta);

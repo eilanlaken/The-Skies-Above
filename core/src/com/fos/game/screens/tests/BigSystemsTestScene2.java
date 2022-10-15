@@ -5,6 +5,8 @@ import com.badlogic.gdx.Input;
 import com.fos.game.engine.context.GameContext;
 import com.fos.game.engine.context.Scene;
 import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
+import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
+import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.cameras.ComponentCamera2D;
 import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
@@ -29,6 +31,8 @@ public class BigSystemsTestScene2 extends Scene {
     ComponentTransform2D transform2DCameraBullets;
     ComponentCamera2D camera2DBullets;
 
+    Entity button;
+
     public BigSystemsTestScene2(final GameContext context) {
         super(context);
     }
@@ -37,7 +41,7 @@ public class BigSystemsTestScene2 extends Scene {
     protected void start() {
         container = new EntityContainer();
 
-        Entity button = new Entity(Layers.UI);
+        button = new Entity(Layers.UI);
         button.attachComponents(
                 context.factoryTransform2D.create(0,0,-11,0,1,1),
                 context.factoryAnimation2D.create("atlases/test/testSpriteSheet2.atlas", "blue")
@@ -94,6 +98,11 @@ public class BigSystemsTestScene2 extends Scene {
             transform2DCameraBullets.translate(-1,0);
             System.out.println("transform x: " + transform2DCameraBullets.transform.getPosition().x);
             System.out.println("camera lens x: " + camera2DBullets.lens.position.x);
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
+            ComponentAnimations2D animations2D = (ComponentAnimations2D) button.getComponent(ComponentType.ANIMATIONS_2D);
+            animations2D.active = !animations2D.active;
         }
     }
 

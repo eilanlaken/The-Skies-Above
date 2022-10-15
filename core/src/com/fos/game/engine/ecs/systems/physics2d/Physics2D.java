@@ -37,6 +37,7 @@ public class Physics2D implements EntitiesProcessor, Disposable {
             ComponentTransform2D transform2D = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
             ComponentRigidBody2D componentRigidBody2D = (ComponentRigidBody2D) entity.components[ComponentType.PHYSICS_2D_BODY.ordinal()];
             Body body = componentRigidBody2D.body;
+            if (componentRigidBody2D.active != body.isActive()) body.setActive(componentRigidBody2D.active);
             transform2D.transform.setPosition(body.getPosition());
             transform2D.transform.setOrientation(body.getTransform().getOrientation());
         }

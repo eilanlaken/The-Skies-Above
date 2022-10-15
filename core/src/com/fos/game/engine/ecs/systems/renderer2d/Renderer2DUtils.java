@@ -81,6 +81,14 @@ public class Renderer2DUtils {
         light2D.light.setDirection(transform2D.getRotation());
     }
 
+    /**
+    this method will build a map of all the render targets and the cameras rendering to these targets:
+    {
+        renderTarget1: cameraA, cameraB;
+        renderTarget2: cameraA;
+        screen: cameraB
+    }
+     */
     protected static Map<RenderTarget, Array<ComponentCamera2D>> getRenderTargetCamerasMap(final Array<ComponentCamera2D> cameras) {
         renderTargetCamerasResult.clear();
         // scan all 2D cameras for render targets

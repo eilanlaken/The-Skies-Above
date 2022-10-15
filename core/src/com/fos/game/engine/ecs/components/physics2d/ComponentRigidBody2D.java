@@ -8,6 +8,7 @@ public class ComponentRigidBody2D implements Component {
 
     public RigidBody2DData data;
     public Body body; // will be set from the system when entity is inserted.
+    public boolean active = true;
 
     protected ComponentRigidBody2D(final RigidBody2DData data) {
         this.data = data;
