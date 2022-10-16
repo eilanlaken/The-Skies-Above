@@ -55,7 +55,7 @@ public class PostProcessingEffectSetColor extends PostProcessingEffect {
     }
 
     @Override
-    protected void loadUniforms() {
+    public void loadUniforms() {
         setUniformMatrix(projTransUniformLocation, camera.combined);
         setUniformf(colorUniformLocation, color.r, color.g, color.b);
     }

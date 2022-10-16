@@ -11,5 +11,5 @@ public abstract class ShaderProgram extends com.badlogic.gdx.graphics.glutils.Sh
 
     protected abstract void cacheUniformLocations();
     protected abstract void init();
-    protected abstract void loadUniforms();
+    public abstract void loadUniforms();
 }
