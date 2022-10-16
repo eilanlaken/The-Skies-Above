@@ -17,7 +17,7 @@ public class FactoryCamera2D extends Factory {
         lens.position.set(data.positionX, data.positionY, 0);
         lens.zoom = data.zoom;
         lens.update();
-        return new ComponentCamera2D(lens, data.layers, 0, null);
+        return new ComponentCamera2D(lens, data.layers, 0, null, null);
     }
 
     public ComponentCamera2D createCamera2D(final float viewportWidth, final float viewportHeight, final Enum ...layers) {
@@ -25,7 +25,7 @@ public class FactoryCamera2D extends Factory {
         lens.setToOrtho(false, viewportWidth, viewportHeight);
         lens.position.set(0,0,0);
         lens.update();
-        return new ComponentCamera2D(lens, layers, 0, null);
+        return new ComponentCamera2D(lens, layers, 0, null, null);
     }
 
 }

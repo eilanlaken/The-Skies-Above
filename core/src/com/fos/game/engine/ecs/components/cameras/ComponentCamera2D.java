@@ -3,11 +3,10 @@ package com.fos.game.engine.ecs.components.cameras;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.utils.Array;
 import com.fos.game.engine.core.graphics.g2d.RenderTarget;
+import com.fos.game.engine.core.graphics.shaders.postprocessing.PostProcessingEffect;
 import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
-import com.fos.game.engine.ecs.systems.renderer_old.shaders.postprocessing.PostProcessingEffect;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -24,9 +23,9 @@ public class ComponentCamera2D implements Component {
     public float pixelsPerMeterX;
     public float pixelsPerMeterY;
     public RenderTarget renderTarget;
-    public Array<PostProcessingEffect> postProcessingEffects;
+    public PostProcessingEffect postProcessingEffect;
 
-    protected ComponentCamera2D(OrthographicCamera lens, final Enum[] layers, float depth, final RenderTarget.RenderTargetParams renderTargetParams, final PostProcessingEffect... postProcessingEffects) {
+    protected ComponentCamera2D(OrthographicCamera lens, final Enum[] layers, float depth, final RenderTarget.RenderTargetParams renderTargetParams, final PostProcessingEffect postProcessingEffect) {
         this.layers = new HashSet<>();
         this.layers.addAll(Arrays.asList(layers));
         this.layersBitMask = UtilsCameras.computeRenderedLayersBitMask(layers);
@@ -37,7 +36,7 @@ public class ComponentCamera2D implements Component {
         this.pixelsPerMeterX = (float) Gdx.graphics.getWidth() / lens.viewportWidth;
         this.pixelsPerMeterY = (float) Gdx.graphics.getHeight() / lens.viewportHeight;
         renderTarget = renderTargetParams == null ? null : new RenderTarget(renderTargetParams);
-        this.postProcessingEffects = new Array<>(postProcessingEffects);
+        this.postProcessingEffect = postProcessingEffect;
     }
 
     public boolean isRenderToTexture() {
