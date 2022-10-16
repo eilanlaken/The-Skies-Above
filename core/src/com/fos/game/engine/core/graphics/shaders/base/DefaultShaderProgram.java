@@ -50,7 +50,7 @@ public class DefaultShaderProgram extends ShaderProgram {
     }
 
     @Override
-    protected void loadUniforms() {
+    public void loadUniforms() {
         setUniformMatrix(projTransUniformLocation, currentCamera.combined);
     }
 }

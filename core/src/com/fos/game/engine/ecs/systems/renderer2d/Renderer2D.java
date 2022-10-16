@@ -84,6 +84,7 @@ public class Renderer2D implements EntitiesProcessor, Disposable {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
+        // TODO: replace this section
         spriteBatch.begin();
         for (final ComponentCamera2D camera : cameras) {
             spriteBatch.setProjectionMatrix(camera.lens.combined);
