@@ -1,14 +1,9 @@
 package com.fos.game.engine.ecs.systems.renderer2d;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.utils.Array;
 import com.fos.game.engine.core.graphics.g2d.RenderTarget;
-import com.fos.game.engine.core.graphics.g2d.SpriteBatch;
 import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
 import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
@@ -146,43 +141,4 @@ public class Renderer2DUtils {
         return !camera.frustum.sphereInFrustum(transform2D.transform.getPosition().x, transform2D.transform.getPosition().y, 0, boundingRadius);
     }
 
-    protected static void renderToCamerasInternalBuffer(final SpriteBatch spriteBatch, final Array<ComponentCamera2D> allCameras, final Map<ComponentCamera2D, Array<Entity>> cameraEntitiesMap) {
-        for (ComponentCamera2D camera : allCameras) {
-            camera.frameBuffer.begin();
-            Gdx.gl.glClearColor(0,0,0,0); // TODO: get value from camera
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT); // TODO: get value from camera
-            spriteBatch.begin();
-            spriteBatch.setProjectionMatrix(camera.lens.combined);
-            for (Entity entity : cameraEntitiesMap.get(camera)) {
-                ComponentAnimations2D animation = (ComponentAnimations2D) entity.components[ComponentType.ANIMATIONS_2D.ordinal()];
-                if (animation == null || !animation.active) continue;
-                ComponentTransform2D transform2D = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
-                final float delta = Gdx.graphics.getDeltaTime();
-                animation.advanceTime(delta);
-                TextureAtlas.AtlasRegion atlasRegion = animation.getTextureRegion();
-                spriteBatch.draw(atlasRegion, transform2D, camera.pixelsPerMeterX, camera.pixelsPerMeterY);
-            }
-            spriteBatch.end();
-            camera.frameBuffer.end();
-        }
-    }
-
-    // TODO: <- replace with texture region batch
-    protected static void renderToTarget(final SpriteBatch spriteBatch, final RenderTarget renderTarget, final Array<ComponentCamera2D> renderTargetCameras) {
-        renderTargetCameras.sort(camerasComparator);
-        final FrameBuffer primaryFrameBuffer = renderTarget == null ? null : renderTarget.primaryFrameBuffer;
-        if (primaryFrameBuffer != null) primaryFrameBuffer.begin();
-        Gdx.gl.glClearColor(0,0,0,1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-        for (ComponentCamera2D camera : renderTargetCameras) {
-            spriteBatch.setShader(camera.postProcessingEffect); // TODO: <- replace with texture region batch
-            spriteBatch.begin();
-            TextureRegion sceneRegion = new TextureRegion(camera.frameBuffer.getTextureAttachments().get(0));
-            sceneRegion.flip(false, true);
-            spriteBatch.draw(sceneRegion, -Gdx.graphics.getWidth()/2f, -Gdx.graphics.getHeight()/2f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-            spriteBatch.end();
-        }
-        spriteBatch.setShader(null);
-        if (primaryFrameBuffer != null) primaryFrameBuffer.end();
-    }
 }

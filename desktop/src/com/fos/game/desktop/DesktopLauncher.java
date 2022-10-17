@@ -19,7 +19,7 @@ public class DesktopLauncher {
 		config.height = (int) height;
 		config.backgroundFPS = 60;
 		config.foregroundFPS = 60;
-		config.useGL30 = true; //TODO: see how to overcome this for 3D. Maybe only needed for instancing which is deprecated.
+		//config.useGL30 = true; //TODO: needed for multiple attachments of framebuffer objects.
 		// config.vSyncEnabled = true; TODO
 		// config.addIcon(); TODO
 		new LwjglApplication(new GameContext(), config);

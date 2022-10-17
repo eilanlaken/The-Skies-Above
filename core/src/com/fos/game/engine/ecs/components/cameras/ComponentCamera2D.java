@@ -28,7 +28,7 @@ public class ComponentCamera2D implements Component {
     public RenderTarget renderTarget;
     public PostProcessingEffect postProcessingEffect;
 
-    public final FrameBuffer frameBuffer; // <- internal hidden FrameBuffer. Only cameras with post processing effect (s) will use it.
+    public FrameBuffer frameBuffer; // <- internal hidden FrameBuffer. Only cameras with post processing effect (s) will use it.
 
     protected ComponentCamera2D(OrthographicCamera lens, final Enum[] layers, float depth, final RenderTarget.RenderTargetParams renderTargetParams, final PostProcessingEffect postProcessingEffect) {
         this.layers = new HashSet<>();
@@ -43,9 +43,13 @@ public class ComponentCamera2D implements Component {
         this.renderTarget = renderTargetParams == null ? null : new RenderTarget(renderTargetParams);
         this.postProcessingEffect = postProcessingEffect;
 
+        buildFrameBuffer();
+    }
+
+    private void buildFrameBuffer() {
         final GLFrameBuffer.FrameBufferBuilder frameBufferBuilderScene = new GLFrameBuffer.FrameBufferBuilder(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         frameBufferBuilderScene.addColorTextureAttachment(GL30.GL_RGBA8, GL30.GL_RGBA, GL30.GL_UNSIGNED_BYTE); // <- regular
-        frameBufferBuilderScene.addDepthTextureAttachment(GL30.GL_DEPTH_COMPONENT , GL30.GL_UNSIGNED_BYTE);
+        //frameBufferBuilderScene.addDepthTextureAttachment(GL30.GL_DEPTH_COMPONENT , GL30.GL_UNSIGNED_BYTE);
         frameBuffer = frameBufferBuilderScene.build();
         for (Texture attached : frameBuffer.getTextureAttachments()) {
             attached.setWrap(Texture.TextureWrap.ClampToEdge, Texture.TextureWrap.ClampToEdge);
