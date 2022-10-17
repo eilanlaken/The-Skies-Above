@@ -167,12 +167,7 @@ public class Renderer2DUtils {
         }
     }
 
-    /**
-     *
-     * @param spriteBatch is the SpriteBatch used to do the rendering.
-     * @param renderTarget is the render target
-     * @param renderTargetCameras is all the cameras drawing into the @param(renderTarget)
-     */
+    // TODO: <- replace with texture region batch
     protected static void renderToTarget(final SpriteBatch spriteBatch, final RenderTarget renderTarget, final Array<ComponentCamera2D> renderTargetCameras) {
         renderTargetCameras.sort(camerasComparator);
         final FrameBuffer primaryFrameBuffer = renderTarget == null ? null : renderTarget.primaryFrameBuffer;
@@ -180,7 +175,7 @@ public class Renderer2DUtils {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         for (ComponentCamera2D camera : renderTargetCameras) {
-            spriteBatch.setShader(camera.postProcessingEffect); // <- replace with texture region batch
+            spriteBatch.setShader(camera.postProcessingEffect); // TODO: <- replace with texture region batch
             spriteBatch.begin();
             TextureRegion sceneRegion = new TextureRegion(camera.frameBuffer.getTextureAttachments().get(0));
             sceneRegion.flip(false, true);

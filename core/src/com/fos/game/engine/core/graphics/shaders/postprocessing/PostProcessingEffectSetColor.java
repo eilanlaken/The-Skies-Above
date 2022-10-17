@@ -26,36 +26,10 @@ public class PostProcessingEffectSetColor extends PostProcessingEffect {
             + "  gl_FragColor = vec4(color, 1.0);\n" //
             + "}";
 
-    // uniforms
-    private int projTransUniformLocation;
-    private int textureUniformLocation;
-    private int colorUniformLocation;
-
-    // java values that will be loaded into the shader uniforms
-    public Camera camera;
-    public Color color;
 
     public PostProcessingEffectSetColor(Camera camera, Color color) {
         super(vertex, fragment);
-        this.camera = camera;
-        this.color = color;
     }
 
-    protected void cacheUniformLocations() {
-        projTransUniformLocation = fetchUniformLocation("u_projTrans", false);
-        textureUniformLocation = fetchUniformLocation("u_texture", false);
-        colorUniformLocation = fetchUniformLocation("u_color", false);
-    }
 
-    @Override
-    protected void init() {
-        bind();
-        setUniformi(textureUniformLocation, 0);
-    }
-
-    @Override
-    public void loadUniforms() {
-        setUniformMatrix(projTransUniformLocation, camera.combined);
-        setUniformf(colorUniformLocation, color.r, color.g, color.b);
-    }
 }
