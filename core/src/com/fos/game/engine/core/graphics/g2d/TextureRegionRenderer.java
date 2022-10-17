@@ -83,6 +83,8 @@ public class TextureRegionRenderer implements Disposable {
             currentShader = postProcessingEffect;
         }
         currentShader.bind();
+        currentShader.updateUniform("u_projTrans", projectionMatrix.setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+        currentShader.updateUniform("u_texture", 0);
         currentShader.loadUniformsToGPU();
 
         drawing = true;
