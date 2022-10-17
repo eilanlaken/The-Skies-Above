@@ -2,7 +2,7 @@ package com.fos.game.engine.core.graphics.shaders.base;
 
 import com.badlogic.gdx.graphics.Camera;
 
-public class DefaultShaderProgram extends ShaderProgram {
+public class DefaultShaderProgram extends Shader {
 
     private int projTransUniformLocation;
     private int textureUniformLocation;
@@ -37,7 +37,6 @@ public class DefaultShaderProgram extends ShaderProgram {
         super(vertex, fragment);
     }
 
-    @Override
     protected void cacheUniformLocations() {
         projTransUniformLocation = fetchUniformLocation("u_projTrans", false);
         textureUniformLocation = fetchUniformLocation("u_texture", false);

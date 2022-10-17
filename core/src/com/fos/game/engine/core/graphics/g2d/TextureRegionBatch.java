@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.Disposable;
 import com.fos.game.engine.core.graphics.shaders.base.DefaultShaderProgram;
-import com.fos.game.engine.core.graphics.shaders.base.ShaderProgram;
+import com.fos.game.engine.core.graphics.shaders.base.Shader;
 import com.fos.game.engine.core.graphics.shaders.postprocessing.PostProcessingEffect;
 import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
 
@@ -37,8 +37,8 @@ public class TextureRegionBatch implements Disposable {
     private int blendSrcFuncAlpha = GL20.GL_SRC_ALPHA;
     private int blendDstFuncAlpha = GL20.GL_ONE_MINUS_SRC_ALPHA;
 
-    private final ShaderProgram defaultShader;
-    private ShaderProgram currentShader = null;
+    private final Shader defaultShader;
+    private Shader currentShader = null;
 
     private final Color color = new Color(1, 1, 1, 1);
     float colorPacked = Color.WHITE_FLOAT_BITS;
@@ -55,9 +55,9 @@ public class TextureRegionBatch implements Disposable {
         Mesh.VertexDataType vertexDataType = Mesh.VertexDataType.VertexBufferObjectWithVAO;
 
         mesh = new Mesh(vertexDataType, false, size * 4, size * 6,
-                new VertexAttribute(VertexAttributes.Usage.Position, 2, ShaderProgram.POSITION_ATTRIBUTE),
-                new VertexAttribute(VertexAttributes.Usage.ColorPacked, 4, ShaderProgram.COLOR_ATTRIBUTE),
-                new VertexAttribute(VertexAttributes.Usage.TextureCoordinates, 2, ShaderProgram.TEXCOORD_ATTRIBUTE + "0"));
+                new VertexAttribute(VertexAttributes.Usage.Position, 2, Shader.POSITION_ATTRIBUTE),
+                new VertexAttribute(VertexAttributes.Usage.ColorPacked, 4, Shader.COLOR_ATTRIBUTE),
+                new VertexAttribute(VertexAttributes.Usage.TextureCoordinates, 2, Shader.TEXCOORD_ATTRIBUTE + "0"));
 
         projectionMatrix.setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 

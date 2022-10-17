@@ -17,7 +17,7 @@ import com.fos.game.scripts.test.PeriodicSendTestScript;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BigSystemsTestScene2 extends Scene {
+public class NewRendererTest extends Scene {
 
     public enum Layers {
         CAMERA,
@@ -35,7 +35,7 @@ public class BigSystemsTestScene2 extends Scene {
 
     Entity button;
 
-    public BigSystemsTestScene2(final GameContext context) {
+    public NewRendererTest(final GameContext context) {
         super(context);
     }
 
@@ -62,7 +62,7 @@ public class BigSystemsTestScene2 extends Scene {
         for (int i = 0; i < 5; i++) {
             Entity entity = new Entity(Layers.BULLET);
             entity.attachComponents(
-                    context.factoryTransform2D.create(-2 + i,0,-1,0,1,1),
+                    context.factoryTransform2D.create(-2 + i,0,6,0,1,1),
                     context.factoryAnimation2D.create("atlases/test/testSpriteSheet2.atlas", "orange")
             );
             container.addEntity(entity);
@@ -80,7 +80,7 @@ public class BigSystemsTestScene2 extends Scene {
         Entity cameraScene = new Entity(Layers.CAMERA);
         transform2DCameraBullets = context.factoryTransform2D.create(0,0,1,0,1,1);
         camera2DBullets = context.factoryCamera2D.createCamera2D(30, 30 * (float) Gdx.graphics.getHeight() / Gdx.graphics.getWidth(), Layers.CHARACTER, Layers.BULLET);
-        camera2DBullets.depth = -1;
+        camera2DBullets.depth = 6;
         cameraScene.attachComponents(
                 transform2DCameraBullets,
                 camera2DBullets,
@@ -91,7 +91,7 @@ public class BigSystemsTestScene2 extends Scene {
 
         Entity cameraUI = new Entity(Layers.CAMERA);
         cameraUI.attachComponents(
-                context.factoryTransform2D.create(0,0,1,0,1,1),
+                context.factoryTransform2D.create(0,0,6,0,1,1),
                 context.factoryCamera2D.createCamera2D(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), Layers.UI)
         );
         container.addEntity(cameraUI);
@@ -101,7 +101,7 @@ public class BigSystemsTestScene2 extends Scene {
     protected void update(float delta) {
         container.update();
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            transform2DCameraBullets.translate(-1,0);
+            transform2DCameraBullets.translate(0.1f,0);
             System.out.println("transform x: " + transform2DCameraBullets.transform.getPosition().x);
             System.out.println("camera lens x: " + camera2DBullets.lens.position.x);
         }

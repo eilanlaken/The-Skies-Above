@@ -41,7 +41,6 @@ public class PostProcessingEffectSetColor extends PostProcessingEffect {
         this.color = color;
     }
 
-    @Override
     protected void cacheUniformLocations() {
         projTransUniformLocation = fetchUniformLocation("u_projTrans", false);
         textureUniformLocation = fetchUniformLocation("u_texture", false);
