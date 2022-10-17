@@ -2,10 +2,13 @@ package com.fos.game.screens.tests;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.fos.game.engine.context.GameContext;
 import com.fos.game.engine.context.Scene;
 import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
 import com.fos.game.engine.ecs.components.cameras.ComponentCamera2D;
+import com.fos.game.engine.ecs.components.physics2d.RigidBody2DData;
 import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.entities.EntityContainer;
@@ -52,7 +55,15 @@ public class NewRendererTest extends Scene {
             Entity entity = new Entity(Layers.CHARACTER);
             entity.attachComponents(
               context.factoryTransform2D.create(-2 + i,0,0,0,1,1),
-              context.factoryAnimation2D.create("atlases/test/testSpriteSheet2.atlas", "green")
+              context.factoryAnimation2D.create("atlases/test/testSpriteSheet2.atlas", "green"),
+              context.factoryRigidBody2D.create(new RigidBody2DData(
+                    BodyDef.BodyType.StaticBody,
+                    RigidBody2DData.Shape.RECTANGLE,
+                    1, 1,
+                    new Filter(),
+                    1,1,1,
+                    false
+              ))
             );
             container.addEntity(entity);
         }

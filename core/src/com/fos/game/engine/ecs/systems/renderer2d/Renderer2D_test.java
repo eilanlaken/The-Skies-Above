@@ -15,6 +15,8 @@ import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.cameras.ComponentCamera2D;
 import com.fos.game.engine.ecs.components.lights2d.ComponentLight2D;
+import com.fos.game.engine.ecs.components.physics2d.ComponentJoint2D;
+import com.fos.game.engine.ecs.components.physics2d.ComponentRigidBody2D;
 import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
@@ -89,8 +91,18 @@ public class Renderer2D_test implements EntitiesProcessor, Disposable {
             }
             spriteBatch.end();
 
-            // TODO: add physics debug renderer.
-            
+            // TODO: test.
+            if (debugMode) {
+                physics2DDebugRenderer.begin();
+                physics2DDebugRenderer.setProjectionMatrix(camera.lens.combined);
+                for (Entity entity : cameraEntitiesMap.get(camera)) {
+                    ComponentRigidBody2D rigidBody2D = (ComponentRigidBody2D) entity.components[ComponentType.PHYSICS_2D_BODY.ordinal()];
+                    ComponentJoint2D joint2D = (ComponentJoint2D) entity.components[ComponentType.PHYSICS_2D_JOINT.ordinal()];
+                    if (rigidBody2D != null) physics2DDebugRenderer.drawBody(rigidBody2D.body);
+                    if (joint2D != null) physics2DDebugRenderer.drawJoint(joint2D.joint);
+                }
+                physics2DDebugRenderer.end();
+            }
 
             camera.frameBuffer.end();
         }

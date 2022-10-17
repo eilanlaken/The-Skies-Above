@@ -1,7 +1,6 @@
 package com.fos.game.engine.ecs.entities;
 
 import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.utils.Disposable;
 import com.fos.game.engine.ecs.components.base.Component;
@@ -11,8 +10,8 @@ import com.fos.game.engine.ecs.components.modelinstance_old.ComponentModelInstan
 import com.fos.game.engine.ecs.components.physics2d.ComponentRigidBody2D;
 import com.fos.game.engine.ecs.components.physics3d.ComponentRigidBody3D;
 import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
-import com.fos.game.engine.ecs.components.transform3d.ComponentTransform3D;
 import com.fos.game.engine.ecs.components.transform2d.FactoryTransform2D;
+import com.fos.game.engine.ecs.components.transform3d.ComponentTransform3D;
 import com.fos.game.engine.ecs.components.transform3d.FactoryTransform3D;
 
 public class Entity implements Disposable {
@@ -71,13 +70,6 @@ public class Entity implements Disposable {
         }
         if (transform3d == null) {
             components[ComponentType.TRANSFORM_3D.ordinal()] = FactoryTransform3D.create();
-        }
-        if (rigidBody2d != null) {
-            rigidBody2d.body.setTransform(transform2D.transform.getPosition().x, transform2D.transform.getPosition().y, transform2D.transform.getRotation());
-            transform2D.transform = rigidBody2d.body.getTransform();
-            for (Fixture fixture : rigidBody2d.body.getFixtureList()) {
-                fixture.setUserData(this);
-            }
         }
         if (rigidBody3d != null) {
             rigidBody3d.userData = this;
