@@ -7,21 +7,21 @@ import com.badlogic.gdx.graphics.glutils.GLFrameBuffer;
 
 public class RenderTarget {
 
-    public final FrameBuffer primaryFrameBuffer;
+    public final FrameBuffer targetFrameBuffer;
 
     public RenderTarget(final RenderTargetParams params) {
         final GLFrameBuffer.FrameBufferBuilder primaryFrameBufferBuilder = new GLFrameBuffer.FrameBufferBuilder(params.resolutionX, params.resolutionY);
         primaryFrameBufferBuilder.addColorTextureAttachment(GL30.GL_RGBA8, GL30.GL_RGBA, GL30.GL_UNSIGNED_BYTE); // <- regular
         primaryFrameBufferBuilder.addDepthTextureAttachment(GL30.GL_DEPTH_COMPONENT, GL30.GL_UNSIGNED_BYTE); // <- depth
-        primaryFrameBuffer = primaryFrameBufferBuilder.build();
-        for (Texture attached : primaryFrameBuffer.getTextureAttachments()) {
+        targetFrameBuffer = primaryFrameBufferBuilder.build();
+        for (Texture attached : targetFrameBuffer.getTextureAttachments()) {
             attached.setWrap(params.textureWrapX, params.textureWrapY);
             attached.setFilter(params.textureFilterX, params.textureFilterY);
         }
     }
 
     public Texture getTexture() {
-        return primaryFrameBuffer.getColorBufferTexture();
+        return targetFrameBuffer.getColorBufferTexture();
     }
 
     public static class RenderTargetParams {

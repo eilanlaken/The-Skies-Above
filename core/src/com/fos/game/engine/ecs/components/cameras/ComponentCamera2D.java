@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+// TODO: add Camera2DData
 public class ComponentCamera2D implements Component {
 
     public Set<Enum> layers;
@@ -25,10 +26,10 @@ public class ComponentCamera2D implements Component {
     public float viewWorldHeight;
     public float pixelsPerMeterX;
     public float pixelsPerMeterY;
-    public RenderTarget renderTarget;
     public PostProcessingEffect postProcessingEffect;
 
     public FrameBuffer frameBuffer; // <- internal hidden FrameBuffer. Only cameras with post processing effect (s) will use it.
+    public RenderTarget renderTarget;
 
     protected ComponentCamera2D(OrthographicCamera lens, final Enum[] layers, float depth, final RenderTarget.RenderTargetParams renderTargetParams, final PostProcessingEffect postProcessingEffect) {
         this.layers = new HashSet<>();

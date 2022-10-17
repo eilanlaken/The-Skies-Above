@@ -88,6 +88,10 @@ public class Renderer2D_test implements EntitiesProcessor, Disposable {
                 spriteBatch.draw(atlasRegion, transform2D, camera.pixelsPerMeterX, camera.pixelsPerMeterY);
             }
             spriteBatch.end();
+
+            // TODO: add physics debug renderer.
+            
+
             camera.frameBuffer.end();
         }
     }
@@ -95,7 +99,7 @@ public class Renderer2D_test implements EntitiesProcessor, Disposable {
     // TODO: <- replace with texture region batch
     protected void renderToTarget(final RenderTarget renderTarget, final Array<ComponentCamera2D> renderTargetCameras) {
         renderTargetCameras.sort(Renderer2DUtils.camerasComparator);
-        final FrameBuffer primaryFrameBuffer = renderTarget == null ? null : renderTarget.primaryFrameBuffer;
+        final FrameBuffer primaryFrameBuffer = renderTarget == null ? null : renderTarget.targetFrameBuffer;
         if (primaryFrameBuffer != null) primaryFrameBuffer.begin();
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
