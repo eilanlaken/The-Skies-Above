@@ -47,7 +47,15 @@ public class NewRendererTest extends Scene {
         button = new Entity(Layers.UI);
         button.attachComponents(
                 context.factoryTransform2D.create(0,0,-11,0,1,1),
-                context.factoryAnimation2D.create("atlases/test/testSpriteSheet2.atlas", "blue")
+                context.factoryAnimation2D.create("atlases/test/testSpriteSheet2.atlas", "blue"),
+                context.factoryRigidBody2D.create(new RigidBody2DData(
+                        BodyDef.BodyType.StaticBody,
+                        RigidBody2DData.Shape.RECTANGLE,
+                        32, 32,
+                        new Filter(),
+                        1,1,1,
+                        false
+                ))
         );
         container.addEntity(button);
 

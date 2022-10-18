@@ -111,8 +111,8 @@ public class Renderer2D_test implements EntitiesProcessor, Disposable {
     // TODO: <- replace with texture region batch
     protected void renderToTarget(final RenderTarget renderTarget, final Array<ComponentCamera2D> renderTargetCameras) {
         renderTargetCameras.sort(Renderer2DUtils.camerasComparator);
-        final FrameBuffer primaryFrameBuffer = renderTarget == null ? null : renderTarget.targetFrameBuffer;
-        if (primaryFrameBuffer != null) primaryFrameBuffer.begin();
+        final FrameBuffer frameBuffer = renderTarget == null ? null : renderTarget.targetFrameBuffer;
+        if (frameBuffer != null) frameBuffer.begin();
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         for (ComponentCamera2D camera : renderTargetCameras) {
@@ -124,7 +124,7 @@ public class Renderer2D_test implements EntitiesProcessor, Disposable {
             spriteBatch.end();
         }
         spriteBatch.setShader(null);
-        if (primaryFrameBuffer != null) primaryFrameBuffer.end();
+        if (frameBuffer != null) frameBuffer.end();
     }
 
     @Override
