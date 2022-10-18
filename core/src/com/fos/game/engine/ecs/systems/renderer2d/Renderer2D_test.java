@@ -1,10 +1,6 @@
 package com.fos.game.engine.ecs.systems.renderer2d;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
@@ -15,8 +11,6 @@ import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.cameras.ComponentCamera2D;
 import com.fos.game.engine.ecs.components.lights2d.ComponentLight2D;
-import com.fos.game.engine.ecs.components.physics2d.ComponentJoint2D;
-import com.fos.game.engine.ecs.components.physics2d.ComponentRigidBody2D;
 import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
@@ -24,6 +18,7 @@ import com.fos.game.engine.ecs.systems.base.SystemConfig;
 
 import java.util.Map;
 
+// TODO: this is not working for different resolutions. 
 public class Renderer2D_test implements EntitiesProcessor, Disposable {
 
     private SpriteBatch spriteBatch;
@@ -67,12 +62,13 @@ public class Renderer2D_test implements EntitiesProcessor, Disposable {
         Map<RenderTarget, Array<ComponentCamera2D>> renderTargetCamerasMap = Renderer2DUtils.getRenderTargetCamerasMap(allCameras);
         Map<ComponentCamera2D, Array<Entity>> cameraEntitiesMap = Renderer2DUtils.getCameraEntitiesMap(allCameras, entities);
 
-        renderToCamerasInternalBuffer(allCameras, cameraEntitiesMap);
+        //renderToCamerasInternalBuffer(allCameras, cameraEntitiesMap);
         for (Map.Entry<RenderTarget, Array<ComponentCamera2D>> renderTargetCameras : renderTargetCamerasMap.entrySet()) {
-            renderToTarget(renderTargetCameras.getKey(), renderTargetCameras.getValue());
+            //renderToTarget(renderTargetCameras.getKey(), renderTargetCameras.getValue());
         }
     }
 
+    /*
     protected void renderToCamerasInternalBuffer(final Array<ComponentCamera2D> allCameras, final Map<ComponentCamera2D, Array<Entity>> cameraEntitiesMap) {
         for (ComponentCamera2D camera : allCameras) {
             camera.frameBuffer.begin();
@@ -126,6 +122,8 @@ public class Renderer2D_test implements EntitiesProcessor, Disposable {
         spriteBatch.setShader(null);
         if (frameBuffer != null) frameBuffer.end();
     }
+
+     */
 
     @Override
     public boolean shouldProcess(Entity entity) {

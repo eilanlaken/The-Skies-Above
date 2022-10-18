@@ -51,7 +51,7 @@ public class NewRendererTest extends Scene {
                 context.factoryRigidBody2D.create(new RigidBody2DData(
                         BodyDef.BodyType.StaticBody,
                         RigidBody2DData.Shape.RECTANGLE,
-                        32, 32,
+                        2, 2,
                         new Filter(),
                         1,1,1,
                         false
@@ -109,7 +109,7 @@ public class NewRendererTest extends Scene {
         Entity cameraUI = new Entity(Layers.CAMERA);
         cameraUI.attachComponents(
                 context.factoryTransform2D.create(0,0,6,0,1,1),
-                context.factoryCamera2D.createCamera2D(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), Layers.UI)
+                context.factoryCamera2D.createCamera2D(30, 30 * (float) Gdx.graphics.getHeight() / Gdx.graphics.getWidth(), Layers.UI)
         );
         container.addEntity(cameraUI);
     }
