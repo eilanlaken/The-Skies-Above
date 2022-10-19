@@ -222,6 +222,7 @@ public class Lights2DTestScene2 extends Scene_old {
 
     @Override
     public void resize(int width, int height) {
+        camera.buildFrameBuffer();
         camera.lens.viewportWidth = camera.viewWorldWidth;
         camera.lens.viewportHeight = camera.viewWorldWidth * (float) height / width;
         camera.lens.update();
