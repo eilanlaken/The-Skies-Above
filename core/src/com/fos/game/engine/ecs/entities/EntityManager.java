@@ -9,6 +9,7 @@ import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
 import com.fos.game.engine.ecs.systems.base.SystemConfig;
 import com.fos.game.engine.ecs.systems.physics2d.Physics2D;
 import com.fos.game.engine.ecs.systems.physics3d.Physics3D;
+import com.fos.game.engine.ecs.systems.renderer2d.Config;
 import com.fos.game.engine.ecs.systems.renderer2d.Renderer2D;
 import com.fos.game.engine.ecs.systems.scripting.ScriptsUpdater;
 import com.fos.game.engine.ecs.systems.signals.SignalRouter;
@@ -79,7 +80,7 @@ public class EntityManager implements Disposable {
 
     public void config(final SystemConfig ...configs) {
         for (final SystemConfig config : configs) {
-            if (config instanceof Renderer2D.Config) renderer2D.config((Renderer2D.Config) config);
+            if (config instanceof Config) renderer2D.config((Config) config);
             // .. configure other systems.
         }
     }

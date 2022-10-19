@@ -19,7 +19,6 @@ import com.fos.game.engine.ecs.components.physics2d.ComponentRigidBody2D;
 import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
-import com.fos.game.engine.ecs.systems.base.SystemConfig;
 
 import java.util.Map;
 
@@ -36,7 +35,7 @@ public class Renderer2D_test2 implements EntitiesProcessor, Disposable {
         this.spriteBatch = new SpriteBatch();
         this.physics2DDebugRenderer = new Physics2DDebugRenderer();
         this.shapeRenderer = new ShapeRenderer();
-        this.debugMode = Renderer2D_test2.Config.DEFAULT.debugMode;
+        this.debugMode = Config.DEFAULT.debugMode;
         this.allCameras = new Array<>();
     }
 
@@ -133,16 +132,6 @@ public class Renderer2D_test2 implements EntitiesProcessor, Disposable {
 
     public void config(final Config config) {
         this.debugMode = config.debugMode;
-    }
-
-    public static final class Config extends SystemConfig {
-        public static final Config DEFAULT = new Config(true, 1f / 2.2f);
-        public final boolean debugMode;
-        public final float gamma;
-        public Config(final boolean debugMode, final float gamma) {
-            this.debugMode = debugMode;
-            this.gamma = gamma;
-        }
     }
 
 }
