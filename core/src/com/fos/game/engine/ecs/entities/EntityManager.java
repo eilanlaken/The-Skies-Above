@@ -18,7 +18,7 @@ import java.util.Map;
 
 //import com.fos.game.engine.ecs.systems.renderer.base.Renderer;
 
-public class EntityContainer implements Disposable {
+public class EntityManager implements Disposable {
 
     // container array
     protected Array<Entity> entities = new Array<>();
@@ -40,7 +40,7 @@ public class EntityContainer implements Disposable {
     public SignalRouter signalRouter = new SignalRouter();
 
 
-    public EntityContainer() {
+    public EntityManager() {
         this.systemEntitiesMap.put(audioPlayer, new Array<Entity>());
         this.systemEntitiesMap.put(physics2D, new Array<Entity>());
         this.systemEntitiesMap.put(physics3D, new Array<Entity>());

@@ -1,10 +1,10 @@
 package com.fos.game.screens.tests;
 
 import com.fos.game.engine.context.GameContext;
-import com.fos.game.engine.context.Scene;
+import com.fos.game.engine.context.Scene_old;
 import com.fos.game.engine.core.graphics.shaders.base.ExampleShaderProgram;
 
-public class ShadersTestScene1 extends Scene {
+public class ShadersTestScene1 extends Scene_old {
 
     ExampleShaderProgram exampleShaderProgram;
 

@@ -15,7 +15,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.fos.game.engine.context.GameContext;
-import com.fos.game.engine.context.Scene;
+import com.fos.game.engine.context.Scene_old;
 import com.fos.game.engine.core.graphics.g2d.GraphicsUtils;
 import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
 import com.fos.game.engine.ecs.components.cameras.ComponentCamera2D;
@@ -29,7 +29,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Lights2DTestScene2 extends Scene {
+public class Lights2DTestScene2 extends Scene_old {
 
     private World world;
     Array<EntityMini> entities;

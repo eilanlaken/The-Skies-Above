@@ -3,17 +3,17 @@ package com.fos.game.screens.tests;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.fos.game.engine.context.GameContext;
-import com.fos.game.engine.context.Scene;
+import com.fos.game.engine.context.Scene_old;
 import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
 import com.fos.game.engine.ecs.components.cameras.ComponentCamera2D;
 import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
-import com.fos.game.engine.ecs.entities.EntityContainer;
+import com.fos.game.engine.ecs.entities.EntityManager;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class BigSystemsTestScene extends Scene {
+public class BigSystemsTestScene extends Scene_old {
 
     public enum Layers {
         CAMERA,
@@ -23,7 +23,7 @@ public class BigSystemsTestScene extends Scene {
         UI,
     }
 
-    EntityContainer container;
+    EntityManager container;
 
     // refs
     ComponentTransform2D transform2DCameraBullets;
@@ -35,7 +35,7 @@ public class BigSystemsTestScene extends Scene {
 
     @Override
     protected void start() {
-        container = new EntityContainer();
+        container = new EntityManager();
 
         Entity button = new Entity(Layers.UI);
         button.attachComponents(

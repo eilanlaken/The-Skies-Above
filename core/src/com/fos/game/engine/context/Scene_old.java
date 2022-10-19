@@ -1,13 +1,12 @@
 package com.fos.game.engine.context;
 
 import com.badlogic.gdx.Screen;
-import com.fos.game.engine.ecs.entities.EntityManager;
 
-public abstract class Scene extends EntityManager implements Screen {
+public abstract class Scene_old implements Screen {
 
     protected final GameContext context;
 
-    public Scene(final GameContext context) {
+    public Scene_old(final GameContext context) {
         this.context = context;
     }
 
@@ -23,14 +22,16 @@ public abstract class Scene extends EntityManager implements Screen {
         this.update(delta);
     }
 
-    protected void update(float delta) {
-        super.update();
+    protected abstract void update(float delta);
+
+    @Override
+    public void pause() {
+
     }
 
     @Override
-    public void pause() {}
+    public void resume() {
 
-    @Override
-    public void resume() {}
+    }
 
 }

@@ -1,18 +1,18 @@
 package com.fos.game.screens.tests;
 
 import com.fos.game.engine.context.GameContext;
-import com.fos.game.engine.context.Scene;
+import com.fos.game.engine.context.Scene_old;
 import com.fos.game.engine.ecs.components.camera_old.FactoryCamera;
 import com.fos.game.engine.ecs.entities.Entity;
-import com.fos.game.engine.ecs.entities.EntityContainer;
+import com.fos.game.engine.ecs.entities.EntityManager;
 import com.fos.game.scripts.test.PeriodicReadTestScript;
 import com.fos.game.scripts.test.PeriodicSendTestScript;
 
 import static com.fos.game.engine.ecs.components.base.ComponentType.SIGNAL_BOX;
 
-public class SignalTestScene extends Scene {
+public class SignalTestScene extends Scene_old {
 
-    EntityContainer container;
+    EntityManager container;
 
     public SignalTestScene(GameContext context) {
         super(context);
@@ -20,7 +20,7 @@ public class SignalTestScene extends Scene {
 
     @Override
     protected void start() {
-        container = new EntityContainer();
+        container = new EntityManager();
         Entity entity1 = new Entity();
         entity1.attachComponents(
                 context.factorySignalBox.create(),

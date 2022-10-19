@@ -1,13 +1,13 @@
 package com.fos.game.screens.loading;
 
 import com.fos.game.engine.context.GameContext;
-import com.fos.game.engine.context.Scene;
+import com.fos.game.engine.context.Scene_old;
 import com.fos.game.engine.core.files.assets.GameAssetManager;
 import com.fos.game.screens.tests.Lights2DTestScene2;
 
 import java.util.Map;
 
-public class LoadingScreen extends Scene {
+public class LoadingScreen extends Scene_old {
 
     private final GameAssetManager assetManager;
     private boolean doneLoading = false;
