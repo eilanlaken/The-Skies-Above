@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.fos.game.engine.context.GameContext;
 import com.fos.game.engine.context.Scene;
+import com.fos.game.engine.core.graphics.g2d.GraphicsUtils;
 import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
 import com.fos.game.engine.ecs.components.cameras.ComponentCamera2D;
 import com.fos.game.engine.ecs.components.physics2d.RigidBody2DData;
@@ -28,7 +29,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Lights2DTestScene extends Scene {
+public class Lights2DTestScene2 extends Scene {
 
     private World world;
     Array<EntityMini> entities;
@@ -39,6 +40,8 @@ public class Lights2DTestScene extends Scene {
     RayHandler rayHandler;
     PointLight pointLight1, pointLight2, pointLight3;
 
+    public final float VIRTUAL_HEIGHT = 20;
+
     class EntityMini {
         ComponentTransform2D transform2D;
         Animation<TextureAtlas.AtlasRegion> animation;
@@ -48,7 +51,7 @@ public class Lights2DTestScene extends Scene {
 
     EntityMini mouse;
 
-    public Lights2DTestScene(final GameContext context) {
+    public Lights2DTestScene2(final GameContext context) {
         super(context);
     }
 
@@ -65,14 +68,14 @@ public class Lights2DTestScene extends Scene {
         //directionalLight = new DirectionalLight(rayHandler, 100, Color.LIME, 30);
 
         entities = new Array<>();
-        camera = context.factoryCamera2D.createCamera2D(30, 30 * (float) Gdx.graphics.getHeight() / Gdx.graphics.getWidth());
+        camera = context.factoryCamera2D.createCamera2D(VIRTUAL_HEIGHT * GraphicsUtils.getAspectRatio(), VIRTUAL_HEIGHT);
 
         for (int i = 0; i < 10; i++) {
             EntityMini entityMini = new EntityMini();
             entityMini.transform2D = context.factoryTransform2D.
                     create(MathUtils.random(-10, 10), MathUtils.random(-1, 4), 1, MathUtils.random(0, 2 * (float)Math.PI), 1, 1);
             entityMini.animation = new Animation<>(1,
-                    context.assetManager.get("atlases/test/testSpriteSheet2.atlas", SpriteSheet.class).findRegions(getRandomRegion()));
+                    context.assetManager.get("atlases/test/testSpriteSheet3.atlas", SpriteSheet.class).findRegions(getRandomRegion()));
             Filter filter = new Filter();
             filter.categoryBits = 0x0001;
             filter.maskBits = 0x0011;
@@ -104,7 +107,7 @@ public class Lights2DTestScene extends Scene {
         mouse = new EntityMini();
         mouse.transform2D = context.factoryTransform2D.create(0, 0f, 1, 0, 1, 1);
         mouse.animation = new Animation<>(1,
-                context.assetManager.get("atlases/test/testSpriteSheet2.atlas", SpriteSheet.class).findRegions("purple"));
+                context.assetManager.get("atlases/test/testSpriteSheet3.atlas", SpriteSheet.class).findRegions("a"));
         mouse.body = createBody(world, new RigidBody2DData(
                         BodyDef.BodyType.KinematicBody,
                         RigidBody2DData.Shape.RECTANGLE,
@@ -187,7 +190,7 @@ public class Lights2DTestScene extends Scene {
             entityMini.transform2D = context.factoryTransform2D.
                     create(MathUtils.random(-10, 10), MathUtils.random(-1, 4), 1, MathUtils.random(0, 2 * (float)Math.PI), 1, 1);
             entityMini.animation = new Animation<>(1,
-                    context.assetManager.get("atlases/test/testSpriteSheet2.atlas", SpriteSheet.class).findRegions(getRandomRegion()));
+                    context.assetManager.get("atlases/test/testSpriteSheet3.atlas", SpriteSheet.class).findRegions(getRandomRegion()));
             Filter filter = new Filter();
             filter.categoryBits = 0x0100;
             filter.maskBits = 0x0010;
@@ -235,13 +238,11 @@ public class Lights2DTestScene extends Scene {
     }
 
     private String getRandomRegion() {
-        int rand = MathUtils.random(0, 5);
-        if (rand == 0) return "blue";
-        if (rand == 1) return "green";
-        if (rand == 2) return "orange";
-        if (rand == 3) return "purple";
-        if (rand == 4) return "red";
-        return "blue";
+        int rand = MathUtils.random(0, 3);
+        if (rand == 0) return "a";
+        if (rand == 1) return "b";
+        if (rand == 2) return "c";
+        return "a";
     }
 
 
@@ -312,8 +313,7 @@ public class Lights2DTestScene extends Scene {
 
     public static Map<String, Class> getRequiredAssetsNameTypeMap() {
         HashMap<String, Class> assetNameClassMap = new HashMap<>();
-        assetNameClassMap.put("atlases/test/testSpriteSheet.atlas", SpriteSheet.class);
-        assetNameClassMap.put("atlases/test/testSpriteSheet2.atlas", SpriteSheet.class);
+        assetNameClassMap.put("atlases/test/testSpriteSheet3.atlas", SpriteSheet.class);
         return assetNameClassMap;
     }
 }

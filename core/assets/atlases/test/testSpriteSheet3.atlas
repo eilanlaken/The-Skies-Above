@@ -1,0 +1,26 @@
+testSpriteSheet3.png
+size: 256, 256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+a
+  rotate: false
+  xy: 1, 1
+  size: 128, 64
+  orig: 128, 64
+  offset: 0, 0
+  index: -1
+b
+  rotate: false
+  xy: 1, 131
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+c
+  rotate: false
+  xy: 131, 1
+  size: 64, 128
+  orig: 64, 128
+  offset: 0, 0
+  index: -1
