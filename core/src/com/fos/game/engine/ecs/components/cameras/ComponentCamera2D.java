@@ -24,8 +24,9 @@ public class ComponentCamera2D implements Component {
     public OrthographicCamera lens;
     public float viewWorldWidth;
     public float viewWorldHeight;
-    public float pixelsPerMeterX;
-    public float pixelsPerMeterY;
+    public float pixelsPerMeter;
+    @Deprecated public float pixelsPerMeterX;
+    @Deprecated public float pixelsPerMeterY;
     public PostProcessingEffect postProcessingEffect;
     public RenderTarget renderTarget;
     public FrameBuffer frameBuffer;
@@ -38,6 +39,7 @@ public class ComponentCamera2D implements Component {
         this.lens = lens;
         this.viewWorldWidth = lens.viewportWidth;
         this.viewWorldHeight = lens.viewportHeight;
+        this.pixelsPerMeter = (float) Gdx.graphics.getHeight() / lens.viewportHeight;
         this.pixelsPerMeterX = (float) Gdx.graphics.getWidth() / lens.viewportWidth;
         this.pixelsPerMeterY = (float) Gdx.graphics.getHeight() / lens.viewportHeight;
         this.renderTarget = renderTargetParams == null ? null : new RenderTarget(renderTargetParams);
