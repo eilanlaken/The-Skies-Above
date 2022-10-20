@@ -15,13 +15,17 @@ public class ComponentAnimations2D implements Component {
     public Animation2DData[] animationsData;
     public HashMap<String, Animation<TextureAtlas.AtlasRegion>> animations;
     public Animation<TextureAtlas.AtlasRegion> currentPlayingAnimation;
+    public float size;
+    public int pixelsPerUnit;
     public float elapsedTime;
     public boolean active = true;
 
-    protected ComponentAnimations2D(final GameAssetManager assetManager, final Animation2DData...animationsData) {
+    protected ComponentAnimations2D(final GameAssetManager assetManager, final float size, final int pixelsPerUnit, final Animation2DData...animationsData) {
         this.animationsData = animationsData;
-        animations = new HashMap<>();
+        this.animations = new HashMap<>();
         this.elapsedTime = 0;
+        this.size = size;
+        this.pixelsPerUnit = pixelsPerUnit;
         for (final Animation2DData data : animationsData) {
             SpriteSheet spriteSheet = assetManager.get(data.filepath, SpriteSheet.class);
             Array<TextureAtlas.AtlasRegion> keyFrames = spriteSheet.findRegions(data.animationName);

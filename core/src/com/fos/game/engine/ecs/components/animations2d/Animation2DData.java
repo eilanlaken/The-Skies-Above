@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 
 public class Animation2DData {
 
-    public final String filepath;
-    public final String animationName;
+    public String filepath;
+    public String animationName;
     public float frameDuration;
     public Animation.PlayMode playMode;
 

@@ -1,0 +1,47 @@
+testSpriteSheet4.png
+size: 512, 256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+testRectA
+  rotate: false
+  xy: 1, 1
+  size: 174, 128
+  orig: 256, 128
+  offset: 0, 0
+  index: 1
+testRectA
+  rotate: false
+  xy: 1, 131
+  size: 256, 111
+  orig: 256, 128
+  offset: 0, 0
+  index: 2
+testRectA
+  rotate: false
+  xy: 177, 1
+  size: 120, 128
+  orig: 256, 128
+  offset: 136, 0
+  index: 3
+testRectB
+  rotate: false
+  xy: 259, 131
+  size: 87, 64
+  orig: 128, 64
+  offset: 0, 0
+  index: 1
+testRectB
+  rotate: false
+  xy: 259, 197
+  size: 128, 56
+  orig: 128, 64
+  offset: 0, 0
+  index: 2
+testRectB
+  rotate: false
+  xy: 389, 1
+  size: 61, 64
+  orig: 128, 64
+  offset: 67, 0
+  index: 3

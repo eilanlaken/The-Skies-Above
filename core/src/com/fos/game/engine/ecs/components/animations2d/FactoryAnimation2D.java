@@ -11,14 +11,21 @@ public class FactoryAnimation2D extends Factory {
         super(assetManager, jsonConverter);
     }
 
+    // TODO: add size and pixelsPerUnit to Animation2DData
     public ComponentAnimations2D create(final Animation2DData... animation2DData) {
-        return new ComponentAnimations2D(assetManager, animation2DData);
+        return new ComponentAnimations2D(assetManager, 1,100, animation2DData);
     }
 
     // for simple single frame animations2d, which are really intended to be Sprites.
+    public ComponentAnimations2D create(final String filepath, final String animationName, float size, int pixelsPerUnit) {
+        Animation2DData animation2DData = new Animation2DData(filepath, animationName, 1.0f, Animation.PlayMode.NORMAL);
+        return new ComponentAnimations2D(assetManager, size, pixelsPerUnit, animation2DData);
+    }
+
+    @Deprecated
     public ComponentAnimations2D create(final String filepath, final String animationName) {
         Animation2DData animation2DData = new Animation2DData(filepath, animationName, 1.0f, Animation.PlayMode.NORMAL);
-        return new ComponentAnimations2D(assetManager, animation2DData);
+        return new ComponentAnimations2D(assetManager, 1, 100, animation2DData);
     }
 
     public ComponentAnimations2D createFromJson(final String json) {
@@ -28,7 +35,7 @@ public class FactoryAnimation2D extends Factory {
 
     public ComponentAnimations2D create(final String filepath, final String animationName, final float frameDuration, final Animation.PlayMode playMode) {
         Animation2DData animation2DData = new Animation2DData(filepath, animationName, frameDuration, playMode);
-        return new ComponentAnimations2D(assetManager, animation2DData);
+        return new ComponentAnimations2D(assetManager, 1, 100, animation2DData);
     }
 
 
