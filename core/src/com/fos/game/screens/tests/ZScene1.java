@@ -40,7 +40,6 @@ public class ZScene1 extends Scene_old {
     RayHandler rayHandler;
     PointLight pointLight1, pointLight2, pointLight3;
 
-    public final float VIRTUAL_HEIGHT = 20;
 
     class EntityMini {
         ComponentTransform2D transform;
@@ -49,9 +48,8 @@ public class ZScene1 extends Scene_old {
         Joint joint;
     }
 
-    EntityMini mouse;
-
-    int pixelsPerUnit;
+    public final float VIRTUAL_HEIGHT = 20;
+    private int pixelsPerUnit = 53*2;
 
     public ZScene1(final GameContext context) {
         super(context);
@@ -75,7 +73,7 @@ public class ZScene1 extends Scene_old {
 
         EntityMini entityMini1 = new EntityMini();
         entityMini1.transform = context.factoryTransform2D.create(3, 0, 1, 0, 1, 1);
-        entityMini1.animations = context.factoryAnimation2D.create("atlases/test/testSpriteSheet4.atlas", "testRectB", 1, 200);
+        entityMini1.animations = context.factoryAnimation2D.create("atlases/test/testSpriteSheet3.atlas", "a", 0.5f, pixelsPerUnit);
         Filter filter = new Filter();
         filter.categoryBits = 0x0001;
         filter.maskBits = 0x0011;
@@ -94,7 +92,7 @@ public class ZScene1 extends Scene_old {
 
         EntityMini entityMini2 = new EntityMini();
         entityMini2.transform = context.factoryTransform2D.create(-3, 0, 1, 0, 1, 1);
-        entityMini2.animations = context.factoryAnimation2D.create("atlases/test/testSpriteSheet4.atlas", "testRectA", 1, 200);
+        entityMini2.animations = context.factoryAnimation2D.create("atlases/test/testSpriteSheet3.atlas", "b", 1, pixelsPerUnit);
         Filter filter2 = new Filter();
         filter2.categoryBits = 0x0001;
         filter2.maskBits = 0x0011;
@@ -137,7 +135,7 @@ public class ZScene1 extends Scene_old {
             if (entityMini.animations == null) continue;
             entityMini.transform.transform.setPosition(entityMini.body.getPosition());
             entityMini.transform.transform.setOrientation(entityMini.body.getTransform().getOrientation());
-            spriteBatch.draw(entityMini.animations.currentPlayingAnimation.getKeyFrame(delta), entityMini.transform, 1, entityMini.animations.pixelsPerUnit);
+            spriteBatch.draw(entityMini.animations.currentPlayingAnimation.getKeyFrame(delta), entityMini.transform, entityMini.animations.size, entityMini.animations.pixelsPerUnit);
         }
         spriteBatch.end();
         // the ambient light is determined by the last rendered RayHandler.
@@ -204,7 +202,8 @@ public class ZScene1 extends Scene_old {
         camera1.lens.viewportHeight = camera1.viewWorldWidth * (float) height / width;
         camera1.lens.update();
 
-        pixelsPerUnit = height / 30;
+        //pixelsPerUnit = height / (int) VIRTUAL_HEIGHT;
+        System.out.println(pixelsPerUnit);
         //camera2.buildFrameBuffer();
         //camera2.lens.viewportWidth = camera1.viewWorldWidth;
         //camera2.lens.viewportHeight = camera1.viewWorldWidth * (float) height / width;
@@ -297,6 +296,7 @@ public class ZScene1 extends Scene_old {
 
     public static Map<String, Class> getRequiredAssetsNameTypeMap() {
         HashMap<String, Class> assetNameClassMap = new HashMap<>();
+        assetNameClassMap.put("atlases/test/testSpriteSheet3.atlas", SpriteSheet.class);
         assetNameClassMap.put("atlases/test/testSpriteSheet4.atlas", SpriteSheet.class);
         return assetNameClassMap;
     }
