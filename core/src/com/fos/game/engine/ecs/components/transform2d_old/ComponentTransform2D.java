@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.Transform;
 import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 
+@Deprecated
 public class ComponentTransform2D implements Component {
 
     public Transform transform;

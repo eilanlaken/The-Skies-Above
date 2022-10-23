@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.GLFrameBuffer;
+import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector3;
 import com.fos.game.engine.core.graphics.g2d.RenderTarget;
 import com.fos.game.engine.core.graphics.shaders.postprocessing.PostProcessingEffect;
 import com.fos.game.engine.ecs.components.base.Component;
@@ -51,6 +53,10 @@ public class ComponentCamera implements Component {
 
     public Texture getRenderTargetTexture() {
         return renderTarget.getTexture();
+    }
+
+    public void setTransform(final Matrix4 transform) {
+
     }
 
     @Override
