@@ -7,9 +7,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.fos.game.engine.context.GameContext;
@@ -18,9 +16,9 @@ import com.fos.game.engine.core.graphics.g2d.GraphicsUtils;
 import com.fos.game.engine.core.graphics.g2d.SpriteBatch;
 import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
 import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
-import com.fos.game.engine.ecs.components.cameras.ComponentCamera2D;
+import com.fos.game.engine.ecs.components.cameras_old.ComponentCamera2D;
 import com.fos.game.engine.ecs.components.physics2d.RigidBody2DData;
-import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
+import com.fos.game.engine.ecs.components.transform2d_old.ComponentTransform2D;
 import com.fos.game.engine.ecs.systems.renderer_old.base.Physics2DDebugRenderer;
 
 import java.util.Comparator;
@@ -33,7 +31,7 @@ public class ZScene1 extends Scene_old {
     Array<EntityMini> entities;
 
     private ComponentCamera2D camera1;
-    //private ComponentCamera2D camera2;
+    private ComponentCamera2D camera2;
 
     SpriteBatch spriteBatch = new SpriteBatch();
     Physics2DDebugRenderer physics2DDebugRenderer = new Physics2DDebugRenderer();
@@ -53,6 +51,17 @@ public class ZScene1 extends Scene_old {
 
     public ZScene1(final GameContext context) {
         super(context);
+        runCode();
+    }
+
+    private void runCode() {
+        Matrix4 x = new Matrix4();
+
+        System.out.println(x);
+        x.rotate(0,0,1, 45);
+        System.out.println("rotated x: " + x);
+        System.out.println("rotation around z: ");
+        System.out.println(x.getRotation(new Quaternion()).getAngleAround(0,0,1));
     }
 
     @Override
@@ -69,7 +78,7 @@ public class ZScene1 extends Scene_old {
 
         entities = new Array<>();
         camera1 = context.factoryCamera2D.createCamera2D(VIRTUAL_HEIGHT * GraphicsUtils.getAspectRatio(), VIRTUAL_HEIGHT);
-        //camera2 = context.factoryCamera2D.createCamera2D(VIRTUAL_HEIGHT * GraphicsUtils.getAspectRatio() / 2, VIRTUAL_HEIGHT / 2);
+        camera2 = context.factoryCamera2D.createCamera2D(VIRTUAL_HEIGHT * GraphicsUtils.getAspectRatio() / 2, VIRTUAL_HEIGHT / 2);
 
         EntityMini entityMini1 = new EntityMini();
         entityMini1.transform = context.factoryTransform2D.create(3, 0, 1, 0, 1, 1);
@@ -127,7 +136,7 @@ public class ZScene1 extends Scene_old {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         camera1.lens.update();
-        //camera2.lens.update();
+        camera2.lens.update();
         rayHandler.setCombinedMatrix(camera1.lens);
         spriteBatch.setProjectionMatrix(camera1.lens.combined);
         spriteBatch.begin();

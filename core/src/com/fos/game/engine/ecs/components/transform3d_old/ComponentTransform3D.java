@@ -1,4 +1,4 @@
-package com.fos.game.engine.ecs.components.transform3d;
+package com.fos.game.engine.ecs.components.transform3d_old;
 
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;

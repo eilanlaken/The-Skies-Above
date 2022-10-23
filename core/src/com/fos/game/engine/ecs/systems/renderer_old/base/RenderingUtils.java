@@ -14,8 +14,8 @@ import com.fos.game.engine.ecs.components.lights3d.LightingEnvironment;
 import com.fos.game.engine.ecs.components.lights3d.UtilsLights;
 import com.fos.game.engine.ecs.components.modelinstance_old.ComponentModelInstance;
 import com.fos.game.engine.ecs.components.modelinstance_old.ModelInstance;
-import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
-import com.fos.game.engine.ecs.components.transform3d.ComponentTransform3D;
+import com.fos.game.engine.ecs.components.transform2d_old.ComponentTransform2D;
+import com.fos.game.engine.ecs.components.transform3d_old.ComponentTransform3D;
 import com.fos.game.engine.ecs.entities.Entity;
 
 import java.util.Comparator;
@@ -126,7 +126,7 @@ public class RenderingUtils {
 
     private static void prepareRenderTargetGroups(Map<RenderTarget, Array<ComponentCamera>> renderTargetCamerasResult) {
         renderTargetCamerasResult.clear();
-        // scan all 2D cameras for render targets
+        // scan all 2D cameras_old for render targets
         for (ComponentCamera camera2D : cameras2D) {
             final RenderTarget renderTarget = camera2D.renderTarget;
             Array<ComponentCamera> camerasForRenderTarget = renderTargetCamerasResult.get(renderTarget);
@@ -136,7 +136,7 @@ public class RenderingUtils {
             }
             camerasForRenderTarget.add(camera2D);
         }
-        // scan all 3D cameras for render targets
+        // scan all 3D cameras_old for render targets
         for (ComponentCamera camera3D : cameras3D) {
             final RenderTarget renderTarget = camera3D.renderTarget;
             Array<ComponentCamera> camerasForRenderTarget = renderTargetCamerasResult.get(camera3D);

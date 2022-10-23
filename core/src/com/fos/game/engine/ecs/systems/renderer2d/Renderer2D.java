@@ -11,12 +11,12 @@ import com.fos.game.engine.core.graphics.g2d.Physics2DDebugRenderer;
 import com.fos.game.engine.core.graphics.g2d.SpriteBatch;
 import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
 import com.fos.game.engine.ecs.components.base.ComponentType;
-import com.fos.game.engine.ecs.components.cameras.ComponentCamera2D;
+import com.fos.game.engine.ecs.components.cameras_old.ComponentCamera2D;
 import com.fos.game.engine.core.graphics.g2d.RenderTarget;
 import com.fos.game.engine.ecs.components.lights2d.ComponentLight2D;
 import com.fos.game.engine.ecs.components.physics2d.ComponentJoint2D;
 import com.fos.game.engine.ecs.components.physics2d.ComponentRigidBody2D;
-import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
+import com.fos.game.engine.ecs.components.transform2d_old.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
 
@@ -93,7 +93,7 @@ public class Renderer2D implements EntitiesProcessor, Disposable {
                 final float delta = Gdx.graphics.getDeltaTime();
                 animation.advanceTime(delta);
                 TextureAtlas.AtlasRegion atlasRegion = animation.getTextureRegion();
-                spriteBatch.draw(atlasRegion, transform2D, camera.pixelsPerMeterX, camera.pixelsPerMeterY);
+                spriteBatch.draw(atlasRegion, transform2D, animation.size, animation.pixelsPerUnit);
             }
         }
         spriteBatch.end();

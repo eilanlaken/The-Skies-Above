@@ -1,4 +1,4 @@
-package com.fos.game.engine.ecs.components.cameras;
+package com.fos.game.engine.ecs.components.cameras_old;
 
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;

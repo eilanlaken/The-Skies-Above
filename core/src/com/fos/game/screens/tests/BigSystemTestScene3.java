@@ -17,10 +17,10 @@ import com.badlogic.gdx.utils.Array;
 import com.fos.game.engine.context.GameContext;
 import com.fos.game.engine.context.Scene_old;
 import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
-import com.fos.game.engine.ecs.components.cameras.ComponentCamera2D;
+import com.fos.game.engine.ecs.components.cameras_old.ComponentCamera2D;
 import com.fos.game.engine.ecs.components.physics2d.RigidBody2DData;
 import com.fos.game.engine.ecs.components.physics2d.UtilsRigidBody2D;
-import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
+import com.fos.game.engine.ecs.components.transform2d_old.ComponentTransform2D;
 import com.fos.game.engine.ecs.systems.renderer_old.base.Physics2DDebugRenderer;
 import com.fos.game.engine.ecs.systems.renderer_old.base.SpriteBatch;
 
@@ -79,8 +79,8 @@ public class BigSystemTestScene3 extends Scene_old {
             entityMini.body = createBody(world, new RigidBody2DData(
                     BodyDef.BodyType.DynamicBody,
                     RigidBody2DData.Shape.RECTANGLE,
-                    UtilsRigidBody2D.getBox2DLength(entityMini.animation.getKeyFrame(0).getRegionWidth(), camera.pixelsPerMeterX),
-                    UtilsRigidBody2D.getBox2DLength(entityMini.animation.getKeyFrame(0).getRegionHeight(), camera.pixelsPerMeterY),
+                    UtilsRigidBody2D.getBox2DLength(entityMini.animation.getKeyFrame(0).getRegionWidth(), 64),
+                    UtilsRigidBody2D.getBox2DLength(entityMini.animation.getKeyFrame(0).getRegionHeight(), 64),
                     filter,
                     1,1,0.2f,false),
                     entityMini.transform2D);
@@ -108,8 +108,8 @@ public class BigSystemTestScene3 extends Scene_old {
         mouse.body = createBody(world, new RigidBody2DData(
                         BodyDef.BodyType.KinematicBody,
                         RigidBody2DData.Shape.RECTANGLE,
-                        UtilsRigidBody2D.getBox2DLength(mouse.animation.getKeyFrame(0).getRegionWidth(), camera.pixelsPerMeterX),
-                        UtilsRigidBody2D.getBox2DLength(mouse.animation.getKeyFrame(0).getRegionHeight(), camera.pixelsPerMeterY),
+                        UtilsRigidBody2D.getBox2DLength(mouse.animation.getKeyFrame(0).getRegionWidth(), 64),
+                        UtilsRigidBody2D.getBox2DLength(mouse.animation.getKeyFrame(0).getRegionHeight(), 64),
                         new Filter(),
                         1,1,0.2f,false),
                         mouse.transform2D
@@ -158,7 +158,7 @@ public class BigSystemTestScene3 extends Scene_old {
             if (entityMini.animation == null) continue;
             entityMini.transform2D.transform.setPosition(entityMini.body.getPosition());
             entityMini.transform2D.transform.setOrientation(entityMini.body.getTransform().getOrientation());
-            spriteBatch.draw2(entityMini.animation.getKeyFrame(0), entityMini.transform2D, camera.pixelsPerMeterX, camera.pixelsPerMeterY);
+            spriteBatch.draw2(entityMini.animation.getKeyFrame(0), entityMini.transform2D, 64, 64);
         }
         spriteBatch.end();
         // the ambient light is determined by the last rendered RayHandler.
@@ -194,8 +194,8 @@ public class BigSystemTestScene3 extends Scene_old {
             entityMini.body = createBody(world, new RigidBody2DData(
                             BodyDef.BodyType.DynamicBody,
                             RigidBody2DData.Shape.RECTANGLE,
-                            UtilsRigidBody2D.getBox2DLength(entityMini.animation.getKeyFrame(0).getRegionWidth(), camera.pixelsPerMeterX),
-                            UtilsRigidBody2D.getBox2DLength(entityMini.animation.getKeyFrame(0).getRegionHeight(), camera.pixelsPerMeterY),
+                            UtilsRigidBody2D.getBox2DLength(entityMini.animation.getKeyFrame(0).getRegionWidth(), 64),
+                            UtilsRigidBody2D.getBox2DLength(entityMini.animation.getKeyFrame(0).getRegionHeight(), 64),
                             filter,
                             1,1,0.2f,false),
                     entityMini.transform2D);

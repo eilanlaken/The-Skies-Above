@@ -1,4 +1,4 @@
-package com.fos.game.engine.ecs.components.cameras;
+package com.fos.game.engine.ecs.components.cameras_old;
 
 public class Camera3DData {
 

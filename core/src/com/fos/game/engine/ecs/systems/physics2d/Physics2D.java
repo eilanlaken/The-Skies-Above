@@ -2,6 +2,7 @@ package com.fos.game.engine.ecs.systems.physics2d;
 
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
@@ -10,7 +11,8 @@ import com.badlogic.gdx.utils.Disposable;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.physics2d.ComponentJoint2D;
 import com.fos.game.engine.ecs.components.physics2d.ComponentRigidBody2D;
-import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
+import com.fos.game.engine.ecs.components.transform.ComponentTransform;
+import com.fos.game.engine.ecs.components.transform2d_old.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
 
@@ -28,18 +30,33 @@ public class Physics2D implements EntitiesProcessor, Disposable {
         this.rayHandler = new RayHandler(this.world);
     }
 
+//    @Override
+//    public void process(final Array<Entity> entities) {
+//        Physics2DUtils.prepare(entities, bodies, joints);
+//        final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
+//        this.world.step(delta, 6, 2);
+//        for (Entity entity : bodies) {
+//            ComponentTransform2D transform2D = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
+//            ComponentRigidBody2D componentRigidBody2D = (ComponentRigidBody2D) entity.components[ComponentType.PHYSICS_2D_BODY.ordinal()];
+//            Body body = componentRigidBody2D.body;
+//            if (componentRigidBody2D.active != body.isActive()) body.setActive(componentRigidBody2D.active);
+//            transform2D.transform.setPosition(body.getPosition());
+//            transform2D.transform.setOrientation(body.getTransform().getOrientation());
+//        }
+//    }
+
     @Override
     public void process(final Array<Entity> entities) {
         Physics2DUtils.prepare(entities, bodies, joints);
         final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
         this.world.step(delta, 6, 2);
         for (Entity entity : bodies) {
-            ComponentTransform2D transform2D = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
+            ComponentTransform transform = (ComponentTransform) entity.components[ComponentType.TRANSFORM.ordinal()];
             ComponentRigidBody2D componentRigidBody2D = (ComponentRigidBody2D) entity.components[ComponentType.PHYSICS_2D_BODY.ordinal()];
             Body body = componentRigidBody2D.body;
             if (componentRigidBody2D.active != body.isActive()) body.setActive(componentRigidBody2D.active);
-            transform2D.transform.setPosition(body.getPosition());
-            transform2D.transform.setOrientation(body.getTransform().getOrientation());
+            transform.matrix.setTranslation(body.getPosition().x, body.getPosition().y, transform.matrix.val[Matrix4.M23]);
+            transform.matrix.setToRotationRad(0,0,1, body.getAngle());
         }
     }
 

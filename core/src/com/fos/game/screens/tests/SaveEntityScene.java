@@ -10,7 +10,7 @@ import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
 import com.fos.game.engine.ecs.components.audio.ComponentSoundEffects;
 import com.fos.game.engine.ecs.components.camera_old.FactoryCamera;
 import com.fos.game.engine.ecs.components.scripts.ComponentScripts;
-import com.fos.game.engine.ecs.components.transform2d.FactoryTransform2D;
+import com.fos.game.engine.ecs.components.transform2d_old.FactoryTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.entities.EntityManager;
 import com.fos.game.engine.core.files.serialization.JsonConverter;

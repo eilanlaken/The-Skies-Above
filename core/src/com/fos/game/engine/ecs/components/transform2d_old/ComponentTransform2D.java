@@ -1,4 +1,4 @@
-package com.fos.game.engine.ecs.components.transform2d;
+package com.fos.game.engine.ecs.components.transform2d_old;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Transform;

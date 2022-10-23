@@ -7,9 +7,9 @@ import com.fos.game.engine.core.graphics.g2d.RenderTarget;
 import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
 import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
-import com.fos.game.engine.ecs.components.cameras.ComponentCamera2D;
+import com.fos.game.engine.ecs.components.cameras_old.ComponentCamera2D;
 import com.fos.game.engine.ecs.components.lights2d.ComponentLight2D;
-import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
+import com.fos.game.engine.ecs.components.transform2d_old.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 
 import java.util.*;
@@ -79,7 +79,7 @@ public class Renderer2DUtils {
     }
 
     /**
-    this method will build a map of all the render targets and the cameras rendering to these targets:
+    this method will build a map of all the render targets and the cameras_old rendering to these targets:
     {
         renderTarget1: cameraA, cameraB;
         renderTarget2: cameraA;
@@ -88,7 +88,7 @@ public class Renderer2DUtils {
      */
     protected static Map<RenderTarget, Array<ComponentCamera2D>> getRenderTargetCamerasMap(final Array<ComponentCamera2D> cameras) {
         renderTargetCamerasResult.clear();
-        // scan all 2D cameras for render targets
+        // scan all 2D cameras_old for render targets
         for (ComponentCamera2D camera2D : cameras) {
             final RenderTarget renderTarget = camera2D.renderTarget;
             Array<ComponentCamera2D> camerasForRenderTarget = renderTargetCamerasResult.get(renderTarget);

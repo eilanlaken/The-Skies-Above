@@ -9,10 +9,10 @@ import com.fos.game.engine.ecs.components.lights3d.Light;
 import com.fos.game.engine.ecs.components.modelinstance_old.ComponentModelInstance;
 import com.fos.game.engine.ecs.components.physics2d.ComponentRigidBody2D;
 import com.fos.game.engine.ecs.components.physics3d.ComponentRigidBody3D;
-import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
-import com.fos.game.engine.ecs.components.transform2d.FactoryTransform2D;
-import com.fos.game.engine.ecs.components.transform3d.ComponentTransform3D;
-import com.fos.game.engine.ecs.components.transform3d.FactoryTransform3D;
+import com.fos.game.engine.ecs.components.transform2d_old.ComponentTransform2D;
+import com.fos.game.engine.ecs.components.transform2d_old.FactoryTransform2D;
+import com.fos.game.engine.ecs.components.transform3d_old.ComponentTransform3D;
+import com.fos.game.engine.ecs.components.transform3d_old.FactoryTransform3D;
 
 public class Entity implements Disposable {
 
