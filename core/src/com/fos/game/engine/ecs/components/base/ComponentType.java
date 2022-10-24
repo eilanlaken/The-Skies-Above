@@ -2,9 +2,8 @@ package com.fos.game.engine.ecs.components.base;
 
 public enum ComponentType {
 
-    TRANSFORM,
-    @Deprecated TRANSFORM_2D,
-    @Deprecated TRANSFORM_3D,
+    TRANSFORM_2D,
+    TRANSFORM_3D,
     LIGHT_2D,
     LIGHT_3D,
     MODEL_INSTANCE,

@@ -14,7 +14,7 @@ import com.fos.game.engine.ecs.components.lights3d.LightingEnvironment;
 import com.fos.game.engine.ecs.components.lights3d.UtilsLights;
 import com.fos.game.engine.ecs.components.modelinstance_old.ComponentModelInstance;
 import com.fos.game.engine.ecs.components.modelinstance_old.ModelInstance;
-import com.fos.game.engine.ecs.components.transform2d_old.ComponentTransform2D;
+import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
 import com.fos.game.engine.ecs.components.transform3d_old.ComponentTransform3D;
 import com.fos.game.engine.ecs.entities.Entity;
 
@@ -77,7 +77,7 @@ public class RenderingUtils {
             if ((entity.componentsBitMask & ATTACHED_LIGHT_BIT_MASK) > 0) {
                 ComponentTransform3D transform = (ComponentTransform3D) entity.components[ComponentType.TRANSFORM_3D.ordinal()];
                 Light light = (Light) entity.components[ComponentType.LIGHT_3D.ordinal()];
-                UtilsLights.applyTransformToLight(transform, light);
+                UtilsLights.applyTransformToLight(transform.matrix4, light);
                 lightingEnvironmentResult.addLight(light);
             }
             if ((entity.componentsBitMask & ATTACHED_CAMERA_BIT_MASK) > 0) {

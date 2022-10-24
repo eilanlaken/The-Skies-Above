@@ -54,7 +54,7 @@ public class Physics3D implements EntitiesProcessor, Disposable {
         for (final Entity entity : entities) {
             ComponentRigidBody3D body = (ComponentRigidBody3D) entity.components[ComponentType.PHYSICS_3D_BODY.ordinal()];
             ComponentTransform3D transform = (ComponentTransform3D) entity.components[ComponentType.TRANSFORM_3D.ordinal()];
-            body.getWorldTransform(transform);
+            body.getWorldTransform(transform.matrix4);
         }
         // step bullet3D simulation
         final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());

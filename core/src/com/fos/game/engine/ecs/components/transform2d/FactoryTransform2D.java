@@ -1,4 +1,4 @@
-package com.fos.game.engine.ecs.components.transform2d_old;
+package com.fos.game.engine.ecs.components.transform2d;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.fos.game.engine.ecs.components.base.Factory;

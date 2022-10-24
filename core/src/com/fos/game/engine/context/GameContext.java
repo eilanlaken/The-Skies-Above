@@ -1,9 +1,11 @@
 package com.fos.game.engine.context;
 
 import com.badlogic.gdx.Game;
+import com.fos.game.engine.core.files.assets.GameAssetManager;
+import com.fos.game.engine.core.files.serialization.JsonConverter;
 import com.fos.game.engine.ecs.components.animations2d.FactoryAnimation2D;
 import com.fos.game.engine.ecs.components.audio.FactoryAudio;
-import com.fos.game.engine.ecs.components.camera_old.FactoryCamera;
+import com.fos.game.engine.ecs.components.camera.FactoryCamera;
 import com.fos.game.engine.ecs.components.cameras_old.FactoryCamera2D;
 import com.fos.game.engine.ecs.components.cameras_old.FactoryCamera3D;
 import com.fos.game.engine.ecs.components.lights2d.FactoryLight2D;
@@ -14,10 +16,8 @@ import com.fos.game.engine.ecs.components.physics3d.FactoryRigidBody3D;
 import com.fos.game.engine.ecs.components.scripts.FactoryScripts;
 import com.fos.game.engine.ecs.components.shapes.FactoryShape2D;
 import com.fos.game.engine.ecs.components.signals.FactorySignalBox;
-import com.fos.game.engine.ecs.components.transform2d_old.FactoryTransform2D;
+import com.fos.game.engine.ecs.components.transform2d.FactoryTransform2D;
 import com.fos.game.engine.ecs.components.transform3d_old.FactoryTransform3D;
-import com.fos.game.engine.core.files.assets.GameAssetManager;
-import com.fos.game.engine.core.files.serialization.JsonConverter;
 import com.fos.game.screens.loading.LoadingScreen;
 
 public class GameContext extends Game {
@@ -28,10 +28,9 @@ public class GameContext extends Game {
 	// Component Factory(s)
 	public FactoryAnimation2D factoryAnimation2D;
 	public FactoryAudio factoryAudio;
-	@Deprecated
 	public FactoryCamera factoryCamera;
-	public FactoryCamera2D factoryCamera2D;
-	public FactoryCamera3D factoryCamera3D;
+	@Deprecated public FactoryCamera2D factoryCamera2D;
+	@Deprecated public FactoryCamera3D factoryCamera3D;
 	public FactoryLight2D factoryLight2D;
 	public FactoryLight3D factoryLight3D;
 	public FactoryModelInstance factoryModelInstance;

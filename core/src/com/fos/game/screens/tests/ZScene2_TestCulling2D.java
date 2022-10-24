@@ -4,9 +4,11 @@ import box2dLight.PointLight;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
@@ -16,7 +18,7 @@ import com.fos.game.engine.core.graphics.g2d.GraphicsUtils;
 import com.fos.game.engine.core.graphics.g2d.SpriteBatch;
 import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
 import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
-import com.fos.game.engine.ecs.components.cameras_old.ComponentCamera2D;
+import com.fos.game.engine.ecs.components.camera.ComponentCamera;
 import com.fos.game.engine.ecs.components.physics2d.RigidBody2DData;
 import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
 import com.fos.game.engine.ecs.systems.renderer_old.base.Physics2DDebugRenderer;
@@ -25,13 +27,13 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ZScene1 extends Scene_old {
+public class ZScene2_TestCulling2D extends Scene_old {
 
     private World world;
     Array<EntityMini> entities;
+    EntityMini entityMini1, entityMini2;
 
-    private ComponentCamera2D camera1;
-    private ComponentCamera2D camera2;
+    private ComponentCamera camera;
 
     SpriteBatch spriteBatch = new SpriteBatch();
     Physics2DDebugRenderer physics2DDebugRenderer = new Physics2DDebugRenderer();
@@ -49,7 +51,7 @@ public class ZScene1 extends Scene_old {
     public final float VIRTUAL_HEIGHT = 20;
     private int pixelsPerUnit = 53*2;
 
-    public ZScene1(final GameContext context) {
+    public ZScene2_TestCulling2D(final GameContext context) {
         super(context);
         runCode();
     }
@@ -57,17 +59,12 @@ public class ZScene1 extends Scene_old {
     private void runCode() {
         Matrix4 x = new Matrix4();
         x.scl(2,3,4);
-        x.rotate(0,0,1, 45);
-        System.out.println("x:");
         System.out.println(x);
-
-        Matrix4 y = new Matrix4();
-        y.rotate(0,0,1, 45);
-        System.out.println("y:");
-        System.out.println(y);
-
-        System.out.println(x.getScaleX());
-        System.out.println(y.getScaleX());
+        x.rotate(0,0,1, 45);
+        System.out.println("rotated x: " + x);
+        System.out.println("rotation around z: ");
+        System.out.println(x.getRotation(new Quaternion()).getAngleAround(0,0,1));
+        System.out.println("scale x,y,z: " + x.getScaleX() + "," + x.getScaleY() + "," + x.getScaleZ());
     }
 
     @Override
@@ -83,10 +80,9 @@ public class ZScene1 extends Scene_old {
         //directionalLight = new DirectionalLight(rayHandler, 100, Color.LIME, 30);
 
         entities = new Array<>();
-        camera1 = context.factoryCamera2D.createCamera2D(VIRTUAL_HEIGHT * GraphicsUtils.getAspectRatio(), VIRTUAL_HEIGHT);
-        camera2 = context.factoryCamera2D.createCamera2D(VIRTUAL_HEIGHT * GraphicsUtils.getAspectRatio() / 2, VIRTUAL_HEIGHT / 2);
+        camera = context.factoryCamera.createCamera2D(VIRTUAL_HEIGHT * GraphicsUtils.getAspectRatio(), VIRTUAL_HEIGHT);
 
-        EntityMini entityMini1 = new EntityMini();
+        entityMini1 = new EntityMini();
         entityMini1.transform = context.factoryTransform2D.create(3, 0, 1, 0, 1, 1);
         entityMini1.animations = context.factoryAnimation2D.create("atlases/test/testSpriteSheet3.atlas", "a", 0.5f, pixelsPerUnit);
         Filter filter = new Filter();
@@ -105,7 +101,7 @@ public class ZScene1 extends Scene_old {
         entities.add(entityMini1);
 
 
-        EntityMini entityMini2 = new EntityMini();
+        entityMini2 = new EntityMini();
         entityMini2.transform = context.factoryTransform2D.create(-3, 0, 1, 0, 1, 1);
         entityMini2.animations = context.factoryAnimation2D.create("atlases/test/testSpriteSheet3.atlas", "b", 1, pixelsPerUnit);
         Filter filter2 = new Filter();
@@ -141,15 +137,18 @@ public class ZScene1 extends Scene_old {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
-        camera1.lens.update();
-        camera2.lens.update();
-        rayHandler.setCombinedMatrix(camera1.lens);
-        spriteBatch.setProjectionMatrix(camera1.lens.combined);
+        camera.lens.update();
+        rayHandler.setCombinedMatrix((OrthographicCamera) camera.lens);
+        spriteBatch.setProjectionMatrix(camera.lens.combined);
         spriteBatch.begin();
         for (EntityMini entityMini : entities) {
             if (entityMini.animations == null) continue;
             entityMini.transform.transform.setPosition(entityMini.body.getPosition());
             entityMini.transform.transform.setOrientation(entityMini.body.getTransform().getOrientation());
+            if (cull(entityMini.transform, entityMini.animations, camera.lens)) {
+                System.out.println("culling");
+                continue;
+            }
             spriteBatch.draw(entityMini.animations.currentPlayingAnimation.getKeyFrame(delta), entityMini.transform, entityMini.animations.size, entityMini.animations.pixelsPerUnit);
         }
         spriteBatch.end();
@@ -157,7 +156,7 @@ public class ZScene1 extends Scene_old {
         rayHandler.render();
 
         physics2DDebugRenderer.begin();
-        physics2DDebugRenderer.setProjectionMatrix(camera1.lens.combined);
+        physics2DDebugRenderer.setProjectionMatrix(camera.lens.combined);
         for (EntityMini entityMini : entities) {
             Body body = entityMini.body;
             Joint joint = entityMini.joint;
@@ -166,7 +165,7 @@ public class ZScene1 extends Scene_old {
         }
         physics2DDebugRenderer.end();
 
-        OrthographicCamera orthographicCamera = camera1.lens;
+        OrthographicCamera orthographicCamera = (OrthographicCamera) camera.lens;
         if (Gdx.input.isKeyPressed(Input.Keys.Z))
             orthographicCamera.zoom += 0.1f;
         if (Gdx.input.isKeyPressed(Input.Keys.A))
@@ -174,55 +173,20 @@ public class ZScene1 extends Scene_old {
         if (Gdx.input.isKeyJustPressed(Input.Keys.K))
             pointLight1.setActive(!pointLight1.isActive());
 
-//        if (Gdx.input.isKeyPressed(Input.Keys.R)) {
-//            EntityMini entityMini = new EntityMini();
-//            entityMini.transform = context.factoryTransform2D.
-//                    create(MathUtils.random(-10, 10), MathUtils.random(-1, 4), 1, MathUtils.random(0, 2 * (float)Math.PI), 1, 1);
-//            entityMini.animation = new Animation<>(1,
-//                    context.assetManager.get("atlases/test/testSpriteSheet3.atlas", SpriteSheet.class).findRegions(getRandomRegion()));
-//            Filter filter = new Filter();
-//            filter.categoryBits = 0x0100;
-//            filter.maskBits = 0x0010;
-//            entityMini.body = createBody(world, new RigidBody2DData(
-//                            BodyDef.BodyType.DynamicBody,
-//                            RigidBody2DData.Shape.RECTANGLE,
-//                            UtilsRigidBody2D.getBox2DLength(entityMini.animation.getKeyFrame(0).getRegionWidth(), camera2.pixelsPerMeterX),
-//                            UtilsRigidBody2D.getBox2DLength(entityMini.animation.getKeyFrame(0).getRegionHeight(), camera2.pixelsPerMeterY),
-//                            filter,
-//                            1,1,0.2f,false),
-//                    entityMini.transform);
-//            entityMini.body.setUserData(entityMini);
-//            entityMini.transform.transform = entityMini.body.getTransform();
-//            entities.add(entityMini);
-//        }
-
-        // activate and deactivate bodies
-        EntityMini entityMini = entities.get(0);
-        if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
-            entityMini.body.setActive(!entityMini.body.isActive()); // <- active / inactive bodies will maintain linear and angular velocity.
-            //entityMini.body.setAwake(!entityMini.body.isAwake());
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            entityMini1.body.setTransform(entityMini1.transform.getPosition().x - 0.1f, entityMini1.transform.getPosition().y, entityMini1.body.getAngle());
         }
-
-        // FOLLOW MOUSE
-        Vector3 v = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-        camera1.lens.unproject(v);
+        if (Gdx.input.isKeyPressed(Input.Keys.R)) {
+            entityMini1.body.setTransform(entityMini1.transform.getPosition().x, entityMini1.transform.getPosition().y, entityMini1.body.getAngle() + 0.1f);
+        }
     }
 
     @Override
     public void resize(int width, int height) {
-        System.out.println("reisze: " + width + "," + height);
-
-        camera1.buildFrameBuffer();
-        camera1.lens.viewportWidth = camera1.viewWorldWidth;
-        camera1.lens.viewportHeight = camera1.viewWorldWidth * (float) height / width;
-        camera1.lens.update();
-
-        //pixelsPerUnit = height / (int) VIRTUAL_HEIGHT;
-        System.out.println(pixelsPerUnit);
-        //camera2.buildFrameBuffer();
-        //camera2.lens.viewportWidth = camera1.viewWorldWidth;
-        //camera2.lens.viewportHeight = camera1.viewWorldWidth * (float) height / width;
-        //camera2.lens.update();
+        camera.buildFrameBuffer();
+        camera.lens.viewportWidth = camera.viewWorldWidth;
+        camera.lens.viewportHeight = camera.viewWorldWidth * (float) height / width;
+        camera.lens.update();
     }
 
     @Override
@@ -315,4 +279,14 @@ public class ZScene1 extends Scene_old {
         assetNameClassMap.put("atlases/test/testSpriteSheet4.atlas", SpriteSheet.class);
         return assetNameClassMap;
     }
+
+    // TODO: test culling
+    private static boolean cull(ComponentTransform2D transform, ComponentAnimations2D animation, final Camera camera) {
+        TextureAtlas.AtlasRegion atlasRegion = animation.getTextureRegion();
+        final float width = atlasRegion.getRegionWidth() * transform.scaleX;
+        final float height = atlasRegion.getRegionHeight() * transform.scaleY;
+        final float boundingRadius = Math.max(width, height) * 2 * animation.size / animation.pixelsPerUnit;
+        return !camera.frustum.sphereInFrustum(transform.transform.getPosition().x, transform.transform.getPosition().y, 0, boundingRadius);
+    }
+
 }

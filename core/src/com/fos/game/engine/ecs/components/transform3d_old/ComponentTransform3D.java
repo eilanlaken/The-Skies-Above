@@ -5,15 +5,12 @@ import com.badlogic.gdx.math.Vector3;
 import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 
-@Deprecated
-public class ComponentTransform3D extends Matrix4 implements Component {
+public class ComponentTransform3D implements Component {
 
-    protected ComponentTransform3D() {
-        super();
-    }
+    public Matrix4 matrix4;
 
     protected ComponentTransform3D(Matrix4 matrix4) {
-        super(matrix4);
+        this.matrix4 = matrix4;
     }
 
     @Override
@@ -23,22 +20,22 @@ public class ComponentTransform3D extends Matrix4 implements Component {
 
     // TODO: test
     public Vector3 getPosition(Vector3 output) {
-        return super.getTranslation(output);
+        return matrix4.getTranslation(output);
     }
 
     // TODO: test
     public Vector3 getDirection(Vector3 output) {
-        output.x = val[M02];
-        output.y = val[M12];
-        output.z = val[M22];
+        output.x = matrix4.val[Matrix4.M02];
+        output.y = matrix4.val[Matrix4.M12];
+        output.z = matrix4.val[Matrix4.M22];
         return output;
     }
 
     // TODO: test
     public Vector3 getUp(Vector3 output) {
-        output.x = val[M01];
-        output.y = val[M11];
-        output.z = val[M21];
+        output.x = matrix4.val[Matrix4.M01];
+        output.y = matrix4.val[Matrix4.M11];
+        output.z = matrix4.val[Matrix4.M21];
         return output;
     }
 
