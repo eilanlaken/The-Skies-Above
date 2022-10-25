@@ -57,14 +57,23 @@ public class ZScene2_TestCulling2D extends Scene_old {
     }
 
     private void runCode() {
-        Matrix4 x = new Matrix4();
-        x.scl(2,3,4);
-        System.out.println(x);
-        x.rotate(0,0,1, 45);
-        System.out.println("rotated x: " + x);
-        System.out.println("rotation around z: ");
-        System.out.println(x.getRotation(new Quaternion()).getAngleAround(0,0,1));
-        System.out.println("scale x,y,z: " + x.getScaleX() + "," + x.getScaleY() + "," + x.getScaleZ());
+        Matrix4 m = new Matrix4();
+        Vector3 pos = new Vector3(1,1,1);
+        Quaternion rot = new Quaternion(new Vector3(0,0,1), 80);
+        Vector3 scl = new Vector3(2,3,4);
+        System.out.println("m:");
+        System.out.println(m);
+
+        m.translate(pos);
+        m.scl(scl);
+        m.rotate(rot);
+
+        System.out.println("m:");
+        System.out.println(m);
+
+        System.out.println("trans: " + m.getTranslation(new Vector3()));
+        System.out.println("scl: " + m.getScale(new Vector3()));
+        System.out.println("rot: " + m.getRotation(new Quaternion()).getAngleAround(new Vector3(0,0,1)));
     }
 
     @Override
@@ -175,6 +184,9 @@ public class ZScene2_TestCulling2D extends Scene_old {
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             entityMini1.body.setTransform(entityMini1.transform.getPosition().x - 0.1f, entityMini1.transform.getPosition().y, entityMini1.body.getAngle());
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            entityMini1.body.setTransform(entityMini1.transform.getPosition().x + 0.1f, entityMini1.transform.getPosition().y, entityMini1.body.getAngle());
         }
         if (Gdx.input.isKeyPressed(Input.Keys.R)) {
             entityMini1.body.setTransform(entityMini1.transform.getPosition().x, entityMini1.transform.getPosition().y, entityMini1.body.getAngle() + 0.1f);

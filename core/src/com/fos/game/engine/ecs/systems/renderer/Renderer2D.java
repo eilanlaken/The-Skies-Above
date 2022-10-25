@@ -11,7 +11,7 @@ import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
 import com.fos.game.engine.ecs.components.physics2d.ComponentJoint2D;
 import com.fos.game.engine.ecs.components.physics2d.ComponentRigidBody2D;
-import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
+import com.fos.game.engine.ecs.components.transform.ComponentTransform;
 import com.fos.game.engine.ecs.entities.Entity;
 
 public class Renderer2D {
@@ -31,11 +31,11 @@ public class Renderer2D {
         for (Entity entity : entities) {
             ComponentAnimations2D animation = (ComponentAnimations2D) entity.components[ComponentType.ANIMATIONS_2D.ordinal()];
             if (animation == null || !animation.active) continue;
-            ComponentTransform2D transform = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
+            ComponentTransform transform = (ComponentTransform) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
             final float delta = Gdx.graphics.getDeltaTime();
             animation.advanceTime(delta);
             TextureAtlas.AtlasRegion atlasRegion = animation.getTextureRegion();
-            spriteBatch.draw(atlasRegion, transform.getPosition().x, transform.getPosition().y, animation.size, animation.pixelsPerUnit);
+            spriteBatch.draw(atlasRegion, transform.position.x, transform.position.y, transform.rotation.getAngleAround(0,0,1), transform.scale.x, transform.scale.y, animation.size, animation.pixelsPerUnit);
         }
         spriteBatch.end();
 
