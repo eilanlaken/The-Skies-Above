@@ -19,7 +19,8 @@ public class Physics2D implements EntitiesProcessor, Disposable {
 
     private static final Vector3 Z_AXIS = new Vector3(0,0,1);
 
-    protected World world;
+    // TODO: make protected.
+    public World world;
     protected RayHandler rayHandler;
 
     private final Array<Entity> bodies = new Array<>();
