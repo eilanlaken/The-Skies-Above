@@ -1,5 +1,6 @@
 package com.fos.game.engine.ecs.components.animations2d;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
@@ -12,27 +13,36 @@ import java.util.HashMap;
 
 public class ComponentAnimations2D implements Component {
 
-    public Animation2DData[] animationsData;
+    public Animations2DData data;
     public HashMap<String, Animation<TextureAtlas.AtlasRegion>> animations;
     public Animation<TextureAtlas.AtlasRegion> currentPlayingAnimation;
     public float size;
     public int pixelsPerUnit;
     public float elapsedTime;
+    public Color tint;
     public boolean active = true;
 
-    protected ComponentAnimations2D(final GameAssetManager assetManager, final float size, final int pixelsPerUnit, final Animation2DData...animationsData) {
-        this.animationsData = animationsData;
+    protected ComponentAnimations2D(GameAssetManager assetManager, Animations2DData data) {
+        this.data = data;
+        this.size = data.size;
+        this.pixelsPerUnit = data.pixelsPerUnit;
+        this.elapsedTime = data.elapsedTime;
+        this.tint = data.tint;
+        this.active = data.active;
         this.animations = new HashMap<>();
-        this.elapsedTime = 0;
-        this.size = size;
-        this.pixelsPerUnit = pixelsPerUnit;
-        for (final Animation2DData data : animationsData) {
-            SpriteSheet spriteSheet = assetManager.get(data.filepath, SpriteSheet.class);
-            Array<TextureAtlas.AtlasRegion> keyFrames = spriteSheet.findRegions(data.animationName);
-            Animation<TextureAtlas.AtlasRegion> animation = new Animation<>(data.frameDuration, keyFrames, data.playMode);
-            animations.put(data.animationName, animation);
+        for (Animations2DData.AnimationData animationData : data.animationData) {
+            SpriteSheet spriteSheet = assetManager.get(animationData.filepath, SpriteSheet.class);
+            Array<TextureAtlas.AtlasRegion> keyFrames = spriteSheet.findRegions(animationData.animationName);
+            Animation<TextureAtlas.AtlasRegion> animation = new Animation<>(animationData.frameDuration, keyFrames, animationData.playMode);
+            animations.put(animationData.animationName, animation);
         }
-        currentPlayingAnimation = animations.get(animationsData[0].animationName);
+        currentPlayingAnimation = animations.get(data.animationData[data.currentlyPlaying].animationName);
+    }
+
+    // TODO: remove
+    @Deprecated
+    protected ComponentAnimations2D() {
+
     }
 
     public TextureAtlas.AtlasRegion getTextureRegion() {

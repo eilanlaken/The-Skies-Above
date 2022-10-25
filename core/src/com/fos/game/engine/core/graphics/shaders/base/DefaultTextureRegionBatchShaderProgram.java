@@ -1,6 +1,6 @@
 package com.fos.game.engine.core.graphics.shaders.base;
 
-public class DefaultShaderProgram extends Shader {
+public class DefaultTextureRegionBatchShaderProgram extends Shader {
 
     private static final String vertex = "attribute vec4 " + com.badlogic.gdx.graphics.glutils.ShaderProgram.POSITION_ATTRIBUTE + ";\n" //
             + "attribute vec2 " + com.badlogic.gdx.graphics.glutils.ShaderProgram.TEXCOORD_ATTRIBUTE + "0;\n" //
@@ -26,7 +26,7 @@ public class DefaultShaderProgram extends Shader {
             + "  gl_FragColor = texture2D(u_texture, v_texCoords);\n" //
             + "}";
 
-    public DefaultShaderProgram() {
+    public DefaultTextureRegionBatchShaderProgram() {
         super(vertex, fragment);
     }
 

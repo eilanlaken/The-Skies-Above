@@ -94,7 +94,7 @@ public class ZScene_3 extends Scene_old {
         entityMini1 = new EntityMini();
         entityMini1.transform = context.factoryTransform.create2d(-3, 0, 0, 0, 1, 1);
         System.out.println("transform " +  entityMini1.transform);
-        entityMini1.animations = context.factoryAnimation2D.create("atlases/test/testSpriteSheet3.atlas", "a", 0.5f, pixelsPerUnit);
+        entityMini1.animations = context.factoryAnimation2D.create("atlases/test/testSpriteSheet3.atlas", "a", 1,0.5f, pixelsPerUnit);
         Filter filter = new Filter();
         filter.categoryBits = 0x0001;
         filter.maskBits = 0x0011;
@@ -112,7 +112,7 @@ public class ZScene_3 extends Scene_old {
 
         entityMini2 = new EntityMini();
         entityMini2.transform = context.factoryTransform.create2d(3, 0, 0, 0, 1, 1);
-        entityMini2.animations = context.factoryAnimation2D.create("atlases/test/testSpriteSheet3.atlas", "b", 1, pixelsPerUnit);
+        entityMini2.animations = context.factoryAnimation2D.create("atlases/test/testSpriteSheet3.atlas", "b", 1,1, pixelsPerUnit);
         Filter filter2 = new Filter();
         filter2.categoryBits = 0x0001;
         filter2.maskBits = 0x0011;
@@ -150,6 +150,7 @@ public class ZScene_3 extends Scene_old {
         spriteBatch.setProjectionMatrix(camera.lens.combined);
         spriteBatch.begin();
         for (EntityMini entityMini : entities) {
+            spriteBatch.setColor(1,1,1,1);
             if (entityMini.animations == null) continue;
             entityMini.transform.position.set(entityMini.body.getPosition().x, entityMini.body.getPosition().y, entityMini.transform.position.z);
             entityMini.transform.rotation.set(new Vector3(0,0,1), entityMini.body.getAngle());
@@ -157,6 +158,8 @@ public class ZScene_3 extends Scene_old {
                 System.out.println("culling");
                 continue;
             }
+            if (entityMini == entityMini1) spriteBatch.setColor(0,1,0,1);
+
             spriteBatch.draw(entityMini.animations.currentPlayingAnimation.getKeyFrame(delta),
                     entityMini.transform.position.x, entityMini.transform.position.y,
                     entityMini.transform.rotation.getAngleAround(0,0,1),

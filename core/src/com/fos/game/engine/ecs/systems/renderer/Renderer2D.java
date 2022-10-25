@@ -27,6 +27,7 @@ public class Renderer2D {
         Gdx.gl.glClearColor(0,0,0,0); // TODO: get value from camera
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT); // TODO: get value from camera
         spriteBatch.begin();
+        spriteBatch.setColor(1,1,1,1);
         spriteBatch.setProjectionMatrix(camera.lens.combined);
         for (Entity entity : entities) {
             ComponentAnimations2D animation = (ComponentAnimations2D) entity.components[ComponentType.ANIMATIONS_2D.ordinal()];
@@ -35,6 +36,7 @@ public class Renderer2D {
             final float delta = Gdx.graphics.getDeltaTime();
             animation.advanceTime(delta);
             TextureAtlas.AtlasRegion atlasRegion = animation.getTextureRegion();
+            spriteBatch.setColor(animation.tint);
             spriteBatch.draw(atlasRegion, transform.position.x, transform.position.y, transform.rotation.getAngleAround(0,0,1), transform.scale.x, transform.scale.y, animation.size, animation.pixelsPerUnit);
         }
         spriteBatch.end();

@@ -1,19 +1,18 @@
 package com.fos.game.screens.tests;
 
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.fos.game.engine.context.GameContext;
 import com.fos.game.engine.context.Scene_old;
-import com.fos.game.engine.ecs.components.animations2d.Animation2DData;
-import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
+import com.fos.game.engine.core.files.serialization.JsonConverter;
 import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
+import com.fos.game.engine.ecs.components.animations2d.Animations2DData_old;
+import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
 import com.fos.game.engine.ecs.components.audio.ComponentSoundEffects;
 import com.fos.game.engine.ecs.components.camera_old.FactoryCamera;
 import com.fos.game.engine.ecs.components.scripts.ComponentScripts;
 import com.fos.game.engine.ecs.components.transform2d.FactoryTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.entities.EntityManager;
-import com.fos.game.engine.core.files.serialization.JsonConverter;
 import com.fos.game.scripts.test.OrangeSquareScript;
 import com.fos.game.scripts.test.SimpleCameraScript;
 
@@ -81,8 +80,8 @@ public class SaveEntityScene extends Scene_old {
     }
 
     private void testSerialization2() {
-        Animation2DData data1 = new Animation2DData("atlases/test/testSpriteSheet.atlas", "testArrowOrange", 1, Animation.PlayMode.LOOP);
-        Animation2DData data2 = new Animation2DData("atlases/test/testSpriteSheet.atlas", "testArrowGreen", 2, Animation.PlayMode.LOOP_PINGPONG);
+        Animations2DData_old data1 = new Animations2DData_old(null, null, 3);
+        Animations2DData_old data2 = new Animations2DData_old(null, null, 3);
 
         componentAnimations2D = context.factoryAnimation2D.create(data1, data2);
         System.out.println();

@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.Disposable;
-import com.fos.game.engine.core.graphics.shaders.base.DefaultShaderProgram;
+import com.fos.game.engine.core.graphics.shaders.base.DefaultTextureRegionBatchShaderProgram;
 import com.fos.game.engine.core.graphics.shaders.base.Shader;
 import com.fos.game.engine.core.graphics.shaders.postprocessing.PostProcessingEffect;
 
@@ -34,7 +34,7 @@ public class TextureRegionRenderer implements Disposable {
     private int blendSrcFuncAlpha = GL20.GL_SRC_ALPHA;
     private int blendDstFuncAlpha = GL20.GL_ONE_MINUS_SRC_ALPHA;
 
-    private final Shader defaultShader = new DefaultShaderProgram();
+    private final Shader defaultShader = new DefaultTextureRegionBatchShaderProgram();
     private Shader currentShader = null;
 
     private final Color color = new Color(1, 1, 1, 1);

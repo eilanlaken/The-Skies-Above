@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
-import com.fos.game.engine.core.graphics.shaders.base.DefaultShaderProgram;
 import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
 
 public class SpriteBatch extends com.badlogic.gdx.graphics.g2d.SpriteBatch {
@@ -13,7 +12,7 @@ public class SpriteBatch extends com.badlogic.gdx.graphics.g2d.SpriteBatch {
     private static final Quaternion quaternion = new Quaternion(); // <- for internal calculations
 
     public SpriteBatch() {
-        super(1000, new DefaultShaderProgram());
+        super(1000);
     }
 
     public void draw(final TextureAtlas.AtlasRegion region, final float x, final float y, final float angleRad, final float scaleX, final float scaleY, final float size, final int pixelsPerUnit) {
