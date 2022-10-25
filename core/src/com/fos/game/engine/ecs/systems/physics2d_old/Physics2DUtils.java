@@ -1,4 +1,4 @@
-package com.fos.game.engine.ecs.systems.physics2d;
+package com.fos.game.engine.ecs.systems.physics2d_old;
 
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
@@ -6,7 +6,7 @@ import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.physics2d.ComponentJoint2D;
 import com.fos.game.engine.ecs.components.physics2d.ComponentRigidBody2D;
 import com.fos.game.engine.ecs.components.physics2d.RigidBody2DData;
-import com.fos.game.engine.ecs.components.transform.ComponentTransform;
+import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 
 public class Physics2DUtils {
@@ -26,14 +26,16 @@ public class Physics2DUtils {
     }
 
     protected static void addRigidBody2D(final World world, final Entity entity, final ComponentRigidBody2D componentRigidBody2D,
-                                         final ComponentTransform transform) {
+                                         final ComponentTransform2D transform2D) {
         RigidBody2DData data = componentRigidBody2D.data;
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = data.bodyType;
-        bodyDef.position.set(transform.position.x, transform.position.y);
-        bodyDef.angle = transform.rotation.getAngleAround(0,0,1);
+        bodyDef.position.set(transform2D.getPosition().x, transform2D.getPosition().y);
+        bodyDef.angle = transform2D.transform.getRotation();
         componentRigidBody2D.body = world.createBody(bodyDef);
         componentRigidBody2D.body.setUserData(entity);
+        transform2D.transform = componentRigidBody2D.body.getTransform();
+        //bodyDef.fixedRotation = false;
         Shape shape = getShape(data);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;

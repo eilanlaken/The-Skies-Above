@@ -27,7 +27,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ZScene2_TestCulling2D extends Scene_old {
+public class ZScene_2 extends Scene_old {
 
     private World world;
     Array<EntityMini> entities;
@@ -51,7 +51,7 @@ public class ZScene2_TestCulling2D extends Scene_old {
     public final float VIRTUAL_HEIGHT = 20;
     private int pixelsPerUnit = 53*2;
 
-    public ZScene2_TestCulling2D(final GameContext context) {
+    public ZScene_2(final GameContext context) {
         super(context);
         runCode();
     }

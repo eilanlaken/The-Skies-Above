@@ -11,6 +11,12 @@ public class ComponentTransform implements Component {
     public Vector3 scale;
     public Quaternion rotation;
 
+    protected ComponentTransform(Vector3 position, Quaternion rotation, Vector3 scale) {
+        this.position = position;
+        this.rotation = rotation;
+        this.scale = scale;
+    }
+
     @Override
     public ComponentType getComponentType() {
         return ComponentType.TRANSFORM;

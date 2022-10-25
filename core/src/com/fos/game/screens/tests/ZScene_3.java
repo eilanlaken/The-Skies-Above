@@ -4,9 +4,11 @@ import box2dLight.PointLight;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
@@ -16,22 +18,22 @@ import com.fos.game.engine.core.graphics.g2d.GraphicsUtils;
 import com.fos.game.engine.core.graphics.g2d.SpriteBatch;
 import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
 import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
-import com.fos.game.engine.ecs.components.cameras_old.ComponentCamera2D;
+import com.fos.game.engine.ecs.components.camera.ComponentCamera;
 import com.fos.game.engine.ecs.components.physics2d.RigidBody2DData;
-import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
+import com.fos.game.engine.ecs.components.transform.ComponentTransform;
 import com.fos.game.engine.ecs.systems.renderer_old.base.Physics2DDebugRenderer;
 
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ZScene1 extends Scene_old {
+public class ZScene_3 extends Scene_old {
 
     private World world;
     Array<EntityMini> entities;
+    EntityMini entityMini1, entityMini2;
 
-    private ComponentCamera2D camera1;
-    private ComponentCamera2D camera2;
+    private ComponentCamera camera;
 
     SpriteBatch spriteBatch = new SpriteBatch();
     Physics2DDebugRenderer physics2DDebugRenderer = new Physics2DDebugRenderer();
@@ -40,7 +42,7 @@ public class ZScene1 extends Scene_old {
 
 
     class EntityMini {
-        ComponentTransform2D transform;
+        ComponentTransform transform;
         ComponentAnimations2D animations;
         Body body;
         Joint joint;
@@ -49,25 +51,29 @@ public class ZScene1 extends Scene_old {
     public final float VIRTUAL_HEIGHT = 20;
     private int pixelsPerUnit = 53*2;
 
-    public ZScene1(final GameContext context) {
+    public ZScene_3(final GameContext context) {
         super(context);
         runCode();
     }
 
     private void runCode() {
-        Matrix4 x = new Matrix4();
-        x.scl(2,3,4);
-        x.rotate(0,0,1, 45);
-        System.out.println("x:");
-        System.out.println(x);
+        Matrix4 m = new Matrix4();
+        Vector3 pos = new Vector3(1,1,1);
+        Quaternion rot = new Quaternion(new Vector3(0,0,1), 80);
+        Vector3 scl = new Vector3(2,3,4);
+        System.out.println("m:");
+        System.out.println(m);
 
-        Matrix4 y = new Matrix4();
-        y.rotate(0,0,1, 45);
-        System.out.println("y:");
-        System.out.println(y);
+        m.translate(pos);
+        m.scl(scl);
+        m.rotate(rot);
 
-        System.out.println(x.getScaleX());
-        System.out.println(y.getScaleX());
+        System.out.println("m:");
+        System.out.println(m);
+
+        System.out.println("trans: " + m.getTranslation(new Vector3()));
+        System.out.println("scl: " + m.getScale(new Vector3()));
+        System.out.println("rot: " + m.getRotation(new Quaternion()).getAngleAround(new Vector3(0,0,1)));
     }
 
     @Override
@@ -83,11 +89,11 @@ public class ZScene1 extends Scene_old {
         //directionalLight = new DirectionalLight(rayHandler, 100, Color.LIME, 30);
 
         entities = new Array<>();
-        camera1 = context.factoryCamera2D.createCamera2D(VIRTUAL_HEIGHT * GraphicsUtils.getAspectRatio(), VIRTUAL_HEIGHT);
-        camera2 = context.factoryCamera2D.createCamera2D(VIRTUAL_HEIGHT * GraphicsUtils.getAspectRatio() / 2, VIRTUAL_HEIGHT / 2);
+        camera = context.factoryCamera.createCamera2D(VIRTUAL_HEIGHT * GraphicsUtils.getAspectRatio(), VIRTUAL_HEIGHT);
 
-        EntityMini entityMini1 = new EntityMini();
-        entityMini1.transform = context.factoryTransform2D.create(3, 0, 1, 0, 1, 1);
+        entityMini1 = new EntityMini();
+        entityMini1.transform = context.factoryTransform.create2d(-3, 0, 0, 0, 1, 1);
+        System.out.println("transform " +  entityMini1.transform);
         entityMini1.animations = context.factoryAnimation2D.create("atlases/test/testSpriteSheet3.atlas", "a", 0.5f, pixelsPerUnit);
         Filter filter = new Filter();
         filter.categoryBits = 0x0001;
@@ -101,12 +107,11 @@ public class ZScene1 extends Scene_old {
                 1,1,0.2f,false),
                 entityMini1.transform);
         entityMini1.body.setUserData(entityMini1);
-        entityMini1.transform.transform = entityMini1.body.getTransform();
         entities.add(entityMini1);
 
 
-        EntityMini entityMini2 = new EntityMini();
-        entityMini2.transform = context.factoryTransform2D.create(-3, 0, 1, 0, 1, 1);
+        entityMini2 = new EntityMini();
+        entityMini2.transform = context.factoryTransform.create2d(3, 0, 0, 0, 1, 1);
         entityMini2.animations = context.factoryAnimation2D.create("atlases/test/testSpriteSheet3.atlas", "b", 1, pixelsPerUnit);
         Filter filter2 = new Filter();
         filter2.categoryBits = 0x0001;
@@ -120,7 +125,6 @@ public class ZScene1 extends Scene_old {
                         1,1,0.2f,false),
                 entityMini2.transform);
         entityMini2.body.setUserData(entityMini2);
-        entityMini2.transform.transform = entityMini2.body.getTransform();
         entities.add(entityMini2);
 
     }
@@ -131,8 +135,8 @@ public class ZScene1 extends Scene_old {
         entities.sort(new Comparator<EntityMini>() {
             @Override
             public int compare(EntityMini o1, EntityMini o2) {
-                final float z1 = o1.transform.z;
-                final float z2 = o2.transform.z;
+                final float z1 = o1.transform.position.z;
+                final float z2 = o2.transform.position.z;
                 return Float.compare(z1, z2);
             }
         });
@@ -141,23 +145,30 @@ public class ZScene1 extends Scene_old {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
-        camera1.lens.update();
-        camera2.lens.update();
-        rayHandler.setCombinedMatrix(camera1.lens);
-        spriteBatch.setProjectionMatrix(camera1.lens.combined);
+        camera.lens.update();
+        rayHandler.setCombinedMatrix((OrthographicCamera) camera.lens);
+        spriteBatch.setProjectionMatrix(camera.lens.combined);
         spriteBatch.begin();
         for (EntityMini entityMini : entities) {
             if (entityMini.animations == null) continue;
-            entityMini.transform.transform.setPosition(entityMini.body.getPosition());
-            entityMini.transform.transform.setOrientation(entityMini.body.getTransform().getOrientation());
-            spriteBatch.draw(entityMini.animations.currentPlayingAnimation.getKeyFrame(delta), entityMini.transform, entityMini.animations.size, entityMini.animations.pixelsPerUnit);
+            entityMini.transform.position.set(entityMini.body.getPosition().x, entityMini.body.getPosition().y, entityMini.transform.position.z);
+            entityMini.transform.rotation.set(new Vector3(0,0,1), entityMini.body.getAngle());
+            if (cull(entityMini.transform, entityMini.animations, camera.lens)) {
+                System.out.println("culling");
+                continue;
+            }
+            spriteBatch.draw(entityMini.animations.currentPlayingAnimation.getKeyFrame(delta),
+                    entityMini.transform.position.x, entityMini.transform.position.y,
+                    entityMini.transform.rotation.getAngleAround(0,0,1),
+                    entityMini.transform.scale.x, entityMini.transform.scale.y,
+                    entityMini.animations.size, entityMini.animations.pixelsPerUnit);
         }
         spriteBatch.end();
         // the ambient light is determined by the last rendered RayHandler.
         rayHandler.render();
 
         physics2DDebugRenderer.begin();
-        physics2DDebugRenderer.setProjectionMatrix(camera1.lens.combined);
+        physics2DDebugRenderer.setProjectionMatrix(camera.lens.combined);
         for (EntityMini entityMini : entities) {
             Body body = entityMini.body;
             Joint joint = entityMini.joint;
@@ -166,7 +177,7 @@ public class ZScene1 extends Scene_old {
         }
         physics2DDebugRenderer.end();
 
-        OrthographicCamera orthographicCamera = camera1.lens;
+        OrthographicCamera orthographicCamera = (OrthographicCamera) camera.lens;
         if (Gdx.input.isKeyPressed(Input.Keys.Z))
             orthographicCamera.zoom += 0.1f;
         if (Gdx.input.isKeyPressed(Input.Keys.A))
@@ -174,55 +185,23 @@ public class ZScene1 extends Scene_old {
         if (Gdx.input.isKeyJustPressed(Input.Keys.K))
             pointLight1.setActive(!pointLight1.isActive());
 
-//        if (Gdx.input.isKeyPressed(Input.Keys.R)) {
-//            EntityMini entityMini = new EntityMini();
-//            entityMini.transform = context.factoryTransform2D.
-//                    create(MathUtils.random(-10, 10), MathUtils.random(-1, 4), 1, MathUtils.random(0, 2 * (float)Math.PI), 1, 1);
-//            entityMini.animation = new Animation<>(1,
-//                    context.assetManager.get("atlases/test/testSpriteSheet3.atlas", SpriteSheet.class).findRegions(getRandomRegion()));
-//            Filter filter = new Filter();
-//            filter.categoryBits = 0x0100;
-//            filter.maskBits = 0x0010;
-//            entityMini.body = createBody(world, new RigidBody2DData(
-//                            BodyDef.BodyType.DynamicBody,
-//                            RigidBody2DData.Shape.RECTANGLE,
-//                            UtilsRigidBody2D.getBox2DLength(entityMini.animation.getKeyFrame(0).getRegionWidth(), camera2.pixelsPerMeterX),
-//                            UtilsRigidBody2D.getBox2DLength(entityMini.animation.getKeyFrame(0).getRegionHeight(), camera2.pixelsPerMeterY),
-//                            filter,
-//                            1,1,0.2f,false),
-//                    entityMini.transform);
-//            entityMini.body.setUserData(entityMini);
-//            entityMini.transform.transform = entityMini.body.getTransform();
-//            entities.add(entityMini);
-//        }
-
-        // activate and deactivate bodies
-        EntityMini entityMini = entities.get(0);
-        if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
-            entityMini.body.setActive(!entityMini.body.isActive()); // <- active / inactive bodies will maintain linear and angular velocity.
-            //entityMini.body.setAwake(!entityMini.body.isAwake());
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            entityMini1.body.setTransform(entityMini1.transform.position.x - 0.1f, entityMini1.transform.position.y, entityMini1.body.getAngle());
         }
-
-        // FOLLOW MOUSE
-        Vector3 v = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-        camera1.lens.unproject(v);
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            entityMini1.body.setTransform(entityMini1.transform.position.x + 0.1f, entityMini1.transform.position.y, entityMini1.body.getAngle());
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.R)) {
+            entityMini1.body.setTransform(entityMini1.transform.position.x, entityMini1.transform.position.y, entityMini1.body.getAngle() + 0.1f);
+        }
     }
 
     @Override
     public void resize(int width, int height) {
-        System.out.println("reisze: " + width + "," + height);
-
-        camera1.buildFrameBuffer();
-        camera1.lens.viewportWidth = camera1.viewWorldWidth;
-        camera1.lens.viewportHeight = camera1.viewWorldWidth * (float) height / width;
-        camera1.lens.update();
-
-        //pixelsPerUnit = height / (int) VIRTUAL_HEIGHT;
-        System.out.println(pixelsPerUnit);
-        //camera2.buildFrameBuffer();
-        //camera2.lens.viewportWidth = camera1.viewWorldWidth;
-        //camera2.lens.viewportHeight = camera1.viewWorldWidth * (float) height / width;
-        //camera2.lens.update();
+        camera.buildFrameBuffer();
+        camera.lens.viewportWidth = camera.viewWorldWidth;
+        camera.lens.viewportHeight = camera.viewWorldWidth * (float) height / width;
+        camera.lens.update();
     }
 
     @Override
@@ -244,11 +223,12 @@ public class ZScene1 extends Scene_old {
     }
 
 
-    private Body createBody(World world, RigidBody2DData data, ComponentTransform2D transform2D) {
+    private Body createBody(World world, RigidBody2DData data, ComponentTransform transform) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = data.bodyType;
-        bodyDef.position.set(transform2D.getPosition().x, transform2D.getPosition().y);
-        bodyDef.angle = transform2D.transform.getRotation();
+        if (transform == null) System.out.println("is null");
+        bodyDef.position.set(transform.position.x, transform.position.y);
+        bodyDef.angle = transform.rotation.getAngleAround(0,0,1);
         Body body = world.createBody(bodyDef);
         bodyDef.fixedRotation = false;
         Shape shape = getShape(data);
@@ -315,4 +295,14 @@ public class ZScene1 extends Scene_old {
         assetNameClassMap.put("atlases/test/testSpriteSheet4.atlas", SpriteSheet.class);
         return assetNameClassMap;
     }
+
+    // TODO: test culling
+    private static boolean cull(ComponentTransform transform, ComponentAnimations2D animation, final Camera camera) {
+        TextureAtlas.AtlasRegion atlasRegion = animation.getTextureRegion();
+        final float width = atlasRegion.getRegionWidth() * transform.scale.x;
+        final float height = atlasRegion.getRegionHeight() * transform.scale.y;
+        final float boundingRadius = Math.max(width, height) * 2 * animation.size / animation.pixelsPerUnit;
+        return !camera.frustum.sphereInFrustum(transform.position.x, transform.position.y, 0, boundingRadius);
+    }
+
 }

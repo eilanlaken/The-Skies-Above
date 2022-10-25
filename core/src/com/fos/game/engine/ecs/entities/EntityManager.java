@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.fos.game.engine.ecs.systems.audio.AudioPlayer;
 import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
 import com.fos.game.engine.ecs.systems.base.SystemConfig;
-import com.fos.game.engine.ecs.systems.physics2d.Physics2D;
+import com.fos.game.engine.ecs.systems.physics2d_old.Physics2D;
 import com.fos.game.engine.ecs.systems.physics3d.Physics3D;
 import com.fos.game.engine.ecs.systems.renderer2d.Config;
 import com.fos.game.engine.ecs.systems.renderer2d.Renderer2D;

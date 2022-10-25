@@ -16,6 +16,7 @@ import com.fos.game.engine.ecs.components.physics3d.FactoryRigidBody3D;
 import com.fos.game.engine.ecs.components.scripts.FactoryScripts;
 import com.fos.game.engine.ecs.components.shapes.FactoryShape2D;
 import com.fos.game.engine.ecs.components.signals.FactorySignalBox;
+import com.fos.game.engine.ecs.components.transform.FactoryTransform;
 import com.fos.game.engine.ecs.components.transform2d.FactoryTransform2D;
 import com.fos.game.engine.ecs.components.transform3d_old.FactoryTransform3D;
 import com.fos.game.screens.loading.LoadingScreen;
@@ -39,8 +40,9 @@ public class GameContext extends Game {
 	public FactoryScripts factoryScripts;
 	public FactoryShape2D factoryShape2D;
 	public FactorySignalBox factorySignalBox;
-	public FactoryTransform2D factoryTransform2D;
-	public FactoryTransform3D factoryTransform3D;
+	public FactoryTransform factoryTransform;
+	@Deprecated public FactoryTransform2D factoryTransform2D;
+	@Deprecated public FactoryTransform3D factoryTransform3D;
 
 	@Override
 	public void create () {
@@ -61,6 +63,7 @@ public class GameContext extends Game {
 		this.factoryScripts = new FactoryScripts(this.assetManager, this.jsonConverter);
 		this.factoryShape2D = new FactoryShape2D(this.assetManager, this.jsonConverter);
 		this.factorySignalBox = new FactorySignalBox(this.assetManager, this.jsonConverter);
+		this.factoryTransform = new FactoryTransform(this.assetManager, this.jsonConverter);
 		this.factoryTransform2D = new FactoryTransform2D(this.assetManager, this.jsonConverter);
 		this.factoryTransform3D = new FactoryTransform3D(this.assetManager, this.jsonConverter);
 		// set the screen to the entry screen
