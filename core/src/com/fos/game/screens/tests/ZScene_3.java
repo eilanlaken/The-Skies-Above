@@ -74,6 +74,8 @@ public class ZScene_3 extends Scene_old {
         System.out.println("trans: " + m.getTranslation(new Vector3()));
         System.out.println("scl: " + m.getScale(new Vector3()));
         System.out.println("rot: " + m.getRotation(new Quaternion()).getAngleAround(new Vector3(0,0,1)));
+
+
     }
 
     @Override
