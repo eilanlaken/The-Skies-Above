@@ -2,14 +2,9 @@ package com.fos.game.engine.core.graphics.g2d;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Quaternion;
-import com.badlogic.gdx.math.Vector3;
 import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
 
 public class SpriteBatch extends com.badlogic.gdx.graphics.g2d.SpriteBatch {
-
-    private static final Vector3 vector = new Vector3(); // <- for internal calculations
-    private static final Quaternion quaternion = new Quaternion(); // <- for internal calculations
 
     public SpriteBatch() {
         super(1000);

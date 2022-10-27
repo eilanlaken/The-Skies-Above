@@ -3,7 +3,7 @@ package com.fos.game.screens.loading;
 import com.fos.game.engine.context.GameContext;
 import com.fos.game.engine.context.Scene_old;
 import com.fos.game.engine.core.files.assets.GameAssetManager;
-import com.fos.game.screens.tests.ZScene_3;
+import com.fos.game.screens.tests.ZScene_4;
 
 import java.util.Map;
 
@@ -27,7 +27,7 @@ public class LoadingScreen extends Scene_old {
         while (!doneLoading) {
             if (assetManager.update()) {
                 doneLoading = true;
-                context.setScreen(new ZScene_3(context));
+                context.setScreen(new ZScene_4(context));
             }
         }
     }
@@ -48,7 +48,7 @@ public class LoadingScreen extends Scene_old {
     }
 
     private void queueAssets() {
-        Map<String, Class> assetsNameTypeMap = ZScene_3.getRequiredAssetsNameTypeMap();
+        Map<String, Class> assetsNameTypeMap = ZScene_4.getRequiredAssetsNameTypeMap();
         for (Map.Entry<String, Class> entry : assetsNameTypeMap.entrySet()) {
             this.assetManager.load(entry.getKey(), entry.getValue());
         }
