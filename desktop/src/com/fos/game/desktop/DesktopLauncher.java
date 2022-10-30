@@ -7,6 +7,7 @@ import com.fos.game.engine.core.context.ApplicationContext;
 import java.awt.*;
 
 public class DesktopLauncher {
+
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.gles30ContextMajorVersion = 3;
@@ -27,4 +28,5 @@ public class DesktopLauncher {
 		//config.addIcon(); TODO
 		new LwjglApplication(new ApplicationContext(), config);
 	}
+
 }
