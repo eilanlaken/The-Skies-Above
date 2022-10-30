@@ -2,7 +2,7 @@ package com.fos.game.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.fos.game.engine.context.GameContext;
+import com.fos.game.engine.core.context.ApplicationContext;
 
 import java.awt.*;
 
@@ -25,6 +25,6 @@ public class DesktopLauncher {
 		//config.useGL30 = true; //TODO: needed for multiple attachments of framebuffer objects.
 		//config.vSyncEnabled = true; TODO
 		//config.addIcon(); TODO
-		new LwjglApplication(new GameContext(), config);
+		new LwjglApplication(new ApplicationContext(), config);
 	}
 }
