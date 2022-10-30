@@ -195,6 +195,9 @@ public class ZScene_4 extends Scene_old {
         renderer.draw(batch, skeleton); // Draw the skeleton images.
         angle += delta * 5;
         skeleton.getRootBone().setRotation(angle);
+        skeleton.setPosition(2,2);
+        System.out.println(skeleton.getBones().get(4).getData().getName());
+        System.out.println(skeleton.getBones().get(4).getWorldY());
         batch.end();
         // the ambient light is determined by the last rendered RayHandler.
         rayHandler.render();
@@ -328,7 +331,7 @@ public class ZScene_4 extends Scene_old {
         return assetNameClassMap;
     }
 
-    // TODO: test culling
+    // TODO: implement culling for Spline 2D outputs.
     private static boolean cull(ComponentTransform transform, ComponentAnimations2D animation, final Camera camera) {
         TextureAtlas.AtlasRegion atlasRegion = animation.getTextureRegion();
         final float width = atlasRegion.getRegionWidth() * transform.scale.x;
