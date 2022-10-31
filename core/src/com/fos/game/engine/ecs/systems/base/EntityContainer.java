@@ -1,12 +1,11 @@
-package com.fos.game.engine.ecs.entities;
+package com.fos.game.engine.ecs.systems.base;
 
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.bullet.dynamics.btDynamicsWorld;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
+import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.audio.AudioPlayer;
-import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
-import com.fos.game.engine.ecs.systems.base.SystemConfig;
 import com.fos.game.engine.ecs.systems.physics2d.Physics2D;
 import com.fos.game.engine.ecs.systems.physics3d.Physics3D;
 import com.fos.game.engine.ecs.systems.renderer2d.Config;
@@ -19,7 +18,7 @@ import java.util.Map;
 
 //import com.fos.game.engine.ecs.systems.renderer.base.Renderer;
 
-public class EntityManager implements Disposable {
+public class EntityContainer implements Disposable {
 
     // container array
     protected Array<Entity> entities = new Array<>();
@@ -41,7 +40,7 @@ public class EntityManager implements Disposable {
     public SignalRouter signalRouter = new SignalRouter();
 
 
-    public EntityManager() {
+    public EntityContainer() {
         this.systemEntitiesMap.put(audioPlayer, new Array<Entity>());
         this.systemEntitiesMap.put(physics2D, new Array<Entity>());
         this.systemEntitiesMap.put(physics3D, new Array<Entity>());

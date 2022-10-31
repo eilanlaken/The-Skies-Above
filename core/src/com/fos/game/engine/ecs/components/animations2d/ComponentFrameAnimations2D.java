@@ -61,6 +61,6 @@ public class ComponentFrameAnimations2D implements Component {
 
     @Override
     public final ComponentType getComponentType() {
-        return ComponentType.ANIMATIONS_2D;
+        return ComponentType.ANIMATIONS_FRAMES_2D;
     }
 }

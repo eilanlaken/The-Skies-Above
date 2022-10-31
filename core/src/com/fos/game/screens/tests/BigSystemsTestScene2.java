@@ -10,7 +10,7 @@ import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.cameras_old.ComponentCamera2D;
 import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
-import com.fos.game.engine.ecs.entities.EntityManager;
+import com.fos.game.engine.ecs.systems.base.EntityContainer;
 import com.fos.game.scripts.test.PeriodicReadTestScript;
 import com.fos.game.scripts.test.PeriodicSendTestScript;
 
@@ -27,7 +27,7 @@ public class BigSystemsTestScene2 extends Scene_old {
         MOUSE,
     }
 
-    EntityManager container;
+    EntityContainer container;
 
     // refs
     ComponentTransform2D transform2DCameraBullets;
@@ -41,7 +41,7 @@ public class BigSystemsTestScene2 extends Scene_old {
 
     @Override
     protected void start() {
-        container = new EntityManager();
+        container = new EntityContainer();
 
         button = new Entity(Layers.UI);
         button.attachComponents(
@@ -107,7 +107,7 @@ public class BigSystemsTestScene2 extends Scene_old {
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
-            ComponentFrameAnimations2D animations2D = (ComponentFrameAnimations2D) button.getComponent(ComponentType.ANIMATIONS_2D);
+            ComponentFrameAnimations2D animations2D = (ComponentFrameAnimations2D) button.getComponent(ComponentType.ANIMATIONS_FRAMES_2D);
             animations2D.active = !animations2D.active;
         }
     }

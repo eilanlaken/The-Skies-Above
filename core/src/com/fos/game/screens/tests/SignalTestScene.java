@@ -4,7 +4,7 @@ import com.fos.game.engine.context.GameContext;
 import com.fos.game.engine.context.Scene_old;
 import com.fos.game.engine.ecs.components.camera_old.FactoryCamera;
 import com.fos.game.engine.ecs.entities.Entity;
-import com.fos.game.engine.ecs.entities.EntityManager;
+import com.fos.game.engine.ecs.systems.base.EntityContainer;
 import com.fos.game.scripts.test.PeriodicReadTestScript;
 import com.fos.game.scripts.test.PeriodicSendTestScript;
 
@@ -12,7 +12,7 @@ import static com.fos.game.engine.ecs.components.base.ComponentType.SIGNAL_BOX;
 
 public class SignalTestScene extends Scene_old {
 
-    EntityManager container;
+    EntityContainer container;
 
     public SignalTestScene(GameContext context) {
         super(context);
@@ -20,7 +20,7 @@ public class SignalTestScene extends Scene_old {
 
     @Override
     protected void start() {
-        container = new EntityManager();
+        container = new EntityContainer();
         Entity entity1 = new Entity();
         entity1.attachComponents(
                 context.factorySignalBox.create(),

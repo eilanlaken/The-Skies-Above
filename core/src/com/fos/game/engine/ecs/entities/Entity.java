@@ -13,10 +13,11 @@ import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
 import com.fos.game.engine.ecs.components.transform2d.FactoryTransform2D;
 import com.fos.game.engine.ecs.components.transform3d_old.ComponentTransform3D;
 import com.fos.game.engine.ecs.components.transform3d_old.FactoryTransform3D;
+import com.fos.game.engine.ecs.systems.base.EntityContainer;
 
 public class Entity implements Disposable {
 
-    public EntityManager container;
+    public EntityContainer container;
 
     public int localId = -1; // effectively its index in the current entity container's entities array
     public int globalId = -1; // a global unique identifier; Only persistent and "important" Entities has a globalId.

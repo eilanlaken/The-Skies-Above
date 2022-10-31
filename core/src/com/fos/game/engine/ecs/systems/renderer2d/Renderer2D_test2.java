@@ -43,8 +43,8 @@ public class Renderer2D_test2 implements EntitiesProcessor, Disposable {
     public void process(Array<Entity> entities) {
         this.allCameras.clear();
         for (Entity entity : entities) {
-            if ((entity.componentsBitMask & ComponentType.ANIMATIONS_2D.bitMask) > 0) {
-                ComponentFrameAnimations2D animation = (ComponentFrameAnimations2D) entity.components[ComponentType.ANIMATIONS_2D.ordinal()];
+            if ((entity.componentsBitMask & ComponentType.ANIMATIONS_FRAMES_2D.bitMask) > 0) {
+                ComponentFrameAnimations2D animation = (ComponentFrameAnimations2D) entity.components[ComponentType.ANIMATIONS_FRAMES_2D.ordinal()];
                 final float delta = Gdx.graphics.getDeltaTime();
                 animation.advanceTime(delta);
             }
@@ -87,7 +87,7 @@ public class Renderer2D_test2 implements EntitiesProcessor, Disposable {
         for (final ComponentCamera2D camera : cameras) {
             spriteBatch.setProjectionMatrix(camera.lens.combined);
             for (Entity entity : cameraEntitiesMap.get(camera)) {
-                ComponentFrameAnimations2D animation = (ComponentFrameAnimations2D) entity.components[ComponentType.ANIMATIONS_2D.ordinal()];
+                ComponentFrameAnimations2D animation = (ComponentFrameAnimations2D) entity.components[ComponentType.ANIMATIONS_FRAMES_2D.ordinal()];
                 if (animation == null || !animation.active) continue;
                 ComponentTransform2D transform2D = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
                 final float delta = Gdx.graphics.getDeltaTime();

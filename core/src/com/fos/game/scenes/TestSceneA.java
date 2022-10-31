@@ -204,11 +204,6 @@ public class TestSceneA extends Scene {
         } else {
             renderer.draw(batch, skeleton); // Draw the skeleton images.
         }
-        skeleton.getBounds(offset, bounds, floatArray);
-
-        //System.out.println("offset: " + offset);
-        //System.out.println("bounds: " + bounds);
-        //System.out.println("fb: " + floatArray);
 
         batch.end();
         // the ambient light is determined by the last rendered RayHandler.

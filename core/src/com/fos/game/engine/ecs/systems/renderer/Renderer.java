@@ -14,8 +14,11 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.fos.game.engine.core.graphics.g2d.Physics2DDebugRenderer;
+import com.fos.game.engine.core.graphics.g2d.PolygonSpriteBatch;
 import com.fos.game.engine.core.graphics.g2d.RenderTarget;
-import com.fos.game.engine.core.graphics.g2d.SpriteBatch;
+import com.fos.game.engine.core.graphics.spine.AnimationState;
+import com.fos.game.engine.core.graphics.spine.Skeleton;
+import com.fos.game.engine.ecs.components.animations2d.ComponentBoneAnimations2D;
 import com.fos.game.engine.ecs.components.animations2d.ComponentFrameAnimations2D;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
@@ -36,7 +39,7 @@ public class Renderer implements EntitiesProcessor, Disposable {
 
     private Renderer2D renderer2D;
     private Renderer3D renderer3D;
-    private SpriteBatch spriteBatch;
+    private PolygonSpriteBatch spriteBatch;
     private ModelBatch modelBatch;
     private Physics2DDebugRenderer physics2DDebugRenderer;
     private ShapeRenderer shapeRenderer;
@@ -46,7 +49,7 @@ public class Renderer implements EntitiesProcessor, Disposable {
     private Array<ComponentCamera> allCameras;
 
     public Renderer() {
-        this.spriteBatch = new SpriteBatch();
+        this.spriteBatch = new PolygonSpriteBatch();
         this.modelBatch = new ModelBatch(new ShaderProvider(), new ModelInstanceSorter());
         this.renderer2D = new Renderer2D();
         this.renderer3D = new Renderer3D();
@@ -60,10 +63,21 @@ public class Renderer implements EntitiesProcessor, Disposable {
     public void process(Array<Entity> entities) {
         this.allCameras.clear();
         for (Entity entity : entities) {
-            if ((entity.componentsBitMask & ComponentType.ANIMATIONS_2D.bitMask) > 0) {
-                ComponentFrameAnimations2D animation = (ComponentFrameAnimations2D) entity.components[ComponentType.ANIMATIONS_2D.ordinal()];
+            if ((entity.componentsBitMask & ComponentType.ANIMATIONS_FRAMES_2D.bitMask) > 0) {
+                ComponentFrameAnimations2D animation = (ComponentFrameAnimations2D) entity.components[ComponentType.ANIMATIONS_FRAMES_2D.ordinal()];
                 final float delta = Gdx.graphics.getDeltaTime();
                 animation.advanceTime(delta);
+            }
+            if ((entity.componentsBitMask & ComponentType.ANIMATIONS_BONES_2D.bitMask) > 0) {
+                // TODO: test.
+                ComponentTransform transform = (ComponentTransform) entity.components[ComponentType.TRANSFORM.ordinal()];
+                ComponentBoneAnimations2D boneAnimations = (ComponentBoneAnimations2D) entity.components[ComponentType.ANIMATIONS_BONES_2D.ordinal()];
+                Skeleton skeleton = boneAnimations.skeleton;
+                AnimationState state = boneAnimations.state;
+                if (state.apply(skeleton)) skeleton.updateWorldTransform();
+                state.update(Gdx.graphics.getDeltaTime());
+                skeleton.setPosition(transform.position.x, transform.position.y);
+                skeleton.getRootBone().setRotation(transform.rotation.getAngleAround(0,0,1));
             }
             if ((entity.componentsBitMask & ComponentType.CAMERA.bitMask) > 0) {
                 final ComponentTransform transform = (ComponentTransform) entity.components[ComponentType.TRANSFORM_2D.ordinal()];

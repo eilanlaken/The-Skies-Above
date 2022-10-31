@@ -17,6 +17,6 @@ public class ComponentBoneAnimations2D implements Component {
 
     @Override
     public ComponentType getComponentType() {
-        return ComponentType.ANIMATIONS_2D;
+        return ComponentType.ANIMATIONS_BONES_2D;
     }
 }

@@ -24,10 +24,10 @@ import java.util.Map;
 public class RenderingUtils {
 
     protected static final int ATTACHED_GRAPHICS_COMPONENT =
-            ComponentType.ANIMATIONS_2D.bitMask | ComponentType.MODEL_INSTANCE.bitMask | ComponentType.LIGHT_3D.bitMask | ComponentType.CAMERA.bitMask;
+            ComponentType.ANIMATIONS_FRAMES_2D.bitMask | ComponentType.MODEL_INSTANCE.bitMask | ComponentType.LIGHT_3D.bitMask | ComponentType.CAMERA.bitMask;
 
     @Deprecated
-    protected static final int ATTACHED_ANIMATIONS_2D_BIT_MASK = ComponentType.ANIMATIONS_2D.bitMask;
+    protected static final int ATTACHED_ANIMATIONS_2D_BIT_MASK = ComponentType.ANIMATIONS_FRAMES_2D.bitMask;
     @Deprecated
     protected static final int ATTACHED_MODEL_INSTANCE_BIT_MASK = ComponentType.MODEL_INSTANCE.bitMask;
     @Deprecated
@@ -157,7 +157,7 @@ public class RenderingUtils {
 
     private static boolean cull(final Entity entity, final OrthographicCamera camera) {
         ComponentTransform2D transform2D = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
-        ComponentFrameAnimations2D animation = (ComponentFrameAnimations2D) entity.components[ComponentType.ANIMATIONS_2D.ordinal()];
+        ComponentFrameAnimations2D animation = (ComponentFrameAnimations2D) entity.components[ComponentType.ANIMATIONS_FRAMES_2D.ordinal()];
         TextureAtlas.AtlasRegion atlasRegion = animation.getTextureRegion();
         final float width = atlasRegion.getRegionWidth() * transform2D.scaleX;
         final float height = atlasRegion.getRegionHeight() * transform2D.scaleY;

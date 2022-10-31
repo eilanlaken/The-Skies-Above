@@ -1,7 +1,7 @@
-package com.fos.game.engine.ecs.entities;
+package com.fos.game.engine.ecs.systems.base;
 
 import com.badlogic.gdx.utils.Array;
-import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
+import com.fos.game.engine.ecs.entities.Entity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class EntityContainerUtils {
 
-    protected static void removeEntities(final EntityManager container) {
+    protected static void removeEntities(final EntityContainer container) {
         for (final Entity entity : container.toRemove) {
             // TODO: if has physics...
             container.entities.removeValue(entity, true);
@@ -17,7 +17,7 @@ public class EntityContainerUtils {
         container.toRemove.clear();
     }
 
-    protected static void addEntities(final EntityManager container) {
+    protected static void addEntities(final EntityContainer container) {
         for (final Entity entity : container.toAdd) {
             entity.container = container;
             container.entities.add(entity);

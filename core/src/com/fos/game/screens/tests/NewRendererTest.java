@@ -11,7 +11,7 @@ import com.fos.game.engine.ecs.components.cameras_old.ComponentCamera2D;
 import com.fos.game.engine.ecs.components.physics2d.RigidBody2DData;
 import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
-import com.fos.game.engine.ecs.entities.EntityManager;
+import com.fos.game.engine.ecs.systems.base.EntityContainer;
 import com.fos.game.scripts.test.PeriodicReadTestScript;
 import com.fos.game.scripts.test.PeriodicSendTestScript;
 
@@ -28,7 +28,7 @@ public class NewRendererTest extends Scene_old {
         MOUSE,
     }
 
-    EntityManager container;
+    EntityContainer container;
 
     // refs
     ComponentTransform2D transform2DCameraBullets;
@@ -42,7 +42,7 @@ public class NewRendererTest extends Scene_old {
 
     @Override
     protected void start() {
-        container = new EntityManager();
+        container = new EntityContainer();
 
         button = new Entity(Layers.UI);
         button.attachComponents(

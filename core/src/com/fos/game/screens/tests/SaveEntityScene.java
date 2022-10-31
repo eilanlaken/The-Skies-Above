@@ -12,7 +12,7 @@ import com.fos.game.engine.ecs.components.camera_old.FactoryCamera;
 import com.fos.game.engine.ecs.components.scripts.ComponentScripts;
 import com.fos.game.engine.ecs.components.transform2d.FactoryTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
-import com.fos.game.engine.ecs.entities.EntityManager;
+import com.fos.game.engine.ecs.systems.base.EntityContainer;
 import com.fos.game.scripts.test.OrangeSquareScript;
 import com.fos.game.scripts.test.SimpleCameraScript;
 
@@ -22,7 +22,7 @@ import java.util.Map;
 public class SaveEntityScene extends Scene_old {
 
     // assets
-    private EntityManager container;
+    private EntityContainer container;
 
     // entities
     private Entity camera;
@@ -46,7 +46,7 @@ public class SaveEntityScene extends Scene_old {
 
     @Override
     public void start() {
-        container = new EntityManager();
+        container = new EntityContainer();
 
         camera = new Entity();
         camera.attachComponents(

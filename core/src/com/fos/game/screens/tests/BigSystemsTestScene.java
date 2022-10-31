@@ -8,7 +8,7 @@ import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
 import com.fos.game.engine.ecs.components.cameras_old.ComponentCamera2D;
 import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
-import com.fos.game.engine.ecs.entities.EntityManager;
+import com.fos.game.engine.ecs.systems.base.EntityContainer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +23,7 @@ public class BigSystemsTestScene extends Scene_old {
         UI,
     }
 
-    EntityManager container;
+    EntityContainer container;
 
     // refs
     ComponentTransform2D transform2DCameraBullets;
@@ -35,7 +35,7 @@ public class BigSystemsTestScene extends Scene_old {
 
     @Override
     protected void start() {
-        container = new EntityManager();
+        container = new EntityContainer();
 
         Entity button = new Entity(Layers.UI);
         button.attachComponents(

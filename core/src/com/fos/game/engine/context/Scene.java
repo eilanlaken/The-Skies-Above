@@ -1,9 +1,9 @@
 package com.fos.game.engine.context;
 
 import com.badlogic.gdx.Screen;
-import com.fos.game.engine.ecs.entities.EntityManager;
+import com.fos.game.engine.ecs.systems.base.EntityContainer;
 
-public abstract class Scene extends EntityManager implements Screen {
+public abstract class Scene extends EntityContainer implements Screen {
 
     protected final GameContext context;
 

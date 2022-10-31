@@ -10,6 +10,7 @@ import com.fos.game.engine.ecs.systems.renderer_old.materials.base.UseTextureMat
 
 import java.util.Comparator;
 
+@Deprecated
 public class ModelInstanceSorter implements RenderableSorter, Comparator<Renderable> {
 
     @Override

@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.*;
 import com.fos.game.engine.ecs.components.base.Factory;
-import com.fos.game.engine.ecs.entities.EntityManager;
+import com.fos.game.engine.ecs.systems.base.EntityContainer;
 import com.fos.game.engine.core.files.assets.GameAssetManager;
 import com.fos.game.engine.core.files.serialization.JsonConverter;
 
@@ -26,7 +26,7 @@ public class FactoryRigidBody2D extends Factory {
 
 
     @Deprecated
-    public static ComponentRigidBody2D create(final EntityManager container, float x, float y, float w, float h) {
+    public static ComponentRigidBody2D create(final EntityContainer container, float x, float y, float w, float h) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
         bodyDef.position.set(x, y);
@@ -47,7 +47,7 @@ public class FactoryRigidBody2D extends Factory {
     }
 
     @Deprecated
-    public static ComponentRigidBody2D create(final EntityManager container) {
+    public static ComponentRigidBody2D create(final EntityContainer container) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
         bodyDef.position.set(0, 0);
@@ -70,7 +70,7 @@ public class FactoryRigidBody2D extends Factory {
     }
 
     @Deprecated
-    public static ComponentRigidBody2D create2(final EntityManager container, BodyDef.BodyType bodyType) {
+    public static ComponentRigidBody2D create2(final EntityContainer container, BodyDef.BodyType bodyType) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = bodyType;
         // to pos of cursor
@@ -91,7 +91,7 @@ public class FactoryRigidBody2D extends Factory {
     }
 
     @Deprecated
-    public static ComponentRigidBody2D create3(final EntityManager container) {
+    public static ComponentRigidBody2D create3(final EntityContainer container) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
         bodyDef.position.set(0, 0);
@@ -109,7 +109,7 @@ public class FactoryRigidBody2D extends Factory {
     }
 
     @Deprecated
-    public static ComponentRigidBody2D create4(final EntityManager container, final TextureAtlas.AtlasRegion region, final float ppm) {
+    public static ComponentRigidBody2D create4(final EntityContainer container, final TextureAtlas.AtlasRegion region, final float ppm) {
         final float width = region.getRegionWidth();
         final float height = region.getRegionHeight();
 
@@ -133,7 +133,7 @@ public class FactoryRigidBody2D extends Factory {
     }
 
     @Deprecated
-    public static ComponentRigidBody2D create5(final EntityManager container, final TextureAtlas.AtlasRegion region, final float ppm, final float scale) {
+    public static ComponentRigidBody2D create5(final EntityContainer container, final TextureAtlas.AtlasRegion region, final float ppm, final float scale) {
         final float width = region.getRegionWidth();
         final float height = region.getRegionHeight();
 

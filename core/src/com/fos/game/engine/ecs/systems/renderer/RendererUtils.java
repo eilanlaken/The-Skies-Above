@@ -22,7 +22,7 @@ import java.util.Map;
 public class RendererUtils {
 
     protected static final int RENDERER_ENTITY =
-            ComponentType.ANIMATIONS_2D.bitMask
+            ComponentType.ANIMATIONS_FRAMES_2D.bitMask
                     | ComponentType.LIGHT_2D.bitMask
                     | ComponentType.CAMERA.bitMask;
 
@@ -40,9 +40,9 @@ public class RendererUtils {
             int depthSort = Float.compare(z1, z2);
             if (depthSort != 0) return depthSort;
 
-            Component animations1 = (Component) e1.components[ComponentType.ANIMATIONS_2D.ordinal()];
+            Component animations1 = (Component) e1.components[ComponentType.ANIMATIONS_FRAMES_2D.ordinal()];
             Component light1 = (Component) e1.components[ComponentType.LIGHT_2D.ordinal()];
-            Component animations2 = (Component) e2.components[ComponentType.ANIMATIONS_2D.ordinal()];
+            Component animations2 = (Component) e2.components[ComponentType.ANIMATIONS_FRAMES_2D.ordinal()];
             Component light2 = (Component) e2.components[ComponentType.LIGHT_2D.ordinal()];
             if (light1 == null && animations1 != null && light2 == null & animations2 != null) return 0; // expected to be the most frequent case (usually)
             if (light1 != null && animations1 == null && light2 == null & animations2 == null) return 1;
@@ -124,7 +124,7 @@ public class RendererUtils {
 
     private static boolean cull(final Entity entity, final Camera camera) {
         ComponentTransform transform = (ComponentTransform) entity.components[ComponentType.TRANSFORM.ordinal()];
-        ComponentFrameAnimations2D animation = (ComponentFrameAnimations2D) entity.components[ComponentType.ANIMATIONS_2D.ordinal()];
+        ComponentFrameAnimations2D animation = (ComponentFrameAnimations2D) entity.components[ComponentType.ANIMATIONS_FRAMES_2D.ordinal()];
         TextureAtlas.AtlasRegion atlasRegion = animation.getTextureRegion();
         final float width = atlasRegion.getRegionWidth() * transform.scale.x;
         final float height = atlasRegion.getRegionHeight() * transform.scale.y;

@@ -4,7 +4,7 @@ import com.badlogic.gdx.utils.Array;
 import com.fos.game.engine.ecs.components.audio.ComponentMusic;
 import com.fos.game.engine.ecs.components.audio.ComponentSoundEffects;
 import com.fos.game.engine.ecs.entities.Entity;
-import com.fos.game.engine.ecs.entities.EntityManager;
+import com.fos.game.engine.ecs.systems.base.EntityContainer;
 import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
 
 @Deprecated
@@ -17,7 +17,7 @@ public class AudioPlayer implements EntitiesProcessor {
 
     }
 
-    public void playSounds(final EntityManager container) {
+    public void playSounds(final EntityContainer container) {
 
     }
 
