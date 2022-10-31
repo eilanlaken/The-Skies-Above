@@ -3,6 +3,7 @@ package com.fos.game.engine.ecs.components.animations2d;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 
+@Deprecated
 public class Animations2DData_old {
 
     public String filepath;

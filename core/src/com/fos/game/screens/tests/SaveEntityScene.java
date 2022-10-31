@@ -6,7 +6,7 @@ import com.fos.game.engine.context.Scene_old;
 import com.fos.game.engine.core.files.serialization.JsonConverter;
 import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
 import com.fos.game.engine.ecs.components.animations2d.Animations2DData_old;
-import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
+import com.fos.game.engine.ecs.components.animations2d.ComponentFrameAnimations2D;
 import com.fos.game.engine.ecs.components.audio.ComponentSoundEffects;
 import com.fos.game.engine.ecs.components.camera_old.FactoryCamera;
 import com.fos.game.engine.ecs.components.scripts.ComponentScripts;
@@ -31,7 +31,7 @@ public class SaveEntityScene extends Scene_old {
     // serialization
     // testing
     ComponentSoundEffects componentSoundEffects;
-    ComponentAnimations2D componentAnimations2D;
+    ComponentFrameAnimations2D componentFrameAnimations2D;
     JsonConverter jsonConverter;
 
     public enum EntityLayers {
@@ -57,7 +57,7 @@ public class SaveEntityScene extends Scene_old {
         orangeSquare = new Entity();
         orangeSquare.attachComponents(
                 FactoryTransform2D.create(0,0),
-                context.factoryAnimation2D.create("atlases/test/testSpriteSheet.atlas", "testArrowOrange"),
+                context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet.atlas", "testArrowOrange"),
                 context.factoryAudio.create("audio/sample.wav", "audio/beep.wav"),
                 new ComponentScripts(new OrangeSquareScript(orangeSquare))
         );
@@ -83,10 +83,10 @@ public class SaveEntityScene extends Scene_old {
         Animations2DData_old data1 = new Animations2DData_old(null, null, 3);
         Animations2DData_old data2 = new Animations2DData_old(null, null, 3);
 
-        componentAnimations2D = context.factoryAnimation2D.create(data1, data2);
+        componentFrameAnimations2D = context.factoryFrameAnimations2D.create(data1, data2);
         System.out.println();
-        System.out.println("component: " + componentAnimations2D);
-        String json = jsonConverter.gson.toJson(componentAnimations2D);
+        System.out.println("component: " + componentFrameAnimations2D);
+        String json = jsonConverter.gson.toJson(componentFrameAnimations2D);
         System.out.println("json: " + json);
         //ComponentAnimations2D deserialized = context.factoryAnimation.create(json);
         //System.out.println("deserialized: " + deserialized.elapsedTime);

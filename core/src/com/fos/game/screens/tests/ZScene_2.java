@@ -17,7 +17,7 @@ import com.fos.game.engine.context.Scene_old;
 import com.fos.game.engine.core.graphics.g2d.GraphicsUtils;
 import com.fos.game.engine.core.graphics.g2d.SpriteBatch;
 import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
-import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
+import com.fos.game.engine.ecs.components.animations2d.ComponentFrameAnimations2D;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
 import com.fos.game.engine.ecs.components.physics2d.RigidBody2DData;
 import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
@@ -43,7 +43,7 @@ public class ZScene_2 extends Scene_old {
 
     class EntityMini {
         ComponentTransform2D transform;
-        ComponentAnimations2D animations;
+        ComponentFrameAnimations2D animations;
         Body body;
         Joint joint;
     }
@@ -93,7 +93,7 @@ public class ZScene_2 extends Scene_old {
 
         entityMini1 = new EntityMini();
         entityMini1.transform = context.factoryTransform2D.create(3, 0, 1, 0, 1, 1);
-        entityMini1.animations = context.factoryAnimation2D.create("atlases/test/testSpriteSheet3.atlas", "a", 0.5f, pixelsPerUnit);
+        entityMini1.animations = context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "a", 0.5f, pixelsPerUnit);
         Filter filter = new Filter();
         filter.categoryBits = 0x0001;
         filter.maskBits = 0x0011;
@@ -112,7 +112,7 @@ public class ZScene_2 extends Scene_old {
 
         entityMini2 = new EntityMini();
         entityMini2.transform = context.factoryTransform2D.create(-3, 0, 1, 0, 1, 1);
-        entityMini2.animations = context.factoryAnimation2D.create("atlases/test/testSpriteSheet3.atlas", "b", 1, pixelsPerUnit);
+        entityMini2.animations = context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "b", 1, pixelsPerUnit);
         Filter filter2 = new Filter();
         filter2.categoryBits = 0x0001;
         filter2.maskBits = 0x0011;
@@ -293,7 +293,7 @@ public class ZScene_2 extends Scene_old {
     }
 
     // TODO: test culling
-    private static boolean cull(ComponentTransform2D transform, ComponentAnimations2D animation, final Camera camera) {
+    private static boolean cull(ComponentTransform2D transform, ComponentFrameAnimations2D animation, final Camera camera) {
         TextureAtlas.AtlasRegion atlasRegion = animation.getTextureRegion();
         final float width = atlasRegion.getRegionWidth() * transform.scaleX;
         final float height = atlasRegion.getRegionHeight() * transform.scaleY;

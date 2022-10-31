@@ -2,9 +2,12 @@ package com.fos.game.engine.ecs.systems.renderer;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.FloatArray;
 import com.fos.game.engine.core.graphics.g2d.RenderTarget;
-import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
+import com.fos.game.engine.core.graphics.spine.Skeleton;
+import com.fos.game.engine.ecs.components.animations2d.ComponentFrameAnimations2D;
 import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
@@ -25,6 +28,9 @@ public class RendererUtils {
 
     private static Map<RenderTarget, Array<ComponentCamera>> renderTargetCamerasResult = new HashMap<>();
     private static Map<ComponentCamera, Array<Entity>> cameraEntitiesMapResult = new HashMap<>();
+    private static Vector2 offset = new Vector2();
+    private static Vector2 bounds = new Vector2();
+    private static FloatArray floatArray = new FloatArray();
 
     protected static final Comparator<Entity> entitiesComparator = new Comparator<Entity>() {
         @Override
@@ -118,12 +124,22 @@ public class RendererUtils {
 
     private static boolean cull(final Entity entity, final Camera camera) {
         ComponentTransform transform = (ComponentTransform) entity.components[ComponentType.TRANSFORM.ordinal()];
-        ComponentAnimations2D animation = (ComponentAnimations2D) entity.components[ComponentType.ANIMATIONS_2D.ordinal()];
+        ComponentFrameAnimations2D animation = (ComponentFrameAnimations2D) entity.components[ComponentType.ANIMATIONS_2D.ordinal()];
         TextureAtlas.AtlasRegion atlasRegion = animation.getTextureRegion();
         final float width = atlasRegion.getRegionWidth() * transform.scale.x;
         final float height = atlasRegion.getRegionHeight() * transform.scale.y;
         final float boundingRadius = Math.max(width, height) * 2 * animation.size;
         return !camera.frustum.sphereInFrustum(transform.position.x, transform.position.y, 0, boundingRadius);
+    }
+
+    /** culling for skeletons */
+    private static boolean cull(Skeleton skeleton, Camera camera) {
+        floatArray.clear();
+        skeleton.getBounds(offset, bounds, floatArray);
+        float x = skeleton.getRootBone().getWorldX();
+        float y = skeleton.getRootBone().getWorldY();
+        float boundingRadius = Math.max(bounds.x, bounds.y) * 2;
+        return !camera.frustum.sphereInFrustum(x, y, 0, boundingRadius);
     }
 
 }

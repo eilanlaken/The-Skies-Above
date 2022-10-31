@@ -11,9 +11,9 @@ import com.fos.game.engine.core.files.assets.GameAssetManager;
 
 import java.util.HashMap;
 
-public class ComponentAnimations2D implements Component {
+public class ComponentFrameAnimations2D implements Component {
 
-    public Animations2DData data;
+    public FrameAnimations2DData data;
     public HashMap<String, Animation<TextureAtlas.AtlasRegion>> animations;
     public Animation<TextureAtlas.AtlasRegion> currentPlayingAnimation;
     public float size;
@@ -22,7 +22,7 @@ public class ComponentAnimations2D implements Component {
     public Color tint;
     public boolean active = true;
 
-    protected ComponentAnimations2D(GameAssetManager assetManager, Animations2DData data) {
+    protected ComponentFrameAnimations2D(GameAssetManager assetManager, FrameAnimations2DData data) {
         this.data = data;
         this.size = data.size;
         this.pixelsPerUnit = data.pixelsPerUnit;
@@ -30,7 +30,7 @@ public class ComponentAnimations2D implements Component {
         this.tint = data.tint;
         this.active = data.active;
         this.animations = new HashMap<>();
-        for (Animations2DData.AnimationData animationData : data.animationData) {
+        for (FrameAnimations2DData.AnimationData animationData : data.animationData) {
             SpriteSheet spriteSheet = assetManager.get(animationData.filepath, SpriteSheet.class);
             Array<TextureAtlas.AtlasRegion> keyFrames = spriteSheet.findRegions(animationData.animationName);
             Animation<TextureAtlas.AtlasRegion> animation = new Animation<>(animationData.frameDuration, keyFrames, animationData.playMode);
@@ -41,7 +41,7 @@ public class ComponentAnimations2D implements Component {
 
     // TODO: remove
     @Deprecated
-    protected ComponentAnimations2D() {
+    protected ComponentFrameAnimations2D() {
 
     }
 

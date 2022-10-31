@@ -1,6 +1,6 @@
 raptor-pma.png
 	size: 1024, 512
-	filter: Linear, Linear
+	filter: Nearest, Nearest
 	pma: true
 	scale: 0.5
 back-arm

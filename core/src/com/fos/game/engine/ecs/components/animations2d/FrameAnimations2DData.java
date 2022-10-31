@@ -3,7 +3,7 @@ package com.fos.game.engine.ecs.components.animations2d;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 
-public class Animations2DData {
+public class FrameAnimations2DData {
 
     public float elapsedTime;
     public Color tint;
@@ -13,7 +13,7 @@ public class Animations2DData {
     public int currentlyPlaying;
     public AnimationData[] animationData;
 
-    public Animations2DData(float elapsedTime, Color tint, boolean active, int pixelsPerUnit, float size, int currentlyPlaying, AnimationData... animationData) {
+    public FrameAnimations2DData(float elapsedTime, Color tint, boolean active, int pixelsPerUnit, float size, int currentlyPlaying, AnimationData... animationData) {
         this.animationData = animationData;
         this.elapsedTime = elapsedTime;
         this.tint = tint;

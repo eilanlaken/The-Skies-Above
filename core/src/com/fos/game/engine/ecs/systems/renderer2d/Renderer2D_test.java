@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.fos.game.engine.core.graphics.g2d.Physics2DDebugRenderer;
 import com.fos.game.engine.core.graphics.g2d.RenderTarget;
 import com.fos.game.engine.core.graphics.g2d.SpriteBatch;
-import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
+import com.fos.game.engine.ecs.components.animations2d.ComponentFrameAnimations2D;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.cameras_old.ComponentCamera2D;
 import com.fos.game.engine.ecs.components.lights2d.ComponentLight2D;
@@ -40,7 +40,7 @@ public class Renderer2D_test implements EntitiesProcessor, Disposable {
         this.allCameras.clear();
         for (Entity entity : entities) {
             if ((entity.componentsBitMask & ComponentType.ANIMATIONS_2D.bitMask) > 0) {
-                ComponentAnimations2D animation = (ComponentAnimations2D) entity.components[ComponentType.ANIMATIONS_2D.ordinal()];
+                ComponentFrameAnimations2D animation = (ComponentFrameAnimations2D) entity.components[ComponentType.ANIMATIONS_2D.ordinal()];
                 final float delta = Gdx.graphics.getDeltaTime();
                 animation.advanceTime(delta);
             }

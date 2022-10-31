@@ -5,7 +5,7 @@ import com.badlogic.gdx.Input;
 import com.fos.game.engine.context.GameContext;
 import com.fos.game.engine.context.Scene_old;
 import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
-import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
+import com.fos.game.engine.ecs.components.animations2d.ComponentFrameAnimations2D;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.cameras_old.ComponentCamera2D;
 import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
@@ -46,7 +46,7 @@ public class BigSystemsTestScene2 extends Scene_old {
         button = new Entity(Layers.UI);
         button.attachComponents(
                 context.factoryTransform2D.create(0,0,-11,0,1,1),
-                context.factoryAnimation2D.create("atlases/test/testSpriteSheet2.atlas", "blue")
+                context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet2.atlas", "blue")
         );
         container.addEntity(button);
 
@@ -54,7 +54,7 @@ public class BigSystemsTestScene2 extends Scene_old {
             Entity entity = new Entity(Layers.CHARACTER);
             entity.attachComponents(
               context.factoryTransform2D.create(-2 + i,0,0,0,1,1),
-              context.factoryAnimation2D.create("atlases/test/testSpriteSheet2.atlas", "green")
+              context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet2.atlas", "green")
             );
             container.addEntity(entity);
         }
@@ -63,7 +63,7 @@ public class BigSystemsTestScene2 extends Scene_old {
             Entity entity = new Entity(Layers.BULLET);
             entity.attachComponents(
                     context.factoryTransform2D.create(-2 + i,0,-1,0,1,1),
-                    context.factoryAnimation2D.create("atlases/test/testSpriteSheet2.atlas", "orange")
+                    context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet2.atlas", "orange")
             );
             container.addEntity(entity);
         }
@@ -72,7 +72,7 @@ public class BigSystemsTestScene2 extends Scene_old {
         Entity mouse = new Entity(Layers.MOUSE);
         mouse.attachComponents(
                 context.factorySignalBox.create(),
-                context.factoryAnimation2D.create("atlases/test/testSpriteSheet2.atlas", "purple"),
+                context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet2.atlas", "purple"),
                 context.factoryScripts.create(new PeriodicSendTestScript(mouse))
         );
         container.addEntity(mouse);
@@ -107,7 +107,7 @@ public class BigSystemsTestScene2 extends Scene_old {
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
-            ComponentAnimations2D animations2D = (ComponentAnimations2D) button.getComponent(ComponentType.ANIMATIONS_2D);
+            ComponentFrameAnimations2D animations2D = (ComponentFrameAnimations2D) button.getComponent(ComponentType.ANIMATIONS_2D);
             animations2D.active = !animations2D.active;
         }
     }

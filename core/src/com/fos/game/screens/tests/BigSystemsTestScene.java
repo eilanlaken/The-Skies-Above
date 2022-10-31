@@ -40,7 +40,7 @@ public class BigSystemsTestScene extends Scene_old {
         Entity button = new Entity(Layers.UI);
         button.attachComponents(
                 context.factoryTransform2D.create(0,0,-11,0,1,1),
-                context.factoryAnimation2D.create("atlases/test/testSpriteSheet2.atlas", "blue")
+                context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet2.atlas", "blue")
         );
         container.addEntity(button);
 
@@ -48,7 +48,7 @@ public class BigSystemsTestScene extends Scene_old {
             Entity entity = new Entity(Layers.CHARACTER);
             entity.attachComponents(
               context.factoryTransform2D.create(-2 + i,0,0,0,1,1),
-              context.factoryAnimation2D.create("atlases/test/testSpriteSheet2.atlas", "green")
+              context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet2.atlas", "green")
             );
             container.addEntity(entity);
         }
@@ -57,7 +57,7 @@ public class BigSystemsTestScene extends Scene_old {
             Entity entity = new Entity(Layers.BULLET);
             entity.attachComponents(
                     context.factoryTransform2D.create(-2 + i,0,-1,0,1,1),
-                    context.factoryAnimation2D.create("atlases/test/testSpriteSheet2.atlas", "orange")
+                    context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet2.atlas", "orange")
             );
             container.addEntity(entity);
         }

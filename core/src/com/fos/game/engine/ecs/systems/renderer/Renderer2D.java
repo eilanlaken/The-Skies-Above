@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
 import com.fos.game.engine.core.graphics.g2d.Physics2DDebugRenderer;
 import com.fos.game.engine.core.graphics.g2d.SpriteBatch;
-import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
+import com.fos.game.engine.ecs.components.animations2d.ComponentFrameAnimations2D;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
 import com.fos.game.engine.ecs.components.physics2d.ComponentJoint2D;
@@ -30,7 +30,7 @@ public class Renderer2D {
         spriteBatch.setColor(1,1,1,1);
         spriteBatch.setProjectionMatrix(camera.lens.combined);
         for (Entity entity : entities) {
-            ComponentAnimations2D animation = (ComponentAnimations2D) entity.components[ComponentType.ANIMATIONS_2D.ordinal()];
+            ComponentFrameAnimations2D animation = (ComponentFrameAnimations2D) entity.components[ComponentType.ANIMATIONS_2D.ordinal()];
             if (animation == null || !animation.active) continue;
             ComponentTransform transform = (ComponentTransform) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
             final float delta = Gdx.graphics.getDeltaTime();

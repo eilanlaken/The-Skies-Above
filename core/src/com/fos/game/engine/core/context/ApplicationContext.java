@@ -4,7 +4,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.fos.game.engine.core.files.assets.GameAssetManager;
 import com.fos.game.engine.core.files.serialization.JsonConverter;
-import com.fos.game.engine.ecs.components.animations2d.FactoryAnimation2D;
+import com.fos.game.engine.ecs.components.animations2d.FactoryFrameAnimations2D;
 import com.fos.game.engine.ecs.components.audio.FactoryAudio;
 import com.fos.game.engine.ecs.components.camera.FactoryCamera;
 import com.fos.game.engine.ecs.components.cameras_old.FactoryCamera2D;
@@ -30,7 +30,7 @@ public class ApplicationContext implements ApplicationListener {
     public GameAssetManager assetManager;
     public JsonConverter jsonConverter;
     // Component Factory(s)
-    public FactoryAnimation2D factoryAnimation2D;
+    public FactoryFrameAnimations2D factoryFrameAnimations2D;
     public FactoryAudio factoryAudio;
     public FactoryCamera factoryCamera;
     @Deprecated public FactoryCamera2D factoryCamera2D;
@@ -51,7 +51,7 @@ public class ApplicationContext implements ApplicationListener {
     public void create() {
         this.assetManager = new GameAssetManager();
         this.jsonConverter = new JsonConverter();
-        this.factoryAnimation2D = new FactoryAnimation2D(this.assetManager, this.jsonConverter);
+        this.factoryFrameAnimations2D = new FactoryFrameAnimations2D(this.assetManager, this.jsonConverter);
         this.factoryAudio = new FactoryAudio(this.assetManager, this.jsonConverter);
         this.factoryCamera = new FactoryCamera(this.assetManager, this.jsonConverter);
         this.factoryCamera2D = new FactoryCamera2D(this.assetManager, this.jsonConverter);

@@ -14,13 +14,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.FloatArray;
 import com.fos.game.engine.core.context.ApplicationContext;
 import com.fos.game.engine.core.context.Scene;
 import com.fos.game.engine.core.graphics.g2d.GraphicsUtils;
 import com.fos.game.engine.core.graphics.g2d.PolygonSpriteBatch;
 import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
 import com.fos.game.engine.core.graphics.spine.*;
-import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
+import com.fos.game.engine.ecs.components.animations2d.ComponentFrameAnimations2D;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
 import com.fos.game.engine.ecs.components.physics2d.RigidBody2DData;
 import com.fos.game.engine.ecs.components.transform.ComponentTransform;
@@ -48,6 +49,10 @@ public class TestSceneA extends Scene {
     Skeleton skeleton;
     AnimationState state;
     float angle = 0;
+    // culling
+    static Vector2 offset = new Vector2();
+    static Vector2 bounds = new Vector2();
+    static FloatArray floatArray = new FloatArray();
 
     Physics2DDebugRenderer physics2DDebugRenderer = new Physics2DDebugRenderer();
     RayHandler rayHandler;
@@ -55,7 +60,7 @@ public class TestSceneA extends Scene {
 
     class EntityMini {
         ComponentTransform transform;
-        ComponentAnimations2D animations;
+        ComponentFrameAnimations2D animations;
         Body body;
         Joint joint;
     }
@@ -106,7 +111,7 @@ public class TestSceneA extends Scene {
         entityMini1 = new EntityMini();
         entityMini1.transform = context.factoryTransform.create2d(-3, 0, 0, 0, 1, 1);
         System.out.println("transform " +  entityMini1.transform);
-        entityMini1.animations = context.factoryAnimation2D.create("atlases/test/testSpriteSheet3.atlas", "a", 1,0.5f, pixelsPerUnit);
+        entityMini1.animations = context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "a", 1,0.5f, pixelsPerUnit);
         Filter filter = new Filter();
         filter.categoryBits = 0x0001;
         filter.maskBits = 0x0011;
@@ -122,8 +127,8 @@ public class TestSceneA extends Scene {
         entities.add(entityMini1);
 
         entityMini2 = new EntityMini();
-        entityMini2.transform = context.factoryTransform.create2d(3, 0, 0, 0, 1, 1);
-        entityMini2.animations = context.factoryAnimation2D.create("atlases/test/testSpriteSheet3.atlas", "b", 1,1, pixelsPerUnit);
+        entityMini2.transform = context.factoryTransform.create2d(0, 0, 0, 0, 1, 1);
+        entityMini2.animations = context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "b", 1,1, pixelsPerUnit);
         Filter filter2 = new Filter();
         filter2.categoryBits = 0x0001;
         filter2.maskBits = 0x0011;
@@ -193,12 +198,18 @@ public class TestSceneA extends Scene {
                     entityMini.transform.scale.x, entityMini.transform.scale.y,
                     entityMini.animations.size, entityMini.animations.pixelsPerUnit);
         }
-        renderer.draw(batch, skeleton); // Draw the skeleton images.
-        angle += delta * 5;
-        skeleton.getRootBone().setRotation(angle);
-        skeleton.setPosition(2,2);
-        System.out.println(skeleton.getBones().get(4).getData().getName());
-        System.out.println(skeleton.getBones().get(4).getWorldY());
+
+        if (cull(skeleton, camera.lens)) {
+            System.out.println("culling");
+        } else {
+            renderer.draw(batch, skeleton); // Draw the skeleton images.
+        }
+        skeleton.getBounds(offset, bounds, floatArray);
+
+        //System.out.println("offset: " + offset);
+        //System.out.println("bounds: " + bounds);
+        //System.out.println("fb: " + floatArray);
+
         batch.end();
         // the ambient light is determined by the last rendered RayHandler.
         rayHandler.render();
@@ -214,9 +225,9 @@ public class TestSceneA extends Scene {
         physics2DDebugRenderer.end();
 
         OrthographicCamera orthographicCamera = (OrthographicCamera) camera.lens;
-        if (Gdx.input.isKeyPressed(Input.Keys.Z))
+        if (Gdx.input.isKeyPressed(Input.Keys.PLUS))
             orthographicCamera.zoom += 0.1f;
-        if (Gdx.input.isKeyPressed(Input.Keys.A))
+        if (Gdx.input.isKeyPressed(Input.Keys.MINUS))
             orthographicCamera.zoom -= 0.1f;
         if (Gdx.input.isKeyJustPressed(Input.Keys.K))
             pointLight1.setActive(!pointLight1.isActive());
@@ -229,6 +240,16 @@ public class TestSceneA extends Scene {
         }
         if (Gdx.input.isKeyPressed(Input.Keys.R)) {
             entityMini1.body.setTransform(entityMini1.transform.position.x, entityMini1.transform.position.y, entityMini1.body.getAngle() + 0.1f);
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+            skeleton.setPosition(skeleton.getX() - 0.1f, skeleton.getY());
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+            skeleton.setPosition(skeleton.getX() + 0.1f, skeleton.getY());
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.R)) {
+            skeleton.getRootBone().setRotation(skeleton.getRootBone().getRotation() + 1);
         }
     }
 
@@ -332,13 +353,23 @@ public class TestSceneA extends Scene {
         return assetNameClassMap;
     }
 
-    // TODO: implement culling for Spline 2D outputs.
-    private static boolean cull(ComponentTransform transform, ComponentAnimations2D animation, final Camera camera) {
+    /** culling for atlas regions */
+    private static boolean cull(ComponentTransform transform, ComponentFrameAnimations2D animation, final Camera camera) {
         TextureAtlas.AtlasRegion atlasRegion = animation.getTextureRegion();
         final float width = atlasRegion.getRegionWidth() * transform.scale.x;
         final float height = atlasRegion.getRegionHeight() * transform.scale.y;
         final float boundingRadius = Math.max(width, height) * 2 * animation.size / animation.pixelsPerUnit;
         return !camera.frustum.sphereInFrustum(transform.position.x, transform.position.y, 0, boundingRadius);
+    }
+
+    /** culling for skeletons */
+    private static boolean cull(Skeleton skeleton, Camera camera) {
+        floatArray.clear();
+        skeleton.getBounds(offset, bounds, floatArray);
+        float x = skeleton.getRootBone().getWorldX();
+        float y = skeleton.getRootBone().getWorldY();
+        float boundingRadius = Math.max(bounds.x, bounds.y) * 2;
+        return !camera.frustum.sphereInFrustum(x, y, 0, boundingRadius);
     }
 
 }

@@ -47,7 +47,7 @@ public class NewRendererTest extends Scene_old {
         button = new Entity(Layers.UI);
         button.attachComponents(
                 context.factoryTransform2D.create(0,0,-11,0,1,1),
-                context.factoryAnimation2D.create("atlases/test/testSpriteSheet2.atlas", "blue"),
+                context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet2.atlas", "blue"),
                 context.factoryRigidBody2D.create(new RigidBody2DData(
                         BodyDef.BodyType.StaticBody,
                         RigidBody2DData.Shape.RECTANGLE,
@@ -63,7 +63,7 @@ public class NewRendererTest extends Scene_old {
             Entity entity = new Entity(Layers.CHARACTER);
             entity.attachComponents(
               context.factoryTransform2D.create(-2 + i,0,0,0,1,1),
-              context.factoryAnimation2D.create("atlases/test/testSpriteSheet2.atlas", "green"),
+              context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet2.atlas", "green"),
               context.factoryRigidBody2D.create(new RigidBody2DData(
                     BodyDef.BodyType.StaticBody,
                     RigidBody2DData.Shape.RECTANGLE,
@@ -80,7 +80,7 @@ public class NewRendererTest extends Scene_old {
             Entity entity = new Entity(Layers.BULLET);
             entity.attachComponents(
                     context.factoryTransform2D.create(-2 + i,0,6,0,1,1),
-                    context.factoryAnimation2D.create("atlases/test/testSpriteSheet2.atlas", "orange")
+                    context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet2.atlas", "orange")
             );
             container.addEntity(entity);
         }
@@ -89,7 +89,7 @@ public class NewRendererTest extends Scene_old {
         Entity mouse = new Entity(Layers.MOUSE);
         mouse.attachComponents(
                 context.factorySignalBox.create(),
-                context.factoryAnimation2D.create("atlases/test/testSpriteSheet2.atlas", "purple"),
+                context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet2.atlas", "purple"),
                 context.factoryScripts.create(new PeriodicSendTestScript(mouse))
         );
         container.addEntity(mouse);
