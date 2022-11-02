@@ -34,14 +34,12 @@ public class Entity implements Disposable {
     @Deprecated
     public Entity(final Enum category, final Object ...componentsToAttach) {
         attachComponents(componentsToAttach);
-        refresh();
         this.category = 0b000001 << category.ordinal();
     }
 
     @Deprecated
     public Entity(final Object ...componentsToAttach) {
         attachComponents(componentsToAttach);
-        refresh();
         this.category = 0b000001;
     }
 
@@ -51,33 +49,7 @@ public class Entity implements Disposable {
             final Component component = (Component) object;
             if (component != null) components[component.getComponentType().ordinal()] = component;
         }
-        refresh();
-    }
-
-    @Deprecated // TODO: deprecate.
-    private void refresh() {
-        componentsBitMask = EntityUtils.computeBitMask(this.components);
-
-        ComponentTransform2D transform2D = (ComponentTransform2D) components[ComponentType.TRANSFORM_2D.ordinal()];
-        ComponentTransform3D transform3d = (ComponentTransform3D) components[ComponentType.TRANSFORM_3D.ordinal()];
-        //ComponentModelInstance modelInstance = (ComponentModelInstance) components[ComponentType.MODEL_INSTANCE.ordinal()];
-        ComponentRigidBody2D rigidBody2d = (ComponentRigidBody2D) components[ComponentType.PHYSICS_2D_BODY.ordinal()];
-        ComponentRigidBody3D rigidBody3d = (ComponentRigidBody3D) components[ComponentType.PHYSICS_3D_BODY.ordinal()];
-
-        if (transform2D == null) {
-            components[ComponentType.TRANSFORM_2D.ordinal()] = FactoryTransform2D.create();
-            transform2D = (ComponentTransform2D) components[ComponentType.TRANSFORM_2D.ordinal()];
-        }
-        if (transform3d == null) {
-            components[ComponentType.TRANSFORM_3D.ordinal()] = FactoryTransform3D.create();
-        }
-        if (rigidBody3d != null) {
-            rigidBody3d.userData = this;
-            rigidBody3d.setWorldTransform(transform3d.matrix4);
-        }
-//        if (modelInstance != null) {
-//            modelInstance.instance.transform = (Matrix4) components[ComponentType.TRANSFORM_3D.ordinal()];
-//        }
+        this.componentsBitMask = EntityUtils.computeBitMask(this.components);
     }
 
     public Object getComponent(final ComponentType componentType) {
