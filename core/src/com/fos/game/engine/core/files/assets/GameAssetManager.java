@@ -5,12 +5,9 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g3d.Model;
-import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.badlogic.gdx.utils.JsonReader;
 import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
 
 import java.nio.FloatBuffer;
@@ -27,7 +24,6 @@ public class GameAssetManager extends AssetManager {
 
     public GameAssetManager() {
         super();
-        this.setLoader(Model.class, ".inst", new G3dModelLoader(new JsonReader(), getFileHandleResolver()));
         this.setLoader(SpriteSheet.class, new SpriteSheetLoader(getFileHandleResolver()));
         //this.setLoader(SoundEffect.class, new SoundEffectLoader(getFileHandleResolver()));
     }
