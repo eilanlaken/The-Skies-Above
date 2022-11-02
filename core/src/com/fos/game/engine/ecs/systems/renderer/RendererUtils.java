@@ -8,7 +8,6 @@ import com.badlogic.gdx.utils.FloatArray;
 import com.fos.game.engine.core.graphics.g2d.RenderTarget;
 import com.fos.game.engine.core.graphics.spine.Skeleton;
 import com.fos.game.engine.ecs.components.animations2d.ComponentFrameAnimations2D;
-import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
 import com.fos.game.engine.ecs.components.lights2d.ComponentLight2D;
@@ -56,8 +55,8 @@ public class RendererUtils {
 
     // TODO: test
     protected static void applyTransform(final ComponentTransform transform, final ComponentLight2D light2D) {
-        light2D.light.setPosition(transform.position.x, transform.position.y);
-        light2D.light.setDirection(transform.rotation.getAngleAround(0,0,1));
+        light2D.box2DLight.setPosition(transform.position.x, transform.position.y);
+        light2D.box2DLight.setDirection(transform.rotation.getAngleAround(0,0,1));
     }
 
     /**

@@ -9,7 +9,7 @@ public class ComponentLight2D implements Component {
 
     public Light2DData light2DData;
     public RayHandler rayHandler; // <- will be set when inserted into the box2d world.
-    public Light light; // <- will be created when inserted into the box2d world.
+    public Light box2DLight; // <- will be created when inserted into the box2d world.
 
     protected ComponentLight2D(final Light2DData light2DData) {
         this.light2DData = light2DData;

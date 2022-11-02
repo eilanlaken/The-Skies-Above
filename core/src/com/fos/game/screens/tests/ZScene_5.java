@@ -199,7 +199,7 @@ public class ZScene_5 extends Scene_old {
         System.out.println(skeleton.getBones().get(4).getData().getName());
         System.out.println(skeleton.getBones().get(4).getWorldY());
         batch.end();
-        // the ambient light is determined by the last rendered RayHandler.
+        // the ambient box2DLight is determined by the last rendered RayHandler.
         rayHandler.render();
 
         physics2DDebugRenderer.begin();

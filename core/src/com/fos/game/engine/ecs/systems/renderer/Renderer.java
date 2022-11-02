@@ -2,6 +2,7 @@ package com.fos.game.engine.ecs.systems.renderer;
 
 // TODO: implement.
 
+import box2dLight.Light;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
@@ -81,6 +82,9 @@ public class Renderer implements EntitiesProcessor, Disposable {
                 final ComponentTransform transform = (ComponentTransform) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
                 final ComponentLight2D light2D = (ComponentLight2D) entity.components[ComponentType.GRAPHICS.ordinal()];
                 RendererUtils.applyTransform(transform, light2D);
+                // sets all lights to inactive - lights will be switched on / off per camera render.
+                Light light = light2D.box2DLight;
+                if (light != null) light.setActive(false);
             }
             else if (graphics instanceof ComponentCamera) {
                 final ComponentTransform transform = (ComponentTransform) entity.components[ComponentType.TRANSFORM_2D.ordinal()];

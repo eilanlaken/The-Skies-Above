@@ -74,8 +74,8 @@ public class Renderer2DUtils {
     }
 
     protected static void applyTransform(final ComponentTransform2D transform2D, final ComponentLight2D light2D) {
-        light2D.light.setPosition(transform2D.getPosition().x, transform2D.getPosition().y);
-        light2D.light.setDirection(transform2D.getRotation());
+        light2D.box2DLight.setPosition(transform2D.getPosition().x, transform2D.getPosition().y);
+        light2D.box2DLight.setDirection(transform2D.getRotation());
     }
 
     /**

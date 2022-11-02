@@ -74,7 +74,7 @@ void main()
     // for point lights
     for (int i = 0; i < MAX_POINT_LIGHTS; i++)
     {
-        // calculate per-light radiance
+        // calculate per-box2DLight radiance
         vec3 vertex_to_light    = invTBN * (point_lights[i].position - world_vertex_position);
         float distance_to_light = length(vertex_to_light);
         float attenuation       = 1.0 / (1.0 + 0.01 * distance_to_light + 0.001 * distance_to_light * distance_to_light);
@@ -102,7 +102,7 @@ void main()
 
     // sum directional lights
     for (int i = 0; i < MAX_DIRECTIONAL_LIGHTS; i++) {
-        // calculate per-light radiance
+        // calculate per-box2DLight radiance
         vec3 vertex_to_light    = invTBN * (directional_lights[i].position - world_vertex_position);
         vec3 radiance           = directional_lights[i].intensity * directional_lights[i].color;
 

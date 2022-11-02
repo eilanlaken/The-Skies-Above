@@ -612,7 +612,7 @@ public class SkeletonJson extends SkeletonLoader {
 				} else if (timelineName.equals("rgba2")) {
 					RGBA2Timeline timeline = new RGBA2Timeline(frames, frames * 7, slot.index);
 					float time = keyMap.getFloat("time", 0);
-					String color = keyMap.getString("light");
+					String color = keyMap.getString("box2DLight");
 					float r = Integer.parseInt(color.substring(0, 2), 16) / 255f;
 					float g = Integer.parseInt(color.substring(2, 4), 16) / 255f;
 					float b = Integer.parseInt(color.substring(4, 6), 16) / 255f;
@@ -629,7 +629,7 @@ public class SkeletonJson extends SkeletonLoader {
 							break;
 						}
 						float time2 = nextMap.getFloat("time", 0);
-						color = nextMap.getString("light");
+						color = nextMap.getString("box2DLight");
 						float nr = Integer.parseInt(color.substring(0, 2), 16) / 255f;
 						float ng = Integer.parseInt(color.substring(2, 4), 16) / 255f;
 						float nb = Integer.parseInt(color.substring(4, 6), 16) / 255f;
@@ -663,7 +663,7 @@ public class SkeletonJson extends SkeletonLoader {
 				} else if (timelineName.equals("rgb2")) {
 					RGB2Timeline timeline = new RGB2Timeline(frames, frames * 6, slot.index);
 					float time = keyMap.getFloat("time", 0);
-					String color = keyMap.getString("light");
+					String color = keyMap.getString("box2DLight");
 					float r = Integer.parseInt(color.substring(0, 2), 16) / 255f;
 					float g = Integer.parseInt(color.substring(2, 4), 16) / 255f;
 					float b = Integer.parseInt(color.substring(4, 6), 16) / 255f;
@@ -679,7 +679,7 @@ public class SkeletonJson extends SkeletonLoader {
 							break;
 						}
 						float time2 = nextMap.getFloat("time", 0);
-						color = nextMap.getString("light");
+						color = nextMap.getString("box2DLight");
 						float nr = Integer.parseInt(color.substring(0, 2), 16) / 255f;
 						float ng = Integer.parseInt(color.substring(2, 4), 16) / 255f;
 						float nb = Integer.parseInt(color.substring(4, 6), 16) / 255f;

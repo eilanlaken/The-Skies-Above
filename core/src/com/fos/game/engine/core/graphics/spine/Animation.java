@@ -1337,7 +1337,7 @@ public class Animation {
 			return slotIndex;
 		}
 
-		/** Sets the time, light color, and dark color for the specified frame.
+		/** Sets the time, box2DLight color, and dark color for the specified frame.
 		 * @param frame Between 0 and <code>frameCount</code>, inclusive.
 		 * @param time The frame time in seconds. */
 		public void setFrame (int frame, float time, float r, float g, float b, float a, float r2, float g2, float b2) {
@@ -1464,7 +1464,7 @@ public class Animation {
 			return slotIndex;
 		}
 
-		/** Sets the time, light color, and dark color for the specified frame.
+		/** Sets the time, box2DLight color, and dark color for the specified frame.
 		 * @param frame Between 0 and <code>frameCount</code>, inclusive.
 		 * @param time The frame time in seconds. */
 		public void setFrame (int frame, float time, float r, float g, float b, float r2, float g2, float b2) {

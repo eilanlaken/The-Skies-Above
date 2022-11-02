@@ -11,9 +11,29 @@ public class FactoryLight2D extends Factory {
         super(assetManager, jsonConverter);
     }
 
+    public ComponentLight2D create(final Light2DData data) {
+        return null;
+    }
+
+    public ComponentLight2D createPointLight() {
+        return null;
+    }
+
+    public ComponentLight2D createConeLight() {
+        return null;
+    }
+
+    public ComponentLight2D createDirectionalLight() {
+        return null;
+    }
+
+    public ComponentLight2D createAmbientLight() {
+        return null;
+    }
+
     @Deprecated // for minor test only
     public ComponentLight2D create() {
-        Light2DData data = new Light2DData(Color.CYAN, 10, 5);
+        Light2DData data = new Light2DData(LightType.POINT, Color.CYAN, 10, 5);
         return new ComponentLight2D(data);
     }
 

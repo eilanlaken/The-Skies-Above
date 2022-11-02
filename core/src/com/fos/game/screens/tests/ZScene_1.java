@@ -153,7 +153,7 @@ public class ZScene_1 extends Scene_old {
             spriteBatch.draw(entityMini.animations.currentPlayingAnimation.getKeyFrame(delta), entityMini.transform, entityMini.animations.size, entityMini.animations.pixelsPerUnit);
         }
         spriteBatch.end();
-        // the ambient light is determined by the last rendered RayHandler.
+        // the ambient box2DLight is determined by the last rendered RayHandler.
         rayHandler.render();
 
         physics2DDebugRenderer.begin();

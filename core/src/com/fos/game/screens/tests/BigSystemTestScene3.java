@@ -161,7 +161,7 @@ public class BigSystemTestScene3 extends Scene_old {
             spriteBatch.draw2(entityMini.animation.getKeyFrame(0), entityMini.transform2D, 64, 64);
         }
         spriteBatch.end();
-        // the ambient light is determined by the last rendered RayHandler.
+        // the ambient box2DLight is determined by the last rendered RayHandler.
         rayHandler.render();
 
         physics2DDebugRenderer.begin();

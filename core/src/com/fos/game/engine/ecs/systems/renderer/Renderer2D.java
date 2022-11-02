@@ -1,7 +1,10 @@
 package com.fos.game.engine.ecs.systems.renderer;
 
+import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
 import com.fos.game.engine.core.graphics.g2d.Physics2DDebugRenderer;
@@ -14,6 +17,7 @@ import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
 import com.fos.game.engine.ecs.components.lights2d.ComponentLight2D;
+import com.fos.game.engine.ecs.components.lights2d.LightType;
 import com.fos.game.engine.ecs.components.physics2d.ComponentJoint2D;
 import com.fos.game.engine.ecs.components.physics2d.ComponentRigidBody2D;
 import com.fos.game.engine.ecs.components.transform.ComponentTransform;
@@ -25,6 +29,8 @@ public class Renderer2D {
     private final SkeletonRenderer skeletonRenderer;
     private final SkeletonRendererDebug skeletonRendererDebug;
     private final Physics2DDebugRenderer physics2DDebugRenderer;
+
+    private final Array<ComponentLight2D> lights = new Array<>();
 
     protected Renderer2D() {
         this.polygonSpriteBatch = new PolygonSpriteBatch();
@@ -38,6 +44,7 @@ public class Renderer2D {
     }
 
     protected void renderToCameraInternalBuffer(final ComponentCamera camera, final Array<Entity> entities, boolean debugMode) {
+        lights.clear();
         camera.frameBuffer.begin();
         Gdx.gl.glClearColor(0,0,0,0); // TODO: get value from camera
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT); // TODO: get value from camera
@@ -49,9 +56,10 @@ public class Renderer2D {
             Component graphics = (Component) entity.components[ComponentType.GRAPHICS.ordinal()];
             if (graphics instanceof ComponentFrameAnimations2D) renderFrameAnimation(transform, (ComponentFrameAnimations2D) graphics);
             if (graphics instanceof ComponentBoneAnimations2D) renderBoneAnimation((ComponentBoneAnimations2D) graphics);
-            if (graphics instanceof ComponentLight2D) renderLight(); // TODO: implement
+            if (graphics instanceof ComponentLight2D) lights.add((ComponentLight2D) graphics);
         }
         polygonSpriteBatch.end();
+        // renderLights(camera.lens); //TODO: <-- test.
 
         if (debugMode) {
             physics2DDebugRenderer.begin();
@@ -80,7 +88,32 @@ public class Renderer2D {
     }
 
 
-    private void renderLight() {
-
+    // TODO: test
+    private void renderLights(final Camera camera) {
+        float ambientR = 0, ambientG = 0, ambientB = 0, ambientA = 0;
+        RayHandler rayHandler = lights.first().rayHandler;
+        rayHandler.update();
+        // turn on relevant lights, collect ambient lights
+        for (ComponentLight2D light2D : lights) {
+            if (light2D.light2DData.type == LightType.AMBIENT) {
+                ambientR += light2D.light2DData.color.r;
+                ambientG += light2D.light2DData.color.g;
+                ambientB += light2D.light2DData.color.b;
+                ambientA += light2D.light2DData.color.a;
+            }
+            else {
+                light2D.box2DLight.setActive(true);
+            }
+        }
+        // render RayHandler with selected "on" lights and computed ambient
+        rayHandler.setAmbientLight(ambientR, ambientG, ambientB, ambientA);
+        rayHandler.setCombinedMatrix((OrthographicCamera) camera);
+        rayHandler.render();
+        // turn lights back to "off"
+        for (ComponentLight2D light2D : lights) {
+            if (light2D.box2DLight != null) {
+                light2D.box2DLight.setActive(false);
+            }
+        }
     }
 }

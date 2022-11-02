@@ -89,7 +89,7 @@ public class Slot {
 		return bone.skeleton;
 	}
 
-	/** The color used to tint the slot's attachment. If {@link #getDarkColor()} is set, this is used as the light color for two
+	/** The color used to tint the slot's attachment. If {@link #getDarkColor()} is set, this is used as the box2DLight color for two
 	 * color tinting. */
 	public Color getColor () {
 		return color;

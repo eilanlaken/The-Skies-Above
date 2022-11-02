@@ -46,7 +46,7 @@ import com.badlogic.gdx.utils.NumberUtils;
 
 import static com.fos.game.engine.core.graphics.spine.utils.SpineUtils.arraycopy;
 
-/** A batch that renders polygons and performs tinting using a light and dark color.
+/** A batch that renders polygons and performs tinting using a box2DLight and dark color.
  * <p>
  * Because an additional vertex attribute is used, the {@link Batch} and {@link PolygonBatch} methods that accept float[] vertex
  * data do not perform two color tinting. {@link #drawTwoColor(Texture, float[], int, int)} and
