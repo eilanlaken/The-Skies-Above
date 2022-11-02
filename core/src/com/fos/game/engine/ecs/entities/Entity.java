@@ -4,7 +4,6 @@ import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.utils.Disposable;
 import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
-import com.fos.game.engine.ecs.components.transform2d_old.ComponentTransform2D;
 import com.fos.game.engine.ecs.systems.base.EntityContainer;
 
 public class Entity implements Disposable {
@@ -60,9 +59,7 @@ public class Entity implements Disposable {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("e_:");
-        ComponentTransform2D t = (ComponentTransform2D) components[ComponentType.TRANSFORM_2D.ordinal()];
-        stringBuilder.append(t.z);
+        stringBuilder.append("e_:" + localId);
         return stringBuilder.toString();
     }
 

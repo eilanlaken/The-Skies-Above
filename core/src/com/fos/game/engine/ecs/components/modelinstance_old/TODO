@@ -1,6 +1,0 @@
-Overhaul modelinstance Component package.
-
-- allow easy serialization: include assets references + filepaths in modelinstance
-- create easy material system
-- create useful factory
-...

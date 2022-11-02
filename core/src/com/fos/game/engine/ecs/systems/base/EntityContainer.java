@@ -8,8 +8,8 @@ import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.audio.AudioPlayer;
 import com.fos.game.engine.ecs.systems.physics2d.Physics2D;
 import com.fos.game.engine.ecs.systems.physics3d.Physics3D;
-import com.fos.game.engine.ecs.systems.renderer2d.Config;
-import com.fos.game.engine.ecs.systems.renderer2d.Renderer2D;
+import com.fos.game.engine.ecs.systems.renderer.Config;
+import com.fos.game.engine.ecs.systems.renderer.Renderer;
 import com.fos.game.engine.ecs.systems.logic.LogicUpdater;
 import com.fos.game.engine.ecs.systems.signals.SignalRouter;
 
@@ -33,7 +33,7 @@ public class EntityContainer implements Disposable {
 
     // TODO: test new renderer.
     //public Renderer renderer = new Renderer();
-    public Renderer2D renderer2D = new Renderer2D();
+    public Renderer renderer = new Renderer();
     //public Renderer2D_test renderer2D_test = new Renderer2D_test();
 
     public LogicUpdater logicUpdater = new LogicUpdater();
@@ -46,7 +46,7 @@ public class EntityContainer implements Disposable {
         this.systemEntitiesMap.put(physics3D, new Array<Entity>());
         // TODO: remove old renderer.
         //this.systemEntitiesMap.put(renderer, new Array<Entity>());
-        this.systemEntitiesMap.put(renderer2D, new Array<Entity>());
+        this.systemEntitiesMap.put(renderer, new Array<Entity>());
         //this.systemEntitiesMap.put(renderer2D_test, new Array<Entity>());
         this.systemEntitiesMap.put(logicUpdater, new Array<Entity>());
         this.systemEntitiesMap.put(signalRouter, new Array<Entity>());
@@ -79,7 +79,7 @@ public class EntityContainer implements Disposable {
 
     public void config(final SystemConfig ...configs) {
         for (final SystemConfig config : configs) {
-            if (config instanceof Config) renderer2D.config((Config) config);
+            if (config instanceof Config) renderer.config((Config) config);
             // .. configure other systems.
         }
     }

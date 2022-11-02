@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.FloatArray;
 import com.fos.game.engine.core.context.ApplicationContext;
 import com.fos.game.engine.core.context.Scene;
 import com.fos.game.engine.core.graphics.g2d.GraphicsUtils;
+import com.fos.game.engine.core.graphics.g2d.Physics2DDebugRenderer;
 import com.fos.game.engine.core.graphics.g2d.PolygonSpriteBatch;
 import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
 import com.fos.game.engine.core.graphics.spine.*;
@@ -25,7 +26,6 @@ import com.fos.game.engine.ecs.components.animations2d.ComponentFrameAnimations2
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
 import com.fos.game.engine.ecs.components.physics2d.RigidBody2DData;
 import com.fos.game.engine.ecs.components.transform.ComponentTransform;
-import com.fos.game.engine.ecs.systems.renderer_old.base.Physics2DDebugRenderer;
 
 import java.util.Comparator;
 import java.util.HashMap;

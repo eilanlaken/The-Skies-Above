@@ -27,7 +27,6 @@ import com.fos.game.engine.ecs.components.lights2d.ComponentLight2D;
 import com.fos.game.engine.ecs.components.transform.ComponentTransform;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
-import com.fos.game.engine.ecs.systems.renderer2d.Config;
 
 import java.util.Map;
 

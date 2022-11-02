@@ -3,20 +3,15 @@ package com.fos.game.engine.core.files.assets;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
-import com.badlogic.gdx.graphics.g3d.model.MeshPart;
-import com.badlogic.gdx.graphics.g3d.model.Node;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.JsonReader;
 import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
-import com.fos.game.engine.ecs.components.modelinstance_old.UtilsModel;
-import com.fos.game.engine.ecs.systems.renderer_old.materials.base.Material;
 
 import java.nio.FloatBuffer;
 import java.util.HashMap;
@@ -26,7 +21,6 @@ public class GameAssetManager extends AssetManager {
     // catalogs
     public final HashMap<String, TextureAtlas> namedSpriteSheets = new HashMap<>();
     public final HashMap<String, Array<TextureAtlas.AtlasRegion>> namedAtlasRegionArrays = new HashMap<>(); // <- TODO: use this.
-    public final HashMap<String, Material> namedMaterials = new HashMap<>();
 
     // buffers
     public static final Array<TextureAtlas> TEXTURE_ATLASES_ARRAY = new Array<>();
@@ -43,7 +37,6 @@ public class GameAssetManager extends AssetManager {
         super.clear();
         this.namedSpriteSheets.clear();
         namedAtlasRegionArrays.clear();
-        namedMaterials.clear();
     }
 
     @Override
@@ -76,7 +69,6 @@ public class GameAssetManager extends AssetManager {
 
     private void wrap() throws ModelDataMismatchException {
         wrapTextures();
-        wrapMeshes();
     }
 
     private void wrapTextures() {
@@ -88,21 +80,6 @@ public class GameAssetManager extends AssetManager {
         }
         setAnisotropicFilteringForAllTextures();
         createAnimationsCatalog();
-    }
-
-    private void wrapMeshes() throws ModelDataMismatchException {
-        Array<Model> allModels = new Array<>();
-        getAll(Model.class, allModels);
-        for (Model model : allModels) {
-            String id = getAssetFileName(model);
-            if (!isModelInstanced(id)) continue;
-            Array<Node> nodes = model.nodes;
-            Array<MeshPart> meshParts = model.meshParts;
-            if (meshParts.size != 1) throw new ModelDataMismatchException();
-            final int INSTANCE_COUNT = nodes.size;
-            Mesh mesh = meshParts.get(0).mesh;
-            UtilsModel.prepareForStaticBundleInstancing(mesh, INSTANCE_COUNT, nodes);
-        }
     }
 
     private void createAnimationsCatalog() {

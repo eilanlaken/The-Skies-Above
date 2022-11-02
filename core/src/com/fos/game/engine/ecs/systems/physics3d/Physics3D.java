@@ -1,6 +1,7 @@
 package com.fos.game.engine.ecs.systems.physics3d;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.Bullet;
 import com.badlogic.gdx.physics.bullet.collision.ContactListener;
@@ -12,7 +13,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.physics3d.ComponentRigidBody3D;
-import com.fos.game.engine.ecs.components.transform3d_old.ComponentTransform3D;
+import com.fos.game.engine.ecs.components.transform.ComponentTransform;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
 
@@ -53,8 +54,12 @@ public class Physics3D implements EntitiesProcessor, Disposable {
         // sync transforms: bullet3D's and transform component
         for (final Entity entity : entities) {
             ComponentRigidBody3D body = (ComponentRigidBody3D) entity.components[ComponentType.PHYSICS_3D_BODY.ordinal()];
-            ComponentTransform3D transform = (ComponentTransform3D) entity.components[ComponentType.TRANSFORM_3D.ordinal()];
-            body.getWorldTransform(transform.matrix4);
+            ComponentTransform transform = (ComponentTransform) entity.components[ComponentType.TRANSFORM_3D.ordinal()];
+            Matrix4 matrix4 = new Matrix4();
+            body.getWorldTransform(matrix4);
+            matrix4.getTranslation(transform.position);
+            matrix4.getScale(transform.scale);
+            matrix4.getRotation(transform.rotation);
         }
         // step bullet3D simulation
         final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
