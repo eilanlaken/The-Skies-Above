@@ -1,12 +1,12 @@
-package com.fos.game.engine.ecs.components.scripts;
+package com.fos.game.engine.ecs.components.logic;
 
 import com.fos.game.engine.ecs.entities.Entity;
 
-public class Script {
+public class Logic {
 
     protected final Entity entity;
 
-    protected Script(final Entity entity) {
+    protected Logic(final Entity entity) {
         this.entity = entity;
     }
 

@@ -10,7 +10,7 @@ import com.fos.game.engine.ecs.systems.physics2d.Physics2D;
 import com.fos.game.engine.ecs.systems.physics3d.Physics3D;
 import com.fos.game.engine.ecs.systems.renderer2d.Config;
 import com.fos.game.engine.ecs.systems.renderer2d.Renderer2D;
-import com.fos.game.engine.ecs.systems.scripting.ScriptsUpdater;
+import com.fos.game.engine.ecs.systems.logic.LogicUpdater;
 import com.fos.game.engine.ecs.systems.signals.SignalRouter;
 
 import java.util.HashMap;
@@ -36,7 +36,7 @@ public class EntityContainer implements Disposable {
     public Renderer2D renderer2D = new Renderer2D();
     //public Renderer2D_test renderer2D_test = new Renderer2D_test();
 
-    public ScriptsUpdater scriptsUpdater = new ScriptsUpdater();
+    public LogicUpdater logicUpdater = new LogicUpdater();
     public SignalRouter signalRouter = new SignalRouter();
 
 
@@ -48,7 +48,7 @@ public class EntityContainer implements Disposable {
         //this.systemEntitiesMap.put(renderer, new Array<Entity>());
         this.systemEntitiesMap.put(renderer2D, new Array<Entity>());
         //this.systemEntitiesMap.put(renderer2D_test, new Array<Entity>());
-        this.systemEntitiesMap.put(scriptsUpdater, new Array<Entity>());
+        this.systemEntitiesMap.put(logicUpdater, new Array<Entity>());
         this.systemEntitiesMap.put(signalRouter, new Array<Entity>());
     }
 

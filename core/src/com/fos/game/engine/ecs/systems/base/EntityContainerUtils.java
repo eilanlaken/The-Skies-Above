@@ -23,7 +23,7 @@ public class EntityContainerUtils {
             container.entities.add(entity);
             entity.localId = container.entities.size - 1;
             container.physics2D.addPhysics(entity);
-            container.scriptsUpdater.startScripts(entity);
+            container.logicUpdater.startScripts(entity);
         }
         container.toAdd.clear();
     }

@@ -9,6 +9,7 @@ public class ComponentLight2D implements Component {
 
     public Light2DData light2DData;
     public RayHandler rayHandler; // <- will be set when inserted into the box2d world.
+    // if this light is an ambient light, this field will be null.
     public Light box2DLight; // <- will be created when inserted into the box2d world.
 
     protected ComponentLight2D(final Light2DData light2DData) {

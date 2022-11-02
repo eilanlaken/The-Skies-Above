@@ -23,7 +23,7 @@ public class Physics3D implements EntitiesProcessor, Disposable {
     private btDefaultCollisionConfiguration collisionConfig;
     private btCollisionDispatcher dispatcher;
     private btDbvtBroadphase broadPhase;
-    // TODO: implement customizable contact listener that interacts with scripting logic.
+    // TODO: implement customizable contact listener that interacts with logic logic.
     private ContactListener contactListener;
 
     public Physics3D() {

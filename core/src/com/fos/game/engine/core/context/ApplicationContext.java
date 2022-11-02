@@ -14,7 +14,7 @@ import com.fos.game.engine.ecs.components.lights3d.FactoryLight3D;
 import com.fos.game.engine.ecs.components.modelinstance_old.FactoryModelInstance;
 import com.fos.game.engine.ecs.components.physics2d.FactoryRigidBody2D;
 import com.fos.game.engine.ecs.components.physics3d.FactoryRigidBody3D;
-import com.fos.game.engine.ecs.components.scripts.FactoryScripts;
+import com.fos.game.engine.ecs.components.logic.FactoryLogic;
 import com.fos.game.engine.ecs.components.shapes.FactoryShape2D;
 import com.fos.game.engine.ecs.components.signals.FactorySignalBox;
 import com.fos.game.engine.ecs.components.transform.FactoryTransform;
@@ -40,7 +40,7 @@ public class ApplicationContext implements ApplicationListener {
     public FactoryModelInstance factoryModelInstance;
     public FactoryRigidBody2D factoryRigidBody2D;
     public FactoryRigidBody3D factoryRigidBody3D;
-    public FactoryScripts factoryScripts;
+    public FactoryLogic factoryLogic;
     public FactoryShape2D factoryShape2D;
     public FactorySignalBox factorySignalBox;
     public FactoryTransform factoryTransform;
@@ -61,7 +61,7 @@ public class ApplicationContext implements ApplicationListener {
         this.factoryModelInstance = new FactoryModelInstance(this.assetManager, this.jsonConverter);
         this.factoryRigidBody2D = new FactoryRigidBody2D(this.assetManager, this.jsonConverter);
         this.factoryRigidBody3D = new FactoryRigidBody3D(this.assetManager, this.jsonConverter);
-        this.factoryScripts = new FactoryScripts(this.assetManager, this.jsonConverter);
+        this.factoryLogic = new FactoryLogic(this.assetManager, this.jsonConverter);
         this.factoryShape2D = new FactoryShape2D(this.assetManager, this.jsonConverter);
         this.factorySignalBox = new FactorySignalBox(this.assetManager, this.jsonConverter);
         this.factoryTransform = new FactoryTransform(this.assetManager, this.jsonConverter);
