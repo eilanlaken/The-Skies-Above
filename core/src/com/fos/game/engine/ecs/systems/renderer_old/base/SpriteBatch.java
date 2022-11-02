@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
+import com.fos.game.engine.ecs.components.transform2d_old.ComponentTransform2D;
 
 public class SpriteBatch extends com.badlogic.gdx.graphics.g2d.SpriteBatch {
 

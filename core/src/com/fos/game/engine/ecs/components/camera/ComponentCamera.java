@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.GLFrameBuffer;
 import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Vector3;
 import com.fos.game.engine.core.graphics.g2d.RenderTarget;
 import com.fos.game.engine.core.graphics.shaders.postprocessing.PostProcessingEffect;
 import com.fos.game.engine.ecs.components.base.Component;
@@ -15,7 +14,7 @@ import com.fos.game.engine.ecs.components.base.ComponentType;
 
 public class ComponentCamera implements Component {
 
-    public Enum[] layers;
+    public Enum[] categories;
     public int layersBitMask;
     public float depth;
     public Camera lens;
@@ -25,9 +24,9 @@ public class ComponentCamera implements Component {
     public RenderTarget renderTarget;
     public FrameBuffer frameBuffer;
 
-    protected ComponentCamera(Camera lens, final Enum[] layers, float depth, final RenderTarget.RenderTargetParams renderTargetParams, final PostProcessingEffect postProcessingEffect) {
-        this.layers = layers;
-        this.layersBitMask = UtilsCamera.computeRenderedLayersBitMask(layers);
+    protected ComponentCamera(Camera lens, final Enum[] categories, float depth, final RenderTarget.RenderTargetParams renderTargetParams, final PostProcessingEffect postProcessingEffect) {
+        this.categories = categories;
+        this.layersBitMask = UtilsCamera.computeRenderedLayersBitMask(categories);
         this.depth = depth;
         this.lens = lens;
         this.viewWorldWidth = lens.viewportWidth;

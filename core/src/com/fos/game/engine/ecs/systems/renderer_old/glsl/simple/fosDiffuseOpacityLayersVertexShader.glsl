@@ -50,7 +50,7 @@ void main() {
     // Translate into worldspace
     vec4 extruded_position_global = (body_transform * vec4(extruded_position, 1.0));
 
-    // As the layers gets closer to the tip, bend more
+    // As the categories gets closer to the tip, bend more
     float layer_normalize = (currentLayer / layers);
     g = (g * body_transform);
     float k = pow(layer_normalize, 3) * 0.08;

@@ -17,6 +17,6 @@ public class ComponentLight2D implements Component {
 
     @Override
     public ComponentType getComponentType() {
-        return ComponentType.LIGHT_2D;
+        return ComponentType.GRAPHICS;
     }
 }

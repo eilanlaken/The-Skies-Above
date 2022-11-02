@@ -6,9 +6,14 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
 import com.fos.game.engine.core.graphics.g2d.Physics2DDebugRenderer;
 import com.fos.game.engine.core.graphics.g2d.PolygonSpriteBatch;
+import com.fos.game.engine.core.graphics.spine.SkeletonRenderer;
+import com.fos.game.engine.core.graphics.spine.SkeletonRendererDebug;
+import com.fos.game.engine.ecs.components.animations2d.ComponentBoneAnimations2D;
 import com.fos.game.engine.ecs.components.animations2d.ComponentFrameAnimations2D;
+import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
+import com.fos.game.engine.ecs.components.lights2d.ComponentLight2D;
 import com.fos.game.engine.ecs.components.physics2d.ComponentJoint2D;
 import com.fos.game.engine.ecs.components.physics2d.ComponentRigidBody2D;
 import com.fos.game.engine.ecs.components.transform.ComponentTransform;
@@ -16,29 +21,37 @@ import com.fos.game.engine.ecs.entities.Entity;
 
 public class Renderer2D {
 
+    private final PolygonSpriteBatch polygonSpriteBatch;
+    private final SkeletonRenderer skeletonRenderer;
+    private final SkeletonRendererDebug skeletonRendererDebug;
     private final Physics2DDebugRenderer physics2DDebugRenderer;
 
     protected Renderer2D() {
+        this.polygonSpriteBatch = new PolygonSpriteBatch();
+        this.skeletonRenderer = new SkeletonRenderer();
+        this.skeletonRenderer.setPremultipliedAlpha(true);
+        this.skeletonRendererDebug = new SkeletonRendererDebug();
+        this.skeletonRendererDebug.setMeshTriangles(false);
+        this.skeletonRendererDebug.setRegionAttachments(false);
+        this.skeletonRendererDebug.setMeshHull(false);
         this.physics2DDebugRenderer = new Physics2DDebugRenderer();
     }
 
-    protected void renderToCameraInternalBuffer(final PolygonSpriteBatch spriteBatch, final ComponentCamera camera, final Array<Entity> entities, boolean debugMode) {
+    protected void renderToCameraInternalBuffer(final ComponentCamera camera, final Array<Entity> entities, boolean debugMode) {
         camera.frameBuffer.begin();
         Gdx.gl.glClearColor(0,0,0,0); // TODO: get value from camera
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT); // TODO: get value from camera
-        spriteBatch.begin();
-        spriteBatch.setColor(1,1,1,1);
-        spriteBatch.setProjectionMatrix(camera.lens.combined);
+        polygonSpriteBatch.begin();
+        polygonSpriteBatch.setColor(1,1,1,1);
+        polygonSpriteBatch.setProjectionMatrix(camera.lens.combined);
         for (Entity entity : entities) {
-            // TODO: add spine 2d support here.
-            ComponentFrameAnimations2D animation = (ComponentFrameAnimations2D) entity.components[ComponentType.ANIMATIONS_FRAMES_2D.ordinal()];
-            if (animation == null || !animation.active) continue;
             ComponentTransform transform = (ComponentTransform) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
-            TextureAtlas.AtlasRegion atlasRegion = animation.getTextureRegion();
-            spriteBatch.setColor(animation.tint);
-            spriteBatch.draw(atlasRegion, transform.position.x, transform.position.y, transform.rotation.getAngleAround(0,0,1), transform.scale.x, transform.scale.y, animation.size, animation.pixelsPerUnit);
+            Component graphics = (Component) entity.components[ComponentType.GRAPHICS.ordinal()];
+            if (graphics instanceof ComponentFrameAnimations2D) renderFrameAnimation(transform, (ComponentFrameAnimations2D) graphics);
+            if (graphics instanceof ComponentBoneAnimations2D) renderBoneAnimation((ComponentBoneAnimations2D) graphics);
+            if (graphics instanceof ComponentLight2D) renderLight(); // TODO: implement
         }
-        spriteBatch.end();
+        polygonSpriteBatch.end();
 
         if (debugMode) {
             physics2DDebugRenderer.begin();
@@ -55,4 +68,19 @@ public class Renderer2D {
         camera.frameBuffer.end();
     }
 
+    private void renderFrameAnimation(final ComponentTransform transform, final ComponentFrameAnimations2D frameAnimation) {
+        if (!frameAnimation.active) return;
+        TextureAtlas.AtlasRegion atlasRegion = frameAnimation.getTextureRegion();
+        polygonSpriteBatch.setColor(frameAnimation.tint);
+        polygonSpriteBatch.draw(atlasRegion, transform.position.x, transform.position.y, transform.rotation.getAngleAround(0,0,1), transform.scale.x, transform.scale.y, frameAnimation.size, frameAnimation.pixelsPerUnit);
+    }
+
+    private void renderBoneAnimation(final ComponentBoneAnimations2D boneAnimation) {
+        skeletonRenderer.draw(polygonSpriteBatch, boneAnimation.skeleton);
+    }
+
+
+    private void renderLight() {
+
+    }
 }

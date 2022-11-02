@@ -11,7 +11,7 @@ import com.fos.game.engine.ecs.components.animations2d.ComponentFrameAnimations2
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.cameras_old.ComponentCamera2D;
 import com.fos.game.engine.ecs.components.lights2d.ComponentLight2D;
-import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
+import com.fos.game.engine.ecs.components.transform2d_old.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
 
@@ -39,8 +39,8 @@ public class Renderer2D_test implements EntitiesProcessor, Disposable {
     public void process(Array<Entity> entities) {
         this.allCameras.clear();
         for (Entity entity : entities) {
-            if ((entity.componentsBitMask & ComponentType.ANIMATIONS_FRAMES_2D.bitMask) > 0) {
-                ComponentFrameAnimations2D animation = (ComponentFrameAnimations2D) entity.components[ComponentType.ANIMATIONS_FRAMES_2D.ordinal()];
+            if ((entity.componentsBitMask & ComponentType.GRAPHICS.bitMask) > 0) {
+                ComponentFrameAnimations2D animation = (ComponentFrameAnimations2D) entity.components[ComponentType.GRAPHICS.ordinal()];
                 final float delta = Gdx.graphics.getDeltaTime();
                 animation.advanceTime(delta);
             }
@@ -50,10 +50,10 @@ public class Renderer2D_test implements EntitiesProcessor, Disposable {
                 Renderer2DUtils.applyTransform(transform2D, camera2D);
                 allCameras.add(camera2D);
             }
-            if ((entity.componentsBitMask & ComponentType.LIGHT_2D.bitMask) > 0) {
+            if ((entity.componentsBitMask & ComponentType.GRAPHICS.bitMask) > 0) {
                 // TODO: test
                 final ComponentTransform2D transform2D = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
-                final ComponentLight2D light2D = (ComponentLight2D) entity.components[ComponentType.LIGHT_2D.ordinal()];
+                final ComponentLight2D light2D = (ComponentLight2D) entity.components[ComponentType.GRAPHICS.ordinal()];
                 Renderer2DUtils.applyTransform(transform2D, light2D);
             }
         }
@@ -76,7 +76,7 @@ public class Renderer2D_test implements EntitiesProcessor, Disposable {
             spriteBatch.begin();
             spriteBatch.setProjectionMatrix(camera.lens.combined);
             for (Entity entity : cameraEntitiesMap.get(camera)) {
-                ComponentAnimations2D animation = (ComponentAnimations2D) entity.components[ComponentType.ANIMATIONS_2D.ordinal()];
+                ComponentAnimations2D animation = (ComponentAnimations2D) entity.components[ComponentType.GRAPHICS.ordinal()];
                 if (animation == null || !animation.active) continue;
                 ComponentTransform2D transform2D = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
                 final float delta = Gdx.graphics.getDeltaTime();

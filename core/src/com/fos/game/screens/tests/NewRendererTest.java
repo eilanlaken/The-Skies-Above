@@ -9,7 +9,7 @@ import com.fos.game.engine.context.Scene_old;
 import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
 import com.fos.game.engine.ecs.components.cameras_old.ComponentCamera2D;
 import com.fos.game.engine.ecs.components.physics2d.RigidBody2DData;
-import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
+import com.fos.game.engine.ecs.components.transform2d_old.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.base.EntityContainer;
 import com.fos.game.scripts.test.PeriodicReadTestScript;

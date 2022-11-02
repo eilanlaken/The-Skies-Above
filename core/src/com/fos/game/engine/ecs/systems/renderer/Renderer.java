@@ -8,18 +8,18 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.fos.game.engine.core.graphics.g2d.Physics2DDebugRenderer;
-import com.fos.game.engine.core.graphics.g2d.PolygonSpriteBatch;
 import com.fos.game.engine.core.graphics.g2d.RenderTarget;
+import com.fos.game.engine.core.graphics.g2d.SpriteBatch;
 import com.fos.game.engine.core.graphics.spine.AnimationState;
 import com.fos.game.engine.core.graphics.spine.Skeleton;
 import com.fos.game.engine.ecs.components.animations2d.ComponentBoneAnimations2D;
 import com.fos.game.engine.ecs.components.animations2d.ComponentFrameAnimations2D;
+import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
 import com.fos.game.engine.ecs.components.lights2d.ComponentLight2D;
@@ -37,10 +37,9 @@ import java.util.Map;
  */
 public class Renderer implements EntitiesProcessor, Disposable {
 
+    private SpriteBatch spriteBatch;
     private Renderer2D renderer2D;
     private Renderer3D renderer3D;
-    private PolygonSpriteBatch spriteBatch;
-    private ModelBatch modelBatch;
     private Physics2DDebugRenderer physics2DDebugRenderer;
     private ShapeRenderer shapeRenderer;
     public boolean debugMode;
@@ -49,8 +48,7 @@ public class Renderer implements EntitiesProcessor, Disposable {
     private Array<ComponentCamera> allCameras;
 
     public Renderer() {
-        this.spriteBatch = new PolygonSpriteBatch();
-        this.modelBatch = new ModelBatch(new ShaderProvider(), new ModelInstanceSorter());
+        this.spriteBatch = new SpriteBatch();
         this.renderer2D = new Renderer2D();
         this.renderer3D = new Renderer3D();
         this.physics2DDebugRenderer = new Physics2DDebugRenderer();
@@ -63,15 +61,15 @@ public class Renderer implements EntitiesProcessor, Disposable {
     public void process(Array<Entity> entities) {
         this.allCameras.clear();
         for (Entity entity : entities) {
-            if ((entity.componentsBitMask & ComponentType.ANIMATIONS_FRAMES_2D.bitMask) > 0) {
-                ComponentFrameAnimations2D animation = (ComponentFrameAnimations2D) entity.components[ComponentType.ANIMATIONS_FRAMES_2D.ordinal()];
+            Component graphics = (Component) entity.components[ComponentType.GRAPHICS.ordinal()];
+            if (graphics instanceof ComponentFrameAnimations2D) {
+                ComponentFrameAnimations2D frameAnimation = (ComponentFrameAnimations2D) entity.components[ComponentType.GRAPHICS.ordinal()];
                 final float delta = Gdx.graphics.getDeltaTime();
-                animation.advanceTime(delta);
+                frameAnimation.advanceTime(delta);
             }
-            if ((entity.componentsBitMask & ComponentType.ANIMATIONS_BONES_2D.bitMask) > 0) {
-                // TODO: test.
+            else if (graphics instanceof ComponentBoneAnimations2D) {
                 ComponentTransform transform = (ComponentTransform) entity.components[ComponentType.TRANSFORM.ordinal()];
-                ComponentBoneAnimations2D boneAnimations = (ComponentBoneAnimations2D) entity.components[ComponentType.ANIMATIONS_BONES_2D.ordinal()];
+                ComponentBoneAnimations2D boneAnimations = (ComponentBoneAnimations2D) entity.components[ComponentType.GRAPHICS.ordinal()];
                 Skeleton skeleton = boneAnimations.skeleton;
                 AnimationState state = boneAnimations.state;
                 if (state.apply(skeleton)) skeleton.updateWorldTransform();
@@ -79,16 +77,16 @@ public class Renderer implements EntitiesProcessor, Disposable {
                 skeleton.setPosition(transform.position.x, transform.position.y);
                 skeleton.getRootBone().setRotation(transform.rotation.getAngleAround(0,0,1));
             }
-            if ((entity.componentsBitMask & ComponentType.CAMERA.bitMask) > 0) {
+            else if (graphics instanceof ComponentLight2D) {
                 final ComponentTransform transform = (ComponentTransform) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
-                final ComponentCamera camera = (ComponentCamera) entity.components[ComponentType.CAMERA_2D.ordinal()];
+                final ComponentLight2D light2D = (ComponentLight2D) entity.components[ComponentType.GRAPHICS.ordinal()];
+                RendererUtils.applyTransform(transform, light2D);
+            }
+            else if (graphics instanceof ComponentCamera) {
+                final ComponentTransform transform = (ComponentTransform) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
+                final ComponentCamera camera = (ComponentCamera) entity.components[ComponentType.GRAPHICS.ordinal()];
                 RendererUtils.applyTransform(transform, camera);
                 allCameras.add(camera);
-            }
-            if ((entity.componentsBitMask & ComponentType.LIGHT_2D.bitMask) > 0) {
-                final ComponentTransform transform = (ComponentTransform) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
-                final ComponentLight2D light2D = (ComponentLight2D) entity.components[ComponentType.LIGHT_2D.ordinal()];
-                RendererUtils.applyTransform(transform, light2D);
             }
         }
 
@@ -96,8 +94,8 @@ public class Renderer implements EntitiesProcessor, Disposable {
         Map<ComponentCamera, Array<Entity>> cameraEntitiesMap = RendererUtils.getCameraEntitiesMap(allCameras, entities);
         for (ComponentCamera camera : allCameras) {
             Camera lens = camera.lens;
-            if (lens instanceof OrthographicCamera) renderer2D.renderToCameraInternalBuffer(spriteBatch, camera, cameraEntitiesMap.get(camera), debugMode);
-            if (lens instanceof PerspectiveCamera) renderer3D.renderToCameraInternalBuffer(modelBatch, camera, cameraEntitiesMap.get(camera), debugMode);
+            if (lens instanceof OrthographicCamera) renderer2D.renderToCameraInternalBuffer(camera, cameraEntitiesMap.get(camera), debugMode);
+            if (lens instanceof PerspectiveCamera) renderer3D.renderToCameraInternalBuffer(camera, cameraEntitiesMap.get(camera), debugMode);
         }
 
         // compose scene
@@ -115,7 +113,7 @@ public class Renderer implements EntitiesProcessor, Disposable {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         for (ComponentCamera camera : renderTargetCameras) {
             spriteBatch.setShader(camera.postProcessingEffect); // TODO: <- replace with texture region batch
-            spriteBatch.begin();
+            spriteBatch.begin(); // TODO: <- apply post processing effect
             TextureRegion sceneRegion = new TextureRegion(camera.frameBuffer.getTextureAttachments().get(0));
             sceneRegion.flip(false, true);
             spriteBatch.draw(sceneRegion, -Gdx.graphics.getWidth()/2f, -Gdx.graphics.getHeight()/2f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

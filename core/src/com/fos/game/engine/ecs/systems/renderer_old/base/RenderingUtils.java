@@ -14,7 +14,7 @@ import com.fos.game.engine.ecs.components.lights3d.LightingEnvironment;
 import com.fos.game.engine.ecs.components.lights3d.UtilsLights;
 import com.fos.game.engine.ecs.components.modelinstance_old.ComponentModelInstance;
 import com.fos.game.engine.ecs.components.modelinstance_old.ModelInstance;
-import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
+import com.fos.game.engine.ecs.components.transform2d_old.ComponentTransform2D;
 import com.fos.game.engine.ecs.components.transform3d_old.ComponentTransform3D;
 import com.fos.game.engine.ecs.entities.Entity;
 
@@ -24,16 +24,16 @@ import java.util.Map;
 public class RenderingUtils {
 
     protected static final int ATTACHED_GRAPHICS_COMPONENT =
-            ComponentType.ANIMATIONS_FRAMES_2D.bitMask | ComponentType.MODEL_INSTANCE.bitMask | ComponentType.LIGHT_3D.bitMask | ComponentType.CAMERA.bitMask;
+            ComponentType.GRAPHICS.bitMask;
 
     @Deprecated
-    protected static final int ATTACHED_ANIMATIONS_2D_BIT_MASK = ComponentType.ANIMATIONS_FRAMES_2D.bitMask;
+    protected static final int ATTACHED_ANIMATIONS_2D_BIT_MASK = ComponentType.GRAPHICS.bitMask;
     @Deprecated
-    protected static final int ATTACHED_MODEL_INSTANCE_BIT_MASK = ComponentType.MODEL_INSTANCE.bitMask;
+    protected static final int ATTACHED_MODEL_INSTANCE_BIT_MASK = ComponentType.GRAPHICS.bitMask;
     @Deprecated
-    protected static final int ATTACHED_LIGHT_BIT_MASK = ComponentType.LIGHT_3D.bitMask;
+    protected static final int ATTACHED_LIGHT_BIT_MASK = ComponentType.GRAPHICS.bitMask;
     @Deprecated
-    protected static final int ATTACHED_CAMERA_BIT_MASK = ComponentType.CAMERA.bitMask;
+    protected static final int ATTACHED_CAMERA_BIT_MASK = ComponentType.GRAPHICS.bitMask;
 
     private static final Vector3 position = new Vector3();
     private static final Array<Entity> rendered2DEntities = new Array<>();
@@ -76,13 +76,13 @@ public class RenderingUtils {
             }
             if ((entity.componentsBitMask & ATTACHED_LIGHT_BIT_MASK) > 0) {
                 ComponentTransform3D transform = (ComponentTransform3D) entity.components[ComponentType.TRANSFORM_3D.ordinal()];
-                Light light = (Light) entity.components[ComponentType.LIGHT_3D.ordinal()];
+                Light light = (Light) entity.components[ComponentType.GRAPHICS.ordinal()];
                 UtilsLights.applyTransformToLight(transform.matrix4, light);
                 lightingEnvironmentResult.addLight(light);
             }
             if ((entity.componentsBitMask & ATTACHED_CAMERA_BIT_MASK) > 0) {
                 // TODO: sync between the transform of the entity to the position of the camera.
-                final ComponentCamera componentCamera = (ComponentCamera) entity.components[ComponentType.CAMERA.ordinal()];
+                final ComponentCamera componentCamera = (ComponentCamera) entity.components[ComponentType.GRAPHICS.ordinal()];
                 final Camera lens = componentCamera.lens;
                 lens.update();
                 if (lens instanceof OrthographicCamera) cameras2D.add(componentCamera);
@@ -100,7 +100,7 @@ public class RenderingUtils {
                 use2DCameraEntitiesResult.put(componentCamera, entitiesRenderedWithCamera);
             }
             for (Entity entity : rendered2DEntities) {
-                if (!((entity.layer & componentCamera.layersBitMask) > 0)) continue;
+                if (!((entity.category & componentCamera.layersBitMask) > 0)) continue;
                 if (RenderingUtils.cull(entity, (OrthographicCamera) componentCamera.lens)) continue;
                 entitiesRenderedWithCamera.add(entity);
             }
@@ -117,7 +117,7 @@ public class RenderingUtils {
                 use3DCameraEntitiesResult.put(componentCamera, entitiesRenderedWithCamera);
             }
             for (Entity entity : rendered3DEntities) {
-                if (!((entity.layer & componentCamera.layersBitMask) > 0)) continue;
+                if (!((entity.category & componentCamera.layersBitMask) > 0)) continue;
                 if (RenderingUtils.cull(entity, (PerspectiveCamera) componentCamera.lens)) continue;
                 entitiesRenderedWithCamera.add(entity);
             }
@@ -149,7 +149,7 @@ public class RenderingUtils {
     }
 
     private static boolean cull(final Entity entity, final PerspectiveCamera lens) {
-        final ComponentModelInstance component = (ComponentModelInstance) entity.components[ComponentType.MODEL_INSTANCE.ordinal()];
+        final ComponentModelInstance component = (ComponentModelInstance) entity.components[ComponentType.GRAPHICS.ordinal()];
         final ModelInstance instance = component.instance;
         position.add(instance.center);
         return !lens.frustum.sphereInFrustum(position, instance.radius);
@@ -157,7 +157,7 @@ public class RenderingUtils {
 
     private static boolean cull(final Entity entity, final OrthographicCamera camera) {
         ComponentTransform2D transform2D = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
-        ComponentFrameAnimations2D animation = (ComponentFrameAnimations2D) entity.components[ComponentType.ANIMATIONS_FRAMES_2D.ordinal()];
+        ComponentFrameAnimations2D animation = (ComponentFrameAnimations2D) entity.components[ComponentType.GRAPHICS.ordinal()];
         TextureAtlas.AtlasRegion atlasRegion = animation.getTextureRegion();
         final float width = atlasRegion.getRegionWidth() * transform2D.scaleX;
         final float height = atlasRegion.getRegionHeight() * transform2D.scaleY;

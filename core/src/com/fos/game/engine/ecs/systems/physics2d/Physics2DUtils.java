@@ -12,7 +12,7 @@ import com.fos.game.engine.ecs.entities.Entity;
 public class Physics2DUtils {
 
     //protected static final int PHYSICS_2D_BIT_MASK = ComponentType.PHYSICS_2D_BODY.bitMask;
-    protected static final int PHYSICS_2D_BIT_MASK = ComponentType.PHYSICS_2D_BODY.bitMask | ComponentType.PHYSICS_2D_JOINT.bitMask | ComponentType.LIGHT_2D.bitMask;
+    protected static final int PHYSICS_2D_BIT_MASK = ComponentType.PHYSICS_2D_BODY.bitMask | ComponentType.PHYSICS_2D_JOINT.bitMask;
 
     protected static void prepare(final Array<Entity> entities, Array<Entity> bodiesResult, Array<Entity> jointsResult) {
         bodiesResult.clear();

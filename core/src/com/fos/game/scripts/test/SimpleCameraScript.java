@@ -18,7 +18,7 @@ public class SimpleCameraScript extends Script {
 
     @Override
     public void start() {
-        ComponentCamera camera = (ComponentCamera) entity.components[ComponentType.CAMERA.ordinal()];
+        ComponentCamera camera = (ComponentCamera) entity.components[ComponentType.GRAPHICS.ordinal()];
         lens = (OrthographicCamera) camera.lens;
     }
 

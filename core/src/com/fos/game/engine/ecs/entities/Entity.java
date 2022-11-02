@@ -9,8 +9,8 @@ import com.fos.game.engine.ecs.components.lights3d.Light;
 import com.fos.game.engine.ecs.components.modelinstance_old.ComponentModelInstance;
 import com.fos.game.engine.ecs.components.physics2d.ComponentRigidBody2D;
 import com.fos.game.engine.ecs.components.physics3d.ComponentRigidBody3D;
-import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
-import com.fos.game.engine.ecs.components.transform2d.FactoryTransform2D;
+import com.fos.game.engine.ecs.components.transform2d_old.ComponentTransform2D;
+import com.fos.game.engine.ecs.components.transform2d_old.FactoryTransform2D;
 import com.fos.game.engine.ecs.components.transform3d_old.ComponentTransform3D;
 import com.fos.game.engine.ecs.components.transform3d_old.FactoryTransform3D;
 import com.fos.game.engine.ecs.systems.base.EntityContainer;
@@ -23,26 +23,26 @@ public class Entity implements Disposable {
     public int globalId = -1; // a global unique identifier; Only persistent and "important" Entities has a globalId.
     public Object[] components;
     public int componentsBitMask;
-    public int layer;
+    public int category;
     public boolean active = true;
 
     @Deprecated
     public Entity() {
-        this.layer = 0b000001;
+        this.category = 0b000001;
     }
 
     @Deprecated
-    public Entity(final Enum layer, final Object ...componentsToAttach) {
+    public Entity(final Enum category, final Object ...componentsToAttach) {
         attachComponents(componentsToAttach);
         refresh();
-        this.layer = 0b000001 << layer.ordinal();
+        this.category = 0b000001 << category.ordinal();
     }
 
     @Deprecated
     public Entity(final Object ...componentsToAttach) {
         attachComponents(componentsToAttach);
         refresh();
-        this.layer = 0b000001;
+        this.category = 0b000001;
     }
 
     public void attachComponents(final Object... componentsToAttach) {
@@ -60,10 +60,9 @@ public class Entity implements Disposable {
 
         ComponentTransform2D transform2D = (ComponentTransform2D) components[ComponentType.TRANSFORM_2D.ordinal()];
         ComponentTransform3D transform3d = (ComponentTransform3D) components[ComponentType.TRANSFORM_3D.ordinal()];
-        ComponentModelInstance modelInstance = (ComponentModelInstance) components[ComponentType.MODEL_INSTANCE.ordinal()];
+        //ComponentModelInstance modelInstance = (ComponentModelInstance) components[ComponentType.MODEL_INSTANCE.ordinal()];
         ComponentRigidBody2D rigidBody2d = (ComponentRigidBody2D) components[ComponentType.PHYSICS_2D_BODY.ordinal()];
         ComponentRigidBody3D rigidBody3d = (ComponentRigidBody3D) components[ComponentType.PHYSICS_3D_BODY.ordinal()];
-        Light light = (Light) components[ComponentType.LIGHT_3D.ordinal()];
 
         if (transform2D == null) {
             components[ComponentType.TRANSFORM_2D.ordinal()] = FactoryTransform2D.create();
@@ -76,12 +75,9 @@ public class Entity implements Disposable {
             rigidBody3d.userData = this;
             rigidBody3d.setWorldTransform(transform3d.matrix4);
         }
-        if (modelInstance != null) {
-            modelInstance.instance.transform = (Matrix4) components[ComponentType.TRANSFORM_3D.ordinal()];
-        }
-        if (light != null) {
-
-        }
+//        if (modelInstance != null) {
+//            modelInstance.instance.transform = (Matrix4) components[ComponentType.TRANSFORM_3D.ordinal()];
+//        }
     }
 
     public Object getComponent(final ComponentType componentType) {

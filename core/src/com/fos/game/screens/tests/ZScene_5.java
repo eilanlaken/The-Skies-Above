@@ -9,25 +9,31 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.math.*;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.fos.game.engine.context.GameContext;
 import com.fos.game.engine.context.Scene_old;
 import com.fos.game.engine.core.graphics.g2d.GraphicsUtils;
-import com.fos.game.engine.core.graphics.g2d.SpriteBatch;
+import com.fos.game.engine.core.graphics.g2d.PolygonSpriteBatch;
 import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
+import com.fos.game.engine.core.graphics.spine.*;
 import com.fos.game.engine.ecs.components.animations2d.ComponentFrameAnimations2D;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
 import com.fos.game.engine.ecs.components.physics2d.RigidBody2DData;
-import com.fos.game.engine.ecs.components.transform2d_old.ComponentTransform2D;
+import com.fos.game.engine.ecs.components.transform.ComponentTransform;
 import com.fos.game.engine.ecs.systems.renderer_old.base.Physics2DDebugRenderer;
 
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ZScene_2 extends Scene_old {
+/**
+ * Spine integration test
+ */
+public class ZScene_5 extends Scene_old {
 
     private World world;
     Array<EntityMini> entities;
@@ -35,14 +41,20 @@ public class ZScene_2 extends Scene_old {
 
     private ComponentCamera camera;
 
-    SpriteBatch spriteBatch = new SpriteBatch();
+    PolygonSpriteBatch batch = new PolygonSpriteBatch();
+    SkeletonRenderer renderer = new SkeletonRenderer();
+    SkeletonRendererDebug debugRenderer = new SkeletonRendererDebug();
+    TextureAtlas atlas;
+    Skeleton skeleton;
+    AnimationState state;
+    float angle = 0;
+
     Physics2DDebugRenderer physics2DDebugRenderer = new Physics2DDebugRenderer();
     RayHandler rayHandler;
     PointLight pointLight1, pointLight2, pointLight3;
 
-
     class EntityMini {
-        ComponentTransform2D transform;
+        ComponentTransform transform;
         ComponentFrameAnimations2D animations;
         Body body;
         Joint joint;
@@ -51,29 +63,36 @@ public class ZScene_2 extends Scene_old {
     public final float VIRTUAL_HEIGHT = 20;
     private int pixelsPerUnit = 53*2;
 
-    public ZScene_2(final GameContext context) {
+    public ZScene_5(final GameContext context) {
         super(context);
-        runCode();
+        init();
     }
 
-    private void runCode() {
-        Matrix4 m = new Matrix4();
-        Vector3 pos = new Vector3(1,1,1);
-        Quaternion rot = new Quaternion(new Vector3(0,0,1), 80);
-        Vector3 scl = new Vector3(2,3,4);
-        System.out.println("m:");
-        System.out.println(m);
+    private void init() {
+        renderer.setPremultipliedAlpha(true);
+        debugRenderer.setMeshTriangles(false);
+        debugRenderer.setRegionAttachments(false);
+        debugRenderer.setMeshHull(false);
 
-        m.translate(pos);
-        m.scl(scl);
-        m.rotate(rot);
+        atlas = new TextureAtlas(Gdx.files.internal("spine/raptor-pma.atlas"));
 
-        System.out.println("m:");
-        System.out.println(m);
+        SkeletonJson loader = new SkeletonJson(atlas); // This loads skeleton JSON data, which is stateless.
+        // SkeletonLoader loader = new SkeletonBinary(atlas); // Or use SkeletonBinary to load binary data.
+        loader.setScale(0.001f); // Load the skeleton at 50% the size it was in Spine.
+        SkeletonData skeletonData = loader.readSkeletonData(Gdx.files.internal("spine/raptor-pro.json"));
 
-        System.out.println("trans: " + m.getTranslation(new Vector3()));
-        System.out.println("scl: " + m.getScale(new Vector3()));
-        System.out.println("rot: " + m.getRotation(new Quaternion()).getAngleAround(new Vector3(0,0,1)));
+        skeleton = new Skeleton(skeletonData); // Skeleton holds skeleton state (bone positions, slot attachments, etc).
+        skeleton.setPosition(0, 0);
+
+
+        AnimationStateData stateData = new AnimationStateData(skeletonData); // Defines mixing (crossfading) between animations.
+
+        state = new AnimationState(stateData); // Holds the animation state for a skeleton (current animation, time, etc).
+        state.setTimeScale(1f); // Slow all animations down to 60% speed.
+
+        // Queue animations on tracks 0 and 1.
+        state.setAnimation(0, "walk", true);
+        state.addAnimation(1, "gun-grab", false, 2); // Keys in higher tracks override the pose from lower tracks.
     }
 
     @Override
@@ -92,8 +111,9 @@ public class ZScene_2 extends Scene_old {
         camera = context.factoryCamera.createCamera2D(VIRTUAL_HEIGHT * GraphicsUtils.getAspectRatio(), VIRTUAL_HEIGHT);
 
         entityMini1 = new EntityMini();
-        entityMini1.transform = context.factoryTransform2D.create(3, 0, 1, 0, 1, 1);
-        entityMini1.animations = context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "a", 0.5f, pixelsPerUnit);
+        entityMini1.transform = context.factoryTransform.create2d(-3, 0, 0, 0, 1, 1);
+        System.out.println("transform " +  entityMini1.transform);
+        entityMini1.animations = context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "a", 1,0.5f, pixelsPerUnit);
         Filter filter = new Filter();
         filter.categoryBits = 0x0001;
         filter.maskBits = 0x0011;
@@ -106,13 +126,12 @@ public class ZScene_2 extends Scene_old {
                 1,1,0.2f,false),
                 entityMini1.transform);
         entityMini1.body.setUserData(entityMini1);
-        entityMini1.transform.transform = entityMini1.body.getTransform();
         entities.add(entityMini1);
 
 
         entityMini2 = new EntityMini();
-        entityMini2.transform = context.factoryTransform2D.create(-3, 0, 1, 0, 1, 1);
-        entityMini2.animations = context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "b", 1, pixelsPerUnit);
+        entityMini2.transform = context.factoryTransform.create2d(3, 0, 0, 0, 1, 1);
+        entityMini2.animations = context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "b", 1,1, pixelsPerUnit);
         Filter filter2 = new Filter();
         filter2.categoryBits = 0x0001;
         filter2.maskBits = 0x0011;
@@ -125,19 +144,25 @@ public class ZScene_2 extends Scene_old {
                         1,1,0.2f,false),
                 entityMini2.transform);
         entityMini2.body.setUserData(entityMini2);
-        entityMini2.transform.transform = entityMini2.body.getTransform();
         entities.add(entityMini2);
 
     }
 
     @Override
     protected void update(float delta) {
+        state.update(Gdx.graphics.getDeltaTime()); // Update the animation time.
+        if (state.apply(skeleton)) // Poses skeleton using current animations. This sets the bones' local SRT.
+            skeleton.updateWorldTransform(); // Uses the bones' local SRT to compute their world SRT.
+        debugRenderer.getShapeRenderer().setProjectionMatrix(camera.lens.combined);
+
+
         world.step(delta, 6, 2);
+
         entities.sort(new Comparator<EntityMini>() {
             @Override
             public int compare(EntityMini o1, EntityMini o2) {
-                final float z1 = o1.transform.z;
-                final float z2 = o2.transform.z;
+                final float z1 = o1.transform.position.z;
+                final float z2 = o2.transform.position.z;
                 return Float.compare(z1, z2);
             }
         });
@@ -148,19 +173,32 @@ public class ZScene_2 extends Scene_old {
 
         camera.lens.update();
         rayHandler.setCombinedMatrix((OrthographicCamera) camera.lens);
-        spriteBatch.setProjectionMatrix(camera.lens.combined);
-        spriteBatch.begin();
+        batch.setProjectionMatrix(camera.lens.combined);
+        batch.begin();
         for (EntityMini entityMini : entities) {
+            batch.setColor(1,1,1,1);
             if (entityMini.animations == null) continue;
-            entityMini.transform.transform.setPosition(entityMini.body.getPosition());
-            entityMini.transform.transform.setOrientation(entityMini.body.getTransform().getOrientation());
+            entityMini.transform.position.set(entityMini.body.getPosition().x, entityMini.body.getPosition().y, entityMini.transform.position.z);
+            entityMini.transform.rotation.set(new Vector3(0,0,1), entityMini.body.getAngle());
             if (cull(entityMini.transform, entityMini.animations, camera.lens)) {
                 System.out.println("culling");
                 continue;
             }
-            spriteBatch.draw(entityMini.animations.currentPlayingAnimation.getKeyFrame(delta), entityMini.transform, entityMini.animations.size, entityMini.animations.pixelsPerUnit);
+            if (entityMini == entityMini1) batch.setColor(0,1,0,1);
+
+            batch.draw(entityMini.animations.currentPlayingAnimation.getKeyFrame(delta),
+                    entityMini.transform.position.x, entityMini.transform.position.y,
+                    entityMini.transform.rotation.getAngleAround(0,0,1),
+                    entityMini.transform.scale.x, entityMini.transform.scale.y,
+                    entityMini.animations.size, entityMini.animations.pixelsPerUnit);
         }
-        spriteBatch.end();
+        renderer.draw(batch, skeleton); // Draw the skeleton images.
+        angle += delta * 5;
+        skeleton.getRootBone().setRotation(angle);
+        skeleton.setPosition(2,2);
+        System.out.println(skeleton.getBones().get(4).getData().getName());
+        System.out.println(skeleton.getBones().get(4).getWorldY());
+        batch.end();
         // the ambient light is determined by the last rendered RayHandler.
         rayHandler.render();
 
@@ -183,13 +221,13 @@ public class ZScene_2 extends Scene_old {
             pointLight1.setActive(!pointLight1.isActive());
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            entityMini1.body.setTransform(entityMini1.transform.getPosition().x - 0.1f, entityMini1.transform.getPosition().y, entityMini1.body.getAngle());
+            entityMini1.body.setTransform(entityMini1.transform.position.x - 0.1f, entityMini1.transform.position.y, entityMini1.body.getAngle());
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            entityMini1.body.setTransform(entityMini1.transform.getPosition().x + 0.1f, entityMini1.transform.getPosition().y, entityMini1.body.getAngle());
+            entityMini1.body.setTransform(entityMini1.transform.position.x + 0.1f, entityMini1.transform.position.y, entityMini1.body.getAngle());
         }
         if (Gdx.input.isKeyPressed(Input.Keys.R)) {
-            entityMini1.body.setTransform(entityMini1.transform.getPosition().x, entityMini1.transform.getPosition().y, entityMini1.body.getAngle() + 0.1f);
+            entityMini1.body.setTransform(entityMini1.transform.position.x, entityMini1.transform.position.y, entityMini1.body.getAngle() + 0.1f);
         }
     }
 
@@ -220,11 +258,12 @@ public class ZScene_2 extends Scene_old {
     }
 
 
-    private Body createBody(World world, RigidBody2DData data, ComponentTransform2D transform2D) {
+    private Body createBody(World world, RigidBody2DData data, ComponentTransform transform) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = data.bodyType;
-        bodyDef.position.set(transform2D.getPosition().x, transform2D.getPosition().y);
-        bodyDef.angle = transform2D.transform.getRotation();
+        if (transform == null) System.out.println("is null");
+        bodyDef.position.set(transform.position.x, transform.position.y);
+        bodyDef.angle = transform.rotation.getAngleAround(0,0,1);
         Body body = world.createBody(bodyDef);
         bodyDef.fixedRotation = false;
         Shape shape = getShape(data);
@@ -292,13 +331,13 @@ public class ZScene_2 extends Scene_old {
         return assetNameClassMap;
     }
 
-    // TODO: test culling
-    private static boolean cull(ComponentTransform2D transform, ComponentFrameAnimations2D animation, final Camera camera) {
+    // TODO: implement culling for Spline 2D outputs.
+    private static boolean cull(ComponentTransform transform, ComponentFrameAnimations2D animation, final Camera camera) {
         TextureAtlas.AtlasRegion atlasRegion = animation.getTextureRegion();
-        final float width = atlasRegion.getRegionWidth() * transform.scaleX;
-        final float height = atlasRegion.getRegionHeight() * transform.scaleY;
+        final float width = atlasRegion.getRegionWidth() * transform.scale.x;
+        final float height = atlasRegion.getRegionHeight() * transform.scale.y;
         final float boundingRadius = Math.max(width, height) * 2 * animation.size / animation.pixelsPerUnit;
-        return !camera.frustum.sphereInFrustum(transform.transform.getPosition().x, transform.transform.getPosition().y, 0, boundingRadius);
+        return !camera.frustum.sphereInFrustum(transform.position.x, transform.position.y, 0, boundingRadius);
     }
 
 }

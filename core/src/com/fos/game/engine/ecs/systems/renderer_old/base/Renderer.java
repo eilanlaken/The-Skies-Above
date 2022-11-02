@@ -20,7 +20,7 @@ import com.fos.game.engine.ecs.components.camera_old.ComponentCamera;
 import com.fos.game.engine.ecs.components.lights3d.LightingEnvironment;
 import com.fos.game.engine.ecs.components.modelinstance_old.ComponentModelInstance;
 import com.fos.game.engine.ecs.components.modelinstance_old.ModelInstance;
-import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
+import com.fos.game.engine.ecs.components.transform2d_old.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
 import com.fos.game.engine.ecs.systems.base.SystemConfig;
@@ -104,7 +104,7 @@ public class Renderer implements EntitiesProcessor, Disposable {
             if (index == 0) modelBatch.begin(cameraEntities.getKey().lens);
             else modelBatch.setCamera(cameraEntities.getKey().lens);
             for (Entity entity : cameraEntities.getValue()) {
-                ComponentModelInstance component = (ComponentModelInstance) entity.components[ComponentType.MODEL_INSTANCE.ordinal()];
+                ComponentModelInstance component = (ComponentModelInstance) entity.components[ComponentType.GRAPHICS.ordinal()];
                 ModelInstance instance = component.instance;
                 modelBatch.render(instance, lightingEnvironment);
             }
@@ -132,7 +132,7 @@ public class Renderer implements EntitiesProcessor, Disposable {
             spriteBatch.setProjectionMatrix(camera.lens.combined);
             for (Entity entity : cameraEntities.getValue()) {
                 ComponentTransform2D transform2D = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
-                ComponentFrameAnimations2D animation = (ComponentFrameAnimations2D) entity.components[ComponentType.ANIMATIONS_FRAMES_2D.ordinal()];
+                ComponentFrameAnimations2D animation = (ComponentFrameAnimations2D) entity.components[ComponentType.GRAPHICS.ordinal()];
                 final float delta = Gdx.graphics.getDeltaTime();
                 animation.advanceTime(delta);
                 TextureAtlas.AtlasRegion atlasRegion = animation.getTextureRegion();

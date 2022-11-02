@@ -10,7 +10,7 @@ import com.fos.game.engine.ecs.systems.renderer_old.materials.base.UseTextureMat
 
 import java.util.Comparator;
 
-@Deprecated
+// TODO: consider transparency by sorting the Renderable(s) by their distance from the camera.
 public class ModelInstanceSorter implements RenderableSorter, Comparator<Renderable> {
 
     @Override

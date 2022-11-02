@@ -32,7 +32,7 @@ public class ComponentCamera3D implements Component {
 
     @Override
     public final ComponentType getComponentType() {
-        return ComponentType.CAMERA;
+        return ComponentType.GRAPHICS;
     }
 
 }

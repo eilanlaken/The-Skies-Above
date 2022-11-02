@@ -14,6 +14,6 @@ public abstract class Light implements Component {
 
     @Override
     public final ComponentType getComponentType() {
-        return ComponentType.LIGHT_3D;
+        return ComponentType.GRAPHICS;
     }
 }

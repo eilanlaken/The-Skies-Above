@@ -9,7 +9,7 @@ import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.cameras_old.ComponentCamera2D;
 import com.fos.game.engine.ecs.components.lights2d.ComponentLight2D;
-import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
+import com.fos.game.engine.ecs.components.transform2d_old.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 
 import java.util.*;
@@ -18,14 +18,14 @@ public class Renderer2DUtils {
 
     public static String CAMERAS_ERROR_DIFFERENT_CAMERAS_MUST_RENDER_DIFFERENT_LAYERS =
             "Error: camera conflict - you are using multiple " + ComponentCamera2D.class.getSimpleName() + "(s) " +
-            "to render the same layer(s). Different " + ComponentCamera2D.class.getSimpleName() + "(s) " +
-            " must render different layers.";
+            "to render the same category(s). Different " + ComponentCamera2D.class.getSimpleName() + "(s) " +
+            " must render different categories.";
 
     private static Set<Enum> currentRenderedLayers = new HashSet<>();
 
     protected static final int ATTACHED_GRAPHICS_2D_COMPONENT =
-            ComponentType.ANIMATIONS_FRAMES_2D.bitMask
-            | ComponentType.LIGHT_2D.bitMask
+            ComponentType.GRAPHICS.bitMask
+            | ComponentType.GRAPHICS.bitMask
             | ComponentType.CAMERA_2D.bitMask;
 
     private static Map<RenderTarget, Array<ComponentCamera2D>> renderTargetCamerasResult = new HashMap<>();
@@ -40,10 +40,10 @@ public class Renderer2DUtils {
             int depthSort = Float.compare(z1, z2);
             if (depthSort != 0) return depthSort;
 
-            Component animations1 = (Component) e1.components[ComponentType.ANIMATIONS_FRAMES_2D.ordinal()];
-            Component light1 = (Component) e1.components[ComponentType.LIGHT_2D.ordinal()];
-            Component animations2 = (Component) e2.components[ComponentType.ANIMATIONS_FRAMES_2D.ordinal()];
-            Component light2 = (Component) e2.components[ComponentType.LIGHT_2D.ordinal()];
+            Component animations1 = (Component) e1.components[ComponentType.GRAPHICS.ordinal()];
+            Component light1 = (Component) e1.components[ComponentType.GRAPHICS.ordinal()];
+            Component animations2 = (Component) e2.components[ComponentType.GRAPHICS.ordinal()];
+            Component light2 = (Component) e2.components[ComponentType.GRAPHICS.ordinal()];
             if (light1 == null && animations1 != null && light2 == null & animations2 != null) return 0; // expected to be the most frequent case (usually)
             if (light1 != null && animations1 == null && light2 == null & animations2 == null) return 1;
             if (light1 != null && animations1 != null && light2 == null & animations2 == null) return 1;
@@ -56,7 +56,7 @@ public class Renderer2DUtils {
             if (light1 != null && animations1 == null && light2 != null & animations2 != null) return 1;
             if (light1 == null && animations1 != null && light2 != null & animations2 != null) return -1;
 
-            return Float.compare(e1.layer, e2.layer);
+            return Float.compare(e1.category, e2.category);
         }
     };
 
@@ -110,7 +110,7 @@ public class Renderer2DUtils {
                 cameraEntitiesMapResult.put(camera, entitiesRenderedWithCamera);
             }
             for (Entity entity : entities) {
-                if (!((entity.layer & camera.layersBitMask) > 0)) continue;
+                if (!((entity.category & camera.layersBitMask) > 0)) continue;
                 if (Renderer2DUtils.cull(entity, camera.lens)) continue;
                 entitiesRenderedWithCamera.add(entity);
             }
@@ -133,7 +133,7 @@ public class Renderer2DUtils {
 
     private static boolean cull(final Entity entity, final OrthographicCamera camera) {
         ComponentTransform2D transform2D = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
-        ComponentFrameAnimations2D animation = (ComponentFrameAnimations2D) entity.components[ComponentType.ANIMATIONS_FRAMES_2D.ordinal()];
+        ComponentFrameAnimations2D animation = (ComponentFrameAnimations2D) entity.components[ComponentType.GRAPHICS.ordinal()];
         TextureAtlas.AtlasRegion atlasRegion = animation.getTextureRegion();
         final float width = atlasRegion.getRegionWidth() * transform2D.scaleX;
         final float height = atlasRegion.getRegionHeight() * transform2D.scaleY;

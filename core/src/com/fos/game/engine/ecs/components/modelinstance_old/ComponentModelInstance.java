@@ -13,6 +13,6 @@ public class ComponentModelInstance implements Component {
 
     @Override
     public ComponentType getComponentType() {
-        return ComponentType.MODEL_INSTANCE;
+        return ComponentType.GRAPHICS;
     }
 }

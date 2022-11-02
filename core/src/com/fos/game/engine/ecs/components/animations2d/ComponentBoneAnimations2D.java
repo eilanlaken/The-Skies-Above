@@ -9,6 +9,7 @@ public class ComponentBoneAnimations2D implements Component {
 
     public Skeleton skeleton;
     public AnimationState state;
+    public boolean active = true;
 
     protected ComponentBoneAnimations2D(Skeleton skeleton, AnimationState state) {
         this.skeleton = skeleton;
@@ -17,6 +18,6 @@ public class ComponentBoneAnimations2D implements Component {
 
     @Override
     public ComponentType getComponentType() {
-        return ComponentType.ANIMATIONS_BONES_2D;
+        return ComponentType.GRAPHICS;
     }
 }

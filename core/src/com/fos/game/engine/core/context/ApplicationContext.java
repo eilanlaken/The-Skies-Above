@@ -18,7 +18,7 @@ import com.fos.game.engine.ecs.components.scripts.FactoryScripts;
 import com.fos.game.engine.ecs.components.shapes.FactoryShape2D;
 import com.fos.game.engine.ecs.components.signals.FactorySignalBox;
 import com.fos.game.engine.ecs.components.transform.FactoryTransform;
-import com.fos.game.engine.ecs.components.transform2d.FactoryTransform2D;
+import com.fos.game.engine.ecs.components.transform2d_old.FactoryTransform2D;
 import com.fos.game.engine.ecs.components.transform3d_old.FactoryTransform3D;
 import com.fos.game.scenes.LoadingScene;
 

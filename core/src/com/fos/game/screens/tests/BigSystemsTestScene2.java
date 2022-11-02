@@ -8,7 +8,7 @@ import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
 import com.fos.game.engine.ecs.components.animations2d.ComponentFrameAnimations2D;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.cameras_old.ComponentCamera2D;
-import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
+import com.fos.game.engine.ecs.components.transform2d_old.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.base.EntityContainer;
 import com.fos.game.scripts.test.PeriodicReadTestScript;
@@ -107,7 +107,7 @@ public class BigSystemsTestScene2 extends Scene_old {
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
-            ComponentFrameAnimations2D animations2D = (ComponentFrameAnimations2D) button.getComponent(ComponentType.ANIMATIONS_FRAMES_2D);
+            ComponentFrameAnimations2D animations2D = (ComponentFrameAnimations2D) button.getComponent(ComponentType.GRAPHICS);
             animations2D.active = !animations2D.active;
         }
     }

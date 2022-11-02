@@ -14,7 +14,7 @@ public abstract class ComponentShape2D implements Component {
 
     @Override
     public ComponentType getComponentType() {
-        return ComponentType.SHAPE_2D;
+        return ComponentType.GRAPHICS;
     }
 
 }

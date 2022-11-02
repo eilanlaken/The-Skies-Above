@@ -7,7 +7,13 @@ import com.fos.game.engine.ecs.entities.Entity;
 
 public class Renderer3D {
 
-    protected void renderToCameraInternalBuffer(final ModelBatch modelBatch, final ComponentCamera camera, final Array<Entity> entities, final boolean debugMode) {
+    private final ModelBatch modelBatch;
+
+    protected Renderer3D() {
+        this.modelBatch = new ModelBatch(new ShaderProvider(), new ModelInstanceSorter());
+    }
+
+    protected void renderToCameraInternalBuffer(final ComponentCamera camera, final Array<Entity> entities, final boolean debugMode) {
 
     }
 
