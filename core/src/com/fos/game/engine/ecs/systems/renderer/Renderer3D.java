@@ -2,10 +2,11 @@ package com.fos.game.engine.ecs.systems.renderer;
 
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Disposable;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
 import com.fos.game.engine.ecs.entities.Entity;
 
-public class Renderer3D {
+public class Renderer3D implements Disposable {
 
     private final ModelBatch modelBatch;
 
@@ -17,4 +18,8 @@ public class Renderer3D {
 
     }
 
+    @Override
+    public void dispose() {
+        modelBatch.dispose();
+    }
 }

@@ -10,10 +10,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
-import com.fos.game.engine.core.graphics.g2d.Physics2DDebugRenderer;
 import com.fos.game.engine.core.graphics.g2d.RenderTarget;
 import com.fos.game.engine.core.graphics.g2d.SpriteBatch;
 import com.fos.game.engine.core.graphics.spine.AnimationState;
@@ -40,8 +38,6 @@ public class Renderer implements EntitiesProcessor, Disposable {
     private SpriteBatch spriteBatch;
     private Renderer2D renderer2D;
     private Renderer3D renderer3D;
-    private Physics2DDebugRenderer physics2DDebugRenderer;
-    private ShapeRenderer shapeRenderer;
     public boolean debugMode;
 
     // state management
@@ -51,8 +47,6 @@ public class Renderer implements EntitiesProcessor, Disposable {
         this.spriteBatch = new SpriteBatch();
         this.renderer2D = new Renderer2D();
         this.renderer3D = new Renderer3D();
-        this.physics2DDebugRenderer = new Physics2DDebugRenderer();
-        this.shapeRenderer = new ShapeRenderer();
         this.debugMode = Config.DEFAULT.debugMode;
         this.allCameras = new Array<>();
     }
@@ -136,9 +130,9 @@ public class Renderer implements EntitiesProcessor, Disposable {
 
     @Override
     public void dispose() {
+        this.renderer2D.dispose();
+        this.renderer3D.dispose();
         this.spriteBatch.dispose();
-        this.physics2DDebugRenderer.dispose();
-        this.shapeRenderer.dispose();
     }
 
     public void config(final Config config) {

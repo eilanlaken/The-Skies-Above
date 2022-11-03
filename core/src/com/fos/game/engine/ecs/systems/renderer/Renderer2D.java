@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Disposable;
 import com.fos.game.engine.core.graphics.g2d.Physics2DDebugRenderer;
 import com.fos.game.engine.core.graphics.g2d.PolygonSpriteBatch;
 import com.fos.game.engine.core.graphics.spine.SkeletonRenderer;
@@ -23,11 +25,12 @@ import com.fos.game.engine.ecs.components.physics2d.ComponentRigidBody2D;
 import com.fos.game.engine.ecs.components.transform.ComponentTransform;
 import com.fos.game.engine.ecs.entities.Entity;
 
-public class Renderer2D {
+public class Renderer2D implements Disposable {
 
     private final PolygonSpriteBatch polygonSpriteBatch;
     private final SkeletonRenderer skeletonRenderer;
     private final SkeletonRendererDebug skeletonRendererDebug;
+    private final ShapeRenderer shapeRenderer;
     private final Physics2DDebugRenderer physics2DDebugRenderer;
 
     private final Array<ComponentLight2D> lights = new Array<>();
@@ -40,6 +43,7 @@ public class Renderer2D {
         this.skeletonRendererDebug.setMeshTriangles(false);
         this.skeletonRendererDebug.setRegionAttachments(false);
         this.skeletonRendererDebug.setMeshHull(false);
+        this.shapeRenderer = new ShapeRenderer();
         this.physics2DDebugRenderer = new Physics2DDebugRenderer();
     }
 
@@ -115,5 +119,12 @@ public class Renderer2D {
                 light2D.box2DLight.setActive(false);
             }
         }
+    }
+
+    @Override
+    public void dispose() {
+        polygonSpriteBatch.dispose();
+        shapeRenderer.dispose();
+        physics2DDebugRenderer.dispose();
     }
 }
