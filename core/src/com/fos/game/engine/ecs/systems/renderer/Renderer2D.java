@@ -56,7 +56,7 @@ public class Renderer2D implements Disposable {
         polygonSpriteBatch.setColor(1,1,1,1);
         polygonSpriteBatch.setProjectionMatrix(camera.lens.combined);
         for (Entity entity : entities) {
-            ComponentTransform transform = (ComponentTransform) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
+            ComponentTransform transform = (ComponentTransform) entity.components[ComponentType.TRANSFORM.ordinal()];
             Component graphics = (Component) entity.components[ComponentType.GRAPHICS.ordinal()];
             if (graphics instanceof ComponentFrameAnimations2D) renderFrameAnimation(transform, (ComponentFrameAnimations2D) graphics);
             if (graphics instanceof ComponentBoneAnimations2D) renderBoneAnimation((ComponentBoneAnimations2D) graphics);

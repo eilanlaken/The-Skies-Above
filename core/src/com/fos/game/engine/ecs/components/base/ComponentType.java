@@ -9,6 +9,7 @@ public enum ComponentType {
     PHYSICS_2D_JOINT,
     PHYSICS_3D_BODY,
     SCRIPTS,
+    CAMERA,
     @Deprecated CAMERA_2D,
     @Deprecated CAMERA_3D,
     GRAPHICS,

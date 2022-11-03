@@ -45,8 +45,8 @@ public class EntityContainerUtils {
     protected static void process(final HashMap<EntitiesProcessor, Array<Entity>> systemEntitiesMap) {
         for (final Map.Entry<EntitiesProcessor, Array<Entity>> systemEntitiesMapEntry : systemEntitiesMap.entrySet()) {
             final EntitiesProcessor entitiesProcessor = systemEntitiesMapEntry.getKey();
-            final Array<Entity> processorEntities = systemEntitiesMapEntry.getValue();
-            entitiesProcessor.process(processorEntities);
+            final Array<Entity> entities = systemEntitiesMapEntry.getValue();
+            entitiesProcessor.process(entities);
         }
     }
 

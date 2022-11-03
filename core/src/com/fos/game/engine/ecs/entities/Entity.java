@@ -17,6 +17,10 @@ public class Entity implements Disposable {
     public int category;
     public boolean active = true;
 
+    public Entity(final Enum category) {
+        this.category = 0b000001 << category.ordinal();
+    }
+
     @Deprecated
     public Entity() {
         this.category = 0b000001;

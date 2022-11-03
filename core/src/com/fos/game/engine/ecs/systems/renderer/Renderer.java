@@ -72,7 +72,7 @@ public class Renderer implements EntitiesProcessor, Disposable {
                 skeleton.getRootBone().setRotation(transform.rotation.getAngleAround(0,0,1));
             }
             else if (graphics instanceof ComponentLight2D) {
-                final ComponentTransform transform = (ComponentTransform) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
+                final ComponentTransform transform = (ComponentTransform) entity.components[ComponentType.TRANSFORM.ordinal()];
                 final ComponentLight2D light2D = (ComponentLight2D) entity.components[ComponentType.GRAPHICS.ordinal()];
                 RendererUtils.applyTransform(transform, light2D);
                 // sets all lights to inactive - lights will be switched on / off per camera render.
@@ -80,7 +80,7 @@ public class Renderer implements EntitiesProcessor, Disposable {
                 if (light != null) light.setActive(false);
             }
             else if (graphics instanceof ComponentCamera) {
-                final ComponentTransform transform = (ComponentTransform) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
+                final ComponentTransform transform = (ComponentTransform) entity.components[ComponentType.TRANSFORM.ordinal()];
                 final ComponentCamera camera = (ComponentCamera) entity.components[ComponentType.GRAPHICS.ordinal()];
                 RendererUtils.applyTransform(transform, camera);
                 allCameras.add(camera);
@@ -113,7 +113,7 @@ public class Renderer implements EntitiesProcessor, Disposable {
             spriteBatch.begin(); // TODO: <- apply post processing effect
             TextureRegion sceneRegion = new TextureRegion(camera.frameBuffer.getTextureAttachments().get(0));
             sceneRegion.flip(false, true);
-            spriteBatch.draw(sceneRegion, -Gdx.graphics.getWidth()/2f, -Gdx.graphics.getHeight()/2f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            spriteBatch.draw(sceneRegion, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
             spriteBatch.end();
         }
         spriteBatch.setShader(null);

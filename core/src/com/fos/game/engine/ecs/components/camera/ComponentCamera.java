@@ -60,7 +60,7 @@ public class ComponentCamera implements Component {
 
     @Override
     public final ComponentType getComponentType() {
-        return ComponentType.CAMERA_2D;
+        return ComponentType.GRAPHICS;
     }
 
 }
