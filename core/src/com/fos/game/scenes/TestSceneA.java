@@ -95,6 +95,8 @@ public class TestSceneA extends Scene {
 
     @Override
     public void show() {
+        System.out.println("show");
+
         world = new World(new Vector2(0,0), true);
         world.setContactListener(getContactListener());
         rayHandler = new RayHandler(world);
@@ -146,11 +148,13 @@ public class TestSceneA extends Scene {
 
     @Override
     public void pause() {
+        System.out.println("pause");
 
     }
 
     @Override
     public void resume() {
+        System.out.println("resume");
 
     }
 
@@ -187,7 +191,6 @@ public class TestSceneA extends Scene {
             entityMini.transform.position.set(entityMini.body.getPosition().x, entityMini.body.getPosition().y, entityMini.transform.position.z);
             entityMini.transform.rotation.set(new Vector3(0,0,1), entityMini.body.getAngle());
             if (cull(entityMini.transform, entityMini.animations, camera.lens)) {
-                System.out.println("culling");
                 continue;
             }
             if (entityMini == entityMini1) batch.setColor(0,1,0,1);
@@ -199,11 +202,7 @@ public class TestSceneA extends Scene {
                     entityMini.animations.size, entityMini.animations.pixelsPerUnit);
         }
 
-        if (cull(skeleton, camera.lens)) {
-            System.out.println("culling");
-        } else {
-            renderer.draw(batch, skeleton); // Draw the skeleton images.
-        }
+        if (!cull(skeleton, camera.lens)) renderer.draw(batch, skeleton); // Draw the skeleton images.
 
         batch.end();
         // the ambient box2DLight is determined by the last rendered RayHandler.
@@ -258,7 +257,7 @@ public class TestSceneA extends Scene {
 
     @Override
     public void hide() {
-
+        System.out.println("hide");
     }
 
     @Override

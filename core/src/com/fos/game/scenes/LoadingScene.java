@@ -36,7 +36,7 @@ public class LoadingScene extends Scene {
         while (!doneLoading) {
             if (assetManager.update()) {
                 doneLoading = true;
-                context.playScene(new TestSceneA(context));
+                context.playScene(new TestSceneB(context));
             }
         }
     }
@@ -57,7 +57,7 @@ public class LoadingScene extends Scene {
     }
 
     private void queueAssets() {
-        Map<String, Class> assetsNameTypeMap = TestSceneA.getRequiredAssetsNameTypeMap();
+        Map<String, Class> assetsNameTypeMap = TestSceneB.getRequiredAssetsNameTypeMap();
         for (Map.Entry<String, Class> entry : assetsNameTypeMap.entrySet()) {
             this.assetManager.load(entry.getKey(), entry.getValue());
         }
