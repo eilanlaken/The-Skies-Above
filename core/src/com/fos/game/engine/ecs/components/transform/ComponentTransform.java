@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 
+@Deprecated
 public class ComponentTransform implements Component {
 
     public Vector3 position;
