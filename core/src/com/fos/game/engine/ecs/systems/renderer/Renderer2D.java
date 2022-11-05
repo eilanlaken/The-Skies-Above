@@ -22,7 +22,7 @@ import com.fos.game.engine.ecs.components.lights2d.ComponentLight2D;
 import com.fos.game.engine.ecs.components.lights2d.LightType;
 import com.fos.game.engine.ecs.components.physics2d.ComponentJoint2D;
 import com.fos.game.engine.ecs.components.physics2d.ComponentRigidBody2D;
-import com.fos.game.engine.ecs.components.transform.ComponentTransform;
+import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 
 public class Renderer2D implements Disposable {
@@ -56,7 +56,7 @@ public class Renderer2D implements Disposable {
         polygonSpriteBatch.setColor(1,1,1,1);
         polygonSpriteBatch.setProjectionMatrix(camera.lens.combined);
         for (Entity entity : entities) {
-            ComponentTransform transform = (ComponentTransform) entity.components[ComponentType.TRANSFORM.ordinal()];
+            ComponentTransform2D transform = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM.ordinal()];
             Component graphics = (Component) entity.components[ComponentType.GRAPHICS.ordinal()];
             if (graphics instanceof ComponentFrameAnimations2D) renderFrameAnimation(transform, (ComponentFrameAnimations2D) graphics);
             if (graphics instanceof ComponentBoneAnimations2D) renderBoneAnimation((ComponentBoneAnimations2D) graphics);
@@ -80,11 +80,11 @@ public class Renderer2D implements Disposable {
         camera.frameBuffer.end();
     }
 
-    private void renderFrameAnimation(final ComponentTransform transform, final ComponentFrameAnimations2D frameAnimation) {
+    private void renderFrameAnimation(final ComponentTransform2D transform, final ComponentFrameAnimations2D frameAnimation) {
         if (!frameAnimation.active) return;
         TextureAtlas.AtlasRegion atlasRegion = frameAnimation.getTextureRegion();
         polygonSpriteBatch.setColor(frameAnimation.tint);
-        polygonSpriteBatch.draw(atlasRegion, transform.position.x, transform.position.y, transform.rotation.getAngleAround(0,0,1), transform.scale.x, transform.scale.y, frameAnimation.size, frameAnimation.pixelsPerUnit);
+        polygonSpriteBatch.draw(atlasRegion, transform.x, transform.y, transform.angle, transform.scaleX, transform.scaleY, frameAnimation.size, frameAnimation.pixelsPerUnit);
     }
 
     private void renderBoneAnimation(final ComponentBoneAnimations2D boneAnimation) {

@@ -22,7 +22,7 @@ import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
 import com.fos.game.engine.ecs.components.lights2d.ComponentLight2D;
-import com.fos.game.engine.ecs.components.transform.ComponentTransform;
+import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
 
@@ -62,17 +62,17 @@ public class Renderer implements EntitiesProcessor, Disposable {
                 frameAnimation.advanceTime(delta);
             }
             else if (graphics instanceof ComponentBoneAnimations2D) {
-                ComponentTransform transform = (ComponentTransform) entity.components[ComponentType.TRANSFORM.ordinal()];
+                ComponentTransform2D transform = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM.ordinal()];
                 ComponentBoneAnimations2D boneAnimations = (ComponentBoneAnimations2D) entity.components[ComponentType.GRAPHICS.ordinal()];
                 Skeleton skeleton = boneAnimations.skeleton;
                 AnimationState state = boneAnimations.state;
                 if (state.apply(skeleton)) skeleton.updateWorldTransform();
                 state.update(Gdx.graphics.getDeltaTime());
-                skeleton.setPosition(transform.position.x, transform.position.y);
-                skeleton.getRootBone().setRotation(transform.rotation.getAngleAround(0,0,1));
+                skeleton.setPosition(transform.x, transform.y);
+                skeleton.getRootBone().setRotation(transform.angle);
             }
             else if (graphics instanceof ComponentLight2D) {
-                final ComponentTransform transform = (ComponentTransform) entity.components[ComponentType.TRANSFORM.ordinal()];
+                final ComponentTransform2D transform = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM.ordinal()];
                 final ComponentLight2D light2D = (ComponentLight2D) entity.components[ComponentType.GRAPHICS.ordinal()];
                 RendererUtils.applyTransform(transform, light2D);
                 // sets all lights to inactive - lights will be switched on / off per camera render.
@@ -80,7 +80,7 @@ public class Renderer implements EntitiesProcessor, Disposable {
                 if (light != null) light.setActive(false);
             }
             else if (graphics instanceof ComponentCamera) {
-                final ComponentTransform transform = (ComponentTransform) entity.components[ComponentType.TRANSFORM.ordinal()];
+                final ComponentTransform2D transform = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM.ordinal()];
                 final ComponentCamera camera = (ComponentCamera) entity.components[ComponentType.GRAPHICS.ordinal()];
                 RendererUtils.applyTransform(transform, camera);
                 allCameras.add(camera);

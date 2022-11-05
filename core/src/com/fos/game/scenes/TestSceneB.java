@@ -12,7 +12,7 @@ import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
 import com.fos.game.engine.ecs.components.animations2d.ComponentFrameAnimations2D;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
-import com.fos.game.engine.ecs.components.transform.ComponentTransform;
+import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.base.EntityContainer;
 
@@ -53,24 +53,24 @@ public class TestSceneB extends Scene {
 
         eCamera1 = new Entity(Categories.CAMERA);
         eCamera1.attachComponents(
-                context.factoryTransform.create2d(0, 0, 0, 0, 1, 1),
+                context.factoryTransform.create2d(0, 0, 0, 1, 1, 0),
                 context.factoryCamera.createCamera2D(VIRTUAL_HEIGHT * GraphicsUtils.getAspectRatio(), VIRTUAL_HEIGHT, Categories.GAME_OBJECT_1)
         );
         eCamera2 = new Entity(Categories.CAMERA);
         eCamera2.attachComponents(
-                context.factoryTransform.create2d(0, 0, 0, 0, 1, 1),
+                context.factoryTransform.create2d(0, 0, 0, 1, 1, 0),
                 context.factoryCamera.createCamera2D(VIRTUAL_HEIGHT * GraphicsUtils.getAspectRatio() / 2, VIRTUAL_HEIGHT / 2, Categories.GAME_OBJECT_2)
         );
 
         e1 = new Entity(Categories.GAME_OBJECT_1);
         e1.attachComponents(
-                context.factoryTransform.create2d(0, 0, 0, 0, 1, 1),
+                context.factoryTransform.create2d(0, 0, 0, 1, 1, 0),
                 context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "a", 1,1f, pixelsPerUnit)
         );
 
         e2 = new Entity(Categories.GAME_OBJECT_2);
         e2.attachComponents(
-                context.factoryTransform.create2d(-5, 0, 0, 0, 1, 1),
+                context.factoryTransform.create2d(-5, 0, 0, 1, 1, 0),
                 context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "a", 1,1f, pixelsPerUnit)
         );
 
@@ -84,11 +84,11 @@ public class TestSceneB extends Scene {
     public void update(float delta) {
         container.update();
 
-        ComponentTransform transformCamera = (ComponentTransform) eCamera1.components[ComponentType.TRANSFORM.ordinal()];
+        ComponentTransform2D transformCamera = (ComponentTransform2D) eCamera1.components[ComponentType.TRANSFORM.ordinal()];
         ComponentCamera camera = (ComponentCamera) eCamera1.components[ComponentType.GRAPHICS.ordinal()];
         OrthographicCamera lens = (OrthographicCamera) camera.lens;
 
-        ComponentTransform transformEntity1 = (ComponentTransform) e1.components[ComponentType.TRANSFORM.ordinal()];
+        ComponentTransform2D transformEntity1 = (ComponentTransform2D) e1.components[ComponentType.TRANSFORM.ordinal()];
 
         tintAlpha += delta;
 
@@ -99,11 +99,7 @@ public class TestSceneB extends Scene {
             lens.zoom -= 0.1f;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            angle = transformEntity1.rotation.getRoll() * MathUtils.radiansToDegrees;
-            angle += delta * 10;
-            System.out.println("angle " + angle);
-            transformEntity1.rotation.setEulerAngles(0,0, (float) angle * MathUtils.degreesToRadians);
-            System.out.println("angle " + angle);
+            transformEntity1.angle += 2 * MathUtils.degreesToRadians;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.T)) {
             ComponentFrameAnimations2D animation = (ComponentFrameAnimations2D) e1.components[ComponentType.GRAPHICS.ordinal()];

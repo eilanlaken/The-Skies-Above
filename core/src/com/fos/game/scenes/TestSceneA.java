@@ -11,7 +11,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.FloatArray;
@@ -25,7 +24,7 @@ import com.fos.game.engine.core.graphics.spine.*;
 import com.fos.game.engine.ecs.components.animations2d.ComponentFrameAnimations2D;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
 import com.fos.game.engine.ecs.components.physics2d.RigidBody2DData;
-import com.fos.game.engine.ecs.components.transform.ComponentTransform;
+import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -59,7 +58,7 @@ public class TestSceneA extends Scene {
     PointLight pointLight1, pointLight2, pointLight3;
 
     class EntityMini {
-        ComponentTransform transform;
+        ComponentTransform2D transform;
         ComponentFrameAnimations2D animations;
         Body body;
         Joint joint;
@@ -111,7 +110,7 @@ public class TestSceneA extends Scene {
         camera = context.factoryCamera.createCamera2D(VIRTUAL_HEIGHT * GraphicsUtils.getAspectRatio(), VIRTUAL_HEIGHT);
 
         entityMini1 = new EntityMini();
-        entityMini1.transform = context.factoryTransform.create2d(-3, 0, 0, 0, 1, 1);
+        entityMini1.transform = null;//context.factoryTransform.create2d(-3, 0, 0, 0, 1, 1);
         System.out.println("transform " +  entityMini1.transform);
         entityMini1.animations = context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "a", 1,0.5f, pixelsPerUnit);
         Filter filter = new Filter();
@@ -129,7 +128,7 @@ public class TestSceneA extends Scene {
         entities.add(entityMini1);
 
         entityMini2 = new EntityMini();
-        entityMini2.transform = context.factoryTransform.create2d(0, 0, 0, 0, 1, 1);
+        entityMini2.transform = null;//context.factoryTransform.create2d(0, 0, 0, 0, 1, 1);
         entityMini2.animations = context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "b", 1,1, pixelsPerUnit);
         Filter filter2 = new Filter();
         filter2.categoryBits = 0x0001;
@@ -171,8 +170,8 @@ public class TestSceneA extends Scene {
         entities.sort(new Comparator<EntityMini>() {
             @Override
             public int compare(EntityMini o1, EntityMini o2) {
-                final float z1 = o1.transform.position.z;
-                final float z2 = o2.transform.position.z;
+                final float z1 = o1.transform.z;
+                final float z2 = o2.transform.z;
                 return Float.compare(z1, z2);
             }
         });
@@ -188,17 +187,18 @@ public class TestSceneA extends Scene {
         for (EntityMini entityMini : entities) {
             batch.setColor(1,1,1,1);
             if (entityMini.animations == null) continue;
-            entityMini.transform.position.set(entityMini.body.getPosition().x, entityMini.body.getPosition().y, entityMini.transform.position.z);
-            entityMini.transform.rotation.set(new Vector3(0,0,1), entityMini.body.getAngle());
+            entityMini.transform.x = entityMini.body.getPosition().x;
+            entityMini.transform.y = entityMini.body.getPosition().y;
+            entityMini.transform.angle = entityMini.body.getAngle();
             if (cull(entityMini.transform, entityMini.animations, camera.lens)) {
                 continue;
             }
             if (entityMini == entityMini1) batch.setColor(0,1,0,1);
 
             batch.draw(entityMini.animations.currentPlayingAnimation.getKeyFrame(delta),
-                    entityMini.transform.position.x, entityMini.transform.position.y,
-                    entityMini.transform.rotation.getAngleAround(0,0,1),
-                    entityMini.transform.scale.x, entityMini.transform.scale.y,
+                    entityMini.transform.x, entityMini.transform.y,
+                    entityMini.transform.angle,
+                    entityMini.transform.scaleX, entityMini.transform.scaleY,
                     entityMini.animations.size, entityMini.animations.pixelsPerUnit);
         }
 
@@ -227,13 +227,13 @@ public class TestSceneA extends Scene {
             pointLight1.setActive(!pointLight1.isActive());
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            entityMini1.body.setTransform(entityMini1.transform.position.x - 0.1f, entityMini1.transform.position.y, entityMini1.body.getAngle());
+            entityMini1.body.setTransform(entityMini1.transform.x - 0.1f, entityMini1.transform.y, entityMini1.body.getAngle());
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            entityMini1.body.setTransform(entityMini1.transform.position.x + 0.1f, entityMini1.transform.position.y, entityMini1.body.getAngle());
+            entityMini1.body.setTransform(entityMini1.transform.x + 0.1f, entityMini1.transform.y, entityMini1.body.getAngle());
         }
         if (Gdx.input.isKeyPressed(Input.Keys.R)) {
-            entityMini1.body.setTransform(entityMini1.transform.position.x, entityMini1.transform.position.y, entityMini1.body.getAngle() + 0.1f);
+            entityMini1.body.setTransform(entityMini1.transform.x, entityMini1.transform.y, entityMini1.body.getAngle() + 0.1f);
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
@@ -274,12 +274,12 @@ public class TestSceneA extends Scene {
     }
 
 
-    private Body createBody(World world, RigidBody2DData data, ComponentTransform transform) {
+    private Body createBody(World world, RigidBody2DData data, ComponentTransform2D transform) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = data.bodyType;
         if (transform == null) System.out.println("is null");
-        bodyDef.position.set(transform.position.x, transform.position.y);
-        bodyDef.angle = transform.rotation.getAngleAround(0,0,1);
+        bodyDef.position.set(transform.x, transform.y);
+        bodyDef.angle = transform.angle;
         Body body = world.createBody(bodyDef);
         bodyDef.fixedRotation = false;
         Shape shape = getShape(data);
@@ -348,12 +348,12 @@ public class TestSceneA extends Scene {
     }
 
     /** culling for atlas regions */
-    private static boolean cull(ComponentTransform transform, ComponentFrameAnimations2D animation, final Camera camera) {
+    private static boolean cull(ComponentTransform2D transform, ComponentFrameAnimations2D animation, final Camera camera) {
         TextureAtlas.AtlasRegion atlasRegion = animation.getTextureRegion();
-        final float width = atlasRegion.getRegionWidth() * transform.scale.x;
-        final float height = atlasRegion.getRegionHeight() * transform.scale.y;
+        final float width = atlasRegion.getRegionWidth() * transform.scaleX;
+        final float height = atlasRegion.getRegionHeight() * transform.scaleY;
         final float boundingRadius = Math.max(width, height) * 2 * animation.size / animation.pixelsPerUnit;
-        return !camera.frustum.sphereInFrustum(transform.position.x, transform.position.y, 0, boundingRadius);
+        return !camera.frustum.sphereInFrustum(transform.x, transform.y, 0, boundingRadius);
     }
 
     /** culling for skeletons */
