@@ -43,8 +43,6 @@ public class TestSceneB extends Scene {
 
     public TestSceneB(final ApplicationContext context) {
         super(context);
-
-
     }
 
     @Override
