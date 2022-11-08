@@ -8,6 +8,6 @@ public class ComponentText implements Component {
 
     @Override
     public final ComponentType getComponentType() {
-        return ComponentType.TEXT;
+        return ComponentType.GRAPHICS;
     }
 }

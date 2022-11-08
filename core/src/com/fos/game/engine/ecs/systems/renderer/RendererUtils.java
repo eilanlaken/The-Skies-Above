@@ -32,8 +32,8 @@ public class RendererUtils {
     protected static final Comparator<Entity> entitiesComparator = new Comparator<Entity>() {
         @Override
         public int compare(Entity e1, Entity e2) {
-            final float z1 = ((ComponentTransform2D) e1.components[ComponentType.TRANSFORM_2D.ordinal()]).z;
-            final float z2 = ((ComponentTransform2D) e2.components[ComponentType.TRANSFORM_2D.ordinal()]).z;
+            final float z1 = ((ComponentTransform2D) e1.components[ComponentType.TRANSFORM.ordinal()]).z;
+            final float z2 = ((ComponentTransform2D) e2.components[ComponentType.TRANSFORM.ordinal()]).z;
             return Float.compare(z1, z2);
         }
     };
