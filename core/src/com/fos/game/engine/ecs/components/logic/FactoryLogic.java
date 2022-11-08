@@ -10,8 +10,8 @@ public class FactoryLogic extends Factory {
         super(assetManager, jsonConverter);
     }
 
-    public ComponentLogic create(final Logic... logics) {
-        return new ComponentLogic(logics);
+    public ComponentLogic create(final Logic... logic) {
+        return new ComponentLogic(logic);
     }
 
 }

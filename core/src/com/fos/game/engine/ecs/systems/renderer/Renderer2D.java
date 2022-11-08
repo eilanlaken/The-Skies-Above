@@ -14,7 +14,7 @@ import com.fos.game.engine.core.graphics.g2d.PolygonSpriteBatch;
 import com.fos.game.engine.core.graphics.spine.SkeletonRenderer;
 import com.fos.game.engine.core.graphics.spine.SkeletonRendererDebug;
 import com.fos.game.engine.ecs.components.animations2d.ComponentBoneAnimations2D;
-import com.fos.game.engine.ecs.components.animations2d.ComponentFrameAnimations2D;
+import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
 import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
@@ -58,7 +58,7 @@ public class Renderer2D implements Disposable {
         for (Entity entity : entities) {
             ComponentTransform2D transform = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM.ordinal()];
             Component graphics = (Component) entity.components[ComponentType.GRAPHICS.ordinal()];
-            if (graphics instanceof ComponentFrameAnimations2D) renderFrameAnimation(transform, (ComponentFrameAnimations2D) graphics);
+            if (graphics instanceof ComponentAnimations2D) renderFrameAnimation(transform, (ComponentAnimations2D) graphics);
             if (graphics instanceof ComponentBoneAnimations2D) renderBoneAnimation((ComponentBoneAnimations2D) graphics);
             if (graphics instanceof ComponentLight2D) lights.add((ComponentLight2D) graphics);
         }
@@ -80,7 +80,7 @@ public class Renderer2D implements Disposable {
         camera.frameBuffer.end();
     }
 
-    private void renderFrameAnimation(final ComponentTransform2D transform, final ComponentFrameAnimations2D frameAnimation) {
+    private void renderFrameAnimation(final ComponentTransform2D transform, final ComponentAnimations2D frameAnimation) {
         if (!frameAnimation.active) return;
         TextureAtlas.AtlasRegion atlasRegion = frameAnimation.getTextureRegion();
         polygonSpriteBatch.setColor(frameAnimation.tint);

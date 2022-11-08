@@ -17,7 +17,7 @@ import com.fos.game.engine.core.graphics.g2d.SpriteBatch;
 import com.fos.game.engine.core.graphics.spine.AnimationState;
 import com.fos.game.engine.core.graphics.spine.Skeleton;
 import com.fos.game.engine.ecs.components.animations2d.ComponentBoneAnimations2D;
-import com.fos.game.engine.ecs.components.animations2d.ComponentFrameAnimations2D;
+import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
 import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
@@ -56,8 +56,8 @@ public class Renderer implements EntitiesProcessor, Disposable {
         this.allCameras.clear();
         for (Entity entity : entities) {
             Component graphics = (Component) entity.components[ComponentType.GRAPHICS.ordinal()];
-            if (graphics instanceof ComponentFrameAnimations2D) {
-                ComponentFrameAnimations2D frameAnimation = (ComponentFrameAnimations2D) entity.components[ComponentType.GRAPHICS.ordinal()];
+            if (graphics instanceof ComponentAnimations2D) {
+                ComponentAnimations2D frameAnimation = (ComponentAnimations2D) entity.components[ComponentType.GRAPHICS.ordinal()];
                 final float delta = Gdx.graphics.getDeltaTime();
                 frameAnimation.advanceTime(delta);
             }

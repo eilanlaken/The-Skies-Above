@@ -5,6 +5,8 @@ import com.fos.game.engine.core.graphics.spine.Skeleton;
 import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 
+// TODO: incomplete for now.
+@Deprecated
 public class ComponentBoneAnimations2D implements Component {
 
     public Skeleton skeleton;

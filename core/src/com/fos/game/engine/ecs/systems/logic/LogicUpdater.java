@@ -14,18 +14,18 @@ public class LogicUpdater implements EntitiesProcessor {
     public void process(final Array<Entity> entities) {
         final float delta = Gdx.graphics.getDeltaTime();
         for (Entity entity : entities) {
-            ComponentLogic scripts = (ComponentLogic) entity.components[ComponentType.SCRIPTS.ordinal()];
-            if (!scripts.active) continue;
-            for (Logic logic : scripts) {
+            ComponentLogic componentLogic = (ComponentLogic) entity.components[ComponentType.LOGIC.ordinal()];
+            if (!componentLogic.active) continue;
+            for (Logic logic : componentLogic.logic) {
                 logic.update(delta);
             }
         }
     }
 
     public void startScripts(final Entity entity) {
-        ComponentLogic scripts = (ComponentLogic) entity.components[ComponentType.SCRIPTS.ordinal()];
-        if (scripts != null) {
-            for (Logic logic : scripts) logic.start();
+        ComponentLogic componentLogic = (ComponentLogic) entity.components[ComponentType.LOGIC.ordinal()];
+        if (componentLogic != null) {
+            for (Logic logic : componentLogic.logic) logic.start();
         }
     }
 

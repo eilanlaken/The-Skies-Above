@@ -9,7 +9,7 @@ import com.fos.game.engine.core.context.ApplicationContext;
 import com.fos.game.engine.core.context.Scene;
 import com.fos.game.engine.core.graphics.g2d.GraphicsUtils;
 import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
-import com.fos.game.engine.ecs.components.animations2d.ComponentFrameAnimations2D;
+import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
 import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
@@ -100,7 +100,7 @@ public class TestSceneB extends Scene {
             transformEntity1.angle += 2 * MathUtils.degreesToRadians;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.T)) {
-            ComponentFrameAnimations2D animation = (ComponentFrameAnimations2D) e1.components[ComponentType.GRAPHICS.ordinal()];
+            ComponentAnimations2D animation = (ComponentAnimations2D) e1.components[ComponentType.GRAPHICS.ordinal()];
             animation.tint.set(1,0,0, MathUtils.sin(tintAlpha));
         }
     }

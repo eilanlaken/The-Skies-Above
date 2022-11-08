@@ -21,7 +21,7 @@ import com.fos.game.engine.core.graphics.g2d.Physics2DDebugRenderer;
 import com.fos.game.engine.core.graphics.g2d.PolygonSpriteBatch;
 import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
 import com.fos.game.engine.core.graphics.spine.*;
-import com.fos.game.engine.ecs.components.animations2d.ComponentFrameAnimations2D;
+import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
 import com.fos.game.engine.ecs.components.physics2d.RigidBody2DData;
 import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
@@ -59,7 +59,7 @@ public class TestSceneA extends Scene {
 
     class EntityMini {
         ComponentTransform2D transform;
-        ComponentFrameAnimations2D animations;
+        ComponentAnimations2D animations;
         Body body;
         Joint joint;
     }
@@ -348,7 +348,7 @@ public class TestSceneA extends Scene {
     }
 
     /** culling for atlas regions */
-    private static boolean cull(ComponentTransform2D transform, ComponentFrameAnimations2D animation, final Camera camera) {
+    private static boolean cull(ComponentTransform2D transform, ComponentAnimations2D animation, final Camera camera) {
         TextureAtlas.AtlasRegion atlasRegion = animation.getTextureRegion();
         final float width = atlasRegion.getRegionWidth() * transform.scaleX;
         final float height = atlasRegion.getRegionHeight() * transform.scaleY;

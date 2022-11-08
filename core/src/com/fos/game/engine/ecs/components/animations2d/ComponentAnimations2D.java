@@ -11,7 +11,7 @@ import com.fos.game.engine.core.files.assets.GameAssetManager;
 
 import java.util.HashMap;
 
-public class ComponentFrameAnimations2D implements Component {
+public class ComponentAnimations2D implements Component {
 
     public FrameAnimations2DData data;
     public HashMap<String, Animation<TextureAtlas.AtlasRegion>> animations;
@@ -22,7 +22,7 @@ public class ComponentFrameAnimations2D implements Component {
     public Color tint;
     public boolean active = true;
 
-    protected ComponentFrameAnimations2D(GameAssetManager assetManager, FrameAnimations2DData data) {
+    protected ComponentAnimations2D(GameAssetManager assetManager, FrameAnimations2DData data) {
         this.data = data;
         this.size = data.size;
         this.pixelsPerUnit = data.pixelsPerUnit;
@@ -41,7 +41,7 @@ public class ComponentFrameAnimations2D implements Component {
 
     // TODO: remove
     @Deprecated
-    protected ComponentFrameAnimations2D() {
+    protected ComponentAnimations2D() {
 
     }
 

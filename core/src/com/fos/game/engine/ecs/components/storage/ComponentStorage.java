@@ -9,4 +9,5 @@ public class ComponentStorage implements Component {
     public ComponentType getComponentType() {
         return ComponentType.STORAGE;
     }
+
 }

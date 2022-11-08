@@ -4,16 +4,19 @@ import com.badlogic.gdx.utils.Array;
 import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 
-public class ComponentLogic extends Array<Logic> implements Component {
+// TODO: change to get rid of the extends.
+public class ComponentLogic implements Component {
 
+    public Array<Logic> logic;
     public boolean active = true;
 
-    public ComponentLogic(Logic... logics) {
-        addAll(logics);
+    public ComponentLogic(Logic... logic) {
+        this.logic = new Array<>();
+        this.logic.addAll(logic);
     }
 
     @Override
     public final ComponentType getComponentType() {
-        return ComponentType.SCRIPTS;
+        return ComponentType.LOGIC;
     }
 }

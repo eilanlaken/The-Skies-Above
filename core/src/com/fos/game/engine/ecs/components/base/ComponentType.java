@@ -6,7 +6,7 @@ public enum ComponentType {
     PHYSICS_2D_BODY,
     PHYSICS_2D_JOINT,
     PHYSICS_3D_BODY,
-    SCRIPTS,
+    LOGIC,
     GRAPHICS,
     AUDIO,
     SIGNAL_BOX,
