@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.bullet.dynamics.btDynamicsWorld;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.fos.game.engine.ecs.entities.Entity;
+import com.fos.game.engine.ecs.entities.GameObject;
 import com.fos.game.engine.ecs.systems.audio.AudioPlayer;
 import com.fos.game.engine.ecs.systems.physics2d.Physics2D;
 import com.fos.game.engine.ecs.systems.physics3d.Physics3D;
@@ -30,12 +31,7 @@ public class EntityContainer implements Disposable {
     public AudioPlayer audioPlayer = new AudioPlayer();
     public Physics2D physics2D = new Physics2D();
     public Physics3D physics3D = new Physics3D();
-
-    // TODO: test new renderer.
-    //public Renderer renderer = new Renderer();
     public Renderer renderer = new Renderer();
-    //public Renderer2D_test renderer2D_test = new Renderer2D_test();
-
     public LogicUpdater logicUpdater = new LogicUpdater();
     public SignalRouter signalRouter = new SignalRouter();
 
@@ -44,14 +40,18 @@ public class EntityContainer implements Disposable {
         this.systemEntitiesMap.put(audioPlayer, new Array<Entity>());
         this.systemEntitiesMap.put(physics2D, new Array<Entity>());
         this.systemEntitiesMap.put(physics3D, new Array<Entity>());
-        // TODO: remove old renderer.
-        //this.systemEntitiesMap.put(renderer, new Array<Entity>());
         this.systemEntitiesMap.put(renderer, new Array<Entity>());
-        //this.systemEntitiesMap.put(renderer2D_test, new Array<Entity>());
         this.systemEntitiesMap.put(logicUpdater, new Array<Entity>());
         this.systemEntitiesMap.put(signalRouter, new Array<Entity>());
     }
 
+    public void addGameObject(final GameObject gameObject) {
+        for (final Entity entity : gameObject.entities) addEntity(entity);
+    }
+
+    public void removeGameObject(final GameObject gameObject) {
+        for (final Entity entity : gameObject.entities) removeEntity(entity);
+    }
 
     public void addEntity(final Entity entity) {
         this.toAdd.add(entity);
