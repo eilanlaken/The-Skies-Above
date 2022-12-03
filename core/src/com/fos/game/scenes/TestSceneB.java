@@ -108,15 +108,13 @@ public class TestSceneB extends Scene {
     @Override
     public void resize(int width, int height) {
         ComponentCamera camera1 = (ComponentCamera) eCamera1.components[ComponentType.GRAPHICS.ordinal()];
-        camera1.buildFrameBuffer();
-        camera1.lens.viewportWidth = camera1.viewWorldWidth;
-        camera1.lens.viewportHeight = camera1.viewWorldWidth * (float) height / width;
+        camera1.lens.viewportHeight = VIRTUAL_HEIGHT;
+        camera1.lens.viewportWidth = VIRTUAL_HEIGHT * width / (float) height;
         camera1.lens.update();
 
-        ComponentCamera camera2 = (ComponentCamera) eCamera1.components[ComponentType.GRAPHICS.ordinal()];
-        camera2.buildFrameBuffer();
-        camera2.lens.viewportWidth = camera2.viewWorldWidth;
-        camera2.lens.viewportHeight = camera2.viewWorldWidth * (float) height / width;
+        ComponentCamera camera2 = (ComponentCamera) eCamera2.components[ComponentType.GRAPHICS.ordinal()];
+        camera2.lens.viewportHeight = VIRTUAL_HEIGHT;
+        camera2.lens.viewportWidth = VIRTUAL_HEIGHT * width / (float) height;
         camera2.lens.update();
     }
 
