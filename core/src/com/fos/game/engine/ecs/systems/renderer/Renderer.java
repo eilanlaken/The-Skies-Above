@@ -113,7 +113,7 @@ public class Renderer implements EntitiesProcessor, Disposable {
             spriteBatch.begin(); // TODO: <- apply post processing effect
             TextureRegion sceneRegion = new TextureRegion(camera.frameBuffer.getTextureAttachments().get(0));
             sceneRegion.flip(false, true);
-            spriteBatch.draw(sceneRegion, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            spriteBatch.draw(sceneRegion, 0, 0);
             spriteBatch.end();
         }
         spriteBatch.setShader(null);
