@@ -23,7 +23,7 @@ public class DesktopLauncher {
 		config.backgroundFPS = 60;
 		config.foregroundFPS = 60;
 		//config.fullscreen = true;
-		//config.useGL30 = true; //TODO: needed for multiple attachments of framebuffer objects.
+		config.useGL30 = true; //TODO: needed for multiple attachments of framebuffer objects.
 		//config.vSyncEnabled = true; TODO
 		//config.addIcon(); TODO
 		new LwjglApplication(new ApplicationContext(), config);
