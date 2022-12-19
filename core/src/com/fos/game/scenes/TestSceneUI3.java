@@ -2,6 +2,7 @@ package com.fos.game.scenes;
 
 import com.fos.game.engine.core.context.ApplicationContext;
 import com.fos.game.engine.core.context.Scene;
+import com.kotcrab.vis.ui.VisUI;
 
 public class TestSceneUI3 extends Scene {
 
@@ -11,7 +12,7 @@ public class TestSceneUI3 extends Scene {
 
     @Override
     public void show() {
-
+        VisUI.load();
     }
 
     @Override
@@ -41,6 +42,6 @@ public class TestSceneUI3 extends Scene {
 
     @Override
     public void dispose() {
-
+        VisUI.dispose();
     }
 }

@@ -36,7 +36,7 @@ public class LoadingScene extends Scene {
         while (!doneLoading) {
             if (assetManager.update()) {
                 doneLoading = true;
-                context.playScene(new TestSceneUI(context));
+                context.playScene(new TestSceneUI3(context));
             }
         }
     }
