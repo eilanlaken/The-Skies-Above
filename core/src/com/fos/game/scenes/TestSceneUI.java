@@ -50,7 +50,8 @@ public class TestSceneUI extends Scene {
 
         textField = new TextField("txt", skin);
 
-        label = new Label("abcdefg", skin);
+        label = new Label("label text", skin);
+        label.setWidth(5);
 
 
         slider = new Slider(0,100,1,true, skin);
