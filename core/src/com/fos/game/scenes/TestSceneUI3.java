@@ -8,6 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.fos.game.engine.core.context.ApplicationContext;
 import com.fos.game.engine.core.context.Scene;
+import com.fos.game.engine.core.graphics.ui.text.base.TypingLabel;
+import com.fos.game.engine.core.graphics.ui.text.effects.BlinkEffect;
 import com.kotcrab.vis.ui.VisUI;
 import com.kotcrab.vis.ui.widget.*;
 
@@ -24,7 +26,7 @@ public class TestSceneUI3 extends Scene {
     public void show() {
         VisUI.load();
         Gdx.input.setInputProcessor(stage);
-        VisTextArea textArea = new VisTextArea("this is a text area");
+        VisTextArea textArea = new VisTextArea("this is a com.fos.game.engine.core.graphics.ui.text area");
         textArea.setX(10);
         textArea.setY(10);
         textArea.setWidth(200);
@@ -54,8 +56,9 @@ public class TestSceneUI3 extends Scene {
         //table.row();
         //table.add(button);
 
-        window = new VisWindow("window title");
+        BlinkEffect x;
 
+        window = new VisWindow("window title");
         window.setX(300);
         window.setY(300);
         window.setWidth(300);
@@ -69,6 +72,13 @@ public class TestSceneUI3 extends Scene {
         //stage.addActor(textArea);
         stage.addActor(window);
         stage.addActor(list);
+
+        String text = "[GREEN]Hello,{WAIT} world!"
+                + "[ORANGE]{SLOWER} Did you know orange is my favorite color?";
+        TypingLabel label = new TypingLabel(text, VisUI.getSkin());
+        label.setX(700);
+        label.setY(700);
+        stage.addActor(label);
     }
 
     @Override

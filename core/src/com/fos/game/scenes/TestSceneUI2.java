@@ -56,7 +56,7 @@ public class TestSceneUI2 extends Scene {
         Button imgButton = new Button(new Image(image), skin);
         Button imgToggleButton = new Button(new Image(image), skin, "toggle");
 
-        Label myLabel = new Label("this is some text.", skin);
+        Label myLabel = new Label("this is some com.fos.game.engine.core.graphics.ui.text.", skin);
         myLabel.setWrap(true);
 
         Table t = new Table();
@@ -82,7 +82,7 @@ public class TestSceneUI2 extends Scene {
                 System.out.println(selectBox.getSelected());
             }
         });
-        selectBox.setItems("Android1", "Windows1 long text in item", "Linux1", "OSX1", "Android2", "Windows2", "Linux2", "OSX2",
+        selectBox.setItems("Android1", "Windows1 long com.fos.game.engine.core.graphics.ui.text in item", "Linux1", "OSX1", "Android2", "Windows2", "Linux2", "OSX2",
                 "Android3", "Windows3", "Linux3", "OSX3", "Android4", "Windows4", "Linux4", "OSX4", "Android5", "Windows5", "Linux5",
                 "OSX5", "Android6", "Windows6", "Linux6", "OSX6", "Android7", "Windows7", "Linux7", "OSX7");
         selectBox.setSelected("Linux6");
@@ -163,7 +163,7 @@ public class TestSceneUI2 extends Scene {
 //                    protected void result (Object object) {
 //                        System.out.println("Chosen: " + object);
 //                    }
-//                }.text("Are you enjoying this demo?").button("Yes", true).button("No", false).key(Keys.ENTER, true)
+//                }.com.fos.game.engine.core.graphics.ui.text("Are you enjoying this demo?").button("Yes", true).button("No", false).key(Keys.ENTER, true)
 //                        .key(Input.Keys.ESCAPE, false).show(stage);
 //            }
 //        });
