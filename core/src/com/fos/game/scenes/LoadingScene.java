@@ -3,6 +3,8 @@ package com.fos.game.scenes;
 import com.fos.game.engine.core.context.ApplicationContext;
 import com.fos.game.engine.core.context.Scene;
 import com.fos.game.engine.core.files.assets.GameAssetManager;
+import com.fos.game.scenes.tests.TestSceneUI;
+import com.fos.game.scenes.tests.TestSceneUI3;
 
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package com.fos.game.scenes;
+package com.fos.game.scenes.tests;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;

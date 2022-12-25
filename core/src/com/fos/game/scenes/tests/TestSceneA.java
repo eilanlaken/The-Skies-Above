@@ -1,4 +1,4 @@
-package com.fos.game.scenes;
+package com.fos.game.scenes.tests;
 
 import box2dLight.PointLight;
 import box2dLight.RayHandler;
