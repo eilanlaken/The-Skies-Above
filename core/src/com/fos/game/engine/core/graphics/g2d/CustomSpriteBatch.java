@@ -1,11 +1,13 @@
 package com.fos.game.engine.core.graphics.g2d;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.MathUtils;
 
-public class SpriteBatch extends com.badlogic.gdx.graphics.g2d.SpriteBatch {
+public class CustomSpriteBatch extends com.badlogic.gdx.graphics.g2d.SpriteBatch {
 
-    public SpriteBatch() {
+    public CustomSpriteBatch() {
         super(1000);
     }
 

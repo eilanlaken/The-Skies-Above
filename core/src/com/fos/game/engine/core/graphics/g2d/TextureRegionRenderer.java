@@ -73,7 +73,7 @@ public class TextureRegionRenderer implements Disposable {
     }
 
     public void begin(final PostProcessingEffect postProcessingEffect) {
-        if (drawing) throw new IllegalStateException("SpriteBatch.end must be called before begin.");
+        if (drawing) throw new IllegalStateException("CustomSpriteBatch.end must be called before begin.");
         renderCalls = 0;
 
         Gdx.gl.glDepthMask(false);
@@ -91,7 +91,7 @@ public class TextureRegionRenderer implements Disposable {
     }
 
     public void draw(TextureRegion region, float x, float y, float width, float height) {
-        if (!drawing) throw new IllegalStateException("SpriteBatch.begin must be called before draw.");
+        if (!drawing) throw new IllegalStateException("CustomSpriteBatch.begin must be called before draw.");
 
         float[] vertices = this.vertices;
 

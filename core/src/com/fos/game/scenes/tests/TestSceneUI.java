@@ -9,14 +9,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.fos.game.engine.core.context.ApplicationContext;
 import com.fos.game.engine.core.context.Scene;
-import com.fos.game.engine.core.graphics.g2d.SpriteBatch;
+import com.fos.game.engine.core.graphics.g2d.CustomSpriteBatch;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class TestSceneUI extends Scene {
 
-    SpriteBatch batch;
+    CustomSpriteBatch batch;
     Stage stage;
 
     private Skin skin;
@@ -32,7 +32,7 @@ public class TestSceneUI extends Scene {
 
     @Override
     public void show() {
-        batch = new SpriteBatch();
+        batch = new CustomSpriteBatch();
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         skin = context.assetManager.get("ui/uiskin.json", Skin.class);
         stage = new Stage();

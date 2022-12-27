@@ -11,6 +11,7 @@ import com.fos.game.engine.core.context.ApplicationContext;
 import com.fos.game.engine.core.context.Scene;
 import com.fos.game.engine.core.graphics.g2d.GraphicsUtils;
 import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
+import com.fos.game.engine.core.graphics.shaders.postprocessing.Example_PostProcessingEffectSetColor;
 import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
@@ -81,6 +82,8 @@ public class TestSceneB extends Scene {
         container.addEntity(e2);
         container.addEntity(eCamera1);
         container.addEntity(eCamera2);
+
+        Example_PostProcessingEffectSetColor postProcessingEffect = new Example_PostProcessingEffectSetColor();
     }
 
     @Override
