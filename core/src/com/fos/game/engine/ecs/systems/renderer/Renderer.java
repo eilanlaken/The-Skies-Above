@@ -12,8 +12,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
+import com.fos.game.engine.core.graphics.g2d.CustomSpriteBatch;
 import com.fos.game.engine.core.graphics.g2d.RenderTarget;
-import com.fos.game.engine.core.graphics.g2d.SpriteBatch;
 import com.fos.game.engine.core.graphics.spine.AnimationState;
 import com.fos.game.engine.core.graphics.spine.Skeleton;
 import com.fos.game.engine.ecs.components.animations2d.ComponentBoneAnimations2D;
@@ -35,7 +35,7 @@ import java.util.Map;
  */
 public class Renderer implements EntitiesProcessor, Disposable {
 
-    private SpriteBatch spriteBatch;
+    private CustomSpriteBatch customSpriteBatch;
     private Renderer2D renderer2D;
     private Renderer3D renderer3D;
     public boolean debugMode;
@@ -44,7 +44,7 @@ public class Renderer implements EntitiesProcessor, Disposable {
     private Array<ComponentCamera> allCameras;
 
     public Renderer() {
-        this.spriteBatch = new SpriteBatch();
+        this.customSpriteBatch = new CustomSpriteBatch();
         this.renderer2D = new Renderer2D();
         this.renderer3D = new Renderer3D();
         this.debugMode = Config.DEFAULT.debugMode;
@@ -82,6 +82,10 @@ public class Renderer implements EntitiesProcessor, Disposable {
             else if (graphics instanceof ComponentCamera) {
                 final ComponentTransform2D transform = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM.ordinal()];
                 final ComponentCamera camera = (ComponentCamera) entity.components[ComponentType.GRAPHICS.ordinal()];
+                if (camera.postProcessingEffect != null) {
+                    camera.postProcessingEffect.updateUniform("u_texture", 0);
+                    camera.postProcessingEffect.updateUniform("u_projTrans", camera.lens.combined);
+                }
                 RendererUtils.applyTransform(transform, camera);
                 allCameras.add(camera);
             }
@@ -108,15 +112,14 @@ public class Renderer implements EntitiesProcessor, Disposable {
         if (frameBuffer != null) frameBuffer.begin();
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+        customSpriteBatch.setShader(null); // <- TODO: implement full screen effects
+        customSpriteBatch.begin();
         for (ComponentCamera camera : renderTargetCameras) {
-            spriteBatch.setShader(camera.postProcessingEffect); // TODO: <- replace with texture region batch
-            spriteBatch.begin(); // TODO: <- apply post processing effect
             TextureRegion sceneRegion = new TextureRegion(camera.frameBuffer.getTextureAttachments().get(0));
             sceneRegion.flip(false, true);
-            spriteBatch.draw(sceneRegion, 0, 0);
-            spriteBatch.end();
+            customSpriteBatch.draw(sceneRegion, 0, 0);
         }
-        spriteBatch.setShader(null);
+        customSpriteBatch.end();
         if (frameBuffer != null) frameBuffer.end();
     }
 
@@ -132,7 +135,7 @@ public class Renderer implements EntitiesProcessor, Disposable {
     public void dispose() {
         this.renderer2D.dispose();
         this.renderer3D.dispose();
-        this.spriteBatch.dispose();
+        this.customSpriteBatch.dispose();
     }
 
     public void config(final Config config) {

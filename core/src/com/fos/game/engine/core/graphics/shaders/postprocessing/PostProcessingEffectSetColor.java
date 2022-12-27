@@ -19,15 +19,16 @@ public class PostProcessingEffectSetColor extends PostProcessingEffect {
             + "#else\n" //
             + "#define LOWP \n" //
             + "#endif\n" //
+            + "uniform sampler2D u_texture;\n" //
             + "uniform vec3 u_color;\n" //
             + "\n" //
             + "void main()\n"//
             + "{\n" //
-            + "  gl_FragColor = vec4(color, 1.0);\n" //
+            + "  gl_FragColor = texture2D(u_texture, vec2(0,0)) + vec4(u_color, 1.0);\n" //
             + "}";
 
 
-    public PostProcessingEffectSetColor(Camera camera, Color color) {
+    public PostProcessingEffectSetColor() {
         super(vertex, fragment);
     }
 

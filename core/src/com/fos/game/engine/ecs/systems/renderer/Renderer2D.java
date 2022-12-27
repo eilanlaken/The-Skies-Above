@@ -52,6 +52,7 @@ public class Renderer2D implements Disposable {
         camera.frameBuffer.begin();
         Gdx.gl.glClearColor(0,0,0,0); // TODO: get value from camera
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT); // TODO: get value from camera
+        polygonSpriteBatch.setShader(camera.postProcessingEffect);
         polygonSpriteBatch.begin();
         polygonSpriteBatch.setColor(1,1,1,1);
         polygonSpriteBatch.setProjectionMatrix(camera.lens.combined);
