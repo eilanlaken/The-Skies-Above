@@ -1,20 +1,19 @@
-package com.fos.game.scenes;
+package com.fos.game.starcontract.screens;
 
 import com.fos.game.engine.core.context.ApplicationContext;
-import com.fos.game.engine.core.context.Scene;
 import com.fos.game.engine.core.files.assets.GameAssetManager;
-import com.fos.game.scenes.tests.TestSceneB;
 import com.fos.game.scenes.tests.TestSceneUI;
 import com.fos.game.scenes.tests.TestSceneUI3;
+import com.fos.game.starcontract.context.GameContext;
 
 import java.util.Map;
 
-public class LoadingScene extends Scene {
+public class LoadingScreen extends GameScreen {
 
     private final GameAssetManager assetManager;
     private boolean doneLoading = false;
 
-    public LoadingScene(final ApplicationContext context) {
+    public LoadingScreen(final GameContext context) {
         super(context);
         this.assetManager = context.assetManager;
     }
@@ -35,11 +34,11 @@ public class LoadingScene extends Scene {
     }
 
     @Override
-    public void update(float delta) {
+    public void frame(float delta) {
         while (!doneLoading) {
             if (assetManager.update()) {
                 doneLoading = true;
-                context.playScene(new TestSceneB(context));
+                context.setScreen(new MainMenuScreen(context));
             }
         }
     }
@@ -60,7 +59,7 @@ public class LoadingScene extends Scene {
     }
 
     private void queueAssets() {
-        Map<String, Class> assetsNameTypeMap = TestSceneB.getRequiredAssetsNameTypeMap();
+        Map<String, Class> assetsNameTypeMap = TestSceneUI.getRequiredAssetsNameTypeMap();
         for (Map.Entry<String, Class> entry : assetsNameTypeMap.entrySet()) {
             this.assetManager.load(entry.getKey(), entry.getValue());
         }

@@ -27,7 +27,7 @@ public class Physics2D implements EntitiesProcessor, Disposable {
     private final Array<Entity> joints = new Array<>();
 
     public Physics2D() {
-        this.world = new World(new Vector2(), true);
+        this.world = new World(new Vector2(0,0), true);
         this.rayHandler = new RayHandler(this.world);
     }
 

@@ -5,6 +5,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.fos.game.engine.core.context.ApplicationContext;
 import com.fos.game.engine.core.context.Scene;
 import com.fos.game.engine.core.graphics.g2d.GraphicsUtils;
@@ -12,6 +14,7 @@ import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
 import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
+import com.fos.game.engine.ecs.components.physics2d.RigidBody2DData;
 import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.base.EntityContainer;
@@ -63,7 +66,9 @@ public class TestSceneB extends Scene {
         e1 = new Entity(Categories.GAME_OBJECT_1);
         e1.attachComponents(
                 context.factoryTransform.create2d(0, 0, 0, 1, 1, 0),
-                context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "a", 1,1f, pixelsPerUnit)
+                context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "a", 1,1f, pixelsPerUnit),
+                context.factoryRigidBody2D.create(new RigidBody2DData(BodyDef.BodyType.DynamicBody, RigidBody2DData.Shape.RECTANGLE,
+                        1, 1, new Filter(), 1,1,1, false))
         );
 
         e2 = new Entity(Categories.GAME_OBJECT_2);
