@@ -2,7 +2,6 @@ package com.fos.game.scenes.tests;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
@@ -12,9 +11,7 @@ import com.fos.game.engine.core.context.ApplicationContext;
 import com.fos.game.engine.core.context.Scene;
 import com.fos.game.engine.core.graphics.g2d.GraphicsUtils;
 import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
-import com.fos.game.engine.core.graphics.shaders.base.DefaultTextureRegionBatchShaderProgram;
-import com.fos.game.engine.core.graphics.shaders.postprocessing.PostProcessingEffect;
-import com.fos.game.engine.core.graphics.shaders.postprocessing.PostProcessingEffectSetColor;
+import com.fos.game.engine.core.graphics.shaders.postprocessing.Example_PostProcessingEffectSetColor;
 import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
@@ -86,7 +83,7 @@ public class TestSceneB extends Scene {
         container.addEntity(eCamera1);
         container.addEntity(eCamera2);
 
-        PostProcessingEffectSetColor postProcessingEffect = new PostProcessingEffectSetColor();
+        Example_PostProcessingEffectSetColor postProcessingEffect = new Example_PostProcessingEffectSetColor();
     }
 
     @Override

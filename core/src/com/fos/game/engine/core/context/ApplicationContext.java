@@ -7,6 +7,7 @@ import com.fos.game.engine.core.files.serialization.JsonConverter;
 import com.fos.game.engine.ecs.components.animations2d.FactoryFrameAnimations2D;
 import com.fos.game.engine.ecs.components.audio.FactoryAudio;
 import com.fos.game.engine.ecs.components.camera.FactoryCamera;
+import com.fos.game.engine.ecs.components.effects.FactoryEffects;
 import com.fos.game.engine.ecs.components.lights2d.FactoryLight2D;
 import com.fos.game.engine.ecs.components.lights3d.FactoryLight3D;
 import com.fos.game.engine.ecs.components.physics2d.FactoryRigidBody2D;
@@ -26,6 +27,7 @@ public class ApplicationContext implements ApplicationListener {
     public JsonConverter jsonConverter;
     // Component Factory(s)
     public FactoryFrameAnimations2D factoryFrameAnimations2D;
+    public FactoryEffects factoryEffects;
     public FactoryAudio factoryAudio;
     public FactoryCamera factoryCamera;
     public FactoryLight2D factoryLight2D;
@@ -42,6 +44,7 @@ public class ApplicationContext implements ApplicationListener {
         this.assetManager = new GameAssetManager();
         this.jsonConverter = new JsonConverter();
         this.factoryFrameAnimations2D = new FactoryFrameAnimations2D(this.assetManager, this.jsonConverter);
+        this.factoryEffects = new FactoryEffects(this.assetManager, this.jsonConverter);
         this.factoryAudio = new FactoryAudio(this.assetManager, this.jsonConverter);
         this.factoryCamera = new FactoryCamera(this.assetManager, this.jsonConverter);
         this.factoryLight2D = new FactoryLight2D(this.assetManager, this.jsonConverter);
