@@ -164,7 +164,7 @@ public class TestSceneUI4 extends Scene {
     @Override
     public void update(float delta) {
         handleInput();
-        ScreenUtils.clear(1f, 1f, 1f, 1);
+        ScreenUtils.clear(1f, 1f, 1f, 0);
         // make window un draggable
         // window.setX(300);
         // window.setY(300);
