@@ -6,6 +6,7 @@ import com.fos.game.engine.core.files.assets.GameAssetManager;
 import com.fos.game.scenes.tests.TestSceneB;
 import com.fos.game.scenes.tests.TestSceneUI;
 import com.fos.game.scenes.tests.TestSceneUI3;
+import com.fos.game.scenes.tests.TestSceneUI4;
 
 import java.util.Map;
 
@@ -39,7 +40,7 @@ public class LoadingScene extends Scene {
         while (!doneLoading) {
             if (assetManager.update()) {
                 doneLoading = true;
-                context.playScene(new TestSceneB(context));
+                context.playScene(new TestSceneUI4(context));
             }
         }
     }
