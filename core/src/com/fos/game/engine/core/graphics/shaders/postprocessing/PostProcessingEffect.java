@@ -26,6 +26,4 @@ public abstract class PostProcessingEffect extends Shader {
         }
     }
 
-    public abstract void apply();
-
 }

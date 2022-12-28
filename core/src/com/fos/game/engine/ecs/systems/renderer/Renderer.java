@@ -114,9 +114,8 @@ public class Renderer implements EntitiesProcessor, Disposable {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         for (ComponentCamera camera : renderTargetCameras) {
-            // TODO-after: post processing should be applied in this section.
-            customSpriteBatch.begin(); 
-            customSpriteBatch.setShader(null);
+            customSpriteBatch.begin();
+            customSpriteBatch.setShader(null); // TODO-after: post processing should be applied in this section.
             TextureRegion sceneRegion = new TextureRegion(camera.frameBuffer.getTextureAttachments().get(0));
             sceneRegion.flip(false, true);
             customSpriteBatch.draw(sceneRegion, 0, 0);

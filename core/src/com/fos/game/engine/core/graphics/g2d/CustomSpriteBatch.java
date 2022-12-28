@@ -1,15 +1,9 @@
 package com.fos.game.engine.core.graphics.g2d;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.MathUtils;
 
 public class CustomSpriteBatch extends com.badlogic.gdx.graphics.g2d.SpriteBatch {
-
-    public CustomSpriteBatch() {
-        super(1000);
-    }
 
     public void draw(final TextureAtlas.AtlasRegion region, final float x, final float y, final float angleRad, final float scaleX, final float scaleY, final float size, final int pixelsPerUnit) {
         final float rotation = angleRad * MathUtils.radiansToDegrees;
