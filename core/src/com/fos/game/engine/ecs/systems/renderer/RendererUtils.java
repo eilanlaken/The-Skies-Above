@@ -10,7 +10,6 @@ import com.fos.game.engine.core.graphics.spine.Skeleton;
 import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
-import com.fos.game.engine.ecs.components.effects.ComponentFullScreenEffect;
 import com.fos.game.engine.ecs.components.lights2d.ComponentLight2D;
 import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
@@ -43,13 +42,6 @@ public class RendererUtils {
         @Override
         public int compare(ComponentCamera c1, ComponentCamera c2) {
             return Float.compare(c1.depth, c2.depth);
-        }
-    };
-
-    protected static final Comparator<ComponentFullScreenEffect> fullScreenEffectsComparator = new Comparator<ComponentFullScreenEffect>() {
-        @Override
-        public int compare(ComponentFullScreenEffect o1, ComponentFullScreenEffect o2) {
-            return Integer.compare(o1.priority, o2.priority);
         }
     };
 
