@@ -67,7 +67,7 @@ public class TestSceneB extends Scene {
         e1 = new Entity(Categories.GAME_OBJECT_1);
         e1.attachComponents(
                 context.factoryTransform.create2d(0, 0, 0, 1, 1, 0),
-                context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "a", 1,1f, pixelsPerUnit),
+                context.factoryFrameAnimations2D.create("atlases/striders/caterpillarBody.atlas", "caterpillarBody", 1,1f, pixelsPerUnit),
                 context.factoryRigidBody2D.create(new RigidBody2DData(BodyDef.BodyType.DynamicBody, RigidBody2DData.Shape.RECTANGLE,
                         1, 1, new Filter(), 1,1,1, false))
         );
@@ -149,6 +149,7 @@ public class TestSceneB extends Scene {
     // TODO: add spine
     public static Map<String, Class> getRequiredAssetsNameTypeMap() {
         HashMap<String, Class> assetNameClassMap = new HashMap<>();
+        assetNameClassMap.put("atlases/striders/caterpillarBody.atlas", SpriteSheet.class);
         assetNameClassMap.put("atlases/test/testSpriteSheet3.atlas", SpriteSheet.class);
         assetNameClassMap.put("atlases/test/testSpriteSheet4.atlas", SpriteSheet.class);
         return assetNameClassMap;
