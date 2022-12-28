@@ -35,7 +35,7 @@ import java.util.Map;
  */
 public class Renderer implements EntitiesProcessor, Disposable {
 
-    private CustomSpriteBatch customSpriteBatch;
+    private CustomSpriteBatch customSpriteBatch; // TODO: change CustomSpriteShader to ShadedSpriteShader to handle post processing
     private Renderer2D renderer2D;
     private Renderer3D renderer3D;
     public boolean debugMode;
@@ -110,10 +110,10 @@ public class Renderer implements EntitiesProcessor, Disposable {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         for (ComponentCamera camera : renderTargetCameras) {
-            customSpriteBatch.begin();
-            customSpriteBatch.setShader(null); // TODO-after: post processing should be applied in this section.
             TextureRegion sceneRegion = new TextureRegion(camera.frameBuffer.getTextureAttachments().get(0));
             sceneRegion.flip(false, true);
+            customSpriteBatch.begin();
+            customSpriteBatch.setShader(null); // TODO-after: post processing should be applied in this section.
             customSpriteBatch.draw(sceneRegion, 0, 0);
             customSpriteBatch.end();
         }
