@@ -82,10 +82,6 @@ public class Renderer implements EntitiesProcessor, Disposable {
             else if (graphics instanceof ComponentCamera) {
                 final ComponentTransform2D transform = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM.ordinal()];
                 final ComponentCamera camera = (ComponentCamera) entity.components[ComponentType.GRAPHICS.ordinal()];
-                if (camera.postProcessingEffect != null) {
-                    camera.postProcessingEffect.updateUniform("u_texture", 0);
-                    camera.postProcessingEffect.updateUniform("u_projTrans", camera.lens.combined);
-                }
                 RendererUtils.applyTransform(transform, camera);
                 allCameras.add(camera);
             }
