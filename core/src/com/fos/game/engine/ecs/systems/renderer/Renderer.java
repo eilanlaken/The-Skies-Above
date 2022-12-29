@@ -21,7 +21,6 @@ import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
 import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
-import com.fos.game.engine.ecs.components.effects.ComponentFullScreenEffect;
 import com.fos.game.engine.ecs.components.lights2d.ComponentLight2D;
 import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
@@ -36,14 +35,13 @@ import java.util.Map;
  */
 public class Renderer implements EntitiesProcessor, Disposable {
 
-    private CustomSpriteBatch customSpriteBatch;
+    private CustomSpriteBatch customSpriteBatch; // TODO: change CustomSpriteShader to ShadedSpriteShader to handle post processing
     private Renderer2D renderer2D;
     private Renderer3D renderer3D;
     public boolean debugMode;
 
     // state management
     private Array<ComponentCamera> allCameras;
-    private Array<ComponentFullScreenEffect> fullScreenEffects;
 
     public Renderer() {
         this.customSpriteBatch = new CustomSpriteBatch();
@@ -51,13 +49,11 @@ public class Renderer implements EntitiesProcessor, Disposable {
         this.renderer3D = new Renderer3D();
         this.debugMode = Config.DEFAULT.debugMode;
         this.allCameras = new Array<>();
-        this.fullScreenEffects = new Array<>();
     }
 
     @Override
     public void process(Array<Entity> entities) {
         this.allCameras.clear();
-        this.fullScreenEffects.clear();
         for (Entity entity : entities) {
             Component graphics = (Component) entity.components[ComponentType.GRAPHICS.ordinal()];
             if (graphics instanceof ComponentAnimations2D) {
@@ -86,16 +82,8 @@ public class Renderer implements EntitiesProcessor, Disposable {
             else if (graphics instanceof ComponentCamera) {
                 final ComponentTransform2D transform = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM.ordinal()];
                 final ComponentCamera camera = (ComponentCamera) entity.components[ComponentType.GRAPHICS.ordinal()];
-                if (camera.postProcessingEffect != null) {
-                    camera.postProcessingEffect.updateUniform("u_texture", 0);
-                    camera.postProcessingEffect.updateUniform("u_projTrans", camera.lens.combined);
-                }
                 RendererUtils.applyTransform(transform, camera);
                 allCameras.add(camera);
-            }
-            else if (graphics instanceof ComponentFullScreenEffect) {
-                final ComponentFullScreenEffect effect = (ComponentFullScreenEffect) entity.components[ComponentType.GRAPHICS.ordinal()];
-                fullScreenEffects.add(effect);
             }
         }
 
@@ -116,21 +104,19 @@ public class Renderer implements EntitiesProcessor, Disposable {
 
     protected void renderToTarget(final RenderTarget renderTarget, final Array<ComponentCamera> renderTargetCameras) {
         renderTargetCameras.sort(RendererUtils.camerasComparator);
-        fullScreenEffects.sort(RendererUtils.fullScreenEffectsComparator);
         final FrameBuffer frameBuffer = renderTarget == null ? null : renderTarget.targetFrameBuffer;
         if (frameBuffer != null) frameBuffer.begin();
         // rendering
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-        customSpriteBatch.setShader(null); // <- TODO: implement full screen effects
-        customSpriteBatch.begin(); // <- TODO: implement begin with shader. 
+        customSpriteBatch.begin();
         for (ComponentCamera camera : renderTargetCameras) {
             TextureRegion sceneRegion = new TextureRegion(camera.frameBuffer.getTextureAttachments().get(0));
             sceneRegion.flip(false, true);
+            customSpriteBatch.setShader(null); // TODO-after: post processing should be applied in this section.
             customSpriteBatch.draw(sceneRegion, 0, 0);
         }
         customSpriteBatch.end();
-
         if (frameBuffer != null) frameBuffer.end();
     }
 

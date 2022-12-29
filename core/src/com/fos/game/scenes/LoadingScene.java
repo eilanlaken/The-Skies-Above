@@ -40,7 +40,7 @@ public class LoadingScene extends Scene {
         while (!doneLoading) {
             if (assetManager.update()) {
                 doneLoading = true;
-                context.playScene(new TestSceneUI4(context));
+                context.playScene(new TestSceneB(context));
             }
         }
     }

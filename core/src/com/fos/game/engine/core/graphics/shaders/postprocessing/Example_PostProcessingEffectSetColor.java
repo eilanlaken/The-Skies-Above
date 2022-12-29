@@ -32,5 +32,4 @@ public class Example_PostProcessingEffectSetColor extends PostProcessingEffect {
         super(vertex, fragment);
     }
 
-
 }

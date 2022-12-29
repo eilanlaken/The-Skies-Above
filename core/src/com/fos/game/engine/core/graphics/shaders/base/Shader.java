@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Vector3;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Shader extends ShaderProgram {
+public class Shader extends ShaderProgram {
 
     // change back to private and protected.
     public HashMap<String, Integer> uniformLocations = new HashMap<>();
@@ -19,11 +19,8 @@ public abstract class Shader extends ShaderProgram {
     public Shader(final String vertex, final String fragment) {
         super(vertex, fragment);
         if (!isCompiled()) throw new IllegalArgumentException("Error compiling shader: " + getLog());
-        cacheUniformLocations();
-    }
-
-    private void cacheUniformLocations() {
         String[] uniforms = getUniforms();
+        // cache uniform locations
         for (final String uniform : uniforms) {
             System.out.println("name: " + uniform);
             int location = fetchUniformLocation(uniform, false);
@@ -35,7 +32,7 @@ public abstract class Shader extends ShaderProgram {
         currentUniforms.put(name, value);
     }
 
-    public final void loadUniformsToGPU() {
+    public final void bindUniformsToGPU() {
         for (Map.Entry<String, Object> entry : currentUniforms.entrySet()) {
             final String entryName = entry.getKey();
             final Object entryValue = entry.getValue();
