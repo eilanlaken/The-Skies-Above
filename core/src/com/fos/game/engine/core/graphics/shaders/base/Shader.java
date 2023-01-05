@@ -22,7 +22,6 @@ public class Shader extends ShaderProgram {
         String[] uniforms = getUniforms();
         // cache uniform locations
         for (final String uniform : uniforms) {
-            System.out.println("name: " + uniform);
             int location = fetchUniformLocation(uniform, false);
             uniformLocations.put(uniform, location);
         }

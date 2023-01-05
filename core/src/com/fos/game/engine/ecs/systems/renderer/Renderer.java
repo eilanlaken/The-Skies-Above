@@ -107,7 +107,7 @@ public class Renderer implements EntitiesProcessor, Disposable {
         final FrameBuffer frameBuffer = renderTarget == null ? null : renderTarget.targetFrameBuffer;
         if (frameBuffer != null) frameBuffer.begin();
         // rendering
-        Gdx.gl.glClearColor(0,0,0,1);
+        Gdx.gl.glClearColor(1,1,1,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         customSpriteBatch.begin();
         for (ComponentCamera camera : renderTargetCameras) {
