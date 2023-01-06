@@ -3,7 +3,6 @@ package com.fos.game.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.fos.game.engine.core.context.ApplicationContext;
-import com.fos.game.starcontract.context.GameContext;
 
 import java.awt.*;
 
@@ -28,7 +27,6 @@ public class DesktopLauncher {
 		//config.vSyncEnabled = true; TODO
 		//config.addIcon(); TODO
 		new LwjglApplication(new ApplicationContext(), config);
-		//new LwjglApplication(new GameContext(), config);
 	}
 
 }

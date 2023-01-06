@@ -23,7 +23,7 @@ import com.fos.game.engine.ecs.systems.base.EntityContainer;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TestSceneB extends Scene {
+public class TestSceneC extends Scene {
 
     enum Categories {
         GAME_OBJECT_1,
@@ -45,7 +45,7 @@ public class TestSceneB extends Scene {
     public final float VIRTUAL_HEIGHT = 20;
     private int pixelsPerUnit = 53*2;
 
-    public TestSceneB(final ApplicationContext context) {
+    public TestSceneC(final ApplicationContext context) {
         super(context);
     }
 
@@ -66,8 +66,8 @@ public class TestSceneB extends Scene {
 
         e1 = new Entity(Categories.GAME_OBJECT_1);
         e1.attachComponents(
-                context.factoryTransform.create2d(0, 6, 0, 3, 3, 0),
-                context.factoryFrameAnimations2D.create("atlases/striders/caterpillarBody.atlas", "caterpillarBody", 1,1f, pixelsPerUnit),
+                context.factoryTransform.create2d(0, 0, 0, 1, 1, 0),
+                context.factoryFrameAnimations2D.create("atlases/stations/station_14.atlas", "station", 1,1f, pixelsPerUnit),
                 context.factoryRigidBody2D.create(new RigidBody2DData(BodyDef.BodyType.DynamicBody, RigidBody2DData.Shape.RECTANGLE,
                         1, 1, new Filter(), 1,1,1, false))
         );
@@ -149,7 +149,7 @@ public class TestSceneB extends Scene {
     // TODO: add spine
     public static Map<String, Class> getRequiredAssetsNameTypeMap() {
         HashMap<String, Class> assetNameClassMap = new HashMap<>();
-        assetNameClassMap.put("atlases/striders/caterpillarBody.atlas", SpriteSheet.class);
+        assetNameClassMap.put("atlases/stations/station_14.atlas", SpriteSheet.class);
         assetNameClassMap.put("atlases/test/testSpriteSheet3.atlas", SpriteSheet.class);
         assetNameClassMap.put("atlases/test/testSpriteSheet4.atlas", SpriteSheet.class);
         return assetNameClassMap;

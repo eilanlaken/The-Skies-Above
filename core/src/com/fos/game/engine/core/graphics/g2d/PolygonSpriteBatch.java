@@ -7,10 +7,10 @@ public class PolygonSpriteBatch extends com.badlogic.gdx.graphics.g2d.PolygonSpr
 
     public void draw(final TextureAtlas.AtlasRegion region, final float x, final float y, final float angleRad, final float scaleX, final float scaleY, final float size, final int pixelsPerUnit) {
         final float rotation = angleRad * MathUtils.radiansToDegrees;
-        final float regionOriginalWidthHalf = region.originalWidth / 2f;
-        final float regionOriginalHeightHalf = region.originalHeight / 2f;
-        final float regionWidthHalf = region.getRegionWidth() / 2f;
-        final float regionHeightHalf = region.getRegionHeight() / 2f;
+        final float regionOriginalWidthHalf = region.originalWidth * 0.5f;
+        final float regionOriginalHeightHalf = region.originalHeight * 0.5f;
+        final float regionWidthHalf = region.getRegionWidth() * 0.5f;
+        final float regionHeightHalf = region.getRegionHeight() * 0.5f;
         final float scaleFactor = size / pixelsPerUnit;
         super.draw(	region,
 
