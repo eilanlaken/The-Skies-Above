@@ -8,9 +8,11 @@ import com.badlogic.gdx.utils.FloatArray;
 import com.fos.game.engine.core.graphics.g2d.RenderTarget;
 import com.fos.game.engine.core.graphics.spine.Skeleton;
 import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
+import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
 import com.fos.game.engine.ecs.components.lights2d.ComponentLight2D;
+import com.fos.game.engine.ecs.components.shape2d.ComponentShapes2D;
 import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 
@@ -29,6 +31,7 @@ public class RendererUtils {
     private static Vector2 bounds = new Vector2();
     private static FloatArray floatArray = new FloatArray();
 
+    // comparators
     protected static final Comparator<Entity> entitiesComparator = new Comparator<Entity>() {
         @Override
         public int compare(Entity e1, Entity e2) {
@@ -101,6 +104,8 @@ public class RendererUtils {
     }
 
     private static boolean cull(final Entity entity, final Camera camera) {
+        Object graphics = entity.components[ComponentType.GRAPHICS.ordinal()];
+        if (graphics instanceof ComponentShapes2D) return false;
         ComponentTransform2D transform = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM.ordinal()];
         ComponentAnimations2D animation = (ComponentAnimations2D) entity.components[ComponentType.GRAPHICS.ordinal()];
         TextureAtlas.AtlasRegion atlasRegion = animation.getTextureRegion();
