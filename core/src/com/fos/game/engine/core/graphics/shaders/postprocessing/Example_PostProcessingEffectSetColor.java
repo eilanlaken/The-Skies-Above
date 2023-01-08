@@ -1,8 +1,5 @@
 package com.fos.game.engine.core.graphics.shaders.postprocessing;
 
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Color;
-
 public class Example_PostProcessingEffectSetColor extends PostProcessingEffect {
 
     private static final String vertex = "attribute vec4 " + com.badlogic.gdx.graphics.glutils.ShaderProgram.POSITION_ATTRIBUTE + ";\n" //
@@ -24,7 +21,7 @@ public class Example_PostProcessingEffectSetColor extends PostProcessingEffect {
             + "\n" //
             + "void main()\n"//
             + "{\n" //
-            + "  gl_FragColor = texture2D(u_texture, vec2(0,0)) * 0 + vec4(u_color, 1.0);\n" //
+            + "  gl_FragColor = texture2D(u_texture, vec2(0,0)) * 0.01 + vec4(u_color, 1.0);\n" //
             + "}";
 
 

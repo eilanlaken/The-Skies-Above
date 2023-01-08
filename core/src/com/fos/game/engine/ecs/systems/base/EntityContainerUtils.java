@@ -21,7 +21,6 @@ public class EntityContainerUtils {
         for (final Entity entity : container.toAdd) {
             entity.container = container;
             container.entities.add(entity);
-            entity.localId = container.entities.size - 1;
             container.physics2D.addPhysics(entity);
             container.logicUpdater.startScripts(entity);
         }

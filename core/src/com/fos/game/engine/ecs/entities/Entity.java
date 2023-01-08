@@ -10,8 +10,6 @@ public class Entity implements Disposable {
 
     public EntityContainer container;
 
-    public int localId = -1; // effectively its index in the current entity container's entities array
-    public int globalId = -1; // a global unique identifier; Only persistent and "important" Entities has a globalId.
     public Object[] components;
     public int componentsBitMask;
     public int category;
@@ -63,7 +61,6 @@ public class Entity implements Disposable {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("e_:" + localId);
         return stringBuilder.toString();
     }
 

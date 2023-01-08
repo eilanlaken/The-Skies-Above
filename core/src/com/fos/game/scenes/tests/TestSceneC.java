@@ -100,7 +100,7 @@ public class TestSceneC extends Scene {
         container.addEntity(eCamera1);
         container.addEntity(eCamera2);
 
-        Example_PostProcessingEffectSetColor postProcessingEffect = new Example_PostProcessingEffectSetColor();
+        Example_PostProcessingEffectSetColor postProcessingEffect = new Example_PostProcessingEffectSetColor(); //TODO: fragment shader throws an error in some openGL drivers.
     }
 
     @Override

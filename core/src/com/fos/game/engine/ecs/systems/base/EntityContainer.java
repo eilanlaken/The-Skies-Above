@@ -22,9 +22,9 @@ import java.util.Map;
 public class EntityContainer implements Disposable {
 
     // container array
-    protected Array<Entity> entities = new Array<>();
-    protected Array<Entity> toAdd = new Array<>();
-    protected Array<Entity> toRemove = new Array<>();
+    protected Array<Entity> entities = new Array<>(false, 1000);
+    protected Array<Entity> toAdd = new Array<>(false, 100);
+    protected Array<Entity> toRemove = new Array<>(false, 100);
 
     // systems
     protected HashMap<EntitiesProcessor, Array<Entity>> systemEntitiesMap = new HashMap<>();
@@ -37,12 +37,12 @@ public class EntityContainer implements Disposable {
 
 
     public EntityContainer() {
-        this.systemEntitiesMap.put(audioPlayer, new Array<Entity>());
-        this.systemEntitiesMap.put(physics2D, new Array<Entity>());
-        this.systemEntitiesMap.put(physics3D, new Array<Entity>());
-        this.systemEntitiesMap.put(renderer, new Array<Entity>());
-        this.systemEntitiesMap.put(logicUpdater, new Array<Entity>());
-        this.systemEntitiesMap.put(signalRouter, new Array<Entity>());
+        this.systemEntitiesMap.put(audioPlayer, new Array<Entity>(false, 100));
+        this.systemEntitiesMap.put(physics2D, new Array<Entity>(false, 1000));
+        this.systemEntitiesMap.put(physics3D, new Array<Entity>(false, 1000));
+        this.systemEntitiesMap.put(renderer, new Array<Entity>(false, 1000));
+        this.systemEntitiesMap.put(logicUpdater, new Array<Entity>(false, 1000));
+        this.systemEntitiesMap.put(signalRouter, new Array<Entity>(false, 1000));
     }
 
     public void addGameObject(final GameObject gameObject) {
