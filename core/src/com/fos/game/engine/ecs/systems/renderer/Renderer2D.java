@@ -1,16 +1,14 @@
 package com.fos.game.engine.ecs.systems.renderer;
 
-import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.fos.game.engine.core.graphics.g2d.Physics2DDebugRenderer;
 import com.fos.game.engine.core.graphics.g2d.PolygonSpriteBatch;
+import com.fos.game.engine.core.graphics.g2d.ShapeBatch;
 import com.fos.game.engine.core.graphics.spine.SkeletonRenderer;
 import com.fos.game.engine.core.graphics.spine.SkeletonRendererDebug;
 import com.fos.game.engine.ecs.components.animations2d.ComponentBoneAnimations2D;
@@ -20,6 +18,7 @@ import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
 import com.fos.game.engine.ecs.components.physics2d.ComponentJoint2D;
 import com.fos.game.engine.ecs.components.physics2d.ComponentRigidBody2D;
+import com.fos.game.engine.ecs.components.shape2d.ComponentShapes2D;
 import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 
@@ -28,7 +27,8 @@ public class Renderer2D implements Disposable {
     private final PolygonSpriteBatch polygonSpriteBatch;
     private final SkeletonRenderer skeletonRenderer;
     private final SkeletonRendererDebug skeletonRendererDebug;
-    private final ShapeRenderer shapeRenderer;
+    private final ShapeBatch shapeBatch;
+    private final ShapeRenderer shapeRenderer; // TODO: replace with ShapeDrawer entirely
     private final Physics2DDebugRenderer physics2DDebugRenderer;
 
 
@@ -42,6 +42,7 @@ public class Renderer2D implements Disposable {
         this.skeletonRendererDebug.setMeshHull(false);
         this.shapeRenderer = new ShapeRenderer();
         this.physics2DDebugRenderer = new Physics2DDebugRenderer();
+        this.shapeBatch = new ShapeBatch(polygonSpriteBatch);
     }
 
     protected void renderToCameraInternalBuffer(final ComponentCamera camera, final Array<Entity> entities, boolean debugMode) {
@@ -51,10 +52,12 @@ public class Renderer2D implements Disposable {
         polygonSpriteBatch.begin();
         polygonSpriteBatch.setColor(1,1,1,1);
         polygonSpriteBatch.setProjectionMatrix(camera.lens.combined);
+        shapeBatch.update();
         for (Entity entity : entities) {
             ComponentTransform2D transform = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM.ordinal()];
             Component graphics = (Component) entity.components[ComponentType.GRAPHICS.ordinal()];
             if (graphics instanceof ComponentAnimations2D) renderFrameAnimation(transform, (ComponentAnimations2D) graphics);
+            if (graphics instanceof ComponentShapes2D) renderShape((ComponentShapes2D) graphics);
             if (graphics instanceof ComponentBoneAnimations2D) renderBoneAnimation((ComponentBoneAnimations2D) graphics);
         }
         polygonSpriteBatch.end();
@@ -82,6 +85,10 @@ public class Renderer2D implements Disposable {
 
     private void renderBoneAnimation(final ComponentBoneAnimations2D boneAnimation) {
         skeletonRenderer.draw(polygonSpriteBatch, boneAnimation.skeleton);
+    }
+
+    private void renderShape(final ComponentShapes2D shape2D) {
+        shape2D.draw(shapeBatch);
     }
 
 
