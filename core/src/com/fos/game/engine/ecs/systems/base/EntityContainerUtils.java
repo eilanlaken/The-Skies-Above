@@ -49,4 +49,24 @@ public class EntityContainerUtils {
         }
     }
 
+    protected static void addEntity(EntityContainer container, Entity entity) {
+        container.toAdd.add(entity);
+        if (entity.children == null) return;
+        for (Entity child : entity.children) {
+            addEntity(container, child);
+        }
+    }
+
+    protected static void removeEntity(EntityContainer container, Entity entity) {
+        if (entity.parent != null) entity.parent.detachChild(entity);
+        addToRemoveArray(container, entity);
+    }
+
+    private static void addToRemoveArray(EntityContainer container, Entity entity) {
+        container.toRemove.add(entity);
+        if (entity.children == null) return;
+        for (Entity child : entity.children) {
+            addToRemoveArray(container, child);
+        }
+    }
 }

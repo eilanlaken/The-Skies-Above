@@ -88,11 +88,11 @@ public class TestSceneEntityChildren extends Scene {
                 }
         );
 
+        e1.attachChild(e2);
         e2.attachChild(e3);
-        e2.attachChild(e4);
+        e3.attachChild(e4);
 
         container.addEntity(e1);
-        container.addEntity(e2);
         container.addEntity(eCamera1);
     }
 
@@ -102,7 +102,8 @@ public class TestSceneEntityChildren extends Scene {
 
         System.out.println("body count = " + container.physics2D.world.getBodyCount());
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) container.removeEntity(e1);
+        if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) container.removeEntity(e4);
+        if (Gdx.input.isKeyJustPressed(Input.Keys.E)) container.removeEntity(e2);
     }
 
     @Override

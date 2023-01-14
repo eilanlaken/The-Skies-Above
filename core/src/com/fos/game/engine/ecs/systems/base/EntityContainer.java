@@ -43,17 +43,15 @@ public class EntityContainer implements Disposable {
     }
 
     public void addEntity(final Entity entity) {
-        this.toAdd.add(entity);
-        if (entity.children == null) return;
-        for (Entity child : entity.children) {
-            addEntity(child);
-        }
+        EntityContainerUtils.addEntity(this, entity);
     }
 
-    // TODO - implement remove entity with children. 
+    // TODO - implement remove entity with children.
     public void removeEntity(final Entity entity) {
-        this.toRemove.add(entity);
+        EntityContainerUtils.removeEntity(this, entity);
     }
+
+
 
     public void update() {
         EntityContainerUtils.removeEntities(this);
