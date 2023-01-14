@@ -15,7 +15,7 @@ public class ComponentJoint2D implements Component {
 
     @Override
     public final ComponentType getComponentType() {
-        return ComponentType.PHYSICS_2D_JOINT;
+        return ComponentType.PHYSICS_2D;
     }
 
 }

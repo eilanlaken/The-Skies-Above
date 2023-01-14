@@ -21,6 +21,6 @@ public class ComponentRigidBody2D implements Component {
 
     @Override
     public final ComponentType getComponentType() {
-        return ComponentType.PHYSICS_2D_BODY;
+        return ComponentType.PHYSICS_2D;
     }
 }

@@ -123,8 +123,7 @@ public class Renderer implements EntitiesProcessor, Disposable {
     @Override
     public boolean shouldProcess(Entity entity) {
         if ((entity.componentsBitMask & RendererUtils.RENDERER_ENTITY) > 0) return true;
-        if (debugMode && (entity.componentsBitMask & ComponentType.PHYSICS_2D_BODY.bitMask) > 0) return true;
-        if (debugMode && (entity.componentsBitMask & ComponentType.PHYSICS_2D_JOINT.bitMask) > 0) return true;
+        if (debugMode && (entity.componentsBitMask & ComponentType.PHYSICS_2D.bitMask) > 0) return true;
         return false;
     }
 

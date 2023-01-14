@@ -66,10 +66,10 @@ public class Renderer2D implements Disposable {
             physics2DDebugRenderer.begin();
             physics2DDebugRenderer.setProjectionMatrix(camera.lens.combined);
             for (Entity entity : entities) {
-                ComponentRigidBody2D rigidBody2D = (ComponentRigidBody2D) entity.components[ComponentType.PHYSICS_2D_BODY.ordinal()];
-                ComponentJoint2D joint2D = (ComponentJoint2D) entity.components[ComponentType.PHYSICS_2D_JOINT.ordinal()];
-                if (rigidBody2D != null) physics2DDebugRenderer.drawBody(rigidBody2D.body);
-                if (joint2D != null) physics2DDebugRenderer.drawJoint(joint2D.joint);
+                Component physics2D = (Component) entity.components[ComponentType.PHYSICS_2D.ordinal()];
+                if (physics2D == null) continue;
+                if (physics2D instanceof ComponentRigidBody2D) physics2DDebugRenderer.drawBody(((ComponentRigidBody2D) physics2D).body);
+                if (physics2D instanceof ComponentJoint2D) physics2DDebugRenderer.drawJoint(((ComponentJoint2D) physics2D).joint);
             }
             physics2DDebugRenderer.end();
         }
