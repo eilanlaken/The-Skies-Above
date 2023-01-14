@@ -1,17 +1,14 @@
 package com.fos.game.engine.ecs.systems.base;
 
-import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.physics.bullet.dynamics.btDynamicsWorld;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.fos.game.engine.ecs.entities.Entity;
-import com.fos.game.engine.ecs.entities.GameObject;
 import com.fos.game.engine.ecs.systems.audio.AudioPlayer;
+import com.fos.game.engine.ecs.systems.logic.LogicUpdater;
 import com.fos.game.engine.ecs.systems.physics2d.Physics2D;
 import com.fos.game.engine.ecs.systems.physics3d.Physics3D;
 import com.fos.game.engine.ecs.systems.renderer.Config;
 import com.fos.game.engine.ecs.systems.renderer.Renderer;
-import com.fos.game.engine.ecs.systems.logic.LogicUpdater;
 import com.fos.game.engine.ecs.systems.signals.SignalRouter;
 
 import java.util.HashMap;
@@ -45,16 +42,12 @@ public class EntityContainer implements Disposable {
         this.systemEntitiesMap.put(signalRouter, new Array<Entity>(false, 1000));
     }
 
-    public void addGameObject(final GameObject gameObject) {
-        for (final Entity entity : gameObject.entities) addEntity(entity);
-    }
-
-    public void removeGameObject(final GameObject gameObject) {
-        for (final Entity entity : gameObject.entities) removeEntity(entity);
-    }
-
     public void addEntity(final Entity entity) {
         this.toAdd.add(entity);
+        if (entity.children == null) return;
+        for (Entity child : entity.children) {
+            addEntity(child);
+        }
     }
 
     public void removeEntity(final Entity entity) {
@@ -66,15 +59,6 @@ public class EntityContainer implements Disposable {
         EntityContainerUtils.addEntities(this);
         EntityContainerUtils.prepareForProcessing(entities, systemEntitiesMap);
         EntityContainerUtils.process(systemEntitiesMap);
-    }
-
-    @Deprecated
-    public World getPhysics2D() {
-        return physics2D.world;
-    }
-    @Deprecated
-    public btDynamicsWorld getPhysics3D() {
-        return physics3D.dynamicsWorld;
     }
 
     public void config(final SystemConfig ...configs) {

@@ -27,7 +27,7 @@ public class TestSceneEntityChildren extends Scene {
     EntityContainer container;
 
     Entity eCamera1;
-    Entity e1, e2, e3;
+    Entity e1, e2, e3, e4, e5;
 
     public final float VIRTUAL_HEIGHT = 20;
     private int pixelsPerUnit = 53*2;
@@ -73,9 +73,24 @@ public class TestSceneEntityChildren extends Scene {
                 }
         );
 
+        e4 = new Entity(Categories.GAME_OBJECT_1);
+        e4.attachComponents(
+                context.factoryTransform.create2d(-5, 0, 5, 1, 1, 0),
+                new ComponentShapes2D() {
+                    @Override
+                    public void draw(ShapeBatch batch) {
+                        batch.setColor(Color.RED);
+                        batch.setDefaultLineWidth(0.1f);
+                        batch.circle(0,0, 1);
+                    }
+                }
+        );
+
+        e2.attachChild(e3);
+        e2.attachChild(e4);
+
         container.addEntity(e1);
         container.addEntity(e2);
-        container.addEntity(e3);
         container.addEntity(eCamera1);
     }
 
