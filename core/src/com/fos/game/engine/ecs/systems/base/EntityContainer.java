@@ -50,6 +50,7 @@ public class EntityContainer implements Disposable {
         }
     }
 
+    // TODO - implement remove entity with children. 
     public void removeEntity(final Entity entity) {
         this.toRemove.add(entity);
     }
