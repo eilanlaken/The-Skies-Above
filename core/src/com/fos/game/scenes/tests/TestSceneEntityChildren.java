@@ -29,7 +29,7 @@ public class TestSceneEntityChildren extends Scene {
     EntityContainer container;
 
     Entity eCamera1;
-    Entity e1, e2, e3, e4, e5;
+    Entity e1, e2, e3, e4;
 
     public final float VIRTUAL_HEIGHT = 20;
     private int pixelsPerUnit = 53*2;
