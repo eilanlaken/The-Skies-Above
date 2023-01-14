@@ -11,7 +11,7 @@ public class EntityContainerUtils {
 
     protected static void removeEntities(final EntityContainer container) {
         for (final Entity entity : container.toRemove) {
-            // TODO: if has physics...
+            container.physics2D.destroyPhysics(entity);
             container.entities.removeValue(entity, true);
         }
         container.toRemove.clear();

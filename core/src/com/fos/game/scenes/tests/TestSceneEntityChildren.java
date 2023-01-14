@@ -1,5 +1,7 @@
 package com.fos.game.scenes.tests;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Filter;
@@ -98,7 +100,9 @@ public class TestSceneEntityChildren extends Scene {
     public void update(float delta) {
         container.update();
 
+        System.out.println("body count = " + container.physics2D.world.getBodyCount());
 
+        if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) container.removeEntity(e1);
     }
 
     @Override

@@ -48,9 +48,17 @@ public class Physics2DUtils {
         shape.dispose();
     }
 
-    protected static void addJoint(final World world, final Entity entity, final ComponentJoint2D componentJoint2D) {
+    protected static void destroyRigidBody2D(final World world, final ComponentRigidBody2D componentRigidBody2D) {
+        world.destroyBody(componentRigidBody2D.body);
+    }
+
+    protected static void addJoint2D(final World world, final Entity entity, final ComponentJoint2D componentJoint2D) {
         componentJoint2D.joint = world.createJoint(componentJoint2D.data.jointDef);
         componentJoint2D.joint.setUserData(entity);
+    }
+
+    protected static void destroyJoint2D(final World world, final ComponentJoint2D componentJoint2D) {
+        world.destroyJoint(componentJoint2D.joint);
     }
 
     private static Shape getShape(final RigidBody2DData data) {
