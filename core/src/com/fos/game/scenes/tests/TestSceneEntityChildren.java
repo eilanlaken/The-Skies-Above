@@ -100,8 +100,6 @@ public class TestSceneEntityChildren extends Scene {
     public void update(float delta) {
         container.update();
 
-        System.out.println("body count = " + container.physics2D.world.getBodyCount());
-
         if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) container.removeEntity(e4);
         if (Gdx.input.isKeyJustPressed(Input.Keys.E)) container.removeEntity(e2);
     }
