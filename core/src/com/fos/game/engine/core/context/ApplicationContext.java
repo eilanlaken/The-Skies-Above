@@ -14,7 +14,7 @@ import com.fos.game.engine.ecs.components.physics3d.FactoryRigidBody3D;
 import com.fos.game.engine.ecs.components.logic.FactoryLogic;
 import com.fos.game.engine.ecs.components.signals.FactorySignalBox;
 import com.fos.game.engine.ecs.components.transform.FactoryTransform;
-import com.fos.game.scenes.LoadingScene;
+import com.fos.game.scenes.tests.TestLoadingScene;
 
 public class ApplicationContext implements ApplicationListener {
 
@@ -49,7 +49,7 @@ public class ApplicationContext implements ApplicationListener {
         this.factoryLogic = new FactoryLogic(this.assetManager, this.jsonConverter);
         this.factorySignalBox = new FactorySignalBox(this.assetManager, this.jsonConverter);
         this.factoryTransform = new FactoryTransform(this.assetManager, this.jsonConverter);
-        playScene(new LoadingScene(this));
+        playScene(new TestLoadingScene(this));
     }
 
     @Override

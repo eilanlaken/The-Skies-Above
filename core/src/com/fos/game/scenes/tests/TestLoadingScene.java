@@ -1,4 +1,4 @@
-package com.fos.game.scenes;
+package com.fos.game.scenes.tests;
 
 import com.fos.game.engine.core.context.ApplicationContext;
 import com.fos.game.engine.core.context.Scene;
@@ -7,12 +7,12 @@ import com.fos.game.scenes.tests.*;
 
 import java.util.Map;
 
-public class LoadingScene extends Scene {
+public class TestLoadingScene extends Scene {
 
     private final GameAssetManager assetManager;
     private boolean doneLoading = false;
 
-    public LoadingScene(final ApplicationContext context) {
+    public TestLoadingScene(final ApplicationContext context) {
         super(context);
         this.assetManager = context.assetManager;
     }
