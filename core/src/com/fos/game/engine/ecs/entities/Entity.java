@@ -22,23 +22,6 @@ public class Entity implements Disposable {
         this.category = 0b000001 << category.ordinal();
     }
 
-    @Deprecated
-    public Entity() {
-        this.category = 0b000001;
-    }
-
-    @Deprecated
-    public Entity(final Enum category, final Object ...componentsToAttach) {
-        attachComponents(componentsToAttach);
-        this.category = 0b000001 << category.ordinal();
-    }
-
-    @Deprecated
-    public Entity(final Object ...componentsToAttach) {
-        attachComponents(componentsToAttach);
-        this.category = 0b000001;
-    }
-
     public void attachComponents(final Object... componentsToAttach) {
         this.components = new Component[ComponentType.values().length];
         for (Object object : componentsToAttach) {
