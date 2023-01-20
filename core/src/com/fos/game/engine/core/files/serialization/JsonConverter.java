@@ -1,7 +1,6 @@
 package com.fos.game.engine.core.files.serialization;
 
 import com.badlogic.gdx.graphics.Camera;
-import com.fos.game.engine.ecs.components.animations2d.Animations2DData_old;
 import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
 import com.fos.game.engine.ecs.components.audio.ComponentSoundEffects;
 import com.google.gson.ExclusionStrategy;
@@ -31,8 +30,6 @@ public class JsonConverter<T> {
         })
         .registerTypeAdapter(Camera.class, new TypeAdapterCamera())
         .registerTypeAdapter(ComponentSoundEffects.class, new TypeAdapterComponentSoundEffects())
-        .registerTypeAdapter(Animations2DData_old.class, new TypeAdapterAnimationData())
-        .registerTypeAdapter(ComponentAnimations2D.class, new TypeAdapterComponentAnimations2D())
         ;
         this.gson = gsonBuilder.create();
     }

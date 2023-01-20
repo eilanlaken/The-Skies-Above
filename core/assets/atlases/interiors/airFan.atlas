@@ -1,0 +1,313 @@
+airFan.png
+size: 512, 1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+airFan
+  rotate: false
+  xy: 1, 1
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 1
+airFan
+  rotate: false
+  xy: 178, 221
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 2
+airFan
+  rotate: false
+  xy: 1, 485
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 3
+airFan
+  rotate: false
+  xy: 178, 705
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 4
+airFan
+  rotate: false
+  xy: 178, 749
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 5
+airFan
+  rotate: false
+  xy: 1, 793
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 6
+airFan
+  rotate: false
+  xy: 1, 837
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 7
+airFan
+  rotate: false
+  xy: 1, 881
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 8
+airFan
+  rotate: false
+  xy: 1, 925
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 9
+airFan
+  rotate: false
+  xy: 178, 1
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 10
+airFan
+  rotate: false
+  xy: 1, 45
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 11
+airFan
+  rotate: false
+  xy: 178, 45
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 12
+airFan
+  rotate: false
+  xy: 1, 89
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 13
+airFan
+  rotate: false
+  xy: 178, 89
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 14
+airFan
+  rotate: false
+  xy: 1, 133
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 15
+airFan
+  rotate: false
+  xy: 178, 133
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 16
+airFan
+  rotate: false
+  xy: 1, 177
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 17
+airFan
+  rotate: false
+  xy: 178, 177
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 18
+airFan
+  rotate: false
+  xy: 1, 221
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 19
+airFan
+  rotate: false
+  xy: 1, 265
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 20
+airFan
+  rotate: false
+  xy: 178, 265
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 21
+airFan
+  rotate: false
+  xy: 1, 309
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 22
+airFan
+  rotate: false
+  xy: 178, 309
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 23
+airFan
+  rotate: false
+  xy: 1, 353
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 24
+airFan
+  rotate: false
+  xy: 178, 353
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 25
+airFan
+  rotate: false
+  xy: 1, 397
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 26
+airFan
+  rotate: false
+  xy: 178, 397
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 27
+airFan
+  rotate: false
+  xy: 1, 441
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 28
+airFan
+  rotate: false
+  xy: 178, 441
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 29
+airFan
+  rotate: false
+  xy: 178, 485
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 30
+airFan
+  rotate: false
+  xy: 1, 529
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 31
+airFan
+  rotate: false
+  xy: 178, 529
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 32
+airFan
+  rotate: false
+  xy: 1, 573
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 33
+airFan
+  rotate: false
+  xy: 178, 573
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 34
+airFan
+  rotate: false
+  xy: 1, 617
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 35
+airFan
+  rotate: false
+  xy: 178, 617
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 36
+airFan
+  rotate: false
+  xy: 1, 661
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 37
+airFan
+  rotate: false
+  xy: 178, 661
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 38
+airFan
+  rotate: false
+  xy: 1, 705
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 39
+airFan
+  rotate: false
+  xy: 1, 749
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: 40
+blade
+  rotate: false
+  xy: 355, 1
+  size: 137, 139
+  orig: 137, 139
+  offset: 0, 0
+  index: -1
+broken-attached
+  rotate: false
+  xy: 1, 969
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: -1
+broken-detached
+  rotate: false
+  xy: 178, 793
+  size: 175, 42
+  orig: 175, 42
+  offset: 0, 0
+  index: -1
+part
+  rotate: false
+  xy: 494, 1
+  size: 7, 42
+  orig: 7, 42
+  offset: 0, 0
+  index: -1

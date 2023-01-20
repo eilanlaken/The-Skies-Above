@@ -1,11 +1,8 @@
-package com.fos.game.scenes.tests;
+package com.fos.game.scenes.tests.engine;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.fos.game.engine.core.context.ApplicationContext;
@@ -13,42 +10,31 @@ import com.fos.game.engine.core.context.Scene;
 import com.fos.game.engine.core.graphics.g2d.GraphicsUtils;
 import com.fos.game.engine.core.graphics.g2d.ShapeBatch;
 import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
-import com.fos.game.engine.core.graphics.shaders.postprocessing.Example_PostProcessingEffectSetColor;
-import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
 import com.fos.game.engine.ecs.components.physics2d.RigidBody2DData;
 import com.fos.game.engine.ecs.components.shape2d.ComponentShapes2D;
-import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.base.EntityContainer;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class TestSceneC extends Scene {
+public class TestSceneEntityChildren extends Scene {
 
     enum Categories {
         GAME_OBJECT_1,
-        GAME_OBJECT_2,
-        UI,
         CAMERA,
     }
     EntityContainer container;
 
-    Entity eCamera1, eCamera2;
-    Entity e1, e2, e3;
-    Entity eLight1, eLight2;
-
-    // test:
-    float angle = 0;
-    float tintAlpha = 0;
-    Vector3 camPosition = new Vector3();
+    Entity eCamera1;
+    Entity e1, e2, e3, e4;
 
     public final float VIRTUAL_HEIGHT = 20;
     private int pixelsPerUnit = 53*2;
 
-    public TestSceneC(final ApplicationContext context) {
+    public TestSceneEntityChildren(final ApplicationContext context) {
         super(context);
     }
 
@@ -61,24 +47,19 @@ public class TestSceneC extends Scene {
                 context.factoryTransform.create2d(0, 0, 0, 1, 1, 0),
                 context.factoryCamera.createCamera2D(VIRTUAL_HEIGHT * GraphicsUtils.getAspectRatio(), VIRTUAL_HEIGHT, Categories.GAME_OBJECT_1)
         );
-        eCamera2 = new Entity(Categories.CAMERA);
-        eCamera2.attachComponents(
-                context.factoryTransform.create2d(0, 0, 0, 1, 1, 0),
-                context.factoryCamera.createCamera2D(VIRTUAL_HEIGHT * GraphicsUtils.getAspectRatio() / 2, VIRTUAL_HEIGHT / 2, Categories.GAME_OBJECT_2)
-        );
 
         e1 = new Entity(Categories.GAME_OBJECT_1);
         e1.attachComponents(
                 context.factoryTransform.create2d(0, 0, 0, 1, 1, 0),
-                context.factoryFrameAnimations2D.create("atlases/stations/station_14.atlas", "station", 1,1f, pixelsPerUnit),
+                context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "a", 1,1f, pixelsPerUnit),
                 context.factoryRigidBody2D.create(new RigidBody2DData(BodyDef.BodyType.DynamicBody, RigidBody2DData.Shape.RECTANGLE,
                         1, 1, new Filter(), 1,1,1, false))
         );
 
-        e2 = new Entity(Categories.GAME_OBJECT_2);
+        e2 = new Entity(Categories.GAME_OBJECT_1);
         e2.attachComponents(
                 context.factoryTransform.create2d(-5, 0, 0, 1, 1, 0),
-                context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "a", 1,1f, pixelsPerUnit)
+                context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "b", 1,1f, pixelsPerUnit)
         );
 
         e3 = new Entity(Categories.GAME_OBJECT_1);
@@ -94,40 +75,33 @@ public class TestSceneC extends Scene {
                 }
         );
 
-        container.addEntity(e1);
-        container.addEntity(e2);
-        container.addEntity(e3);
-        container.addEntity(eCamera1);
-        container.addEntity(eCamera2);
+        e4 = new Entity(Categories.GAME_OBJECT_1);
+        e4.attachComponents(
+                context.factoryTransform.create2d(-5, 0, 5, 1, 1, 0),
+                new ComponentShapes2D() {
+                    @Override
+                    public void draw(ShapeBatch batch) {
+                        batch.setColor(Color.RED);
+                        batch.setDefaultLineWidth(0.1f);
+                        batch.circle(0,0, 1);
+                    }
+                }
+        );
 
-        Example_PostProcessingEffectSetColor postProcessingEffect = new Example_PostProcessingEffectSetColor(); //TODO: fragment shader throws an error in some openGL drivers.
+        e1.attachChild(e2);
+        e2.attachChild(e3);
+        e3.attachChild(e4);
+
+        container.addEntity(e1);
+        container.addEntity(eCamera1);
     }
 
     @Override
     public void update(float delta) {
         container.update();
 
-        ComponentTransform2D transformCamera = (ComponentTransform2D) eCamera1.components[ComponentType.TRANSFORM.ordinal()];
-        ComponentCamera camera = (ComponentCamera) eCamera1.components[ComponentType.GRAPHICS.ordinal()];
-        OrthographicCamera lens = (OrthographicCamera) camera.lens;
-
-        ComponentTransform2D transformEntity1 = (ComponentTransform2D) e1.components[ComponentType.TRANSFORM.ordinal()];
-
-        tintAlpha += delta;
-
-        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
-            lens.zoom += 0.1f;
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            lens.zoom -= 0.1f;
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            transformEntity1.angle += 2 * MathUtils.degreesToRadians;
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.T)) {
-            ComponentAnimations2D animation = (ComponentAnimations2D) e1.components[ComponentType.GRAPHICS.ordinal()];
-            animation.tint.set(1,0,0, MathUtils.sin(tintAlpha));
-        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) container.removeEntity(e4);
+        if (Gdx.input.isKeyJustPressed(Input.Keys.E)) container.removeEntity(e2);
     }
 
     @Override
@@ -136,11 +110,6 @@ public class TestSceneC extends Scene {
         camera1.lens.viewportHeight = VIRTUAL_HEIGHT;
         camera1.lens.viewportWidth = VIRTUAL_HEIGHT * width / (float) height;
         camera1.lens.update();
-
-        ComponentCamera camera2 = (ComponentCamera) eCamera2.components[ComponentType.GRAPHICS.ordinal()];
-        camera2.lens.viewportHeight = VIRTUAL_HEIGHT / 2f;
-        camera2.lens.viewportWidth = (VIRTUAL_HEIGHT * width / 2f) / (float) height;
-        camera2.lens.update();
     }
 
     @Override
@@ -166,7 +135,6 @@ public class TestSceneC extends Scene {
     // TODO: add spine
     public static Map<String, Class> getRequiredAssetsNameTypeMap() {
         HashMap<String, Class> assetNameClassMap = new HashMap<>();
-        assetNameClassMap.put("atlases/stations/station_14.atlas", SpriteSheet.class);
         assetNameClassMap.put("atlases/test/testSpriteSheet3.atlas", SpriteSheet.class);
         assetNameClassMap.put("atlases/test/testSpriteSheet4.atlas", SpriteSheet.class);
         return assetNameClassMap;

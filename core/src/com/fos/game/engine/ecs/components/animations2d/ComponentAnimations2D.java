@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 public class ComponentAnimations2D implements Component {
 
-    public FrameAnimations2DData data;
+    public Animations2DData data;
     public HashMap<String, Animation<TextureAtlas.AtlasRegion>> animations;
     public Animation<TextureAtlas.AtlasRegion> currentPlayingAnimation;
     public float size;
@@ -22,7 +22,7 @@ public class ComponentAnimations2D implements Component {
     public Color tint;
     public boolean active = true;
 
-    protected ComponentAnimations2D(GameAssetManager assetManager, FrameAnimations2DData data) {
+    protected ComponentAnimations2D(GameAssetManager assetManager, Animations2DData data) {
         this.data = data;
         this.size = data.size;
         this.pixelsPerUnit = data.pixelsPerUnit;
@@ -30,13 +30,13 @@ public class ComponentAnimations2D implements Component {
         this.tint = data.tint;
         this.active = data.active;
         this.animations = new HashMap<>();
-        for (FrameAnimations2DData.AnimationData animationData : data.animationData) {
-            SpriteSheet spriteSheet = assetManager.get(animationData.filepath, SpriteSheet.class);
-            Array<TextureAtlas.AtlasRegion> keyFrames = spriteSheet.findRegions(animationData.animationName);
-            Animation<TextureAtlas.AtlasRegion> animation = new Animation<>(animationData.frameDuration, keyFrames, animationData.playMode);
-            animations.put(animationData.animationName, animation);
+        for (Animations2DData.Animation2DData animation2DData : data.animation2DData) {
+            SpriteSheet spriteSheet = assetManager.get(animation2DData.filepath, SpriteSheet.class);
+            Array<TextureAtlas.AtlasRegion> keyFrames = spriteSheet.findRegions(animation2DData.animationName);
+            Animation<TextureAtlas.AtlasRegion> animation = new Animation<>(animation2DData.frameDuration, keyFrames, animation2DData.playMode);
+            animations.put(animation2DData.animationName, animation);
         }
-        currentPlayingAnimation = animations.get(data.animationData[data.currentlyPlaying].animationName);
+        currentPlayingAnimation = animations.get(data.animation2DData[data.currentlyPlaying].animationName);
     }
 
     // TODO: remove

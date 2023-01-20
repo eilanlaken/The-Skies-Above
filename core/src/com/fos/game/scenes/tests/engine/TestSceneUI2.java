@@ -1,4 +1,4 @@
-package com.fos.game.scenes.tests;
+package com.fos.game.scenes.tests.engine;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

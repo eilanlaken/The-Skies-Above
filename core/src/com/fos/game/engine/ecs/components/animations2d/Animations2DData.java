@@ -3,7 +3,7 @@ package com.fos.game.engine.ecs.components.animations2d;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 
-public class FrameAnimations2DData {
+public class Animations2DData {
 
     public float elapsedTime;
     public Color tint;
@@ -11,10 +11,10 @@ public class FrameAnimations2DData {
     public int pixelsPerUnit;
     public float size;
     public int currentlyPlaying;
-    public AnimationData[] animationData;
+    public Animation2DData[] animation2DData;
 
-    public FrameAnimations2DData(float elapsedTime, Color tint, boolean active, int pixelsPerUnit, float size, int currentlyPlaying, AnimationData... animationData) {
-        this.animationData = animationData;
+    public Animations2DData(float elapsedTime, Color tint, boolean active, int pixelsPerUnit, float size, int currentlyPlaying, Animation2DData... animation2DData) {
+        this.animation2DData = animation2DData;
         this.elapsedTime = elapsedTime;
         this.tint = tint;
         this.active = active;
@@ -23,13 +23,13 @@ public class FrameAnimations2DData {
         this.currentlyPlaying = currentlyPlaying;
     }
 
-    public static class AnimationData {
+    public static class Animation2DData {
         public String filepath;
         public String animationName;
         public Animation.PlayMode playMode;
         public float frameDuration;
 
-        public AnimationData(String filepath, String animationName, float frameDuration, Animation.PlayMode playMode) {
+        public Animation2DData(String filepath, String animationName, float frameDuration, Animation.PlayMode playMode) {
             this.filepath = filepath;
             this.animationName = animationName;
             this.playMode = playMode;
