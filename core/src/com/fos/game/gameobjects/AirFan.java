@@ -4,7 +4,7 @@ import com.fos.game.engine.ecs.entities.Entity;
 
 public class AirFan extends Entity {
 
-    public AirFan(final Enum category, float x, float y) {
+    public AirFan(final Enum category, float x, float y, float angle) {
         super(category);
     }
 

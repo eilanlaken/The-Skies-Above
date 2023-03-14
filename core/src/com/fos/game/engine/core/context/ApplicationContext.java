@@ -14,7 +14,7 @@ import com.fos.game.engine.ecs.components.physics3d.FactoryRigidBody3D;
 import com.fos.game.engine.ecs.components.logic.FactoryLogic;
 import com.fos.game.engine.ecs.components.signals.FactorySignalBox;
 import com.fos.game.engine.ecs.components.transform.FactoryTransform;
-import com.fos.game.scenes.tests.TestLoadingScene;
+import com.fos.game.scenes.tests.loading.TestLoadingScene;
 
 public class ApplicationContext implements ApplicationListener {
 

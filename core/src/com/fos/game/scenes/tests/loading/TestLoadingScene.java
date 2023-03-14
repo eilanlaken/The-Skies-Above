@@ -1,4 +1,4 @@
-package com.fos.game.scenes.tests;
+package com.fos.game.scenes.tests.loading;
 
 import com.fos.game.engine.core.context.ApplicationContext;
 import com.fos.game.engine.core.context.Scene;
