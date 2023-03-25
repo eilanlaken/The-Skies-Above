@@ -1,0 +1,12 @@
+This documents lists the texture atlas layers of the interiors of the metros.
+
+Layer 0 - floor:
+floor tiles,
+floor decorations,
+shadows,
+neon banners
+
+Layer 1000 - top wall decorators
+vents,
+LEDs,
+fans
