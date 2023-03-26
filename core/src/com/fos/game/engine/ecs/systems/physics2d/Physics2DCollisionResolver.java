@@ -16,12 +16,12 @@ public class Physics2DCollisionResolver implements ContactListener {
         Entity entityA = (Entity) contact.getFixtureA().getBody().getUserData();
         Entity entityB = (Entity) contact.getFixtureB().getBody().getUserData();
 
-        ComponentSignalBox signalBoxA = (ComponentSignalBox) entityA.components[ComponentType.SIGNAL_BOX.ordinal()];
+        ComponentSignalBox signalBoxA = (ComponentSignalBox) entityA.components[ComponentType.SIGNALS.ordinal()];
         if (signalBoxA != null) {
             signalBoxA.signalsToSend.add(new BeginCollisionSignal(entityA, contact, entityB));
         }
 
-        ComponentSignalBox signalBoxB = (ComponentSignalBox) entityB.components[ComponentType.SIGNAL_BOX.ordinal()];
+        ComponentSignalBox signalBoxB = (ComponentSignalBox) entityB.components[ComponentType.SIGNALS.ordinal()];
         if (signalBoxB != null) {
             signalBoxB.signalsToSend.add(new BeginCollisionSignal(entityB, contact, entityA));
         }
@@ -32,12 +32,12 @@ public class Physics2DCollisionResolver implements ContactListener {
         Entity entityA = (Entity) contact.getFixtureA().getBody().getUserData();
         Entity entityB = (Entity) contact.getFixtureB().getBody().getUserData();
 
-        ComponentSignalBox signalBoxA = (ComponentSignalBox) entityA.components[ComponentType.SIGNAL_BOX.ordinal()];
+        ComponentSignalBox signalBoxA = (ComponentSignalBox) entityA.components[ComponentType.SIGNALS.ordinal()];
         if (signalBoxA != null) {
             signalBoxA.signalsToSend.add(new EndCollisionSignal(entityA, contact, entityB));
         }
 
-        ComponentSignalBox signalBoxB = (ComponentSignalBox) entityB.components[ComponentType.SIGNAL_BOX.ordinal()];
+        ComponentSignalBox signalBoxB = (ComponentSignalBox) entityB.components[ComponentType.SIGNALS.ordinal()];
         if (signalBoxB != null) {
             signalBoxB.signalsToSend.add(new EndCollisionSignal(entityB, contact, entityA));
         }

@@ -17,6 +17,6 @@ public class ComponentSignalBox implements Component {
 
     @Override
     public ComponentType getComponentType() {
-        return ComponentType.SIGNAL_BOX;
+        return ComponentType.SIGNALS;
     }
 }

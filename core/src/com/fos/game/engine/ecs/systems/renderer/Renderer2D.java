@@ -17,7 +17,7 @@ import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
 import com.fos.game.engine.ecs.components.physics2d.ComponentJoint2D;
-import com.fos.game.engine.ecs.components.physics2d.ComponentRigidBody2D;
+import com.fos.game.engine.ecs.components.physics2d.ComponentBody2D;
 import com.fos.game.engine.ecs.components.shape2d.ComponentShapes2D;
 import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
@@ -54,7 +54,7 @@ public class Renderer2D implements Disposable {
         polygonSpriteBatch.setProjectionMatrix(camera.lens.combined);
         shapeBatch.update();
         for (Entity entity : entities) {
-            ComponentTransform2D transform = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM.ordinal()];
+            ComponentTransform2D transform = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
             Component graphics = (Component) entity.components[ComponentType.GRAPHICS.ordinal()];
             if (graphics instanceof ComponentAnimations2D) renderFrameAnimation(transform, (ComponentAnimations2D) graphics);
             if (graphics instanceof ComponentShapes2D) renderShape((ComponentShapes2D) graphics);
@@ -68,7 +68,7 @@ public class Renderer2D implements Disposable {
             for (Entity entity : entities) {
                 Component physics2D = (Component) entity.components[ComponentType.PHYSICS_2D.ordinal()];
                 if (physics2D == null) continue;
-                if (physics2D instanceof ComponentRigidBody2D) physics2DDebugRenderer.drawBody(((ComponentRigidBody2D) physics2D).body);
+                if (physics2D instanceof ComponentBody2D) physics2DDebugRenderer.drawBody(((ComponentBody2D) physics2D).body);
                 if (physics2D instanceof ComponentJoint2D) physics2DDebugRenderer.drawJoint(((ComponentJoint2D) physics2D).joint);
             }
             physics2DDebugRenderer.end();
@@ -80,7 +80,7 @@ public class Renderer2D implements Disposable {
         if (!frameAnimation.active) return;
         TextureAtlas.AtlasRegion atlasRegion = frameAnimation.getTextureRegion();
         polygonSpriteBatch.setColor(frameAnimation.tint);
-        polygonSpriteBatch.draw(atlasRegion, transform.x, transform.y, transform.angle, transform.scaleX, transform.scaleY, frameAnimation.size, frameAnimation.pixelsPerUnit);
+        polygonSpriteBatch.draw(atlasRegion, transform.worldX, transform.worldY, transform.worldAngle, transform.worldScaleX, transform.worldScaleY, frameAnimation.size, frameAnimation.pixelsPerUnit);
     }
 
     private void renderBoneAnimation(final ComponentBoneAnimations2D boneAnimation) {

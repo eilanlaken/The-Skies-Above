@@ -22,7 +22,7 @@ public class SignalRouter implements EntitiesProcessor {
         SignalRouterUtils.collectAllUnsentSignals(entities, signals);
         // flush the send and receive queues for all entities
         for (final Entity entity : entities) {
-            final ComponentSignalBox signalBox = (ComponentSignalBox) entity.components[ComponentType.SIGNAL_BOX.ordinal()];
+            final ComponentSignalBox signalBox = (ComponentSignalBox) entity.components[ComponentType.SIGNALS.ordinal()];
             signalBox.signalsToSend.clear();
             signalBox.receivedSignals.clear();
         }
@@ -30,7 +30,7 @@ public class SignalRouter implements EntitiesProcessor {
         for (final Signal signal : signals) {
             for (final Entity entity : entities) {
                 if (!signal.isTarget(entity)) continue;
-                final ComponentSignalBox signalBox = (ComponentSignalBox) entity.components[ComponentType.SIGNAL_BOX.ordinal()];
+                final ComponentSignalBox signalBox = (ComponentSignalBox) entity.components[ComponentType.SIGNALS.ordinal()];
                 signalBox.receivedSignals.add(signal);
             }
         }

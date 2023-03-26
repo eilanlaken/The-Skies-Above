@@ -19,7 +19,7 @@ import java.util.Map;
 public class TestSceneParentTransform extends Scene {
 
     enum Categories {
-        GAME_OBJECT_1,
+        GAME_OBJECTS,
         CAMERA,
     }
     EntityContainer container;
@@ -40,26 +40,39 @@ public class TestSceneParentTransform extends Scene {
 
         eCamera1 = new Entity(Categories.CAMERA);
         eCamera1.attachComponents(
-                context.factoryTransform.create2d(0, 0, 0, 1, 1, 0),
-                context.factoryCamera.createCamera2D(VIRTUAL_HEIGHT * GraphicsUtils.getAspectRatio(), VIRTUAL_HEIGHT, Categories.GAME_OBJECT_1)
+                context.factoryTransform2D.create2d(0, 0, 0, 1, 1, 0, false, eCamera1),
+                context.factoryCamera.createCamera2D(VIRTUAL_HEIGHT * GraphicsUtils.getAspectRatio(), VIRTUAL_HEIGHT, Categories.GAME_OBJECTS)
         );
 
-        e1 = new Entity(Categories.GAME_OBJECT_1);
+        e1 = new Entity(Categories.GAME_OBJECTS);
+        ComponentTransform2D transform2D_1 = context.factoryTransform2D.create2d(0, 0, 0, 1, 1, 0, false, e1);
         e1.attachComponents(
-                context.factoryTransform.create2d(0, 0, 0, 1, 1, 0),
+                transform2D_1,
                 context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "a", 1,1f, pixelsPerUnit)
         );
 
-        e2 = new Entity(Categories.GAME_OBJECT_1);
+        e2 = new Entity(Categories.GAME_OBJECTS);
+        ComponentTransform2D transform2D_2 = context.factoryTransform2D.create2d(-5, 0, 0, 1, 1, 0, true, e2);
+        transform2D_2.parent = transform2D_1;
         e2.attachComponents(
-                context.factoryTransform.create2d(-5, 0, 0, 1, 1, 0),
+                transform2D_2,
                 context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "b", 1,1f, pixelsPerUnit)
         );
 
+        e3 = new Entity(Categories.GAME_OBJECTS);
+        ComponentTransform2D transform2D_3 = context.factoryTransform2D.create2d(-2, 1, 0, 1, 1, 0, false, e3);
+        transform2D_3.parent = transform2D_2;
+        e3.attachComponents(
+                transform2D_3,
+                context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "c", 1,1f, pixelsPerUnit)
+        );
 
-        e1.attachChild(e2);
+        //e1.attachChild(e2);
 
         container.addEntity(e1);
+        container.addEntity(e2);
+        container.addEntity(e3);
+
         container.addEntity(eCamera1);
     }
 
@@ -67,39 +80,41 @@ public class TestSceneParentTransform extends Scene {
     public void update(float delta) {
         container.update();
 
+        Entity toMove = e2;
+
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            ComponentTransform2D transform2D = (ComponentTransform2D) e1.getComponent(ComponentType.TRANSFORM);
+            ComponentTransform2D transform2D = (ComponentTransform2D) toMove.getComponent(ComponentType.TRANSFORM_2D);
             transform2D.x -= 0.05f;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            ComponentTransform2D transform2D = (ComponentTransform2D) e1.getComponent(ComponentType.TRANSFORM);
+            ComponentTransform2D transform2D = (ComponentTransform2D) toMove.getComponent(ComponentType.TRANSFORM_2D);
             transform2D.x += 0.05f;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            ComponentTransform2D transform2D = (ComponentTransform2D) e1.getComponent(ComponentType.TRANSFORM);
+            ComponentTransform2D transform2D = (ComponentTransform2D) toMove.getComponent(ComponentType.TRANSFORM_2D);
             transform2D.y += 0.05f;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            ComponentTransform2D transform2D = (ComponentTransform2D) e1.getComponent(ComponentType.TRANSFORM);
+            ComponentTransform2D transform2D = (ComponentTransform2D) toMove.getComponent(ComponentType.TRANSFORM_2D);
             transform2D.y -= 0.05f;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
-            ComponentTransform2D transform2D = (ComponentTransform2D) e1.getComponent(ComponentType.TRANSFORM);
+            ComponentTransform2D transform2D = (ComponentTransform2D) toMove.getComponent(ComponentType.TRANSFORM_2D);
             transform2D.angle += 1 * MathUtils.degreesToRadians;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.E)) {
-            ComponentTransform2D transform2D = (ComponentTransform2D) e1.getComponent(ComponentType.TRANSFORM);
+            ComponentTransform2D transform2D = (ComponentTransform2D) toMove.getComponent(ComponentType.TRANSFORM_2D);
             transform2D.angle -= 1 * MathUtils.degreesToRadians;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            ComponentTransform2D transform2D = (ComponentTransform2D) e1.getComponent(ComponentType.TRANSFORM);
-            transform2D.scaleY += 1 * MathUtils.degreesToRadians;
-            transform2D.scaleX += 1 * MathUtils.degreesToRadians;
+            ComponentTransform2D transform2D = (ComponentTransform2D) toMove.getComponent(ComponentType.TRANSFORM_2D);
+            transform2D.scaleX += 0.017f;
+            transform2D.scaleY += 0.017f;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            ComponentTransform2D transform2D = (ComponentTransform2D) e1.getComponent(ComponentType.TRANSFORM);
-            transform2D.scaleY -= 1 * MathUtils.degreesToRadians;
-            transform2D.scaleX -= 1 * MathUtils.degreesToRadians;
+            ComponentTransform2D transform2D = (ComponentTransform2D) toMove.getComponent(ComponentType.TRANSFORM_2D);
+            transform2D.scaleX -= 0.017f;
+            transform2D.scaleY -= 0.017f;
         }
     }
 

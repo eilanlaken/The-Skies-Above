@@ -2,13 +2,14 @@ package com.fos.game.engine.ecs.components.base;
 
 public enum ComponentType {
 
-    TRANSFORM,
+    TRANSFORM_2D,
+    TRANSFORM_3D,
     PHYSICS_2D,
-    PHYSICS_3D_BODY,
+    PHYSICS_3D,
     LOGIC,
     GRAPHICS,
     AUDIO,
-    SIGNAL_BOX,
+    SIGNALS,
     STORAGE,
     ;
 

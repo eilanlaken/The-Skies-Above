@@ -8,7 +8,6 @@ import com.badlogic.gdx.utils.FloatArray;
 import com.fos.game.engine.core.graphics.g2d.RenderTarget;
 import com.fos.game.engine.core.graphics.spine.Skeleton;
 import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
-import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
 import com.fos.game.engine.ecs.components.lights2d.ComponentLight2D;
@@ -35,8 +34,8 @@ public class RendererUtils {
     protected static final Comparator<Entity> entitiesComparator = new Comparator<Entity>() {
         @Override
         public int compare(Entity e1, Entity e2) {
-            final float z1 = ((ComponentTransform2D) e1.components[ComponentType.TRANSFORM.ordinal()]).z;
-            final float z2 = ((ComponentTransform2D) e2.components[ComponentType.TRANSFORM.ordinal()]).z;
+            final float z1 = ((ComponentTransform2D) e1.components[ComponentType.TRANSFORM_2D.ordinal()]).z;
+            final float z2 = ((ComponentTransform2D) e2.components[ComponentType.TRANSFORM_2D.ordinal()]).z;
             return Float.compare(z1, z2);
         }
     };
@@ -51,15 +50,15 @@ public class RendererUtils {
     // TODO: test.
     protected static void applyTransform(final ComponentTransform2D transform, final ComponentCamera camera) {
         final Camera lens = camera.lens;
-        lens.position.set(transform.x, transform.y, lens.position.z);
+        lens.position.set(transform.worldX, transform.worldY, lens.position.z);
         //lens.rotate(transform.rotation);
         lens.update();
     }
 
     // TODO: test
     protected static void applyTransform(final ComponentTransform2D transform, final ComponentLight2D light2D) {
-        light2D.box2DLight.setPosition(transform.x, transform.y);
-        light2D.box2DLight.setDirection(transform.angle);
+        light2D.box2DLight.setPosition(transform.worldX, transform.worldY);
+        light2D.box2DLight.setDirection(transform.worldAngle);
     }
 
     /**
@@ -106,13 +105,13 @@ public class RendererUtils {
     private static boolean cull(final Entity entity, final Camera camera) {
         Object graphics = entity.components[ComponentType.GRAPHICS.ordinal()];
         if (graphics instanceof ComponentShapes2D) return false;
-        ComponentTransform2D transform = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM.ordinal()];
+        ComponentTransform2D transform = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
         ComponentAnimations2D animation = (ComponentAnimations2D) entity.components[ComponentType.GRAPHICS.ordinal()];
         TextureAtlas.AtlasRegion atlasRegion = animation.getTextureRegion();
-        final float width = atlasRegion.getRegionWidth() * transform.scaleX;
-        final float height = atlasRegion.getRegionHeight() * transform.scaleY;
+        final float width = atlasRegion.getRegionWidth() * transform.worldScaleY;
+        final float height = atlasRegion.getRegionHeight() * transform.worldScaleY;
         final float boundingRadius = Math.max(width, height) * 2 * animation.size;
-        return !camera.frustum.sphereInFrustum(transform.x, transform.y, 0, boundingRadius);
+        return !camera.frustum.sphereInFrustum(transform.worldX, transform.worldY, 0, boundingRadius);
     }
 
     /** culling for skeletons */

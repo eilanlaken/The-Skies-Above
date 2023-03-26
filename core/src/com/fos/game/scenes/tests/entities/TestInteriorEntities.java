@@ -40,13 +40,13 @@ public class TestInteriorEntities extends Scene {
 
         eCamera1 = new Entity(Categories.CAMERA);
         eCamera1.attachComponents(
-                context.factoryTransform.create2d(0, 0, 0, 1, 1, 0),
+                context.factoryTransform2D.create2d(0, 0, 0, 1, 1, 0),
                 context.factoryCamera.createCamera2D(VIRTUAL_HEIGHT * GraphicsUtils.getAspectRatio(), VIRTUAL_HEIGHT, Categories.GAME_OBJECT_1)
         );
 
         e1 = new Entity(Categories.GAME_OBJECT_1);
         e1.attachComponents(
-                context.factoryTransform.create2d(0, 0, 0, 1, 1, 0),
+                context.factoryTransform2D.create2d(0, 0, 0, 1, 1, 0),
                 context.factoryFrameAnimations2D.create("atlases/interiors/airFan.atlas", "airFan", Animation.PlayMode.LOOP, 0.01f, 1f, pixelsPerUnit),
                 context.factoryRigidBody2D.create(new RigidBody2DData(BodyDef.BodyType.DynamicBody, RigidBody2DData.Shape.RECTANGLE,
                         1, 1, new Filter(), 1,1,1, false))

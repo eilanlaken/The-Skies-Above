@@ -10,15 +10,15 @@ import com.badlogic.gdx.utils.Disposable;
 import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.physics2d.ComponentJoint2D;
-import com.fos.game.engine.ecs.components.physics2d.ComponentRigidBody2D;
+import com.fos.game.engine.ecs.components.physics2d.ComponentBody2D;
 import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
 
+@Deprecated
 public class Physics2D implements EntitiesProcessor, Disposable {
 
-    // TODO: make protected.
-    public World world;
+    protected World world;
     protected RayHandler rayHandler;
 
     private final Array<Entity> bodies = new Array<>();
@@ -35,22 +35,22 @@ public class Physics2D implements EntitiesProcessor, Disposable {
         final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
         this.world.step(delta, 6, 2);
         for (Entity entity : bodies) {
-            ComponentTransform2D transform = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM.ordinal()];
-            ComponentRigidBody2D componentRigidBody2D = (ComponentRigidBody2D) entity.components[ComponentType.PHYSICS_2D.ordinal()];
-            Body body = componentRigidBody2D.body;
-            if (componentRigidBody2D.active != body.isActive()) body.setActive(componentRigidBody2D.active);
-            transform.x = body.getPosition().x;
-            transform.y = body.getPosition().y;
-            transform.angle = body.getAngle();
+            ComponentTransform2D transform = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
+            ComponentBody2D componentBody2D = (ComponentBody2D) entity.components[ComponentType.PHYSICS_2D.ordinal()];
+            Body body = componentBody2D.body;
+            if (componentBody2D.active != body.isActive()) body.setActive(componentBody2D.active);
+            transform.worldX = body.getPosition().x;
+            transform.worldY = body.getPosition().y;
+            transform.worldAngle = body.getAngle();
         }
     }
 
     public void addPhysics(final Entity entity) {
         Component physics2d = (Component) entity.components[ComponentType.PHYSICS_2D.ordinal()];
         if (physics2d == null) return;
-        if (physics2d instanceof ComponentRigidBody2D) {
-            ComponentTransform2D transform = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM.ordinal()];
-            ComponentRigidBody2D body2D = (ComponentRigidBody2D) physics2d;
+        if (physics2d instanceof ComponentBody2D) {
+            ComponentTransform2D transform = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
+            ComponentBody2D body2D = (ComponentBody2D) physics2d;
             Physics2DUtils.addRigidBody2D(world, entity, body2D, transform);
         } else {
             ComponentJoint2D joint2D = (ComponentJoint2D) physics2d;
@@ -61,8 +61,8 @@ public class Physics2D implements EntitiesProcessor, Disposable {
     public void destroyPhysics(final Entity entity) {
         Component physics2d = (Component) entity.components[ComponentType.PHYSICS_2D.ordinal()];
         if (physics2d == null) return;
-        if (physics2d instanceof ComponentRigidBody2D) {
-            ComponentRigidBody2D body2D = (ComponentRigidBody2D) physics2d;
+        if (physics2d instanceof ComponentBody2D) {
+            ComponentBody2D body2D = (ComponentBody2D) physics2d;
             Physics2DUtils.destroyRigidBody2D(world, body2D);
         } else {
             ComponentJoint2D joint2D = (ComponentJoint2D) physics2d;

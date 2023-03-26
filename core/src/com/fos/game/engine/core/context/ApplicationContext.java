@@ -13,7 +13,7 @@ import com.fos.game.engine.ecs.components.physics2d.FactoryRigidBody2D;
 import com.fos.game.engine.ecs.components.physics3d.FactoryRigidBody3D;
 import com.fos.game.engine.ecs.components.logic.FactoryLogic;
 import com.fos.game.engine.ecs.components.signals.FactorySignalBox;
-import com.fos.game.engine.ecs.components.transform.FactoryTransform;
+import com.fos.game.engine.ecs.components.transform.FactoryTransform2D;
 import com.fos.game.scenes.tests.loading.TestLoadingScene;
 
 public class ApplicationContext implements ApplicationListener {
@@ -33,7 +33,7 @@ public class ApplicationContext implements ApplicationListener {
     public FactoryRigidBody3D factoryRigidBody3D;
     public FactoryLogic factoryLogic;
     public FactorySignalBox factorySignalBox;
-    public FactoryTransform factoryTransform;
+    public FactoryTransform2D factoryTransform2D;
 
     @Override
     public void create() {
@@ -48,7 +48,7 @@ public class ApplicationContext implements ApplicationListener {
         this.factoryRigidBody3D = new FactoryRigidBody3D(this.assetManager, this.jsonConverter);
         this.factoryLogic = new FactoryLogic(this.assetManager, this.jsonConverter);
         this.factorySignalBox = new FactorySignalBox(this.assetManager, this.jsonConverter);
-        this.factoryTransform = new FactoryTransform(this.assetManager, this.jsonConverter);
+        this.factoryTransform2D = new FactoryTransform2D(this.assetManager, this.jsonConverter);
         playScene(new TestLoadingScene(this));
     }
 

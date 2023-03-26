@@ -62,17 +62,17 @@ public class Renderer implements EntitiesProcessor, Disposable {
                 frameAnimation.advanceTime(delta);
             }
             else if (graphics instanceof ComponentBoneAnimations2D) {
-                ComponentTransform2D transform = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM.ordinal()];
+                ComponentTransform2D transform = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
                 ComponentBoneAnimations2D boneAnimations = (ComponentBoneAnimations2D) entity.components[ComponentType.GRAPHICS.ordinal()];
                 Skeleton skeleton = boneAnimations.skeleton;
                 AnimationState state = boneAnimations.state;
                 if (state.apply(skeleton)) skeleton.updateWorldTransform();
                 state.update(Gdx.graphics.getDeltaTime());
-                skeleton.setPosition(transform.x, transform.y);
-                skeleton.getRootBone().setRotation(transform.angle);
+                skeleton.setPosition(transform.worldX, transform.worldY);
+                skeleton.getRootBone().setRotation(transform.worldAngle);
             }
             else if (graphics instanceof ComponentLight2D) {
-                final ComponentTransform2D transform = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM.ordinal()];
+                final ComponentTransform2D transform = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
                 final ComponentLight2D light2D = (ComponentLight2D) entity.components[ComponentType.GRAPHICS.ordinal()];
                 RendererUtils.applyTransform(transform, light2D);
                 // sets all lights to inactive - lights will be switched on / off per camera render.
@@ -80,7 +80,7 @@ public class Renderer implements EntitiesProcessor, Disposable {
                 if (light != null) light.setActive(false);
             }
             else if (graphics instanceof ComponentCamera) {
-                final ComponentTransform2D transform = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM.ordinal()];
+                final ComponentTransform2D transform = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
                 final ComponentCamera camera = (ComponentCamera) entity.components[ComponentType.GRAPHICS.ordinal()];
                 RendererUtils.applyTransform(transform, camera);
                 allCameras.add(camera);

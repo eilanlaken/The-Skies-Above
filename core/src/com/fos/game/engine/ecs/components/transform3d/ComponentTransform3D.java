@@ -1,4 +1,4 @@
-package com.fos.game.engine.ecs.components.transform;
+package com.fos.game.engine.ecs.components.transform3d;
 
 import com.badlogic.gdx.math.Matrix4;
 import com.fos.game.engine.ecs.components.base.Component;
@@ -14,7 +14,7 @@ public class ComponentTransform3D implements Component {
 
     @Override
     public ComponentType getComponentType() {
-        return ComponentType.TRANSFORM;
+        return ComponentType.TRANSFORM_3D;
     }
 
 }

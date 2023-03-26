@@ -55,18 +55,18 @@ public class TestSceneB extends Scene {
 
         eCamera1 = new Entity(Categories.CAMERA);
         eCamera1.attachComponents(
-                context.factoryTransform.create2d(0, 0, 0, 1, 1, 0),
+                context.factoryTransform2D.create2d(0, 0, 0, 1, 1, 0),
                 context.factoryCamera.createCamera2D(VIRTUAL_HEIGHT * GraphicsUtils.getAspectRatio(), VIRTUAL_HEIGHT, Categories.GAME_OBJECT_1)
         );
         eCamera2 = new Entity(Categories.CAMERA);
         eCamera2.attachComponents(
-                context.factoryTransform.create2d(0, 0, 0, 1, 1, 0),
+                context.factoryTransform2D.create2d(0, 0, 0, 1, 1, 0),
                 context.factoryCamera.createCamera2D(VIRTUAL_HEIGHT * GraphicsUtils.getAspectRatio() / 2, VIRTUAL_HEIGHT / 2, Categories.GAME_OBJECT_2)
         );
 
         e1 = new Entity(Categories.GAME_OBJECT_1);
         e1.attachComponents(
-                context.factoryTransform.create2d(0, 6, 0, 3, 3, 0),
+                context.factoryTransform2D.create2d(0, 6, 0, 3, 3, 0),
                 context.factoryFrameAnimations2D.create("atlases/striders/caterpillarBody.atlas", "caterpillarBody", 1,1f, pixelsPerUnit),
                 context.factoryRigidBody2D.create(new RigidBody2DData(BodyDef.BodyType.DynamicBody, RigidBody2DData.Shape.RECTANGLE,
                         1, 1, new Filter(), 1,1,1, false))
@@ -74,7 +74,7 @@ public class TestSceneB extends Scene {
 
         e2 = new Entity(Categories.GAME_OBJECT_2);
         e2.attachComponents(
-                context.factoryTransform.create2d(-5, 0, 0, 1, 1, 0),
+                context.factoryTransform2D.create2d(-5, 0, 0, 1, 1, 0),
                 context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "a", 1,1f, pixelsPerUnit)
         );
 
@@ -90,11 +90,11 @@ public class TestSceneB extends Scene {
     public void update(float delta) {
         container.update();
 
-        ComponentTransform2D transformCamera = (ComponentTransform2D) eCamera1.components[ComponentType.TRANSFORM.ordinal()];
+        ComponentTransform2D transformCamera = (ComponentTransform2D) eCamera1.components[ComponentType.TRANSFORM_2D.ordinal()];
         ComponentCamera camera = (ComponentCamera) eCamera1.components[ComponentType.GRAPHICS.ordinal()];
         OrthographicCamera lens = (OrthographicCamera) camera.lens;
 
-        ComponentTransform2D transformEntity1 = (ComponentTransform2D) e1.components[ComponentType.TRANSFORM.ordinal()];
+        ComponentTransform2D transformEntity1 = (ComponentTransform2D) e1.components[ComponentType.TRANSFORM_2D.ordinal()];
 
         tintAlpha += delta;
 

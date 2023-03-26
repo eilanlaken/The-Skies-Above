@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.audio.AudioPlayer;
+import com.fos.game.engine.ecs.systems.dynamics2D.Dynamics2D;
 import com.fos.game.engine.ecs.systems.logic.LogicUpdater;
 import com.fos.game.engine.ecs.systems.physics2d.Physics2D;
 import com.fos.game.engine.ecs.systems.physics3d.Physics3D;
@@ -27,6 +28,7 @@ public class EntityContainer implements Disposable {
     protected HashMap<EntitiesProcessor, Array<Entity>> systemEntitiesMap = new HashMap<>();
     public AudioPlayer audioPlayer = new AudioPlayer();
     public Physics2D physics2D = new Physics2D();
+    public Dynamics2D dynamics2D = new Dynamics2D();
     public Physics3D physics3D = new Physics3D();
     public Renderer renderer = new Renderer();
     public LogicUpdater logicUpdater = new LogicUpdater();
@@ -35,7 +37,10 @@ public class EntityContainer implements Disposable {
 
     public EntityContainer() {
         this.systemEntitiesMap.put(audioPlayer, new Array<Entity>(false, 100));
-        this.systemEntitiesMap.put(physics2D, new Array<Entity>(false, 1000));
+
+        //this.systemEntitiesMap.put(physics2D, new Array<Entity>(false, 1000));
+        this.systemEntitiesMap.put(dynamics2D, new Array<Entity>(false, 1000));
+
         this.systemEntitiesMap.put(physics3D, new Array<Entity>(false, 1000));
         this.systemEntitiesMap.put(renderer, new Array<Entity>(false, 1000));
         this.systemEntitiesMap.put(logicUpdater, new Array<Entity>(false, 1000));

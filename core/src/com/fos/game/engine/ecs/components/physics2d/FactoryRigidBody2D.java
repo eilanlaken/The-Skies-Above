@@ -10,8 +10,8 @@ public class FactoryRigidBody2D extends Factory {
         super(assetManager, jsonConverter);
     }
 
-    public ComponentRigidBody2D create(final RigidBody2DData data) {
-        return new ComponentRigidBody2D(data);
+    public ComponentBody2D create(final RigidBody2DData data) {
+        return new ComponentBody2D(data);
     }
 
 }

@@ -44,13 +44,13 @@ public class TestSceneEntityChildren extends Scene {
 
         eCamera1 = new Entity(Categories.CAMERA);
         eCamera1.attachComponents(
-                context.factoryTransform.create2d(0, 0, 0, 1, 1, 0),
+                context.factoryTransform2D.create2d(0, 0, 0, 1, 1, 0),
                 context.factoryCamera.createCamera2D(VIRTUAL_HEIGHT * GraphicsUtils.getAspectRatio(), VIRTUAL_HEIGHT, Categories.GAME_OBJECT_1)
         );
 
         e1 = new Entity(Categories.GAME_OBJECT_1);
         e1.attachComponents(
-                context.factoryTransform.create2d(0, 0, 0, 1, 1, 0),
+                context.factoryTransform2D.create2d(0, 0, 0, 1, 1, 0),
                 context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "a", 1,1f, pixelsPerUnit),
                 context.factoryRigidBody2D.create(new RigidBody2DData(BodyDef.BodyType.DynamicBody, RigidBody2DData.Shape.RECTANGLE,
                         1, 1, new Filter(), 1,1,1, false))
@@ -58,13 +58,13 @@ public class TestSceneEntityChildren extends Scene {
 
         e2 = new Entity(Categories.GAME_OBJECT_1);
         e2.attachComponents(
-                context.factoryTransform.create2d(-5, 0, 0, 1, 1, 0),
+                context.factoryTransform2D.create2d(-5, 0, 0, 1, 1, 0),
                 context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "b", 1,1f, pixelsPerUnit)
         );
 
         e3 = new Entity(Categories.GAME_OBJECT_1);
         e3.attachComponents(
-                context.factoryTransform.create2d(-5, 0, 5, 1, 1, 0),
+                context.factoryTransform2D.create2d(-5, 0, 5, 1, 1, 0),
                 new ComponentShapes2D() {
                     @Override
                     public void draw(ShapeBatch batch) {
@@ -77,7 +77,7 @@ public class TestSceneEntityChildren extends Scene {
 
         e4 = new Entity(Categories.GAME_OBJECT_1);
         e4.attachComponents(
-                context.factoryTransform.create2d(-5, 0, 5, 1, 1, 0),
+                context.factoryTransform2D.create2d(-5, 0, 5, 1, 1, 0),
                 new ComponentShapes2D() {
                     @Override
                     public void draw(ShapeBatch batch) {
