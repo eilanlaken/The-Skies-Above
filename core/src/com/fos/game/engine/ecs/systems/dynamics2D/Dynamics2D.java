@@ -22,13 +22,13 @@ public class Dynamics2D implements EntitiesProcessor, Disposable {
     protected final RayHandler rayHandler;
 
     public Dynamics2D() {
-        this.world = new World(new Vector2(0,0), true);
+        this.world = new World(new Vector2(0,-1f), true);
+        this.world.setContactListener(new Dynamics2DCollisionResolver());
         this.rayHandler = new RayHandler(this.world);
     }
 
     @Override
     public void process(Array<Entity> entities) {
-        System.out.println(entities.size);
         final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
         this.world.step(delta, 6, 2);
 
@@ -51,6 +51,10 @@ public class Dynamics2D implements EntitiesProcessor, Disposable {
             transform.worldX = body.getPosition().x;
             transform.worldY = body.getPosition().y;
             transform.worldAngle = body.getAngle();
+            transform.updated = true;
+            return;
+        }
+        if (transform.isStatic) {
             transform.updated = true;
             return;
         }
@@ -109,8 +113,7 @@ public class Dynamics2D implements EntitiesProcessor, Disposable {
     public boolean shouldProcess(Entity entity) {
         if ((entity.componentsBitMask & Dynamics2DUtils.PHYSICS_2D_BIT_MASK) > 0) return true;
         ComponentTransform2D transform2D = entity.getTransform2D();
-        if (transform2D != null && !transform2D.isStatic) return true;
-        return false;
+        return transform2D != null && !transform2D.isStatic;
     }
 
     @Override

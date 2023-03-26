@@ -11,7 +11,7 @@ public class EntityContainerUtils {
 
     protected static void removeEntities(final EntityContainer container) {
         for (final Entity entity : container.toRemove) {
-            container.physics2D.destroyPhysics(entity);
+            container.dynamics2D.destroyPhysics(entity);
             container.entities.removeValue(entity, true);
         }
         container.toRemove.clear();
@@ -21,7 +21,7 @@ public class EntityContainerUtils {
         for (final Entity entity : container.toAdd) {
             entity.container = container;
             container.entities.add(entity);
-            container.physics2D.addPhysics(entity);
+            container.dynamics2D.addPhysics(entity);
             container.logicUpdater.startScripts(entity);
         }
         container.toAdd.clear();

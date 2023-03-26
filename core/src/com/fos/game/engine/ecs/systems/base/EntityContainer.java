@@ -6,7 +6,6 @@ import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.audio.AudioPlayer;
 import com.fos.game.engine.ecs.systems.dynamics2D.Dynamics2D;
 import com.fos.game.engine.ecs.systems.logic.LogicUpdater;
-import com.fos.game.engine.ecs.systems.physics2d.Physics2D;
 import com.fos.game.engine.ecs.systems.physics3d.Physics3D;
 import com.fos.game.engine.ecs.systems.renderer.Config;
 import com.fos.game.engine.ecs.systems.renderer.Renderer;
@@ -27,7 +26,7 @@ public class EntityContainer implements Disposable {
     // systems
     protected HashMap<EntitiesProcessor, Array<Entity>> systemEntitiesMap = new HashMap<>();
     public AudioPlayer audioPlayer = new AudioPlayer();
-    public Physics2D physics2D = new Physics2D();
+    //public Physics2D physics2D = new Physics2D();
     public Dynamics2D dynamics2D = new Dynamics2D();
     public Physics3D physics3D = new Physics3D();
     public Renderer renderer = new Renderer();
