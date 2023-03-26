@@ -8,7 +8,7 @@ public class ComponentTransform2D implements Component {
 
     public final Entity entity;
     public ComponentTransform2D parent;
-    public boolean isStatic;
+    public final boolean isStatic;
 
     public float x, y, z;
     public float scaleX, scaleY;

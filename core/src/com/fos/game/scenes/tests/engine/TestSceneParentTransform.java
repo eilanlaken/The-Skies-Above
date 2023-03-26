@@ -59,7 +59,7 @@ public class TestSceneParentTransform extends Scene {
         );
 
         e2 = new Entity(Categories.GAME_OBJECTS);
-        ComponentTransform2D transform2D_2 = context.factoryTransform2D.create2d(-5, 0, 0, 1, 1, 0, false, e2);
+        ComponentTransform2D transform2D_2 = context.factoryTransform2D.create2d(-3, 0, 0, 1, 1, 0, true, e2);
         transform2D_2.parent = transform2D_1;
         e2.attachComponents(
                 transform2D_2,
@@ -67,7 +67,7 @@ public class TestSceneParentTransform extends Scene {
         );
 
         e3 = new Entity(Categories.GAME_OBJECTS);
-        ComponentTransform2D transform2D_3 = context.factoryTransform2D.create2d(-2, 1, 0, 1, 1, 0, false, e3);
+        ComponentTransform2D transform2D_3 = context.factoryTransform2D.create2d(-6, 1, 0, 1, 1, 0, false, e3);
         transform2D_3.parent = transform2D_2;
         e3.attachComponents(
                 transform2D_3,
