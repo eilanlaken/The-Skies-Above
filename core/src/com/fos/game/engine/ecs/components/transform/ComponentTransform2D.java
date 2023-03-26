@@ -6,8 +6,8 @@ import com.fos.game.engine.ecs.entities.Entity;
 
 public class ComponentTransform2D implements Component {
 
-    public final Entity entity;
-    public ComponentTransform2D parent;
+    // public final Entity entity;
+    // public ComponentTransform2D parent;
     public final boolean isStatic;
 
     public float x, y, z;
@@ -19,9 +19,9 @@ public class ComponentTransform2D implements Component {
     public float worldAngle;
     public boolean updated;
 
-    protected ComponentTransform2D(float x, float y, float z, float scaleX, float scaleY, float angle, boolean isStatic, Entity entity) {
-        this.entity = entity;
-        this.parent = null;
+    protected ComponentTransform2D(float x, float y, float z, float scaleX, float scaleY, float angle, boolean isStatic) {
+        //this.entity = entity;
+        //this.parent = null;
         this.isStatic = isStatic;
 
         this.x = x;

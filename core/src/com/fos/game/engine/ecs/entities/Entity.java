@@ -24,13 +24,14 @@ import com.fos.game.engine.ecs.systems.base.EntityContainer;
 public class Entity implements Disposable {
 
     public EntityContainer container;
-    public Entity parent;
-    public Array<Entity> children;
+    private Entity parent;
+    private Array<Entity> children;
 
     public Object[] components;
     public int componentsBitMask;
     public int category;
     public boolean active = true;
+    public boolean clearParent = false;
 
     public Entity(final Enum category) {
         this.category = 0b000001 << category.ordinal();
@@ -58,6 +59,7 @@ public class Entity implements Disposable {
     public void detachChild(final Entity child) {
         children.removeValue(child, true);
         child.parent = null;
+        child.clearParent = true;
     }
 
     @Override
@@ -144,4 +146,11 @@ public class Entity implements Disposable {
         return (ComponentStorage) components[ComponentType.STORAGE.ordinal()];
     }
 
+    public Entity getParent() {
+        return parent;
+    }
+
+    public Array<Entity> getChildren() {
+        return children;
+    }
 }

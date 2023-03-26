@@ -58,7 +58,17 @@ public class Dynamics2D implements EntitiesProcessor, Disposable {
             transform.updated = true;
             return;
         }
-        if (transform.parent == null) {
+        if (entity.clearParent) {
+            transform.x = transform.worldX;
+            transform.y = transform.worldY;
+            transform.z = transform.worldZ;
+            transform.scaleX = transform.worldScaleX;
+            transform.scaleY = transform.worldScaleY;
+            transform.angle = transform.worldAngle;
+            transform.updated = true;
+            return;
+        }
+        if (entity.getParent() == null) {
             transform.worldX = transform.x;
             transform.worldY = transform.y;
             transform.worldZ = transform.z;
@@ -66,21 +76,21 @@ public class Dynamics2D implements EntitiesProcessor, Disposable {
             transform.worldScaleY = transform.scaleY;
             transform.worldAngle = transform.angle;
             transform.updated = true;
+            return;
         }
-        if (transform.parent != null) {
-            Entity transformParent = transform.parent.entity;
-            updateWorldTransform(transformParent);
-            ComponentTransform2D parent = transform.parent;
-            float cos = MathUtils.cos(parent.worldAngle);
-            float sin = MathUtils.sin(parent.worldAngle);
+        if (entity.getParent() != null) {
+            updateWorldTransform(entity.getParent());
+            ComponentTransform2D parentTransform = entity.getParent().getTransform2D();
+            float cos = MathUtils.cos(parentTransform.worldAngle);
+            float sin = MathUtils.sin(parentTransform.worldAngle);
             float x = transform.x * cos - transform.y * sin;
             float y = transform.x * sin + transform.y * cos;
-            transform.worldX = parent.worldX + x * parent.worldScaleX;
-            transform.worldY = parent.worldY + y * parent.worldScaleY;
-            transform.worldZ = parent.worldZ;
-            transform.worldScaleX = transform.scaleX * parent.worldScaleX;
-            transform.worldScaleY = transform.scaleY * parent.worldScaleY;
-            transform.worldAngle  = transform.angle + parent.worldAngle;
+            transform.worldX = parentTransform.worldX + x * parentTransform.worldScaleX;
+            transform.worldY = parentTransform.worldY + y * parentTransform.worldScaleY;
+            transform.worldZ = parentTransform.worldZ;
+            transform.worldScaleX = transform.scaleX * parentTransform.worldScaleX;
+            transform.worldScaleY = transform.scaleY * parentTransform.worldScaleY;
+            transform.worldAngle  = transform.angle + parentTransform.worldAngle;
         }
     }
 

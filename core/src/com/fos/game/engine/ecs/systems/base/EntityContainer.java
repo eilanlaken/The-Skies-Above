@@ -22,6 +22,7 @@ public class EntityContainer implements Disposable {
     protected Array<Entity> entities = new Array<>(false, 1000);
     protected Array<Entity> toAdd = new Array<>(false, 100);
     protected Array<Entity> toRemove = new Array<>(false, 100);
+    protected Array<Entity> toUnparent = new Array<>(false, 100);
 
     // systems
     protected HashMap<EntitiesProcessor, Array<Entity>> systemEntitiesMap = new HashMap<>();
