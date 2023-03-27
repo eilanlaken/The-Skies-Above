@@ -24,14 +24,13 @@ import com.fos.game.engine.ecs.systems.base.EntityContainer;
 public class Entity implements Disposable {
 
     public EntityContainer container;
-    private Entity parent;
-    private Array<Entity> children;
+    public Entity parent;
+    public Array<Entity> children;
 
     public Object[] components;
     public int componentsBitMask;
     public int category;
     public boolean active = true;
-    public boolean clearParent = false;
 
     public Entity(final Enum category) {
         this.category = 0b000001 << category.ordinal();
@@ -50,16 +49,34 @@ public class Entity implements Disposable {
         return components[componentType.ordinal()];
     }
 
-    public void attachChild(final Entity child) {
-        if (children == null) children = new Array<>(false, 3);
-        children.add(child);
-        child.parent = this;
+    public void attachChild(final Entity e) {
+        if (e == null) {
+            throw new IllegalArgumentException("Child entity cannot be null");
+        }
+        if (e == this) {
+            throw new IllegalArgumentException("Cannot attach an entity to itself");
+        }
+        if (e.parent != null) {
+            throw new IllegalArgumentException("Entity already has a parent");
+        }
+        if (this.children != null && this.children.contains(e, true)) {
+            throw new IllegalArgumentException("Entity is already a child of this entity");
+        }
+        if (this.children == null) this.children = new Array<>(false, 3);
+        this.children.add(e);
+        e.parent = this;
     }
 
-    public void detachChild(final Entity child) {
-        children.removeValue(child, true);
-        child.parent = null;
-        child.clearParent = true;
+    public void detachChild(final Entity e) {
+        if (e == null) {
+            throw new IllegalArgumentException("Child entity cannot be null");
+        }
+        if (e.parent != this) {
+            throw new IllegalArgumentException("Entity is not a child of this entity");
+        }
+        e.parent = null;
+        children.removeValue(e, true);
+        this.container.unparent(e);
     }
 
     @Override
@@ -146,11 +163,4 @@ public class Entity implements Disposable {
         return (ComponentStorage) components[ComponentType.STORAGE.ordinal()];
     }
 
-    public Entity getParent() {
-        return parent;
-    }
-
-    public Array<Entity> getChildren() {
-        return children;
-    }
 }

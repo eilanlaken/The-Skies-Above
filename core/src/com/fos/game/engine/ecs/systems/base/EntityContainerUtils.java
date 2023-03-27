@@ -9,6 +9,13 @@ import java.util.Set;
 
 public class EntityContainerUtils {
 
+    protected static void unparentEntities(final EntityContainer container) {
+        for (Entity entity : container.toUnparent) {
+            container.dynamics2D.unparent(entity);
+        }
+        container.toUnparent.clear();
+    }
+
     protected static void removeEntities(final EntityContainer container) {
         for (final Entity entity : container.toRemove) {
             container.dynamics2D.destroyPhysics(entity);
@@ -49,24 +56,4 @@ public class EntityContainerUtils {
         }
     }
 
-    protected static void addEntity(EntityContainer container, Entity entity) {
-        container.toAdd.add(entity);
-        if (entity.getChildren() == null) return;
-        for (Entity child : entity.getChildren()) {
-            addEntity(container, child);
-        }
-    }
-
-    protected static void removeEntity(EntityContainer container, Entity entity) {
-        if (entity.getParent() != null) entity.getParent().detachChild(entity);
-        addToRemoveArray(container, entity);
-    }
-
-    private static void addToRemoveArray(EntityContainer container, Entity entity) {
-        container.toRemove.add(entity);
-        if (entity.getChildren() == null) return;
-        for (Entity child : entity.getChildren()) {
-            addToRemoveArray(container, child);
-        }
-    }
 }

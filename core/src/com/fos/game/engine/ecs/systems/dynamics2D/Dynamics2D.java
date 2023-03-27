@@ -58,17 +58,7 @@ public class Dynamics2D implements EntitiesProcessor, Disposable {
             transform.updated = true;
             return;
         }
-        if (entity.clearParent) {
-            transform.x = transform.worldX;
-            transform.y = transform.worldY;
-            transform.z = transform.worldZ;
-            transform.scaleX = transform.worldScaleX;
-            transform.scaleY = transform.worldScaleY;
-            transform.angle = transform.worldAngle;
-            transform.updated = true;
-            return;
-        }
-        if (entity.getParent() == null) {
+        if (entity.parent == null) {
             transform.worldX = transform.x;
             transform.worldY = transform.y;
             transform.worldZ = transform.z;
@@ -78,9 +68,9 @@ public class Dynamics2D implements EntitiesProcessor, Disposable {
             transform.updated = true;
             return;
         }
-        if (entity.getParent() != null) {
-            updateWorldTransform(entity.getParent());
-            ComponentTransform2D parentTransform = entity.getParent().getTransform2D();
+        if (entity.parent != null) {
+            updateWorldTransform(entity.parent);
+            ComponentTransform2D parentTransform = entity.parent.getTransform2D();
             float cos = MathUtils.cos(parentTransform.worldAngle);
             float sin = MathUtils.sin(parentTransform.worldAngle);
             float x = transform.x * cos - transform.y * sin;
@@ -92,6 +82,18 @@ public class Dynamics2D implements EntitiesProcessor, Disposable {
             transform.worldScaleY = transform.scaleY * parentTransform.worldScaleY;
             transform.worldAngle  = transform.angle + parentTransform.worldAngle;
         }
+    }
+
+    public void unparent(Entity entity) {
+        ComponentTransform2D transform = entity.getTransform2D();
+        if (transform == null) return;
+        transform.x = transform.worldX;
+        transform.y = transform.worldY;
+        transform.z = transform.worldZ;
+        transform.scaleX = transform.worldScaleX;
+        transform.scaleY = transform.worldScaleY;
+        transform.angle = transform.worldAngle;
+        transform.updated = true;
     }
 
     public void addPhysics(final Entity entity) {

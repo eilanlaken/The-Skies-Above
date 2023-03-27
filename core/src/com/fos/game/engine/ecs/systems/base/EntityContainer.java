@@ -47,22 +47,37 @@ public class EntityContainer implements Disposable {
         this.systemEntitiesMap.put(signalRouter, new Array<Entity>(false, 1000));
     }
 
-    public void addEntity(final Entity entity) {
-        EntityContainerUtils.addEntity(this, entity);
-    }
-
-    // TODO - implement remove entity with children.
-    public void removeEntity(final Entity entity) {
-        EntityContainerUtils.removeEntity(this, entity);
-    }
-
-
-
     public void update() {
+        EntityContainerUtils.unparentEntities(this);
         EntityContainerUtils.removeEntities(this);
         EntityContainerUtils.addEntities(this);
         EntityContainerUtils.prepareForProcessing(entities, systemEntitiesMap);
         EntityContainerUtils.process(systemEntitiesMap);
+    }
+
+    public void addEntity(Entity entity) {
+        this.toAdd.add(entity);
+        if (entity.children == null) return;
+        for (Entity child : entity.children) {
+            addEntity(child);
+        }
+    }
+
+    public void removeEntity(Entity entity) {
+        if (entity.parent != null) entity.parent.detachChild(entity);
+        addToRemoveArray(entity);
+    }
+
+    private void addToRemoveArray(Entity entity) {
+        this.toRemove.add(entity);
+        if (entity.children == null) return;
+        for (Entity child : entity.children) {
+            addToRemoveArray(child);
+        }
+    }
+
+    public void unparent(Entity entity) {
+        this.toUnparent.add(entity);
     }
 
     public void config(final SystemConfig ...configs) {

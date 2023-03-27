@@ -15,6 +15,11 @@ public class FactoryTransform2D extends Factory {
         return new ComponentTransform2D(x, y, z, scaleX, scaleY, angle, false);
     }
 
+    public ComponentTransform2D create2d(float x, float y, float z, float scaleX, float scaleY, float angle, boolean isStatic) {
+        return new ComponentTransform2D(x, y, z, scaleX, scaleY, angle, isStatic);
+    }
+
+    @Deprecated
     public ComponentTransform2D create2d(float x, float y, float z, float scaleX, float scaleY, float angle, boolean isStatic, Entity entity) {
         return new ComponentTransform2D(x, y, z, scaleX, scaleY, angle, isStatic);
     }

@@ -50,42 +50,37 @@ public class TestSceneParentTransform extends Scene {
         );
 
         e1 = new Entity(Categories.GAME_OBJECTS);
-        ComponentTransform2D transform2D_1 = context.factoryTransform2D.create2d(0, 0, 0, 1, 1, 0, false, e1);
         e1.attachComponents(
-                transform2D_1,
+                context.factoryTransform2D.create2d(0, 0, 0, 1, 1, 0, false),
                 context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "a", 1,1f, pixelsPerUnit),
                 context.factoryRigidBody2D.create(new RigidBody2DData(BodyDef.BodyType.DynamicBody, RigidBody2DData.Shape.RECTANGLE,
                         1, 1, new Filter(), 1,1,1, false))
         );
 
         e2 = new Entity(Categories.GAME_OBJECTS);
-        ComponentTransform2D transform2D_2 = context.factoryTransform2D.create2d(-3, 0, 0, 1, 1, 0, true, e2);
-        //transform2D_2.parent = transform2D_1;
         e2.attachComponents(
-                transform2D_2,
+                context.factoryTransform2D.create2d(-3, 0, 0, 1, 1, 0, false),
                 context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "b", 1,1f, pixelsPerUnit)
         );
 
         e3 = new Entity(Categories.GAME_OBJECTS);
-        ComponentTransform2D transform2D_3 = context.factoryTransform2D.create2d(-6, 1, 0, 1, 1, 0, false, e3);
-        //transform2D_3.parent = transform2D_2;
         e3.attachComponents(
-                transform2D_3,
+                context.factoryTransform2D.create2d(-6, 1, 0, 1, 1, 0, false),
                 context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "c", 1,1f, pixelsPerUnit)
         );
 
         e4 = new Entity(Categories.GAME_OBJECTS);
-        ComponentTransform2D transform2D_4 = context.factoryTransform2D.create2d(0, -6, 0, 1, 1, 0, false, e3);
         e4.attachComponents(
-                transform2D_4,
+                context.factoryTransform2D.create2d(0, -6, 0, 1, 1, 0, false),
                 context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "c", 1,1f, pixelsPerUnit),
                 context.factoryRigidBody2D.create(new RigidBody2DData(BodyDef.BodyType.StaticBody, RigidBody2DData.Shape.RECTANGLE,
                         10, 1, new Filter(), 1,1,1, false))
         );
 
+        e1.attachChild(e2);
+        e2.attachChild(e3);
+
         container.addEntity(e1);
-        container.addEntity(e2);
-        container.addEntity(e3);
         container.addEntity(e4);
 
 
