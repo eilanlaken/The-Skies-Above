@@ -65,6 +65,7 @@ public class Entity implements Disposable {
         if (this.children == null) this.children = new Array<>(false, 3);
         this.children.add(e);
         e.parent = this;
+        if (this.container != null) this.container.parent(e);
     }
 
     public void detachChild(final Entity e) {
@@ -76,7 +77,7 @@ public class Entity implements Disposable {
         }
         e.parent = null;
         children.removeValue(e, true);
-        this.container.unparent(e);
+        if (this.container != null) this.container.unparent(e);
     }
 
     @Override

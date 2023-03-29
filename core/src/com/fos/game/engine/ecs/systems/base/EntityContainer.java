@@ -23,6 +23,7 @@ public class EntityContainer implements Disposable {
     protected Array<Entity> toAdd = new Array<>(false, 100);
     protected Array<Entity> toRemove = new Array<>(false, 100);
     protected Array<Entity> toUnparent = new Array<>(false, 100);
+    protected Array<Entity> toParent = new Array<>(false, 100);
 
     // systems
     protected HashMap<EntitiesProcessor, Array<Entity>> systemEntitiesMap = new HashMap<>();
@@ -48,6 +49,7 @@ public class EntityContainer implements Disposable {
     }
 
     public void update() {
+        EntityContainerUtils.parentEntities(this);
         EntityContainerUtils.unparentEntities(this);
         EntityContainerUtils.removeEntities(this);
         EntityContainerUtils.addEntities(this);
@@ -78,6 +80,10 @@ public class EntityContainer implements Disposable {
 
     public void unparent(Entity entity) {
         this.toUnparent.add(entity);
+    }
+
+    public void parent(Entity entity) {
+        this.toParent.add(entity);
     }
 
     public void config(final SystemConfig ...configs) {

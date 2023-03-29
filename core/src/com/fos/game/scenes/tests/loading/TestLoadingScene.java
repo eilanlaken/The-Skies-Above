@@ -3,7 +3,7 @@ package com.fos.game.scenes.tests.loading;
 import com.fos.game.engine.core.context.ApplicationContext;
 import com.fos.game.engine.core.context.Scene;
 import com.fos.game.engine.core.files.assets.GameAssetManager;
-import com.fos.game.scenes.tests.engine.TestSceneParentTransform;
+import com.fos.game.scenes.tests.engine.TestSceneParentTransform2;
 
 import java.util.Map;
 
@@ -37,7 +37,7 @@ public class TestLoadingScene extends Scene {
         while (!doneLoading) {
             if (assetManager.update()) {
                 doneLoading = true;
-                context.playScene(new TestSceneParentTransform(context));
+                context.playScene(new TestSceneParentTransform2(context));
             }
         }
     }
@@ -58,7 +58,7 @@ public class TestLoadingScene extends Scene {
     }
 
     private void queueAssets() {
-        Map<String, Class> assetsNameTypeMap = TestSceneParentTransform.getRequiredAssetsNameTypeMap();
+        Map<String, Class> assetsNameTypeMap = TestSceneParentTransform2.getRequiredAssetsNameTypeMap();
         for (Map.Entry<String, Class> entry : assetsNameTypeMap.entrySet()) {
             this.assetManager.load(entry.getKey(), entry.getValue());
         }

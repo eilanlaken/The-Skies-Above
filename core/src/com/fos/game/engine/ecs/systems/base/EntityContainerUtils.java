@@ -9,6 +9,13 @@ import java.util.Set;
 
 public class EntityContainerUtils {
 
+    protected static void parentEntities(final EntityContainer container) {
+        for (Entity entity : container.toParent) {
+            container.dynamics2D.parent(entity);
+        }
+        container.toParent.clear();
+    }
+
     protected static void unparentEntities(final EntityContainer container) {
         for (Entity entity : container.toUnparent) {
             container.dynamics2D.unparent(entity);

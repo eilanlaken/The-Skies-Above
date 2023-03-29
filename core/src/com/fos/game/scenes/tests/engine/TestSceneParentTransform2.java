@@ -3,7 +3,6 @@ package com.fos.game.scenes.tests.engine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.fos.game.engine.core.context.ApplicationContext;
@@ -12,7 +11,6 @@ import com.fos.game.engine.core.graphics.g2d.GraphicsUtils;
 import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
-import com.fos.game.engine.ecs.components.physics2d.ComponentBody2D;
 import com.fos.game.engine.ecs.components.physics2d.RigidBody2DData;
 import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
@@ -21,7 +19,7 @@ import com.fos.game.engine.ecs.systems.base.EntityContainer;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TestSceneParentTransform extends Scene {
+public class TestSceneParentTransform2 extends Scene {
 
     enum Categories {
         GAME_OBJECTS,
@@ -35,7 +33,7 @@ public class TestSceneParentTransform extends Scene {
     public final float VIRTUAL_HEIGHT = 20;
     private int pixelsPerUnit = 53*2;
 
-    public TestSceneParentTransform(final ApplicationContext context) {
+    public TestSceneParentTransform2(final ApplicationContext context) {
         super(context);
     }
 
@@ -52,9 +50,7 @@ public class TestSceneParentTransform extends Scene {
         e1 = new Entity(Categories.GAME_OBJECTS);
         e1.attachComponents(
                 context.factoryTransform2D.create2d(0, 0, 0, 1, 1, 0, false),
-                context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "a", 1,1f, pixelsPerUnit),
-                context.factoryRigidBody2D.create(new RigidBody2DData(BodyDef.BodyType.DynamicBody, RigidBody2DData.Shape.RECTANGLE,
-                        1, 1, new Filter(), 1,1,1, false))
+                context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "a", 1,1f, pixelsPerUnit)
         );
 
         e2 = new Entity(Categories.GAME_OBJECTS);
@@ -93,11 +89,6 @@ public class TestSceneParentTransform extends Scene {
 
         Entity toMove = e1;
 
-        ComponentBody2D componentBody2D_1 = e1.getBody2D();
-        Body body = componentBody2D_1.body;
-
-
-
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             ComponentTransform2D transform2D = (ComponentTransform2D) toMove.getComponent(ComponentType.TRANSFORM_2D);
             transform2D.x -= 0.05f;
@@ -120,17 +111,15 @@ public class TestSceneParentTransform extends Scene {
         }
         if (Gdx.input.isKeyPressed(Input.Keys.E)) {
             ComponentTransform2D transform2D = (ComponentTransform2D) toMove.getComponent(ComponentType.TRANSFORM_2D);
-            //transform2D.angle -= 1 * MathUtils.degreesToRadians;
-            //body.applyForceToCenter(1,0, false);
-            body.applyTorque(3, false);
+            transform2D.angle -= 1 * MathUtils.degreesToRadians;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            ComponentTransform2D transform2D = (ComponentTransform2D) e2.getComponent(ComponentType.TRANSFORM_2D);
+            ComponentTransform2D transform2D = (ComponentTransform2D) toMove.getComponent(ComponentType.TRANSFORM_2D);
             transform2D.scaleX += 0.017f;
             transform2D.scaleY += 0.017f;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            ComponentTransform2D transform2D = (ComponentTransform2D) e2.getComponent(ComponentType.TRANSFORM_2D);
+            ComponentTransform2D transform2D = (ComponentTransform2D) toMove.getComponent(ComponentType.TRANSFORM_2D);
             transform2D.scaleX -= 0.017f;
             transform2D.scaleY -= 0.017f;
         }
