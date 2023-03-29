@@ -20,7 +20,6 @@ public class Dynamics2D implements EntitiesProcessor, Disposable {
 
     protected final World world;
     protected final RayHandler rayHandler;
-    private static final Vector2 compute = new Vector2();
 
     public Dynamics2D() {
         this.world = new World(new Vector2(0,-1f), true);
@@ -86,10 +85,12 @@ public class Dynamics2D implements EntitiesProcessor, Disposable {
     }
 
     public void parent(Entity entity) {
+        /*
         ComponentTransform2D transform = entity.getTransform2D();
         if (transform == null) return;
         ComponentTransform2D transformParent = entity.parent.getTransform2D();
         if (transformParent == null) return;
+        Vector2 compute = new Vector2();
         compute.set(-transformParent.worldX + transform.x, -transformParent.worldY + transform.y);
         compute.rotateRad(-transformParent.worldAngle);
         compute.scl(1 / transformParent.worldScaleX, 1 / transformParent.worldScaleY);
@@ -99,9 +100,12 @@ public class Dynamics2D implements EntitiesProcessor, Disposable {
         transform.scaleX = transform.scaleX / transformParent.worldScaleX;
         transform.scaleY = transform.scaleY / transformParent.worldScaleY;
         transform.updated = true;
+
+         */
     }
 
     public void unparent(Entity entity) {
+        /*
         ComponentTransform2D transform = entity.getTransform2D();
         if (transform == null) return;
         transform.x = transform.worldX;
@@ -111,6 +115,8 @@ public class Dynamics2D implements EntitiesProcessor, Disposable {
         transform.scaleY = transform.worldScaleY;
         transform.angle = transform.worldAngle;
         transform.updated = true;
+
+         */
     }
 
     public void addPhysics(final Entity entity) {
