@@ -56,7 +56,9 @@ public class TestSceneParentTransform2 extends Scene {
         e2 = new Entity(Categories.GAME_OBJECTS);
         e2.attachComponents(
                 context.factoryTransform2D.create2d(-3, 0, 0, 1, 1, 0, false),
-                context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "b", 1,1f, pixelsPerUnit)
+                context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "b", 1,1f, pixelsPerUnit),
+                context.factoryRigidBody2D.create(new RigidBody2DData(BodyDef.BodyType.DynamicBody, RigidBody2DData.Shape.RECTANGLE,
+                        1, 1, new Filter(), 1,1,1, false))
         );
 
         e3 = new Entity(Categories.GAME_OBJECTS);

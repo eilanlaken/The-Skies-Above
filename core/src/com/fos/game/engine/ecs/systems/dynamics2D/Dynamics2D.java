@@ -41,6 +41,8 @@ public class Dynamics2D implements EntitiesProcessor, Disposable {
         }
     }
 
+
+
     private void updateWorldTransform(Entity entity) {
         ComponentTransform2D transform = entity.getTransform2D();
         if (transform.updated) return;
@@ -55,6 +57,12 @@ public class Dynamics2D implements EntitiesProcessor, Disposable {
             return;
         }
         if (transform.isStatic) {
+            transform.x = transform.worldX;
+            transform.y = transform.worldY;
+            transform.z = transform.worldZ;
+            transform.scaleX = transform.worldScaleX;
+            transform.scaleY = transform.worldScaleY;
+            transform.angle = transform.worldAngle;
             transform.updated = true;
             return;
         }
@@ -66,9 +74,7 @@ public class Dynamics2D implements EntitiesProcessor, Disposable {
             transform.worldScaleY = transform.scaleY;
             transform.worldAngle = transform.angle;
             transform.updated = true;
-            return;
-        }
-        if (entity.parent != null) {
+        } else {
             updateWorldTransform(entity.parent);
             ComponentTransform2D parentTransform = entity.parent.getTransform2D();
             float cos = MathUtils.cos(parentTransform.worldAngle);
@@ -85,7 +91,6 @@ public class Dynamics2D implements EntitiesProcessor, Disposable {
     }
 
     public void parent(Entity entity) {
-        /*
         ComponentTransform2D transform = entity.getTransform2D();
         if (transform == null) return;
         ComponentTransform2D transformParent = entity.parent.getTransform2D();
@@ -100,12 +105,9 @@ public class Dynamics2D implements EntitiesProcessor, Disposable {
         transform.scaleX = transform.scaleX / transformParent.worldScaleX;
         transform.scaleY = transform.scaleY / transformParent.worldScaleY;
         transform.updated = true;
-
-         */
     }
 
     public void unparent(Entity entity) {
-        /*
         ComponentTransform2D transform = entity.getTransform2D();
         if (transform == null) return;
         transform.x = transform.worldX;
@@ -115,8 +117,6 @@ public class Dynamics2D implements EntitiesProcessor, Disposable {
         transform.scaleY = transform.worldScaleY;
         transform.angle = transform.worldAngle;
         transform.updated = true;
-
-         */
     }
 
     public void addPhysics(final Entity entity) {
