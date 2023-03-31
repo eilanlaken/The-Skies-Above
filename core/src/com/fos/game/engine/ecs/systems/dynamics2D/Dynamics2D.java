@@ -138,21 +138,6 @@ public class Dynamics2D implements EntitiesProcessor, Disposable {
         }
     }
 
-    @Deprecated
-    public void addPhysics(final Entity entity) {
-        ComponentBody2D body2D = entity.getBody2D();
-        if (body2D == null) return;
-        ComponentTransform2D transform = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
-        Dynamics2DUtils.addBody2D(world, entity, body2D, transform);
-    }
-
-    @Deprecated
-    public void destroyPhysics(final Entity entity) {
-        ComponentBody2D body2D = entity.getBody2D();
-        if (body2D == null) return;
-        Dynamics2DUtils.destroyBody2D(world, body2D);
-    }
-
     // api
     // TODO: implement ray casting
 

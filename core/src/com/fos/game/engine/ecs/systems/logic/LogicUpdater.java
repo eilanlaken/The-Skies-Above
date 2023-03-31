@@ -30,14 +30,6 @@ public class LogicUpdater implements EntitiesProcessor {
         }
     }
 
-    @Deprecated
-    public void startScripts(final Entity entity) {
-        ComponentLogic componentLogic = (ComponentLogic) entity.components[ComponentType.LOGIC.ordinal()];
-        if (componentLogic != null) {
-            for (Logic logic : componentLogic.logic) logic.start();
-        }
-    }
-
     @Override
     public boolean shouldProcess(Entity entity) {
         return (entity.componentsBitMask & LogicUpdaterUtils.SCRIPTED_ENTITY_BIT_MASK) > 0;

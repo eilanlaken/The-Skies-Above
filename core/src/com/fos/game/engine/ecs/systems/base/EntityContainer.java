@@ -37,10 +37,7 @@ public class EntityContainer implements Disposable {
 
     public EntityContainer() {
         this.systemEntitiesMap.put(audioPlayer, new Array<Entity>(false, 100));
-
-        //this.systemEntitiesMap.put(physics2D, new Array<Entity>(false, 1000));
         this.systemEntitiesMap.put(dynamics2D, new Array<Entity>(false, 1000));
-
         this.systemEntitiesMap.put(physics3D, new Array<Entity>(false, 1000));
         this.systemEntitiesMap.put(renderer, new Array<Entity>(false, 1000));
         this.systemEntitiesMap.put(logicUpdater, new Array<Entity>(false, 1000));
@@ -67,7 +64,6 @@ public class EntityContainer implements Disposable {
     }
 
     public void removeEntity(Entity entity) {
-        entity.container = null;
         entity.active = false;
         if (entity.parent != null) entity.parent.detachChild(entity);
         addToRemoveArray(entity);

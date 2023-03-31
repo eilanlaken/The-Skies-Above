@@ -26,7 +26,6 @@ public class EntityContainerUtils {
     protected static void removeEntities(final EntityContainer container) {
         container.entities.removeAll(container.toRemove, true);
         container.dynamics2D.removeEntities(container.toRemove);
-        for (Entity entity : container.toRemove) entity.container = null;
         container.toRemove.clear();
     }
 
