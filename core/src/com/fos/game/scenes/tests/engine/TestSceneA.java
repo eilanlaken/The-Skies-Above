@@ -23,7 +23,7 @@ import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
 import com.fos.game.engine.core.graphics.spine.*;
 import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
-import com.fos.game.engine.ecs.components.physics2d.RigidBody2DData;
+import com.fos.game.engine.ecs.components.physics2d.Body2DData;
 import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
 
 import java.util.Comparator;
@@ -116,9 +116,9 @@ public class TestSceneA extends Scene {
         Filter filter = new Filter();
         filter.categoryBits = 0x0001;
         filter.maskBits = 0x0011;
-        entityMini1.body = createBody(world, new RigidBody2DData(
+        entityMini1.body = createBody(world, new Body2DData(
                         BodyDef.BodyType.DynamicBody,
-                        RigidBody2DData.Shape.RECTANGLE,
+                        Body2DData.Shape.RECTANGLE,
                         1,
                         1,
                         filter,
@@ -133,9 +133,9 @@ public class TestSceneA extends Scene {
         Filter filter2 = new Filter();
         filter2.categoryBits = 0x0001;
         filter2.maskBits = 0x0011;
-        entityMini2.body = createBody(world, new RigidBody2DData(
+        entityMini2.body = createBody(world, new Body2DData(
                         BodyDef.BodyType.DynamicBody,
-                        RigidBody2DData.Shape.RECTANGLE,
+                        Body2DData.Shape.RECTANGLE,
                         1,
                         1,
                         filter2,
@@ -274,7 +274,7 @@ public class TestSceneA extends Scene {
     }
 
 
-    private Body createBody(World world, RigidBody2DData data, ComponentTransform2D transform) {
+    private Body createBody(World world, Body2DData data, ComponentTransform2D transform) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = data.bodyType;
         if (transform == null) System.out.println("is null");
@@ -297,13 +297,13 @@ public class TestSceneA extends Scene {
         return body;
     }
 
-    private Shape getShape(final RigidBody2DData data) {
-        if (data.shape == RigidBody2DData.Shape.CIRCLE) {
+    private Shape getShape(final Body2DData data) {
+        if (data.shape == Body2DData.Shape.CIRCLE) {
             CircleShape shape = new CircleShape();
             shape.setRadius((data.width + data.height) * 0.5f); // average of width and height
             return shape;
         }
-        if (data.shape == RigidBody2DData.Shape.RECTANGLE) {
+        if (data.shape == Body2DData.Shape.RECTANGLE) {
             PolygonShape shape = new PolygonShape();
             shape.setAsBox(data.width / 2, data.height / 2);
             return shape;

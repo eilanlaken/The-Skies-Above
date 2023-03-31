@@ -4,7 +4,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.physics2d.ComponentJoint2D;
 import com.fos.game.engine.ecs.components.physics2d.ComponentBody2D;
-import com.fos.game.engine.ecs.components.physics2d.RigidBody2DData;
+import com.fos.game.engine.ecs.components.physics2d.Body2DData;
 import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 
@@ -14,7 +14,7 @@ public class Dynamics2DUtils {
 
     protected static void addRigidBody2D(final World world, final Entity entity, final ComponentBody2D componentBody2D,
                                          final ComponentTransform2D transform) {
-        RigidBody2DData data = componentBody2D.data;
+        Body2DData data = componentBody2D.data;
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = data.bodyType;
         bodyDef.position.set(transform.x, transform.y);
@@ -48,13 +48,13 @@ public class Dynamics2DUtils {
         world.destroyJoint(componentJoint2D.joint);
     }
 
-    private static Shape getShape(final RigidBody2DData data) {
-        if (data.shape == RigidBody2DData.Shape.CIRCLE) {
+    private static Shape getShape(final Body2DData data) {
+        if (data.shape == Body2DData.Shape.CIRCLE) {
             CircleShape shape = new CircleShape();
             shape.setRadius((data.width + data.height) * 0.5f); // average of width and height
             return shape;
         }
-        if (data.shape == RigidBody2DData.Shape.RECTANGLE) {
+        if (data.shape == Body2DData.Shape.RECTANGLE) {
             PolygonShape shape = new PolygonShape();
             shape.setAsBox(data.width / 2, data.height / 2);
             return shape;

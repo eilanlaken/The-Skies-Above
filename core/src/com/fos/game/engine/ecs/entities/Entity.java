@@ -13,7 +13,7 @@ import com.fos.game.engine.ecs.components.lights2d.ComponentLight2D;
 import com.fos.game.engine.ecs.components.logic.ComponentLogic;
 import com.fos.game.engine.ecs.components.physics2d.ComponentJoint2D;
 import com.fos.game.engine.ecs.components.physics2d.ComponentBody2D;
-import com.fos.game.engine.ecs.components.physics3d.ComponentRigidBody3D;
+import com.fos.game.engine.ecs.components.physics3d.ComponentBody3D;
 import com.fos.game.engine.ecs.components.shape2d.ComponentShapes2D;
 import com.fos.game.engine.ecs.components.signals.ComponentSignalBox;
 import com.fos.game.engine.ecs.components.storage.ComponentStorage;
@@ -116,8 +116,8 @@ public class Entity implements Disposable {
     }
 
     // physics 3d
-    public ComponentRigidBody3D getPhysics3D() {
-        return (ComponentRigidBody3D) components[ComponentType.PHYSICS_3D.ordinal()];
+    public ComponentBody3D getPhysics3D() {
+        return (ComponentBody3D) components[ComponentType.PHYSICS_3D.ordinal()];
     }
 
     // graphics

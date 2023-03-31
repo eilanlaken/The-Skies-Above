@@ -12,7 +12,7 @@ import com.fos.game.engine.core.graphics.g2d.ShapeBatch;
 import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
-import com.fos.game.engine.ecs.components.physics2d.RigidBody2DData;
+import com.fos.game.engine.ecs.components.physics2d.Body2DData;
 import com.fos.game.engine.ecs.components.shape2d.ComponentShapes2D;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.base.EntityContainer;
@@ -52,7 +52,7 @@ public class TestSceneEntityChildren extends Scene {
         e1.attachComponents(
                 context.factoryTransform2D.create2d(0, 0, 0, 1, 1, 0),
                 context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "a", 1,1f, pixelsPerUnit),
-                context.factoryRigidBody2D.create(new RigidBody2DData(BodyDef.BodyType.DynamicBody, RigidBody2DData.Shape.RECTANGLE,
+                context.factoryBody2D.create(new Body2DData(BodyDef.BodyType.DynamicBody, Body2DData.Shape.RECTANGLE,
                         1, 1, new Filter(), 1,1,1, false))
         );
 

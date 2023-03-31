@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.bullet.dynamics.*;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.fos.game.engine.ecs.components.base.ComponentType;
-import com.fos.game.engine.ecs.components.physics3d.ComponentRigidBody3D;
+import com.fos.game.engine.ecs.components.physics3d.ComponentBody3D;
 import com.fos.game.engine.ecs.components.transform3d.ComponentTransform3D;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
@@ -52,7 +52,7 @@ public class Physics3D implements EntitiesProcessor, Disposable {
     public void process(final Array<Entity> entities) {
         // sync transforms: bullet3D's and transform component
         for (final Entity entity : entities) {
-            ComponentRigidBody3D body = (ComponentRigidBody3D) entity.components[ComponentType.PHYSICS_3D.ordinal()];
+            ComponentBody3D body = (ComponentBody3D) entity.components[ComponentType.PHYSICS_3D.ordinal()];
             ComponentTransform3D transform = (ComponentTransform3D) entity.components[ComponentType.TRANSFORM_3D.ordinal()];
             body.getWorldTransform(transform.matrix4);
         }

@@ -17,7 +17,7 @@ import com.fos.game.engine.core.graphics.shaders.postprocessing.Example_PostProc
 import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
-import com.fos.game.engine.ecs.components.physics2d.RigidBody2DData;
+import com.fos.game.engine.ecs.components.physics2d.Body2DData;
 import com.fos.game.engine.ecs.components.shape2d.ComponentShapes2D;
 import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
@@ -71,7 +71,7 @@ public class TestSceneC extends Scene {
         e1.attachComponents(
                 context.factoryTransform2D.create2d(0, 0, 0, 1, 1, 0),
                 context.factoryFrameAnimations2D.create("atlases/stations/station_14.atlas", "station", 1,1f, pixelsPerUnit),
-                context.factoryRigidBody2D.create(new RigidBody2DData(BodyDef.BodyType.DynamicBody, RigidBody2DData.Shape.RECTANGLE,
+                context.factoryBody2D.create(new Body2DData(BodyDef.BodyType.DynamicBody, Body2DData.Shape.RECTANGLE,
                         1, 1, new Filter(), 1,1,1, false))
         );
 

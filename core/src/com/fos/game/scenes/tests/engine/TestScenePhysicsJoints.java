@@ -19,7 +19,7 @@ import com.fos.game.engine.ecs.systems.base.EntityContainer;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TestSceneParentTransform2 extends Scene {
+public class TestScenePhysicsJoints extends Scene {
 
     enum Categories {
         GAME_OBJECTS,
@@ -28,12 +28,12 @@ public class TestSceneParentTransform2 extends Scene {
     EntityContainer container;
 
     Entity eCamera1;
-    Entity e1, e2, e3, e4;
+    Entity e1, e2, e3, e4, e5;
 
     public final float VIRTUAL_HEIGHT = 20;
     private int pixelsPerUnit = 53*2;
 
-    public TestSceneParentTransform2(final ApplicationContext context) {
+    public TestScenePhysicsJoints(final ApplicationContext context) {
         super(context);
     }
 
@@ -50,7 +50,9 @@ public class TestSceneParentTransform2 extends Scene {
         e1 = new Entity(Categories.GAME_OBJECTS);
         e1.attachComponents(
                 context.factoryTransform2D.create2d(0, 0, 0, 1, 1, 0, false),
-                context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "a", 1,1f, pixelsPerUnit)
+                context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "a", 1,1f, pixelsPerUnit),
+                context.factoryBody2D.create(new Body2DData(BodyDef.BodyType.DynamicBody, Body2DData.Shape.RECTANGLE,
+                        1, 1, new Filter(), 1,1,1, false))
         );
 
         e2 = new Entity(Categories.GAME_OBJECTS);
@@ -64,7 +66,9 @@ public class TestSceneParentTransform2 extends Scene {
         e3 = new Entity(Categories.GAME_OBJECTS);
         e3.attachComponents(
                 context.factoryTransform2D.create2d(-6, 1, 0, 1, 1, 0, false),
-                context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "c", 1,1f, pixelsPerUnit)
+                context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "c", 1,1f, pixelsPerUnit),
+                context.factoryBody2D.create(new Body2DData(BodyDef.BodyType.DynamicBody, Body2DData.Shape.RECTANGLE,
+                        1, 1, new Filter(), 1,1,1, false))
         );
 
         e4 = new Entity(Categories.GAME_OBJECTS);
@@ -72,13 +76,22 @@ public class TestSceneParentTransform2 extends Scene {
                 context.factoryTransform2D.create2d(0, -6, 0, 1, 1, 0, false),
                 context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "c", 1,1f, pixelsPerUnit),
                 context.factoryBody2D.create(new Body2DData(BodyDef.BodyType.StaticBody, Body2DData.Shape.RECTANGLE,
-                        10, 1, new Filter(), 1,1,1, false))
+                        20, 1, new Filter(), 1,1,1, false))
         );
 
-        e1.attachChild(e2);
-        e2.attachChild(e3);
+        e5 = new Entity(Categories.GAME_OBJECTS);
+        e5.attachComponents(
+                context.factoryFrameAnimations2D.create("atlases/test/testSpriteSheet3.atlas", "c", 1,1f, pixelsPerUnit),
+                context.factoryBody2D.create(new Body2DData(BodyDef.BodyType.StaticBody, Body2DData.Shape.RECTANGLE,
+                        20, 1, new Filter(), 1,1,1, false))
+        );
+
+        //context.factoryRigidBody2D.create();
+
 
         container.addEntity(e1);
+        container.addEntity(e2);
+        container.addEntity(e3);
         container.addEntity(e4);
 
 

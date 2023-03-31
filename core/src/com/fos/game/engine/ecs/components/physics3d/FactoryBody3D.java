@@ -13,17 +13,17 @@ import com.fos.game.engine.ecs.components.base.Factory;
 import com.fos.game.engine.core.files.assets.GameAssetManager;
 import com.fos.game.engine.core.files.serialization.JsonConverter;
 
-public class FactoryRigidBody3D extends Factory {
+public class FactoryBody3D extends Factory {
 
     private static final Vector3 localInertia = new Vector3();
     private static final Vector3 shapeData = new Vector3();
     private static boolean bulletPhysicsInitialized = false;
 
-    public FactoryRigidBody3D(final GameAssetManager assetManager, final JsonConverter jsonConverter) {
+    public FactoryBody3D(final GameAssetManager assetManager, final JsonConverter jsonConverter) {
         super(assetManager, jsonConverter);
     }
 
-    public static ComponentRigidBody3D createRigidBody(final Model model, float mass, final boolean optimized) {
+    public static ComponentBody3D createRigidBody(final Model model, float mass, final boolean optimized) {
         final Mesh mesh = model.meshes.get(0);
         final btConvexHullShape shape = new btConvexHullShape(mesh.getVerticesBuffer(), mesh.getNumVertices(),
                 mesh.getVertexSize());
@@ -37,28 +37,28 @@ public class FactoryRigidBody3D extends Factory {
         return createRigidBody(optimizedShape, mass);
     }
 
-    public static ComponentRigidBody3D createRigidBox(float width, float height, float depth, float mass) {
+    public static ComponentBody3D createRigidBox(float width, float height, float depth, float mass) {
         init();
         btCollisionShape boxShape = createBoxShape(width, height, depth);
         return createRigidBody(boxShape, mass);
     }
 
-    public static ComponentRigidBody3D createRigidBody(btCollisionShape collisionShape, float mass) {
+    public static ComponentBody3D createRigidBody(btCollisionShape collisionShape, float mass) {
         init();
         if (mass > 0f) collisionShape.calculateLocalInertia(mass, localInertia);
         else localInertia.set(0, 0, 0);
         btRigidBody.btRigidBodyConstructionInfo constructionInfo = new btRigidBody.btRigidBodyConstructionInfo(mass, null, collisionShape, localInertia);
-        ComponentRigidBody3D body = new ComponentRigidBody3D(constructionInfo);
+        ComponentBody3D body = new ComponentBody3D(constructionInfo);
         constructionInfo.dispose();
         return body;
     }
 
     // TODO: see if this actually works
-    public static ComponentRigidBody3D createRigidBody(btCollisionShape collisionShape, float mass, final btRigidBody source) {
+    public static ComponentBody3D createRigidBody(btCollisionShape collisionShape, float mass, final btRigidBody source) {
         if (mass > 0f) collisionShape.calculateLocalInertia(mass, localInertia);
         else localInertia.set(0, 0, 0);
         btRigidBody.btRigidBodyConstructionInfo constructionInfo = new btRigidBody.btRigidBodyConstructionInfo(mass, null, collisionShape, localInertia);
-        ComponentRigidBody3D body = new ComponentRigidBody3D(constructionInfo);
+        ComponentBody3D body = new ComponentBody3D(constructionInfo);
 
         body.setLinearVelocity(source.getLinearVelocity());
         body.setAngularVelocity(source.getAngularVelocity());

@@ -3,7 +3,7 @@ package com.fos.game.engine.ecs.components.physics2d;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class UtilsRigidBody2D {
+public class UtilsBody2D {
 
     public static float getBox2DLength(final float pixelsLength, final float pixelsPerMeter) {
         return pixelsLength / pixelsPerMeter;
