@@ -1,9 +1,12 @@
 package com.fos.game.engine.ecs.systems.renderer;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.fos.game.engine.core.graphics.g2d.Physics2DDebugRenderer;
@@ -11,19 +14,19 @@ import com.fos.game.engine.core.graphics.g2d.PolygonSpriteBatch;
 import com.fos.game.engine.core.graphics.g2d.ShapeBatch;
 import com.fos.game.engine.core.graphics.spine.SkeletonRenderer;
 import com.fos.game.engine.core.graphics.spine.SkeletonRendererDebug;
-import com.fos.game.engine.ecs.components.animations2d.ComponentBoneAnimations2D;
 import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
+import com.fos.game.engine.ecs.components.animations2d.ComponentBoneAnimations2D;
 import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
-import com.fos.game.engine.ecs.components.physics2d.ComponentJoint2D;
-import com.fos.game.engine.ecs.components.physics2d.ComponentBody2D;
 import com.fos.game.engine.ecs.components.shape2d.ComponentShapes2D;
 import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
+import com.fos.game.engine.ecs.systems.base.EntityContainer;
 
 public class Renderer2D implements Disposable {
 
+    private final EntityContainer container;
     private final PolygonSpriteBatch polygonSpriteBatch;
     private final SkeletonRenderer skeletonRenderer;
     private final SkeletonRendererDebug skeletonRendererDebug;
@@ -31,8 +34,8 @@ public class Renderer2D implements Disposable {
     private final ShapeRenderer shapeRenderer; // TODO: replace with ShapeDrawer entirely
     private final Physics2DDebugRenderer physics2DDebugRenderer;
 
-
-    protected Renderer2D() {
+    protected Renderer2D(final EntityContainer container) {
+        this.container = container;
         this.polygonSpriteBatch = new PolygonSpriteBatch();
         this.skeletonRenderer = new SkeletonRenderer();
         this.skeletonRenderer.setPremultipliedAlpha(true);
@@ -62,14 +65,17 @@ public class Renderer2D implements Disposable {
         }
         polygonSpriteBatch.end();
 
+        // expensive operations, should be enabled only during debugging.
         if (debugMode) {
             physics2DDebugRenderer.begin();
             physics2DDebugRenderer.setProjectionMatrix(camera.lens.combined);
-            for (Entity entity : entities) {
-                Component physics2D = (Component) entity.components[ComponentType.PHYSICS_2D.ordinal()];
-                if (physics2D == null) continue;
-                if (physics2D instanceof ComponentBody2D) physics2DDebugRenderer.drawBody(((ComponentBody2D) physics2D).body);
-                if (physics2D instanceof ComponentJoint2D) physics2DDebugRenderer.drawJoint(((ComponentJoint2D) physics2D).joint);
+            Array<Body> bodies = container.dynamics2D.getBodies();
+            for (Body body : bodies) {
+                physics2DDebugRenderer.drawBody(body);
+            }
+            Array<Joint> joints = container.dynamics2D.getJoints();
+            for (Joint joint : joints) {
+                physics2DDebugRenderer.drawJoint(joint);
             }
             physics2DDebugRenderer.end();
         }

@@ -2,7 +2,6 @@ package com.fos.game.engine.ecs.systems.dynamics2D;
 
 import com.badlogic.gdx.physics.box2d.*;
 import com.fos.game.engine.ecs.components.base.ComponentType;
-import com.fos.game.engine.ecs.components.physics2d.ComponentJoint2D;
 import com.fos.game.engine.ecs.components.physics2d.ComponentBody2D;
 import com.fos.game.engine.ecs.components.physics2d.Body2DData;
 import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
@@ -12,8 +11,8 @@ public class Dynamics2DUtils {
 
     protected static final int PHYSICS_2D_BIT_MASK = ComponentType.PHYSICS_2D.bitMask;
 
-    protected static void addRigidBody2D(final World world, final Entity entity, final ComponentBody2D componentBody2D,
-                                         final ComponentTransform2D transform) {
+    protected static void addBody2D(final World world, final Entity entity, final ComponentBody2D componentBody2D,
+                                    final ComponentTransform2D transform) {
         Body2DData data = componentBody2D.data;
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = data.bodyType;
@@ -35,17 +34,8 @@ public class Dynamics2DUtils {
         shape.dispose();
     }
 
-    protected static void destroyRigidBody2D(final World world, final ComponentBody2D componentBody2D) {
+    protected static void destroyBody2D(final World world, final ComponentBody2D componentBody2D) {
         world.destroyBody(componentBody2D.body);
-    }
-
-    protected static void addJoint2D(final World world, final Entity entity, final ComponentJoint2D componentJoint2D) {
-        componentJoint2D.joint = world.createJoint(componentJoint2D.data.jointDef);
-        componentJoint2D.joint.setUserData(entity);
-    }
-
-    protected static void destroyJoint2D(final World world, final ComponentJoint2D componentJoint2D) {
-        world.destroyJoint(componentJoint2D.joint);
     }
 
     private static Shape getShape(final Body2DData data) {

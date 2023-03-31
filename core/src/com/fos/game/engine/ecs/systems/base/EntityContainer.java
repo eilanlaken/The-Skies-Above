@@ -28,10 +28,9 @@ public class EntityContainer implements Disposable {
     // systems
     protected HashMap<EntitiesProcessor, Array<Entity>> systemEntitiesMap = new HashMap<>();
     public AudioPlayer audioPlayer = new AudioPlayer();
-    //public Physics2D physics2D = new Physics2D();
     public Dynamics2D dynamics2D = new Dynamics2D();
     public Physics3D physics3D = new Physics3D();
-    public Renderer renderer = new Renderer();
+    public Renderer renderer = new Renderer(this);
     public LogicUpdater logicUpdater = new LogicUpdater();
     public SignalRouter signalRouter = new SignalRouter();
 
@@ -59,6 +58,8 @@ public class EntityContainer implements Disposable {
 
     public void addEntity(Entity entity) {
         this.toAdd.add(entity);
+        entity.container = this;
+        entity.active = true;
         if (entity.children == null) return;
         for (Entity child : entity.children) {
             addEntity(child);
@@ -66,6 +67,8 @@ public class EntityContainer implements Disposable {
     }
 
     public void removeEntity(Entity entity) {
+        entity.container = null;
+        entity.active = false;
         if (entity.parent != null) entity.parent.detachChild(entity);
         addToRemoveArray(entity);
     }

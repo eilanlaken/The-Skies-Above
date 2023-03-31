@@ -25,6 +25,7 @@ import com.fos.game.engine.ecs.components.lights2d.ComponentLight2D;
 import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
+import com.fos.game.engine.ecs.systems.base.EntityContainer;
 
 import java.util.Map;
 
@@ -43,9 +44,9 @@ public class Renderer implements EntitiesProcessor, Disposable {
     // state management
     private Array<ComponentCamera> allCameras;
 
-    public Renderer() {
+    public Renderer(final EntityContainer container) {
         this.customSpriteBatch = new CustomSpriteBatch();
-        this.renderer2D = new Renderer2D();
+        this.renderer2D = new Renderer2D(container);
         this.renderer3D = new Renderer3D();
         this.debugMode = Config.DEFAULT.debugMode;
         this.allCameras = new Array<>();

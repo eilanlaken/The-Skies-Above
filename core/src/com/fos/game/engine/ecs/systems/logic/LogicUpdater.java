@@ -22,6 +22,15 @@ public class LogicUpdater implements EntitiesProcessor {
         }
     }
 
+    public void addEntities(final Array<Entity> toAdd) {
+        for (Entity entity : toAdd) {
+            ComponentLogic componentLogic = entity.getLogic();
+            if (componentLogic == null) continue;
+            for (Logic logic : componentLogic.logic) logic.start();
+        }
+    }
+
+    @Deprecated
     public void startScripts(final Entity entity) {
         ComponentLogic componentLogic = (ComponentLogic) entity.components[ComponentType.LOGIC.ordinal()];
         if (componentLogic != null) {

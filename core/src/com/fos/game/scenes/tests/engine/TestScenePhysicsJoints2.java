@@ -23,7 +23,7 @@ import com.fos.game.engine.ecs.systems.base.EntityContainer;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TestScenePhysicsJoints extends Scene {
+public class TestScenePhysicsJoints2 extends Scene {
 
     enum Categories {
         GAME_OBJECTS,
@@ -39,7 +39,7 @@ public class TestScenePhysicsJoints extends Scene {
 
     Joint joint;
 
-    public TestScenePhysicsJoints(final ApplicationContext context) {
+    public TestScenePhysicsJoints2(final ApplicationContext context) {
         super(context);
     }
 
@@ -149,13 +149,17 @@ public class TestScenePhysicsJoints extends Scene {
             transform2D.scaleY -= 0.017f;
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.O)) {
-            WeldJointDef weldJointDef = new WeldJointDef();
-            weldJointDef.initialize(e1.getBody2D().body, e2.getBody2D().body, new Vector2(3,3));
-            joint = container.dynamics2D.createJoint(weldJointDef);
+            if (e1.active && e2.active) {
+                WeldJointDef weldJointDef = new WeldJointDef();
+                weldJointDef.initialize(e1.getBody2D().body, e2.getBody2D().body, new Vector2(3, 3));
+                joint = container.dynamics2D.createJoint(weldJointDef);
+            }
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
-            System.out.println(joint.getBodyA().getUserData());
-            System.out.println(joint.getBodyB().getUserData());
+            container.dynamics2D.destroyJoint(joint);
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.G)) {
+            container.removeEntity(e2);
         }
     }
 

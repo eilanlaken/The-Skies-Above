@@ -5,13 +5,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Joint;
+import com.badlogic.gdx.physics.box2d.JointDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
-import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.physics2d.ComponentBody2D;
-import com.fos.game.engine.ecs.components.physics2d.ComponentJoint2D;
 import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.base.EntitiesProcessor;
@@ -20,6 +20,8 @@ public class Dynamics2D implements EntitiesProcessor, Disposable {
 
     protected final World world;
     protected final RayHandler rayHandler;
+    private Array<Body> bodies = new Array<>(10000);
+    private Array<Joint> joints = new Array<>(10000);
 
     public Dynamics2D() {
         this.world = new World(new Vector2(0,-1f), true);
@@ -119,29 +121,58 @@ public class Dynamics2D implements EntitiesProcessor, Disposable {
         transform.updated = true;
     }
 
-    public void addPhysics(final Entity entity) {
-        Component physics2d = (Component) entity.components[ComponentType.PHYSICS_2D.ordinal()];
-        if (physics2d == null) return;
-        if (physics2d instanceof ComponentBody2D) {
+    public void addEntities(final Array<Entity> toAdd) {
+        for (Entity entity : toAdd) {
+            ComponentBody2D body2D = entity.getBody2D();
+            if (body2D == null) continue;
             ComponentTransform2D transform = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
-            ComponentBody2D body2D = (ComponentBody2D) physics2d;
-            Dynamics2DUtils.addRigidBody2D(world, entity, body2D, transform);
-        } else {
-            ComponentJoint2D joint2D = (ComponentJoint2D) physics2d;
-            Dynamics2DUtils.addJoint2D(world, entity, joint2D);
+            Dynamics2DUtils.addBody2D(world, entity, body2D, transform);
         }
     }
 
-    public void destroyPhysics(final Entity entity) {
-        Component physics2d = (Component) entity.components[ComponentType.PHYSICS_2D.ordinal()];
-        if (physics2d == null) return;
-        if (physics2d instanceof ComponentBody2D) {
-            ComponentBody2D body2D = (ComponentBody2D) physics2d;
-            Dynamics2DUtils.destroyRigidBody2D(world, body2D);
-        } else {
-            ComponentJoint2D joint2D = (ComponentJoint2D) physics2d;
-            Dynamics2DUtils.destroyJoint2D(world, joint2D);
+    public void removeEntities(final Array<Entity> toRemove) {
+        for (Entity entity : toRemove) {
+            ComponentBody2D body2D = entity.getBody2D();
+            if (body2D == null) continue;
+            Dynamics2DUtils.destroyBody2D(world, body2D);
         }
+    }
+
+    @Deprecated
+    public void addPhysics(final Entity entity) {
+        ComponentBody2D body2D = entity.getBody2D();
+        if (body2D == null) return;
+        ComponentTransform2D transform = (ComponentTransform2D) entity.components[ComponentType.TRANSFORM_2D.ordinal()];
+        Dynamics2DUtils.addBody2D(world, entity, body2D, transform);
+    }
+
+    @Deprecated
+    public void destroyPhysics(final Entity entity) {
+        ComponentBody2D body2D = entity.getBody2D();
+        if (body2D == null) return;
+        Dynamics2DUtils.destroyBody2D(world, body2D);
+    }
+
+    // api
+    // TODO: implement ray casting
+
+    public Joint createJoint(JointDef jointDef) {
+        return world.createJoint(jointDef);
+    }
+
+    public void destroyJoint(Joint joint) {
+        if (joint == null || !joint.isActive()) return;
+        world.destroyJoint(joint);
+    }
+
+    public Array<Body> getBodies() {
+        world.getBodies(bodies);
+        return bodies;
+    }
+
+    public Array<Joint> getJoints() {
+        world.getJoints(joints);
+        return joints;
     }
 
     @Override

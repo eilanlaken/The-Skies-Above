@@ -11,7 +11,6 @@ import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
 import com.fos.game.engine.ecs.components.lights2d.ComponentLight2D;
 import com.fos.game.engine.ecs.components.logic.ComponentLogic;
-import com.fos.game.engine.ecs.components.physics2d.ComponentJoint2D;
 import com.fos.game.engine.ecs.components.physics2d.ComponentBody2D;
 import com.fos.game.engine.ecs.components.physics3d.ComponentBody3D;
 import com.fos.game.engine.ecs.components.shape2d.ComponentShapes2D;
@@ -30,7 +29,7 @@ public class Entity implements Disposable {
     public Object[] components;
     public int componentsBitMask;
     public int category;
-    public boolean active = true;
+    public boolean active = false;
 
     public Entity(final Enum category) {
         this.category = 0b000001 << category.ordinal();
@@ -108,11 +107,6 @@ public class Entity implements Disposable {
     // physics 2d
     public ComponentBody2D getBody2D() {
         return (ComponentBody2D) components[ComponentType.PHYSICS_2D.ordinal()];
-    }
-
-    // physics 2d
-    public ComponentJoint2D getJoint2D() {
-        return (ComponentJoint2D) components[ComponentType.PHYSICS_2D.ordinal()];
     }
 
     // physics 3d

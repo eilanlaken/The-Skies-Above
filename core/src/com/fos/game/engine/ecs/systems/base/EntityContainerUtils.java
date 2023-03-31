@@ -24,20 +24,16 @@ public class EntityContainerUtils {
     }
 
     protected static void removeEntities(final EntityContainer container) {
-        for (final Entity entity : container.toRemove) {
-            container.dynamics2D.destroyPhysics(entity);
-            container.entities.removeValue(entity, true);
-        }
+        container.entities.removeAll(container.toRemove, true);
+        container.dynamics2D.removeEntities(container.toRemove);
+        for (Entity entity : container.toRemove) entity.container = null;
         container.toRemove.clear();
     }
 
     protected static void addEntities(final EntityContainer container) {
-        for (final Entity entity : container.toAdd) {
-            entity.container = container;
-            container.entities.add(entity);
-            container.dynamics2D.addPhysics(entity);
-            container.logicUpdater.startScripts(entity);
-        }
+        container.entities.addAll(container.toAdd);
+        container.dynamics2D.addEntities(container.toAdd);
+        container.logicUpdater.addEntities(container.toAdd);
         container.toAdd.clear();
     }
 

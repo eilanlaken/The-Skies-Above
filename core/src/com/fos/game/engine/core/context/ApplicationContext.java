@@ -10,7 +10,6 @@ import com.fos.game.engine.ecs.components.camera.FactoryCamera;
 import com.fos.game.engine.ecs.components.lights2d.FactoryLight2D;
 import com.fos.game.engine.ecs.components.lights3d.FactoryLight3D;
 import com.fos.game.engine.ecs.components.physics2d.FactoryBody2D;
-import com.fos.game.engine.ecs.components.physics2d.FactoryJoint2D;
 import com.fos.game.engine.ecs.components.physics3d.FactoryBody3D;
 import com.fos.game.engine.ecs.components.logic.FactoryLogic;
 import com.fos.game.engine.ecs.components.signals.FactorySignalBox;
@@ -31,7 +30,6 @@ public class ApplicationContext implements ApplicationListener {
     public FactoryLight2D factoryLight2D;
     public FactoryLight3D factoryLight3D;
     public FactoryBody2D factoryBody2D;
-    public FactoryJoint2D factoryJoint2D;
     public FactoryBody3D factoryBody3D;
     public FactoryLogic factoryLogic;
     public FactorySignalBox factorySignalBox;
@@ -47,7 +45,6 @@ public class ApplicationContext implements ApplicationListener {
         this.factoryLight2D = new FactoryLight2D(this.assetManager, this.jsonConverter);
         this.factoryLight3D = new FactoryLight3D(this.assetManager, this.jsonConverter);
         this.factoryBody2D = new FactoryBody2D(this.assetManager, this.jsonConverter);
-        this.factoryJoint2D = new FactoryJoint2D(this.assetManager, this.jsonConverter);
         this.factoryBody3D = new FactoryBody3D(this.assetManager, this.jsonConverter);
         this.factoryLogic = new FactoryLogic(this.assetManager, this.jsonConverter);
         this.factorySignalBox = new FactorySignalBox(this.assetManager, this.jsonConverter);
