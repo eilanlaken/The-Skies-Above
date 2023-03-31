@@ -29,14 +29,13 @@
 
 package com.fos.game.engine.core.graphics.spine.attachments;
 
-import static com.fos.game.engine.core.graphics.spine.utils.SpineUtils.*;
-
 import com.badlogic.gdx.utils.FloatArray;
 import com.badlogic.gdx.utils.Null;
-
 import com.fos.game.engine.core.graphics.spine.Bone;
 import com.fos.game.engine.core.graphics.spine.Skeleton;
 import com.fos.game.engine.core.graphics.spine.Slot;
+
+import static com.fos.game.engine.core.graphics.spine.utils.SpineUtils.arraycopy;
 
 /** Base class for an attachment with vertices that are transformed by one or more bones and can be deformed by a slot's
  * {@link Slot#getDeform()}. */

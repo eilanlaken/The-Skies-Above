@@ -4,10 +4,10 @@
 
 package com.fos.game.engine.core.graphics.ui.text.effects;
 
-import com.fos.game.engine.core.graphics.ui.text.utils.NoiseUtils;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.fos.game.engine.core.graphics.ui.text.base.TypingLabel;
 import com.fos.game.engine.core.graphics.ui.text.base.Effect;
+import com.fos.game.engine.core.graphics.ui.text.base.TypingLabel;
+import com.fos.game.engine.core.graphics.ui.text.utils.NoiseUtils;
 
 public class CrowdEffect extends Effect
 {

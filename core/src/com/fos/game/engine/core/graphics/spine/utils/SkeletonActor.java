@@ -32,7 +32,6 @@ package com.fos.game.engine.core.graphics.spine.utils;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-
 import com.fos.game.engine.core.graphics.spine.AnimationState;
 import com.fos.game.engine.core.graphics.spine.Skeleton;
 import com.fos.game.engine.core.graphics.spine.SkeletonRenderer;

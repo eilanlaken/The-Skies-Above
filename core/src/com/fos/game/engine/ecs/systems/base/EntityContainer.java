@@ -14,8 +14,6 @@ import com.fos.game.engine.ecs.systems.signals.SignalRouter;
 import java.util.HashMap;
 import java.util.Map;
 
-//import com.fos.game.engine.ecs.systems.renderer.base.Renderer;
-
 public class EntityContainer implements Disposable {
 
     // container array

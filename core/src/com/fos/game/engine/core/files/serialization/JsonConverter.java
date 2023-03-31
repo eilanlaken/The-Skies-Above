@@ -1,7 +1,6 @@
 package com.fos.game.engine.core.files.serialization;
 
 import com.badlogic.gdx.graphics.Camera;
-import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
 import com.fos.game.engine.ecs.components.audio.ComponentSoundEffects;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;

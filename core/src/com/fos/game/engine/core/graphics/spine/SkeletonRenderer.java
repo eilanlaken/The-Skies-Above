@@ -36,12 +36,7 @@ import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.utils.FloatArray;
 import com.badlogic.gdx.utils.NumberUtils;
 import com.badlogic.gdx.utils.ShortArray;
-
-import com.fos.game.engine.core.graphics.spine.attachments.Attachment;
-import com.fos.game.engine.core.graphics.spine.attachments.ClippingAttachment;
-import com.fos.game.engine.core.graphics.spine.attachments.MeshAttachment;
-import com.fos.game.engine.core.graphics.spine.attachments.RegionAttachment;
-import com.fos.game.engine.core.graphics.spine.attachments.SkeletonAttachment;
+import com.fos.game.engine.core.graphics.spine.attachments.*;
 import com.fos.game.engine.core.graphics.spine.utils.SkeletonClipping;
 import com.fos.game.engine.core.graphics.spine.utils.TwoColorPolygonBatch;
 

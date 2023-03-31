@@ -4,16 +4,16 @@
 
 package com.fos.game.engine.core.graphics.ui.text.base;
 
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.graphics.Colors;
-import com.fos.game.engine.core.graphics.ui.text.utils.Palette;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.Constructor;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
-import com.badlogic.gdx.utils.reflect.ClassReflection;
-import com.badlogic.gdx.math.MathUtils;
+import com.fos.game.engine.core.graphics.ui.text.utils.Palette;
 import regexodus.Matcher;
-import regexodus.Replacer;
 import regexodus.Pattern;
+import regexodus.Replacer;
 
 class Parser
 {

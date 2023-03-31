@@ -2,8 +2,8 @@ package com.fos.game.engine.ecs.systems.dynamics2D;
 
 import com.badlogic.gdx.physics.box2d.*;
 import com.fos.game.engine.ecs.components.base.ComponentType;
-import com.fos.game.engine.ecs.components.physics2d.ComponentBody2D;
 import com.fos.game.engine.ecs.components.physics2d.Body2DData;
+import com.fos.game.engine.ecs.components.physics2d.ComponentBody2D;
 import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 

@@ -29,17 +29,16 @@
 
 package com.fos.game.engine.core.graphics.spine;
 
-import java.util.Arrays;
-
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.FloatArray;
-
 import com.fos.game.engine.core.graphics.spine.PathConstraintData.PositionMode;
 import com.fos.game.engine.core.graphics.spine.PathConstraintData.RotateMode;
 import com.fos.game.engine.core.graphics.spine.PathConstraintData.SpacingMode;
 import com.fos.game.engine.core.graphics.spine.attachments.Attachment;
 import com.fos.game.engine.core.graphics.spine.attachments.PathAttachment;
 import com.fos.game.engine.core.graphics.spine.utils.SpineUtils;
+
+import java.util.Arrays;
 
 /** Stores the current pose for a path constraint. A path constraint adjusts the rotation, translation, and scale of the
  * constrained bones so they follow a {@link PathAttachment}.

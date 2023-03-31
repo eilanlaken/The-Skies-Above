@@ -4,37 +4,22 @@
 
 package com.fos.game.engine.core.graphics.ui.text.base;
 
-import com.badlogic.gdx.scenes.scene2d.utils.UIUtils;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.utils.Pools;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.LongArray;
-import java.io.PrintStream;
-import com.badlogic.gdx.utils.IntMap;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.math.MathUtils;
-import regexodus.Category;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.Null;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.utils.Clipboard;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.utils.FloatArray;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.utils.Disableable;
+import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.Widget;
+import com.badlogic.gdx.scenes.scene2d.utils.*;
+import com.badlogic.gdx.utils.*;
+import regexodus.Category;
+
+import java.io.PrintStream;
+import java.lang.StringBuilder;
 
 public class TextraField extends Widget implements Disableable
 {

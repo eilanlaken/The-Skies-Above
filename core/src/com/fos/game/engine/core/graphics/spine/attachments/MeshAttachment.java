@@ -29,14 +29,13 @@
 
 package com.fos.game.engine.core.graphics.spine.attachments;
 
-import static com.fos.game.engine.core.graphics.spine.utils.SpineUtils.*;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Null;
-
 import com.fos.game.engine.core.graphics.spine.Slot;
+
+import static com.fos.game.engine.core.graphics.spine.utils.SpineUtils.arraycopy;
 
 /** An attachment that displays a textured mesh. A mesh has hull vertices and internal vertices within the hull. Holes are not
  * supported. Each vertex has UVs (texture coordinates) and triangles are used to map an image on to the mesh.

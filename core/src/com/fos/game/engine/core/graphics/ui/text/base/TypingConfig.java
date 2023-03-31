@@ -4,38 +4,11 @@
 
 package com.fos.game.engine.core.graphics.ui.text.base;
 
-import com.fos.game.engine.core.graphics.ui.text.effects.StylistEffect;
-import com.fos.game.engine.core.graphics.ui.text.effects.AttentionEffect;
-import com.fos.game.engine.core.graphics.ui.text.effects.TriggerEffect;
-import com.fos.game.engine.core.graphics.ui.text.effects.LinkEffect;
-import com.fos.game.engine.core.graphics.ui.text.effects.HighlightEffect;
-import com.fos.game.engine.core.graphics.ui.text.effects.RotateEffect;
-import com.fos.game.engine.core.graphics.ui.text.effects.ScaleEffect;
-import com.fos.game.engine.core.graphics.ui.text.effects.SquashEffect;
-import com.fos.game.engine.core.graphics.ui.text.effects.CarouselEffect;
-import com.fos.game.engine.core.graphics.ui.text.effects.HeartbeatEffect;
-import com.fos.game.engine.core.graphics.ui.text.effects.EmergeEffect;
-import com.fos.game.engine.core.graphics.ui.text.effects.ShrinkEffect;
-import com.fos.game.engine.core.graphics.ui.text.effects.CrowdEffect;
-import com.fos.game.engine.core.graphics.ui.text.effects.SpinEffect;
-import com.fos.game.engine.core.graphics.ui.text.effects.SpiralEffect;
-import com.fos.game.engine.core.graphics.ui.text.effects.JoltEffect;
-import com.fos.game.engine.core.graphics.ui.text.effects.BlinkEffect;
-import com.fos.game.engine.core.graphics.ui.text.effects.FadeEffect;
-import com.fos.game.engine.core.graphics.ui.text.effects.GradientEffect;
-import com.fos.game.engine.core.graphics.ui.text.effects.RainbowEffect;
-import com.fos.game.engine.core.graphics.ui.text.effects.WindEffect;
-import com.fos.game.engine.core.graphics.ui.text.effects.WaveEffect;
-import com.fos.game.engine.core.graphics.ui.text.effects.SlideEffect;
-import com.fos.game.engine.core.graphics.ui.text.effects.SickEffect;
-import com.fos.game.engine.core.graphics.ui.text.effects.ShakeEffect;
-import com.fos.game.engine.core.graphics.ui.text.effects.JumpEffect;
-import com.fos.game.engine.core.graphics.ui.text.effects.HangEffect;
-import com.fos.game.engine.core.graphics.ui.text.effects.EaseEffect;
-import com.badlogic.gdx.utils.OrderedMap;
-import com.badlogic.gdx.utils.ObjectMap;
-import com.badlogic.gdx.utils.IntFloatMap;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.utils.IntFloatMap;
+import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.utils.OrderedMap;
+import com.fos.game.engine.core.graphics.ui.text.effects.*;
 
 public class TypingConfig
 {

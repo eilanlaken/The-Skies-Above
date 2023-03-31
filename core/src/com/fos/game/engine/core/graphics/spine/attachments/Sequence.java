@@ -29,11 +29,10 @@
 
 package com.fos.game.engine.core.graphics.spine.attachments;
 
-import static com.fos.game.engine.core.graphics.spine.utils.SpineUtils.*;
-
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
 import com.fos.game.engine.core.graphics.spine.Slot;
+
+import static com.fos.game.engine.core.graphics.spine.utils.SpineUtils.arraycopy;
 
 public class Sequence {
 	static private int nextID;

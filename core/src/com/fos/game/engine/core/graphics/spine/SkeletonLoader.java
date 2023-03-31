@@ -29,15 +29,14 @@
 
 package com.fos.game.engine.core.graphics.spine;
 
-import java.io.InputStream;
-
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
-
 import com.fos.game.engine.core.graphics.spine.SkeletonJson.LinkedMesh;
 import com.fos.game.engine.core.graphics.spine.attachments.AtlasAttachmentLoader;
 import com.fos.game.engine.core.graphics.spine.attachments.AttachmentLoader;
+
+import java.io.InputStream;
 
 /** Base class for loading skeleton data from a file.
  * <p>

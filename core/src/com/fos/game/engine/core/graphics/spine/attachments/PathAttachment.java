@@ -29,11 +29,10 @@
 
 package com.fos.game.engine.core.graphics.spine.attachments;
 
-import static com.fos.game.engine.core.graphics.spine.utils.SpineUtils.*;
-
 import com.badlogic.gdx.graphics.Color;
-
 import com.fos.game.engine.core.graphics.spine.PathConstraint;
+
+import static com.fos.game.engine.core.graphics.spine.utils.SpineUtils.arraycopy;
 
 /** An attachment whose vertices make up a composite Bezier curve.
  * <p>

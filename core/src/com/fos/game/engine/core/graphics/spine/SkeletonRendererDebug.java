@@ -37,14 +37,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.FloatArray;
-
-import com.fos.game.engine.core.graphics.spine.attachments.Attachment;
-import com.fos.game.engine.core.graphics.spine.attachments.BoundingBoxAttachment;
-import com.fos.game.engine.core.graphics.spine.attachments.ClippingAttachment;
-import com.fos.game.engine.core.graphics.spine.attachments.MeshAttachment;
-import com.fos.game.engine.core.graphics.spine.attachments.PathAttachment;
-import com.fos.game.engine.core.graphics.spine.attachments.PointAttachment;
-import com.fos.game.engine.core.graphics.spine.attachments.RegionAttachment;
+import com.fos.game.engine.core.graphics.spine.attachments.*;
 
 public class SkeletonRendererDebug {
 	static public final Color boneLineColor = Color.RED;

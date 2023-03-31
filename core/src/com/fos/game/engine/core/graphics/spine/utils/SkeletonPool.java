@@ -30,7 +30,6 @@
 package com.fos.game.engine.core.graphics.spine.utils;
 
 import com.badlogic.gdx.utils.Pool;
-
 import com.fos.game.engine.core.graphics.spine.Skeleton;
 import com.fos.game.engine.core.graphics.spine.SkeletonData;
 

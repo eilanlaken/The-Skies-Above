@@ -38,7 +38,6 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Null;
-
 import com.fos.game.engine.core.graphics.spine.SkeletonBinary;
 import com.fos.game.engine.core.graphics.spine.SkeletonData;
 import com.fos.game.engine.core.graphics.spine.SkeletonJson;

@@ -4,8 +4,8 @@
 
 package com.fos.game.engine.core.graphics.ui.text.utils;
 
-import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntArray;
 import com.badlogic.gdx.utils.ObjectIntMap;

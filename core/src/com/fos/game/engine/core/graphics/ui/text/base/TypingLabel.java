@@ -17,9 +17,9 @@ import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.fos.game.engine.core.graphics.ui.text.utils.ColorUtils;
 
+import java.lang.StringBuilder;
 import java.util.Arrays;
 import java.util.Map;
-import java.lang.StringBuilder;
 
 public class TypingLabel extends TextraLabel
 {

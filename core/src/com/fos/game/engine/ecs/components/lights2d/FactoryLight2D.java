@@ -1,9 +1,9 @@
 package com.fos.game.engine.ecs.components.lights2d;
 
 import com.badlogic.gdx.graphics.Color;
-import com.fos.game.engine.ecs.components.base.Factory;
 import com.fos.game.engine.core.files.assets.GameAssetManager;
 import com.fos.game.engine.core.files.serialization.JsonConverter;
+import com.fos.game.engine.ecs.components.base.Factory;
 
 public class FactoryLight2D extends Factory {
 

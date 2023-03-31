@@ -29,66 +29,22 @@
 
 package com.fos.game.engine.core.graphics.spine;
 
-import java.io.EOFException;
-import java.io.IOException;
-import java.io.InputStream;
-
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.DataInput;
-import com.badlogic.gdx.utils.FloatArray;
-import com.badlogic.gdx.utils.IntArray;
-import com.badlogic.gdx.utils.Null;
-import com.badlogic.gdx.utils.SerializationException;
-
-import com.fos.game.engine.core.graphics.spine.Animation.AlphaTimeline;
-import com.fos.game.engine.core.graphics.spine.Animation.AttachmentTimeline;
-import com.fos.game.engine.core.graphics.spine.Animation.CurveTimeline;
-import com.fos.game.engine.core.graphics.spine.Animation.CurveTimeline1;
-import com.fos.game.engine.core.graphics.spine.Animation.CurveTimeline2;
-import com.fos.game.engine.core.graphics.spine.Animation.DeformTimeline;
-import com.fos.game.engine.core.graphics.spine.Animation.DrawOrderTimeline;
-import com.fos.game.engine.core.graphics.spine.Animation.EventTimeline;
-import com.fos.game.engine.core.graphics.spine.Animation.IkConstraintTimeline;
-import com.fos.game.engine.core.graphics.spine.Animation.PathConstraintMixTimeline;
-import com.fos.game.engine.core.graphics.spine.Animation.PathConstraintPositionTimeline;
-import com.fos.game.engine.core.graphics.spine.Animation.PathConstraintSpacingTimeline;
-import com.fos.game.engine.core.graphics.spine.Animation.RGB2Timeline;
-import com.fos.game.engine.core.graphics.spine.Animation.RGBA2Timeline;
-import com.fos.game.engine.core.graphics.spine.Animation.RGBATimeline;
-import com.fos.game.engine.core.graphics.spine.Animation.RGBTimeline;
-import com.fos.game.engine.core.graphics.spine.Animation.RotateTimeline;
-import com.fos.game.engine.core.graphics.spine.Animation.ScaleTimeline;
-import com.fos.game.engine.core.graphics.spine.Animation.ScaleXTimeline;
-import com.fos.game.engine.core.graphics.spine.Animation.ScaleYTimeline;
-import com.fos.game.engine.core.graphics.spine.Animation.SequenceTimeline;
-import com.fos.game.engine.core.graphics.spine.Animation.ShearTimeline;
-import com.fos.game.engine.core.graphics.spine.Animation.ShearXTimeline;
-import com.fos.game.engine.core.graphics.spine.Animation.ShearYTimeline;
-import com.fos.game.engine.core.graphics.spine.Animation.Timeline;
-import com.fos.game.engine.core.graphics.spine.Animation.TransformConstraintTimeline;
-import com.fos.game.engine.core.graphics.spine.Animation.TranslateTimeline;
-import com.fos.game.engine.core.graphics.spine.Animation.TranslateXTimeline;
-import com.fos.game.engine.core.graphics.spine.Animation.TranslateYTimeline;
+import com.badlogic.gdx.utils.*;
+import com.fos.game.engine.core.graphics.spine.Animation.*;
 import com.fos.game.engine.core.graphics.spine.BoneData.TransformMode;
 import com.fos.game.engine.core.graphics.spine.PathConstraintData.PositionMode;
 import com.fos.game.engine.core.graphics.spine.PathConstraintData.RotateMode;
 import com.fos.game.engine.core.graphics.spine.PathConstraintData.SpacingMode;
 import com.fos.game.engine.core.graphics.spine.SkeletonJson.LinkedMesh;
-import com.fos.game.engine.core.graphics.spine.attachments.Attachment;
-import com.fos.game.engine.core.graphics.spine.attachments.AttachmentLoader;
-import com.fos.game.engine.core.graphics.spine.attachments.AttachmentType;
-import com.fos.game.engine.core.graphics.spine.attachments.BoundingBoxAttachment;
-import com.fos.game.engine.core.graphics.spine.attachments.ClippingAttachment;
-import com.fos.game.engine.core.graphics.spine.attachments.MeshAttachment;
-import com.fos.game.engine.core.graphics.spine.attachments.PathAttachment;
-import com.fos.game.engine.core.graphics.spine.attachments.PointAttachment;
-import com.fos.game.engine.core.graphics.spine.attachments.RegionAttachment;
-import com.fos.game.engine.core.graphics.spine.attachments.Sequence;
+import com.fos.game.engine.core.graphics.spine.attachments.*;
 import com.fos.game.engine.core.graphics.spine.attachments.Sequence.SequenceMode;
-import com.fos.game.engine.core.graphics.spine.attachments.VertexAttachment;
+
+import java.io.EOFException;
+import java.io.IOException;
+import java.io.InputStream;
 
 /** Loads skeleton data in the Spine binary format.
  * <p>

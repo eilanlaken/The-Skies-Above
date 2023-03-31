@@ -30,7 +30,6 @@
 package com.fos.game.engine.core.graphics.spine.attachments;
 
 import com.badlogic.gdx.utils.Null;
-
 import com.fos.game.engine.core.graphics.spine.Skin;
 
 /** The interface which can be implemented to customize creating and populating attachments.

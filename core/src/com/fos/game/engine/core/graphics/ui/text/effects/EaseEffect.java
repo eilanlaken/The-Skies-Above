@@ -6,9 +6,9 @@ package com.fos.game.engine.core.graphics.ui.text.effects;
 
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
-import com.fos.game.engine.core.graphics.ui.text.base.TypingLabel;
 import com.badlogic.gdx.utils.IntFloatMap;
 import com.fos.game.engine.core.graphics.ui.text.base.Effect;
+import com.fos.game.engine.core.graphics.ui.text.base.TypingLabel;
 
 public class EaseEffect extends Effect
 {

@@ -33,7 +33,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Null;
-
 import com.fos.game.engine.core.graphics.spine.Skin;
 
 /** An {@link AttachmentLoader} that configures attachments using texture regions from an {@link Atlas}.

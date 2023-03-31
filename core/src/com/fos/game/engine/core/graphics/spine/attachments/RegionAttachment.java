@@ -29,15 +29,15 @@
 
 package com.fos.game.engine.core.graphics.spine.attachments;
 
-import static com.fos.game.engine.core.graphics.spine.utils.SpineUtils.*;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Null;
-
 import com.fos.game.engine.core.graphics.spine.Bone;
 import com.fos.game.engine.core.graphics.spine.Slot;
+
+import static com.fos.game.engine.core.graphics.spine.utils.SpineUtils.arraycopy;
+import static com.fos.game.engine.core.graphics.spine.utils.SpineUtils.degRad;
 
 /** An attachment that displays a textured quadrilateral.
  * <p>

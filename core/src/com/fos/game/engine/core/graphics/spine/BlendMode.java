@@ -29,9 +29,9 @@
 
 package com.fos.game.engine.core.graphics.spine;
 
-import static com.badlogic.gdx.graphics.GL20.*;
-
 import com.badlogic.gdx.graphics.g2d.Batch;
+
+import static com.badlogic.gdx.graphics.GL20.*;
 
 /** Determines how images are blended with existing pixels when drawn. */
 public enum BlendMode {

@@ -4,9 +4,9 @@
 
 package com.fos.game.engine.core.graphics.ui.text.effects;
 
-import com.fos.game.engine.core.graphics.ui.text.utils.StringUtils;
-import com.fos.game.engine.core.graphics.ui.text.base.TypingLabel;
 import com.fos.game.engine.core.graphics.ui.text.base.Effect;
+import com.fos.game.engine.core.graphics.ui.text.base.TypingLabel;
+import com.fos.game.engine.core.graphics.ui.text.utils.StringUtils;
 
 public class TriggerEffect extends Effect
 {

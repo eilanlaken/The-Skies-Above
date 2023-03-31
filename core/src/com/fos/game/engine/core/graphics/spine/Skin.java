@@ -32,7 +32,6 @@ package com.fos.game.engine.core.graphics.spine;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Null;
 import com.badlogic.gdx.utils.OrderedSet;
-
 import com.fos.game.engine.core.graphics.spine.attachments.Attachment;
 import com.fos.game.engine.core.graphics.spine.attachments.MeshAttachment;
 

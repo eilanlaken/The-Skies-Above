@@ -6,10 +6,10 @@ package com.fos.game.engine.core.graphics.ui.text.effects;
 
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.utils.TimeUtils;
-import com.fos.game.engine.core.graphics.ui.text.base.TypingLabel;
 import com.badlogic.gdx.utils.FloatArray;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.fos.game.engine.core.graphics.ui.text.base.Effect;
+import com.fos.game.engine.core.graphics.ui.text.base.TypingLabel;
 
 public class JoltEffect extends Effect
 {

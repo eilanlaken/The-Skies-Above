@@ -3,7 +3,6 @@ package com.fos.game.engine.core.graphics.shaders.postprocessing;
 
 import com.fos.game.engine.core.graphics.shaders.base.Shader;
 
-import java.util.HashMap;
 import java.util.Set;
 
 /**

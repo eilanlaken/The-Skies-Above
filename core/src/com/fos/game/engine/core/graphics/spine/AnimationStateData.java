@@ -30,7 +30,6 @@
 package com.fos.game.engine.core.graphics.spine;
 
 import com.badlogic.gdx.utils.ObjectFloatMap;
-
 import com.fos.game.engine.core.graphics.spine.AnimationState.TrackEntry;
 
 /** Stores mix (crossfade) durations to be applied when {@link AnimationState} animations are changed. */

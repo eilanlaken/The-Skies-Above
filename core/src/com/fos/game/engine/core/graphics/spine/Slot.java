@@ -32,7 +32,6 @@ package com.fos.game.engine.core.graphics.spine;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.FloatArray;
 import com.badlogic.gdx.utils.Null;
-
 import com.fos.game.engine.core.graphics.spine.Animation.DeformTimeline;
 import com.fos.game.engine.core.graphics.spine.attachments.Attachment;
 import com.fos.game.engine.core.graphics.spine.attachments.Sequence;

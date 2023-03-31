@@ -2,7 +2,6 @@ package com.fos.game.engine.ecs.components.transform;
 
 import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
-import com.fos.game.engine.ecs.entities.Entity;
 
 public class ComponentTransform2D implements Component {
 

@@ -4,10 +4,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
+import com.fos.game.engine.core.files.assets.GameAssetManager;
 import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
 import com.fos.game.engine.ecs.components.base.Component;
 import com.fos.game.engine.ecs.components.base.ComponentType;
-import com.fos.game.engine.core.files.assets.GameAssetManager;
 
 import java.util.HashMap;
 

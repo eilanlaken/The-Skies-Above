@@ -30,7 +30,6 @@
 package com.fos.game.engine.core.graphics.spine.attachments;
 
 import com.badlogic.gdx.utils.Null;
-
 import com.fos.game.engine.core.graphics.spine.Skeleton;
 
 /** Attachment that displays a skeleton. */

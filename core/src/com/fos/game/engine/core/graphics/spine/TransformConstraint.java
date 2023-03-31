@@ -29,10 +29,10 @@
 
 package com.fos.game.engine.core.graphics.spine;
 
-import static com.fos.game.engine.core.graphics.spine.utils.SpineUtils.*;
-
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+
+import static com.fos.game.engine.core.graphics.spine.utils.SpineUtils.*;
 
 /** Stores the current pose for a transform constraint. A transform constraint adjusts the world transform of the constrained
  * bones to match that of the target bone.

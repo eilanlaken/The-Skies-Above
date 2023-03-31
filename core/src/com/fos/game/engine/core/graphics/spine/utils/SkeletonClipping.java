@@ -32,7 +32,6 @@ package com.fos.game.engine.core.graphics.spine.utils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.FloatArray;
 import com.badlogic.gdx.utils.ShortArray;
-
 import com.fos.game.engine.core.graphics.spine.Slot;
 import com.fos.game.engine.core.graphics.spine.attachments.ClippingAttachment;
 
