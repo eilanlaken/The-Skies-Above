@@ -21,10 +21,10 @@ import com.fos.game.engine.core.graphics.g2d.Physics2DDebugRenderer;
 import com.fos.game.engine.core.graphics.g2d.PolygonSpriteBatch;
 import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
 import com.fos.game.engine.core.graphics.spine.*;
-import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
+import com.fos.game.engine.ecs.components.rendered2d.ComponentAnimations2D;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
 import com.fos.game.engine.ecs.components.physics2d.Body2DData;
-import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
+import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
 
 import java.util.Comparator;
 import java.util.HashMap;

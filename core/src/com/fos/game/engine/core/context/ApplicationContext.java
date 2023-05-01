@@ -2,9 +2,10 @@ package com.fos.game.engine.core.context;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.fos.game.engine.core.files.assets.AssetLoader;
 import com.fos.game.engine.core.files.assets.GameAssetManager;
 import com.fos.game.engine.core.files.serialization.JsonConverter;
-import com.fos.game.engine.ecs.components.animations2d.FactoryFrameAnimations2D;
+import com.fos.game.engine.ecs.components.rendered2d.FactoryFrameAnimations2D;
 import com.fos.game.engine.ecs.components.audio.FactoryAudio;
 import com.fos.game.engine.ecs.components.camera.FactoryCamera;
 import com.fos.game.engine.ecs.components.lights2d.FactoryLight2D;
@@ -13,7 +14,7 @@ import com.fos.game.engine.ecs.components.logic.FactoryLogic;
 import com.fos.game.engine.ecs.components.physics2d.FactoryBody2D;
 import com.fos.game.engine.ecs.components.physics3d.FactoryBody3D;
 import com.fos.game.engine.ecs.components.signals.FactorySignalBox;
-import com.fos.game.engine.ecs.components.transform.FactoryTransform2D;
+import com.fos.game.engine.ecs.components.transform2d.FactoryTransform2D;
 import com.fos.game.scenes.tests.loading.TestLoadingScene;
 
 public class ApplicationContext implements ApplicationListener {
@@ -21,7 +22,8 @@ public class ApplicationContext implements ApplicationListener {
     public Scene scene;
 
     // service providers
-    public GameAssetManager assetManager;
+    @Deprecated public GameAssetManager assetManager;
+    public AssetLoader assetLoader;
     public JsonConverter jsonConverter;
     // Component Factory(s)
     public FactoryFrameAnimations2D factoryFrameAnimations2D;
@@ -38,6 +40,7 @@ public class ApplicationContext implements ApplicationListener {
     @Override
     public void create() {
         this.assetManager = new GameAssetManager();
+        this.assetLoader = new AssetLoader();
         this.jsonConverter = new JsonConverter();
         this.factoryFrameAnimations2D = new FactoryFrameAnimations2D(this.assetManager, this.jsonConverter);
         this.factoryAudio = new FactoryAudio(this.assetManager, this.jsonConverter);

@@ -3,7 +3,7 @@ package com.fos.game.engine.ecs.entities;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
-import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
+import com.fos.game.engine.ecs.components.rendered2d.ComponentAnimations2D;
 import com.fos.game.engine.ecs.components.audio.ComponentMusic;
 import com.fos.game.engine.ecs.components.audio.ComponentSoundEffects;
 import com.fos.game.engine.ecs.components.base.Component;
@@ -16,7 +16,7 @@ import com.fos.game.engine.ecs.components.physics3d.ComponentBody3D;
 import com.fos.game.engine.ecs.components.shape2d.ComponentShapes2D;
 import com.fos.game.engine.ecs.components.signals.ComponentSignalBox;
 import com.fos.game.engine.ecs.components.storage.ComponentStorage;
-import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
+import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
 import com.fos.game.engine.ecs.components.transform3d.ComponentTransform3D;
 import com.fos.game.engine.ecs.systems.base.EntityContainer;
 

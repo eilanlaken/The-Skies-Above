@@ -24,5 +24,4 @@ public class SpriteSheet extends TextureAtlas {
         return namedRegions.get(name);
     }
 
-
 }

@@ -7,3 +7,7 @@ EC_ = "emissive [plain] color [material]".
 AG_ = "animated glow" material. The diffuse map is also the emissive map.
 SG_ = "static glow" material.
 
+new simple renderer:
+3d white tint bug: remove emissive from materials.
+https://www.reddit.com/r/libgdx/comments/bkpk8j/libgdx_g3d_models_white_because_of_wrong_emissive/
+this.modelInstance.materials.get(0).remove(ColorAttribute.Emissive);

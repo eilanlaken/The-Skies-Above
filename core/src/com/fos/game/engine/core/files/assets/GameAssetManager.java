@@ -13,6 +13,7 @@ import com.fos.game.engine.core.graphics.g2d.SpriteSheet;
 import java.nio.FloatBuffer;
 import java.util.HashMap;
 
+@Deprecated
 public class GameAssetManager extends AssetManager {
 
     // catalogs
@@ -54,17 +55,13 @@ public class GameAssetManager extends AssetManager {
         boolean done = super.update();
         if (done) {
             try {
-                wrap();
+                wrapTextures();
             } catch (Exception e) {
                 e.printStackTrace();
                 System.exit(1);
             }
         }
         return done;
-    }
-
-    private void wrap() throws ModelDataMismatchException {
-        wrapTextures();
     }
 
     private void wrapTextures() {
@@ -122,18 +119,6 @@ public class GameAssetManager extends AssetManager {
             texture.bind();
             Gdx.gl30.glTexParameterf(GL20.GL_TEXTURE_2D, GL20.GL_TEXTURE_MAX_ANISOTROPY_EXT, Math.min(16, maxAnisotropy));
             texture.bind(0);
-        }
-    }
-
-    // helper methods
-    private static boolean isModelInstanced(final String id) {
-        return id.endsWith(".inst");
-    }
-
-    public static class ModelDataMismatchException extends Exception {
-        @Override
-        public String getMessage() {
-            return super.getMessage() + " Instanced Models should contain a single mesh part.";
         }
     }
 

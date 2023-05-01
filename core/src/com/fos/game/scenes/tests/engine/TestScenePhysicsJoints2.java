@@ -16,7 +16,7 @@ import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
 import com.fos.game.engine.ecs.components.physics2d.Body2DData;
 import com.fos.game.engine.ecs.components.physics2d.ComponentBody2D;
-import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
+import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.base.EntityContainer;
 

@@ -7,12 +7,12 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.FloatArray;
 import com.fos.game.engine.core.graphics.g2d.RenderTarget;
 import com.fos.game.engine.core.graphics.spine.Skeleton;
-import com.fos.game.engine.ecs.components.animations2d.ComponentAnimations2D;
+import com.fos.game.engine.ecs.components.rendered2d.ComponentAnimations2D;
 import com.fos.game.engine.ecs.components.base.ComponentType;
 import com.fos.game.engine.ecs.components.camera.ComponentCamera;
 import com.fos.game.engine.ecs.components.lights2d.ComponentLight2D;
 import com.fos.game.engine.ecs.components.shape2d.ComponentShapes2D;
-import com.fos.game.engine.ecs.components.transform.ComponentTransform2D;
+import com.fos.game.engine.ecs.components.transform2d.ComponentTransform2D;
 import com.fos.game.engine.ecs.entities.Entity;
 
 import java.util.Comparator;

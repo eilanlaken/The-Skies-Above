@@ -4,7 +4,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.fos.game.engine.ecs.entities.Entity;
 import com.fos.game.engine.ecs.systems.audio.AudioPlayer;
-import com.fos.game.engine.ecs.systems.dynamics2D.Dynamics2D;
+import com.fos.game.engine.ecs.systems.dynamics2d.Dynamics2D;
 import com.fos.game.engine.ecs.systems.logic.LogicUpdater;
 import com.fos.game.engine.ecs.systems.physics3d.Physics3D;
 import com.fos.game.engine.ecs.systems.renderer.Config;
